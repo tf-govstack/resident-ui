@@ -65,7 +65,7 @@ USER ${container_user_uid}:${container_user_gid}
 
 EXPOSE 8080
 
-ENTRYPOINT [ "./configure_start.sh" ]
+#ENTRYPOINT [ "./configure_start.sh" ]
 
 #get the admin i18n bundle zip from artifactory
 CMD echo "starting nginx" ; \
