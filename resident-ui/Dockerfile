@@ -51,8 +51,8 @@ ADD dist ${base_path}
 #RUN apt-get update -y && apt-get install -y wget && apt-get install -y unzip
 
 # change permissions of file inside working dir
-RUN chown -R ${container_user}:${container_user} ${base_path}/assets/i18n
-RUN chown -R ${container_user}:${container_user} ${base_path}/assets/entity-spec
+#RUN chown -R ${container_user}:${container_user} ${base_path}/assets/i18n
+#RUN chown -R ${container_user}:${container_user} ${base_path}/assets/entity-spec
 
 ADD configure_start.sh configure_start.sh
 
