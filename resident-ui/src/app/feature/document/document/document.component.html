@@ -1,0 +1,12 @@
+
+<ul *ngFor="let item of documentInfo">
+<li *ngIf="item.isActive">
+	<b>{{item.name}}</b>
+	<span>{{item.description}}</span>
+	<ul *ngFor="let documenttype of item.documenttypes">
+		<li *ngIf="documenttype.isActive">
+			{{documenttype.code}}
+		</li>
+	</ul>
+</li>
+</ul>
