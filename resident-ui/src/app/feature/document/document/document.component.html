@@ -1,5 +1,5 @@
 <span class="breadcrumb">
-        <a (click)="changePage('home')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> >&nbsp;&nbsp;{{'dashboard.getinformation' | translate}}&nbsp;&nbsp;>&nbsp;&nbsp;<span class="active">{{'dashboard.document' | translate}}</span>
+        <a (click)="onItemSelected('home')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> >&nbsp;&nbsp;{{'dashboard.getinformation' | translate}}&nbsp;&nbsp;>&nbsp;&nbsp;<span class="active">{{'dashboard.document' | translate}}</span>
 </span>
 <mat-tab-group class="mat-tab-group mat-background-primary mat-primary" [selectedIndex]="1" (selectedTabChange)="onItemSelected($event)">
   <mat-tab label="{{'dashboard.regcenter' | translate}}"></mat-tab>
