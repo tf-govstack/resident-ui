@@ -4,9 +4,10 @@ import { MaterialModule } from './material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { HeaderComponent } from './header/header.component';
+import { I18nModule } from 'src/app/i18n.module';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, I18nModule],
   declarations: [ HeaderComponent ],
   exports: [ MaterialModule, HeaderComponent ],
   entryComponents: [],

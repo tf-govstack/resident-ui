@@ -9,6 +9,7 @@ import { AppConfigService } from './app-config.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/material.module';
 import { CommonModule } from "@angular/common";
+import { I18nModule } from 'src/app/i18n.module';
 
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {
@@ -29,7 +30,8 @@ const appInitialization = (appConfig: AppConfigService) => {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    I18nModule
   ],
   providers: [
     {

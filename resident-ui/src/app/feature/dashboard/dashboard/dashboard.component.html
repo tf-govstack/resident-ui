@@ -1,0 +1,15 @@
+<div class="basic-container" *ngIf="menuItems">
+<mat-grid-list cols="4" rowHeight="2:1">
+  <mat-grid-tile cols="1" rowHeight="2:1" *ngFor="let menuItem of menuItems">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar [style.font-size.px]="32">{{ menuItem.icon }}</mat-icon>
+        <mat-card-title *ngIf="!menuItem.route">{{ menuItem.displayName | translate }}</mat-card-title>
+        <mat-card-title *ngIf="menuItem.route"  (click)="onItemSelected(menuItem.route)">{{ menuItem.displayName | translate }}</mat-card-title>
+        <mat-card-subtitle *ngFor="let subMenu of menuItem.subMenus" (click)="onItemSelected(subMenu.route)">{{ subMenu.displayName | translate }}</mat-card-subtitle>
+        <div style="flex-grow: 1"></div>
+      </mat-card-header>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+</div>

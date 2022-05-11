@@ -3,10 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { VerifyComponent } from './verify/verify.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: VerifyComponent
-  }
+  {path: '', component: VerifyComponent}
 ];
 
 @NgModule({

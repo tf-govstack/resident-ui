@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { AuthGuardService } from './auth/auth-guard.service';
-import { DocumentComponent } from 'src/app/feature/document/document/document.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'dashboard', loadChildren: () => import('src/app/feature/dashboard/dashboard.module').then( m => m.DashboardModule )}, 
   { path: 'document', loadChildren: () => import('src/app/feature/document/document.module').then( m => m.DocumentModule )},
-  {
-    path: ':userPreferredLanguage/resident',
-    children: [
-      { path: 'login', loadChildren: () => import('src/app/auth/auth.module').then( m => m.AuthModule )}
-    ]
-  },
+  { path: 'regcenter', loadChildren: () => import('src/app/feature/booking/booking.module').then( m => m.BookingModule )},
+  { path: 'verify', loadChildren: () => import('src/app/feature/verify/verify.module').then( m => m.VerifyModule )},
 ];
 
 @NgModule({

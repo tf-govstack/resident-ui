@@ -1,7 +1,25 @@
-<div class="example-container">
-  <mat-form-field appearance="fill">
-    <mat-label>Enter your email</mat-label>
-    <input matInput placeholder="pat@example.com" [formControl]="email" required>
-    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-  </mat-form-field>
-</div>
+
+<mat-radio-group aria-label="Select an option">
+  <mat-radio-button value="MOBILE">{{'verifyuinvid.mobileno' | translate }}</mat-radio-button>
+  <mat-radio-button value="EMAIL">{{'verifyuinvid.email' | translate }}</mat-radio-button>
+</mat-radio-group>
+
+<mat-form-field appearance="fill">
+  <mat-label>{{'verifyuinvid.uid' | translate }}</mat-label>
+  <input
+  matInput
+  type="text"
+  name="uin"
+  class="search-input"/>
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="generateOTP()">{{'verifyuinvid.sendotp' | translate}}</button>
+
+<mat-form-field appearance="fill">
+  <mat-label>{{'verifyuinvid.otp' | translate }}</mat-label>
+  <input
+  matInput
+  type="text"
+  name="otp"
+  class="search-input"/>
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="verifyOTP()">{{'verifyuinvid.submit' | translate}}</button>

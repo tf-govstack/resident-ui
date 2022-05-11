@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: "app-header",
@@ -13,11 +14,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPreferredLang: string;
   textDir = localStorage.getItem("dir");
   constructor(
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
-    //this.translate.use(localStorage.getItem("langCode")); 
+    console.log("langCode>>>"+localStorage.getItem("langCode"));
+    this.translateService.use(localStorage.getItem("langCode")); 
+    /*this.translateService
+    .getTranslation("eng")
+    .subscribe(response => {
+      console.log("response>>>"+JSON.stringify(response));
+    });*/
     this.textDir = localStorage.getItem("dir");
   }
   textDirection() {
@@ -74,7 +82,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });*/
   }
 
+  onItemSelected(item: any) {
+    /*const itemName = item.route.split('/')[item.route.split('/').length - 1];*/
+    console.log("item>>>"+item);
+    /*this.auditService.audit(1, item.auditEventId, itemName);
+    if (this.screenResize < 840) {
+      this.sideMenuService.closeNav();
+      this.router.navigate([item.route]);
+    } else {*/
+      this.router.navigate([item]);
+    /*}*/
+  }
+
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 }
