@@ -1,5 +1,5 @@
 <span class="breadcrumb">
-        <a (click)="changePage('home')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> >&nbsp;&nbsp;{{'dashboard.getinformation' | translate}}&nbsp;&nbsp;>&nbsp;&nbsp;<span class="active">{{'dashboard.regcenter' | translate}}</span>
+        <a (click)="onItemSelected('home')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> >&nbsp;&nbsp;{{'dashboard.getinformation' | translate}}&nbsp;&nbsp;>&nbsp;&nbsp;<span class="active">{{'dashboard.regcenter' | translate}}</span>
 </span>
 <div class="spinner" *ngIf="!isWorkingDaysAvailable">
   <mat-spinner></mat-spinner>
