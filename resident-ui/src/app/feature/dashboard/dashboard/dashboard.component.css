@@ -1,0 +1,12 @@
+.basic-container {
+  padding: 30px;
+}
+
+.mat-card {
+  height: 190px;
+  width: 400px;
+}
+
+.mat-card-subtitle{
+  cursor: pointer;
+}

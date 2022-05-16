@@ -1,0 +1,145 @@
+{
+    "menuItems": [
+        {
+            "displayName": "UIN Services",
+            "icon": "settings",
+            "route": "",
+            "auditEventId": "ADM-004",
+            "cols":2,
+            "rows":2,
+            "subMenus" : [{
+                "displayName": "Lock/unlock authentication",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Update Demographic and Biometric data",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Manage VID",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Download Card",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Order Physical Card",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Share With A Partner",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            }]
+        },
+        {
+            "displayName": "Get Information",
+            "icon": "info",
+            "route": "",
+            "auditEventId": "ADM-004",
+            "cols":1,
+            "rows":1,
+            "subMenus" : [{
+                "displayName": "Search registration center",
+                "icon": "",
+                "route": "regcenter",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Acceptable Documents",
+                "icon": "",
+                "route": "document",
+                "auditEventId": "ADM-004"
+            }]
+        },
+        {
+            "displayName": "Booking an Appointment",
+            "icon": "chrome_reader_mode",
+            "route": "",
+            "auditEventId": "ADM-004",
+            "cols":1,
+            "rows":1,
+            "subMenus" : [{
+                "displayName": "pre-registration",
+                "icon": "",
+                "route": "redirect",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Retrieving lost UIN",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Booking an appointment",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            }]
+        },
+        {
+            "displayName": "Get My UIN",
+            "icon": "location_on",
+            "route": "",
+            "auditEventId": "ADM-004",
+            "cols":1,
+            "rows":1
+        }, 
+        {
+            "displayName": "Verify Phone Number / Email ID",
+            "icon": "done",
+            "route": "verify",
+            "auditEventId": "ADM-004",
+            "cols":1,
+            "rows":1
+        }       
+    ],
+    "dashboard": {
+        "welcomeMessage":"Welcome to Mosip Partner portal !",
+        "Logout":"Logout",
+        "home" : "Home",
+        "getinformation" : "Get Information",
+        "regcenter" : "Find a Registration Center",
+        "document" : "List of Supporting Documents"
+    },
+    "centerSelection": {
+        "title": " Book Appointment ",
+        "action_nearBy": "Nearby",
+        "display_recommended": "Recommended Centres",
+        "text_found": "Found",
+        "text_centers": "centers",
+        "text_timing": "Timing",
+        "text_open": "Open",
+        "text_select": "Select Location Types",
+        "text_enter": "Enter",
+        "text_search": "Search....",
+        "action_back": "Back",
+        "action_book_later": "Book Later",
+        "action_continue": "Continue",
+        "noResult_found": "No results Found",
+        "lunch_hours": "Lunch"
+    },
+    "verifyuinvid": {
+        "title": "",
+        "mobileno": "Verify mobile number",
+        "email": "Verify Email ID",
+        "uid": "Enter UIN / VID",
+        "captcha": "Enter Captcha",
+        "sendotp": "Send OTP",
+        "otp": "Enter OTP",
+        "submit": "Submit"
+    }
+}
