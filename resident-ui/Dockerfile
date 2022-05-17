@@ -42,9 +42,9 @@ RUN apt-get -y update \
 # set working directory for the user
 WORKDIR /home/${container_user}
 
-#ADD ./nginx.conf /etc/nginx/nginx.conf
+ADD ./nginx.conf /etc/nginx/nginx.conf
 
-#ADD default.conf /etc/nginx/conf.d/
+ADD default.conf /etc/nginx/conf.d/
 
 ADD dist ${base_path}
 
@@ -56,8 +56,8 @@ USER ${container_user_uid}:${container_user_gid}
 
 EXPOSE 8080
 
-CMD #wget -q --show-progress "${resident_i18n_bundle_url_env}" -O "${i18n_path}"/resident-i18n-bundle.zip; \
-    #cd ${i18n_path} ; \
-    #unzip -o resident-i18n-bundle.zip ; \
-    nginx ; \
+   #wget -q --show-progress "${resident_i18n_bundle_url_env}" -O "${i18n_path}"/resident-i18n-bundle.zip; \
+   #cd ${i18n_path} ; \
+   #unzip -o resident-i18n-bundle.zip ; \
+ CMD  nginx ; \
     sleep infinity
