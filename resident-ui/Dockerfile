@@ -56,8 +56,8 @@ USER ${container_user_uid}:${container_user_gid}
 
 EXPOSE 8080
 
-#CMD wget -q --show-progress "${resident_i18n_bundle_url_env}" -O "${i18n_path}"/resident-i18n-bundle.zip; \
+   #wget -q --show-progress "${resident_i18n_bundle_url_env}" -O "${i18n_path}"/resident-i18n-bundle.zip; \
    #cd ${i18n_path} ; \
    #unzip -o resident-i18n-bundle.zip ; \
-   nginx ; \
-   sleep infinity
+ CMD  nginx ; \
+      sleep infinity
