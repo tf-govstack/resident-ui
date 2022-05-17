@@ -60,4 +60,4 @@ EXPOSE 8080
    #cd ${i18n_path} ; \
    #unzip -o resident-i18n-bundle.zip ; \
  CMD  nginx ; \
-    sleep infinity
+      sleep infinity
