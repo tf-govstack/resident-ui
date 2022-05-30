@@ -1,25 +1,61 @@
-
-<mat-radio-group aria-label="Select an option">
-  <mat-radio-button value="MOBILE">{{'verifyuinvid.mobileno' | translate }}</mat-radio-button>
-  <mat-radio-button value="EMAIL">{{'verifyuinvid.email' | translate }}</mat-radio-button>
-</mat-radio-group>
-
-<mat-form-field appearance="fill">
-  <mat-label>{{'verifyuinvid.uid' | translate }}</mat-label>
-  <input
-  matInput
-  type="text"
-  name="uin"
-  class="search-input"/>
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="generateOTP()">{{'verifyuinvid.sendotp' | translate}}</button>
-
-<mat-form-field appearance="fill">
-  <mat-label>{{'verifyuinvid.otp' | translate }}</mat-label>
-  <input
-  matInput
-  type="text"
-  name="otp"
-  class="search-input"/>
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="verifyOTP()">{{'verifyuinvid.submit' | translate}}</button>
+<span class="breadcrumb">
+  <a (click)="onItemSelected('home')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> >&nbsp;&nbsp;<span class="active">{{'dashboard.verify' | translate}}</span>
+</span>
+<div class="main-div">
+  <mat-card class="example-card">
+    <table class="table-style">
+      <tr>
+        <td>
+          <mat-radio-group aria-label="Select an option">
+            <mat-radio-button value="MOBILE">{{'verifyuinvid.mobileno' | translate }}</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-radio-button value="EMAIL">{{'verifyuinvid.email' | translate }}</mat-radio-button>
+          </mat-radio-group>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!-- <mat-form-field appearance="fill">
+            <mat-label>{{'verifyuinvid.uid' | translate }}</mat-label>
+            <input
+            matInput
+            type="text"
+            name="uin"
+            class="search-input"/>
+          </mat-form-field> -->
+          <label for="uin">{{'verifyuinvid.uid' | translate }}</label>
+          <input type="text" id="uin" name="uin" placeholder="{{'verifyuinvid.uid' | translate}}" />
+        </td>
+      </tr>
+     <!--  <tr>
+        <td>
+          <ngx-captcha [config]="captchaConfig" ></ngx-captcha>
+        </td>
+      </tr>   -->    
+      <tr>
+        <td>
+          <button mat-raised-button color="primary" (click)="generateOTP()">{{'verifyuinvid.sendotp' | translate}}</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="otp">{{'verifyuinvid.otp' | translate }}</label>
+          <input type="text" id="otp" name="otp" placeholder="{{'verifyuinvid.otp' | translate}}"/>
+          <!-- <mat-form-field appearance="fill">
+            <mat-label>{{'verifyuinvid.otp' | translate }}</mat-label>
+            <input
+            matInput
+            type="text"
+            name="otp"
+            class="search-input"/>
+          </mat-form-field> -->
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button mat-raised-button disabled (click)="verifyOTP()">{{'verifyuinvid.resendotp' | translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button mat-raised-button color="primary" (click)="verifyOTP()">{{'verifyuinvid.submit' | translate}}</button>
+        </td>
+      </tr>
+    </table>  
+  </mat-card>
+</div>

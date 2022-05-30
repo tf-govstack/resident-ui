@@ -1,0 +1,66 @@
+<span class="breadcrumb">
+	<a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<span class="active">{{'genrevokevid.title' | translate}}</span>
+</span>
+
+<div class="main-div" *ngIf="langJSON">
+	<mat-card>
+
+		<table>
+			<tr>
+				<td>
+					<mat-button-toggle-group name="fontStyle" value="{{selectedValue}}" (change)="onToggle($event)">
+					  <mat-button-toggle value="generatevid">{{'genrevokevid.generatevidtoggle' | translate}}</mat-button-toggle>
+					  <mat-button-toggle value="revokevid">{{'genrevokevid.revokevidtoggle' | translate}}</mat-button-toggle>
+					</mat-button-toggle-group>					
+				</td>
+			</tr>
+		</table>
+
+		<table *ngIf="selectedValue === 'generatevid'">
+			<tr>
+				<td>
+					<mat-radio-group class = "tp-radio-group" *ngIf="policyType">  
+				   	<mat-radio-button class = "tp-radio-button" (change)="setvidType($event)"  *ngFor = "let policy of policyType.vidPolicies" [value] = "policy.vidType">  
+				    {{policy.vidType}}  
+				   	</mat-radio-button>  
+					</mat-radio-group>
+				</td>
+			</tr>
+			<tr *ngIf="vidType">
+				<td>
+					<p><mat-checkbox value="PHONE" (change)="sendNotification($event)">Send VID to registered phone</mat-checkbox></p>					
+				</td>
+			</tr>
+			<tr *ngIf="vidType">
+				<td>
+					<p><mat-checkbox value="EMAIL" (change)="sendNotification($event)">Send VID to registered email ID</mat-checkbox></p>					
+				</td>
+			</tr>
+			<tr *ngIf="vidType">
+				<td>
+					<button mat-raised-button color="primary" (click)="generateVID()">{{'verifyuinvid.submit' | translate}}</button>
+				</td>
+			</tr>
+		</table>
+
+		<table *ngIf="selectedValue === 'revokevid'">
+			<tr>
+				<td>
+					<mat-radio-group class = "tp-radio-group" *ngIf="vidlist">  
+				   	<mat-radio-button class = "tp-radio-button" (change)="revokevidvalueset($event)" *ngFor="let vid of vidlist" [value] = "vid">  
+				    {{vid.vid}} Type: {{vid.vidType}} Expiry: {{vid.expiryTimestamp | date:'dd/MM/yyyy'}}
+				   	</mat-radio-button>  
+					</mat-radio-group>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<button mat-raised-button color="primary" (click)="revokeVID()">{{'verifyuinvid.submit' | translate}}</button>
+				</td>
+			</tr>
+		</table>
+
+	</mat-card>	
+</div>
+
+

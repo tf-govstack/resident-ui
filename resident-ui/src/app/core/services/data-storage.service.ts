@@ -137,6 +137,30 @@ export class DataStorageService {
     return this.httpClient.post(this.BASE_URL  + this.version + '/req/auth', request);
   }
 
+  getSchema() {
+    return this.httpClient.get(this.BASE_URL  + this.version + '/proxy/config/ui-schema');
+  }
+
+  getDemographicdetail() {
+    return this.httpClient.get(this.BASE_URL  + this.version + '/identity/input-attributes/values');
+  }
+
+  getPolicy() {
+    return this.httpClient.get(this.BASE_URL  + this.version + '/vid/policy');
+  }
+
+  getVIDs() {
+    return this.httpClient.get(this.BASE_URL  + this.version + '/vids');
+  }
+
+  generateVID(request: any){
+    return this.httpClient.post(this.BASE_URL  + this.version + '/generate-vid', request);
+  }
+
+  revokeVID(request: any, vid: string){
+    return this.httpClient.patch(this.BASE_URL  + this.version + '/revoke-vid/' + vid, request);
+  }
+
   onLogout() {
     const url =
       this.BASE_URL +

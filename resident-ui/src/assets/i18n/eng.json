@@ -8,37 +8,47 @@
             "cols":2,
             "rows":2,
             "subMenus" : [{
-                "displayName": "Lock/unlock authentication",
+                "displayName": "View History",
+                "icon": "",
+                "route": "uinservices/dashboard",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Generate / Revoke VID",
+                "icon": "",
+                "route": "uinservices/genrevokevid",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Lock / unlock Authentication Type",
                 "icon": "",
                 "route": "",
                 "auditEventId": "ADM-004"
             },
             {
-                "displayName": "Update Demographic and Biometric data",
+                "displayName": "Update Demographic Data",
+                "icon": "",
+                "route": "uinservices/updatedemographic",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Track Service Request",
                 "icon": "",
                 "route": "",
                 "auditEventId": "ADM-004"
             },
             {
-                "displayName": "Manage VID",
+                "displayName": "Download A Configured Card",
                 "icon": "",
                 "route": "",
                 "auditEventId": "ADM-004"
             },
             {
-                "displayName": "Download Card",
+                "displayName": "Order A Physical Card",
                 "icon": "",
                 "route": "",
                 "auditEventId": "ADM-004"
             },
             {
-                "displayName": "Order Physical Card",
-                "icon": "",
-                "route": "",
-                "auditEventId": "ADM-004"
-            },
-            {
-                "displayName": "Share With A Partner",
+                "displayName": "Share With Partner",
                 "icon": "",
                 "route": "",
                 "auditEventId": "ADM-004"
@@ -52,7 +62,7 @@
             "cols":1,
             "rows":1,
             "subMenus" : [{
-                "displayName": "Search registration center",
+                "displayName": "Search Registration Center",
                 "icon": "",
                 "route": "regcenter",
                 "auditEventId": "ADM-004"
@@ -72,7 +82,7 @@
             "cols":1,
             "rows":1,
             "subMenus" : [{
-                "displayName": "pre-registration",
+                "displayName": "Pre-registration",
                 "icon": "",
                 "route": "redirect",
                 "auditEventId": "ADM-004"
@@ -80,13 +90,13 @@
             {
                 "displayName": "Retrieving lost UIN",
                 "icon": "",
-                "route": "",
+                "route": "redirect",
                 "auditEventId": "ADM-004"
             },
             {
                 "displayName": "Booking an appointment",
                 "icon": "",
-                "route": "",
+                "route": "redirect",
                 "auditEventId": "ADM-004"
             }]
         },
@@ -113,7 +123,9 @@
         "home" : "Home",
         "getinformation" : "Get Information",
         "regcenter" : "Find a Registration Center",
-        "document" : "List of Supporting Documents"
+        "document" : "List of Supporting Documents",
+        "verify" : "Verify Phone Number / Email ID",
+        "uinservices" : "UIN Services"
     },
     "centerSelection": {
         "title": " Book Appointment ",
@@ -135,11 +147,22 @@
     "verifyuinvid": {
         "title": "",
         "mobileno": "Verify mobile number",
-        "email": "Verify Email ID",
+        "email": "Verify email ID",
         "uid": "Enter UIN / VID",
         "captcha": "Enter Captcha",
         "sendotp": "Send OTP",
         "otp": "Enter OTP",
-        "submit": "Submit"
+        "submit": "Submit",
+        "resendotp": "Resend OTP"
+    },
+    "genrevokevid": {
+        "title": "Generate / Revoke VID",
+        "generatevid": [{"title":"Perpetual","message":"No limit to usage or expiry"},{"title":"Temporary","message":"Expires after 30 mins and can be used only once"},{"title":"One-time","message":"Has no expiry date but  can be used only once"}],
+        "revokevid": "",
+        "generatevidtoggle": "Generate VID",
+        "revokevidtoggle": "Revoke VID"
+    },
+    "updatedemographic": {
+        "title": "Demographic Data"
     }
 }

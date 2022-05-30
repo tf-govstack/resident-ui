@@ -1,0 +1,28 @@
+ul, li{
+  list-style-type:none;
+  padding: 2px 0px 3px 9px;
+}
+.mini-card {
+  width: 90%;
+  height: 50%;
+  border-radius: 5px;
+}
+.tp-radio-group {  
+  display: inline-flex;  
+  flex-direction: column;  
+}  
+.tp-radio-button {  
+  margin: 5px;  
+}  
+.tp-selected-value {  
+  margin: 15px 0;  
+}  
+
+.mat-button-toggle-checked{
+  background-color: #03a64a;
+  color: white !important;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background{
+  background-color: #03a64a !important;
+}

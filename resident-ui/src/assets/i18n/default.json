@@ -1,34 +1,40 @@
 {
-  "languages": {
-    "eng": {
+  "languages": [
+    {
       "name": "English",
       "nativeName": "English",
-      "locale": "en_GB"
+      "locale": "en_GB",
+      "code": "eng"
     },
-    "ara": {
+    {
       "name": "Arabic",
-      "nativeName": "العَرَبِيَّة‎",
-      "locale": "ar_SA"
+      "nativeName": "اعربي",
+      "locale": "ar_SA",
+      "code": "ara"
     },
-    "fra": {
+    {
       "name": "French",
       "nativeName": "français",
-      "locale": "fr_CH"
+      "locale": "fr_CH",
+      "code": "fra"
     },
-    "hin": {
+    {
       "name": "Hindi",
       "nativeName": "हिंदी",
-      "locale": "hi_IN"
+      "locale": "hi_IN",
+      "code": "hin"
     },
-    "tam": {
+    {
       "name": "Tamil",
       "nativeName": "தமிழ்",
-      "locale": "ta_IN"
+      "locale": "ta_IN",
+      "code": "tam"
     },
-    "kan": {
+    {
       "name": "Kannada",
       "nativeName": "ಕನ್ನಡ",
-      "locale": "kn_IN"
+      "locale": "kn_IN",
+      "code": "kan"
     }
-  }
+  ]
 }
