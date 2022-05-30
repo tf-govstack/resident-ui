@@ -6,8 +6,7 @@ const routes: Routes = [
   { path: 'dashboard', loadChildren: 'src/app/feature/dashboard/dashboard.module#DashboardModule'}, 
   { path: 'document', loadChildren: 'src/app/feature/document/document.module'},
   { path: 'regcenter', loadChildren: 'src/app/feature/booking/booking.module'},
-  { path: 'verify', loadChildren:'src/app/feature/verify/verify.module'},
-  { path: 'uinservices', loadChildren:'src/app/feature/uinservices/uinservices.module#UinservicesModule'}
+  { path: 'verify', loadChildren:'src/app/feature/verify/verify.module'}
 ];
 
 @NgModule({
