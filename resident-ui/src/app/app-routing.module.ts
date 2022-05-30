@@ -3,10 +3,11 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard', loadChildren: () => import('src/app/feature/dashboard/dashboard.module').then( m => m.DashboardModule )}, 
-  { path: 'document', loadChildren: () => import('src/app/feature/document/document.module').then( m => m.DocumentModule )},
-  { path: 'regcenter', loadChildren: () => import('src/app/feature/booking/booking.module').then( m => m.BookingModule )},
-  { path: 'verify', loadChildren: () => import('src/app/feature/verify/verify.module').then( m => m.VerifyModule )},
+  { path: 'dashboard', loadChildren: 'src/app/feature/dashboard/dashboard.module#DashboardModule'}, 
+  { path: 'document', loadChildren: 'src/app/feature/document/document.module'},
+  { path: 'regcenter', loadChildren: 'src/app/feature/booking/booking.module'},
+  { path: 'verify', loadChildren:'src/app/feature/verify/verify.module'},
+  { path: 'uinservices', loadChildren:'src/app/feature/uinservices/uinservices.module#UinservicesModule'}
 ];
 
 @NgModule({
