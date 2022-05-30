@@ -19,11 +19,11 @@ export class DataStorageService {
   }
 
   getDocuments(langCode: string){
-    return this.httpClient.get(this.BASE_URL  + 'v1' + '/proxy/masterdata/validdocuments/'+langCode);
+    return this.httpClient.get(this.BASE_URL   + '/proxy/masterdata/validdocuments/'+langCode);
   }
 
   getLocationHierarchyLevel(langCode: string){
-    return this.httpClient.get(this.BASE_URL  + 'v1' + '/proxy/masterdata/locationHierarchyLevels/'+langCode);
+    return this.httpClient.get(this.BASE_URL   + '/proxy/masterdata/locationHierarchyLevels/'+langCode);
   }
 
   recommendedCenters(
@@ -34,7 +34,6 @@ export class DataStorageService {
     //console.log(data);
     let url =
       this.BASE_URL +
-      'v1' +
       "/proxy" +
       appConstants.APPEND_URL.master_data +
       "registrationcenters/" +
@@ -58,7 +57,6 @@ export class DataStorageService {
   getLocationInfoForLocCode(locCode: string, langCode: string) {
     let url =
       this.BASE_URL +
-      'v1' +
       "/proxy" +
       appConstants.APPEND_URL.master_data +
       "locations/info/" +
@@ -77,7 +75,6 @@ export class DataStorageService {
   ) {
     let url =
       this.BASE_URL +
-      'v1' +
       "/proxy" +
       appConstants.APPEND_URL.master_data +
       appConstants.APPEND_URL.registration_centers_by_name +
@@ -100,7 +97,6 @@ export class DataStorageService {
   getNearbyRegistrationCenters(coords: any) {
     return this.httpClient.get(
       this.BASE_URL +
-        'v1' +
         "/proxy" +
         appConstants.APPEND_URL.master_data +
         appConstants.APPEND_URL.nearby_registration_centers +
@@ -119,7 +115,6 @@ export class DataStorageService {
   getWorkingDays(registartionCenterId: string, langCode: string) {
     const url =
       this.BASE_URL +
-      'v1' +
       "/proxy" +
       appConstants.APPEND_URL.master_data +
       "workingdays/" +
@@ -130,35 +125,35 @@ export class DataStorageService {
   }
 
   generateOTP(request: any) {
-    return this.httpClient.post(this.BASE_URL  + 'v1' + '/req/otp', request);
+    return this.httpClient.post(this.BASE_URL   + '/req/otp', request);
   }
 
   verifyOTP(request: any) {
-    return this.httpClient.post(this.BASE_URL  + 'v1' + '/req/auth', request);
+    return this.httpClient.post(this.BASE_URL   + '/req/auth', request);
   }
 
   getSchema() {
-    return this.httpClient.get(this.BASE_URL  + 'v1' + '/proxy/config/ui-schema');
+    return this.httpClient.get(this.BASE_URL   + '/proxy/config/ui-schema');
   }
 
   getDemographicdetail() {
-    return this.httpClient.get(this.BASE_URL  + 'v1' + '/identity/input-attributes/values');
+    return this.httpClient.get(this.BASE_URL   + '/identity/input-attributes/values');
   }
 
   getPolicy() {
-    return this.httpClient.get(this.BASE_URL  + 'v1' + '/vid/policy');
+    return this.httpClient.get(this.BASE_URL   + '/vid/policy');
   }
 
   getVIDs() {
-    return this.httpClient.get(this.BASE_URL  + 'v1' + '/vids');
+    return this.httpClient.get(this.BASE_URL   + '/vids');
   }
 
   generateVID(request: any){
-    return this.httpClient.post(this.BASE_URL  + 'v1' + '/generate-vid', request);
+    return this.httpClient.post(this.BASE_URL   + '/generate-vid', request);
   }
 
   revokeVID(request: any, vid: string){
-    return this.httpClient.patch(this.BASE_URL  + 'v1' + '/revoke-vid/' + vid, request);
+    return this.httpClient.patch(this.BASE_URL   + '/revoke-vid/' + vid, request);
   }
 
   onLogout() {
