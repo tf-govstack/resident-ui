@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/material.module';
 import { CommonModule } from "@angular/common";
 import { I18nModule } from 'src/app/i18n.module';
+/*import {NgxCaptchaModule} from '@binssoft/ngx-captcha';*/
 
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {

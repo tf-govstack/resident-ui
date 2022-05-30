@@ -13,7 +13,7 @@ import Utils from 'src/app/app.utils';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   menuItems:any;
-  userPreferredLangCode = localStorage.getItem("userPrefLanguage");
+  userPreferredLangCode = localStorage.getItem("langCode");
   constructor(
     private router: Router,
     private dataStorageService: DataStorageService,
@@ -33,8 +33,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    console.log("item>>>"+item);
-    this.router.navigate([item]);
+    if(item === "redirect"){
+      window.open(window.location.hostname+"/pre-registration-ui", "_blank");
+    }else{
+     this.router.navigate([item]); 
+   }    
   }
 
   ngOnDestroy(): void {

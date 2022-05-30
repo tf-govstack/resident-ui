@@ -10,12 +10,12 @@
         <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
       </div>
       <img class="img-fluid" src="assets\logo.png"/>
-      <!-- <mat-nav-list class="list-item">
-        <a mat-list-item (click)="onItemSelected('regcenter')">{{ 'menuItems.regcenter' | translate }}</a>
-        <a mat-list-item (click)="onItemSelected('document')">{{ 'menuItems.document' | translate }}</a>
-        <a mat-list-item (click)="onItemSelected('verify')">{{ 'menuItems.verify' | translate }}</a>
-      </mat-nav-list> -->
       <span class="spacer"></span>
+
+      <button mat-button [matMenuTriggerFor]="menu1"> <span class="mat-button-wrapper"><mat-icon>language</mat-icon> {{selectedLanguage}} <mat-icon>arrow_drop_down</mat-icon></span></button>
+      <mat-menu #menu1="matMenu">
+        <button mat-menu-item (click)="onlanguagechange(item)" *ngFor="let item of defaultJsonValue.languages">{{item.nativeName}}</button>
+      </mat-menu>
     </mat-toolbar>
   </mat-sidenav-content>
 </mat-sidenav-container>

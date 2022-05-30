@@ -67,6 +67,7 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', sans-serif;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   -ms-overflow-style: none;
+  background-color: #F4F4F4;
 }
 .btn_axn-pri {
   min-width: 158px;
@@ -279,7 +280,7 @@ mat-keyboard-container mat-keyboard-key .mat-keyboard-key {
   border: 1px solid #ff4081;
   color: #ff4081;
 }
-app-center-selection, app-document {
+app-center-selection, app-document, app-verify, app-demographic, uin-dashboard, app-uindashboard, app-revokevid {
   margin-left: 60px !important;
   margin-right: 60px !important;
 }
@@ -316,3 +317,35 @@ app-document > ul{
   margin-right: 60px !important;  
 }
 
+.mat-radio-outer-circle, .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+  border-color: #03A64A;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple{
+  background-color: #03A64A;
+}
+
+.mat-fab.mat-primary, .mat-flat-button.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary{
+  background-color: #03A64A;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex{
+  background-color: transparent;
+}
+
+.mat-raised-button:not([class*=mat-elevation-z]){
+  box-shadow: none;
+}
+
+.mat-radio-label-content{
+  font-size: 14px;
+}
+
+.main-div{
+  padding-top: 20px;
+  width: 95%;
+  display: block;
+  margin-left:auto;
+  margin-right:auto;  
+  vertical-align:middle;
+}

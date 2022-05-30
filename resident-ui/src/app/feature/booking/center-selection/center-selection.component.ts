@@ -40,7 +40,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   searchTextFlag = false;
   displayMessage = "Showing nearby registration centers";
   subscriptions: Subscription[] = [];
-  userPreferredLangCode = localStorage.getItem("userPrefLanguage");
+  userPreferredLangCode = localStorage.getItem("langCode");
   workingDays: string;
   preRegId = [];
   recommendedCenterLocCode = 1;
@@ -135,7 +135,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   }*/
 
   getErrorLabels() {
-    this.dataService.getI18NLanguageFiles(localStorage.getItem('userPrefLanguage')).subscribe((response) => {
+    this.dataService.getI18NLanguageFiles(localStorage.getItem('langCode')).subscribe((response) => {
       this.errorlabels = response["error"];
       this.apiErrorCodes = response[appConstants.API_ERROR_CODES];
     });
@@ -551,6 +551,8 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   onItemSelected(item: any) {
     if(item.index === 1){
       this.router.navigate(["document"]);
+    }else if(item === "home"){
+      this.router.navigate(["dashboard"]);
     }else{
       this.router.navigate(["regcenter"]);
     }

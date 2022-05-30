@@ -5,23 +5,27 @@ import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "app-document",
-  templateUrl: "document.component.html",
-  styleUrls: ["document.component.css"],
+  selector: "app-demographic",
+  templateUrl: "updatedemographic.component.html",
+  styleUrls: ["updatedemographic.component.css"],
 })
-export class DocumentComponent implements OnInit, OnDestroy {
-  documentInfo : any;
+export class UpdatedemographicComponent implements OnInit, OnDestroy {
+  userInfo : any;
+  schema : any;
   subscriptions: Subscription[] = [];
   constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
 
-    this.dataStorageService
-    .getDocuments(localStorage.getItem("langCode"))
-    .subscribe((response) => {
+    this.dataStorageService.getSchema().subscribe((response) => {
+      if(response)
+        this.schema = response["identity"];
+    });
+    
+    this.dataStorageService.getDemographicdetail().subscribe((response) => {
       if(response["response"])
-        this.documentInfo = response["response"]["documentcategories"];
+        this.userInfo = response["response"];
     });
   }
 
@@ -30,12 +34,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    if(item.index === 1){
-      this.router.navigate(["document"]);
-    }else if(item === "home"){
-      this.router.navigate(["dashboard"]);
-    }else{
-      this.router.navigate(["regcenter"]);
-    }
+    this.router.navigate([item]);
   }
 }

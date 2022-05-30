@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
+import defaultJson from "src/assets/i18n/default.json";
 
 @Component({
   selector: "app-header",
@@ -13,38 +14,55 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   userPreferredLang: string;
   textDir = localStorage.getItem("dir");
+  defaultJsonValue: any;
+  selectedLanguage: any;
   constructor(
     private router: Router,
     private translateService: TranslateService
   ) {}
 
   ngOnInit() {
-    console.log("langCode>>>"+localStorage.getItem("langCode"));
+    this.defaultJsonValue = defaultJson;
+    if(!localStorage.getItem("langCode")){
+      localStorage.setItem("langCode", "eng");
+      this.selectedLanguage = defaultJson["languages"][0].nativeName;
+    }else{
+      for (let language of defaultJson["languages"]) {
+        if(localStorage.getItem("langCode") === language.code){
+          this.selectedLanguage = language.nativeName;
+        }        
+      }
+    }
     this.translateService.use(localStorage.getItem("langCode")); 
-    /*this.translateService
-    .getTranslation("eng")
-    .subscribe(response => {
-      console.log("response>>>"+JSON.stringify(response));
-    });*/
     this.textDir = localStorage.getItem("dir");
   }
+
   textDirection() {
     return localStorage.getItem("dir");
   }
+
+  onlanguagechange(item:any) {
+    if(item){
+      this.selectedLanguage = item.nativeName;
+      localStorage.setItem("langCode", item.code);
+      location.reload();
+    }    
+  }
+
   onLogoClick() {
    /* if (this.authService.isAuthenticated()) {
       this.router.navigate([
-        localStorage.getItem("userPrefLanguage"),
+        localStorage.getItem("langCode"),
         "dashboard",
       ]);
     } else {
-      this.router.navigate([`/${localStorage.getItem("userPrefLanguage")}`]);
+      this.router.navigate([`/${localStorage.getItem("langCode")}`]);
     }*/
   }
 
   onHome() {
     this.router.navigate([
-      localStorage.getItem("userPrefLanguage"),
+      localStorage.getItem("langCode"),
       "dashboard",
     ]);
   }
@@ -56,7 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showMessage() {
     let languagelabels ;
     /*this.dataStorageService
-    .getI18NLanguageFiles(localStorage.getItem("userPrefLanguage"))
+    .getI18NLanguageFiles(localStorage.getItem("langCode"))
     .subscribe((response) => {
       languagelabels = response["login"]["logout_msg"];
       const data = {

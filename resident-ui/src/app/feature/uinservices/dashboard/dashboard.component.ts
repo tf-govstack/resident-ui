@@ -5,23 +5,21 @@ import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "app-document",
-  templateUrl: "document.component.html",
-  styleUrls: ["document.component.css"],
+  selector: "app-uindashboard",
+  templateUrl: "dashboard.component.html",
+  styleUrls: ["dashboard.component.css"],
 })
-export class DocumentComponent implements OnInit, OnDestroy {
-  documentInfo : any;
+export class DashboardComponent implements OnInit, OnDestroy {
+  menuItems:any;
   subscriptions: Subscription[] = [];
   constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
-
-    this.dataStorageService
-    .getDocuments(localStorage.getItem("langCode"))
-    .subscribe((response) => {
-      if(response["response"])
-        this.documentInfo = response["response"]["documentcategories"];
+    this.translateService
+    .getTranslation(localStorage.getItem("langCode"))
+    .subscribe(response => {
+      this.menuItems = response.menuItems;
     });
   }
 
@@ -30,12 +28,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    if(item.index === 1){
-      this.router.navigate(["document"]);
-    }else if(item === "home"){
-      this.router.navigate(["dashboard"]);
-    }else{
-      this.router.navigate(["regcenter"]);
-    }
+    console.log("item>>>"+item);
+    this.router.navigate([item]);
   }
 }

@@ -1,6 +1,168 @@
 {
+    "menuItems": [
+        {
+            "displayName": "UIN Services",
+            "icon": "settings",
+            "route": "",
+            "auditEventId": "ADM-004",
+            "cols":2,
+            "rows":2,
+            "subMenus" : [{
+                "displayName": "View History",
+                "icon": "",
+                "route": "uinservices/dashboard",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Generate / Revoke VID",
+                "icon": "",
+                "route": "uinservices/genrevokevid",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Lock / unlock Authentication Type",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Update Demographic Data",
+                "icon": "",
+                "route": "uinservices/updatedemographic",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Track Service Request",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Download A Configured Card",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Order A Physical Card",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Share With Partner",
+                "icon": "",
+                "route": "",
+                "auditEventId": "ADM-004"
+            }]
+        },
+        {
+            "displayName": "Get Information",
+            "icon": "info",
+            "route": "",
+            "auditEventId": "ADM-004",
+            "cols":1,
+            "rows":1,
+            "subMenus" : [{
+                "displayName": "Search Registration Center",
+                "icon": "",
+                "route": "regcenter",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Acceptable Documents",
+                "icon": "",
+                "route": "document",
+                "auditEventId": "ADM-004"
+            }]
+        },
+        {
+            "displayName": "Booking an Appointment",
+            "icon": "chrome_reader_mode",
+            "route": "",
+            "auditEventId": "ADM-004",
+            "cols":1,
+            "rows":1,
+            "subMenus" : [{
+                "displayName": "Pre-registration",
+                "icon": "",
+                "route": "redirect",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Retrieving lost UIN",
+                "icon": "",
+                "route": "redirect",
+                "auditEventId": "ADM-004"
+            },
+            {
+                "displayName": "Booking an appointment",
+                "icon": "",
+                "route": "redirect",
+                "auditEventId": "ADM-004"
+            }]
+        },
+        {
+            "displayName": "Get My UIN",
+            "icon": "location_on",
+            "route": "",
+            "auditEventId": "ADM-004",
+            "cols":1,
+            "rows":1
+        }, 
+        {
+            "displayName": "Verify Phone Number / Email ID",
+            "icon": "done",
+            "route": "verify",
+            "auditEventId": "ADM-004",
+            "cols":1,
+            "rows":1
+        }       
+    ],
     "dashboard": {
-        "welcomeMessage":"Welcome to Mosip Partner portal hin !",
-        "Logout":"Logout_hin"
+        "welcomeMessage":"Welcome to Mosip Partner portal !",
+        "Logout":"Logout",
+        "home" : "Home",
+        "getinformation" : "Get Information",
+        "regcenter" : "Find a Registration Center",
+        "document" : "List of Supporting Documents",
+        "verify" : "Verify Phone Number / Email ID",
+        "uinservices" : "UIN Services"
+    },
+    "centerSelection": {
+        "title": " Book Appointment ",
+        "action_nearBy": "Nearby",
+        "display_recommended": "Recommended Centres",
+        "text_found": "Found",
+        "text_centers": "centers",
+        "text_timing": "Timing",
+        "text_open": "Open",
+        "text_select": "Select Location Types",
+        "text_enter": "Enter",
+        "text_search": "Search....",
+        "action_back": "Back",
+        "action_book_later": "Book Later",
+        "action_continue": "Continue",
+        "noResult_found": "No results Found",
+        "lunch_hours": "Lunch"
+    },
+    "verifyuinvid": {
+        "title": "",
+        "mobileno": "Verify mobile number",
+        "email": "Verify email ID",
+        "uid": "Enter UIN / VID",
+        "captcha": "Enter Captcha",
+        "sendotp": "Send OTP",
+        "otp": "Enter OTP",
+        "submit": "Submit",
+        "resendotp": "Resend OTP"
+    },
+    "genrevokevid": {
+        "title": "Generate / Revoke VID",
+        "generatevid": [{"title":"Perpetual","message":"No limit to usage or expiry"},{"title":"Temporary","message":"Expires after 30 mins and can be used only once"},{"title":"One-time","message":"Has no expiry date but  can be used only once"}],
+        "revokevid": "",
+        "generatevidtoggle": "Generate VID",
+        "revokevidtoggle": "Revoke VID"
+    },
+    "updatedemographic": {
+        "title": "Demographic Data"
     }
 }

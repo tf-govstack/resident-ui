@@ -5,6 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { DataStorageService } from "src/app/core/services/data-storage.service";
 import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
+import {NgxCaptchaService} from '@binssoft/ngx-captcha';
 
 @Component({
   selector: "app-verify",
@@ -13,19 +14,42 @@ import Utils from 'src/app/app.utils';
 })
 export class VerifyComponent implements OnInit, OnDestroy {
   transactionID:any;
-  userPreferredLangCode = localStorage.getItem("userPrefLanguage");
+  userPreferredLangCode = localStorage.getItem("langCode");
+  captchaStatus:any = '';
+  
+  captchaConfig:any = {
+    type:1, 
+    length:6, 
+    cssClass:'custom',
+    back: {
+     stroke:"#2F9688",
+     solid:"#f2efd2"
+    } , 
+    font:{
+      color:"#000000", 
+      size:"35px"
+    }
+  };
 
   constructor(
     private router: Router,
     private dataStorageService: DataStorageService,
     private translateService: TranslateService,
     private appConfigService: AppConfigService,
+    /*private captchaService: NgxCaptchaService*/
   ) {
     this.translateService.use(this.userPreferredLangCode);
   }
 
   async ngOnInit() {
-
+    /*this.captchaService.captchStatus.subscribe((status)=>{
+      this.captchaStatus = status;
+      if (status == false) {
+          alert("Opps!\nCaptcha mismatch")
+      } else if (status == true)  {
+          alert("Success!\nYou are right")
+      }
+    });*/
   }
 
   generateOTP() {
@@ -69,6 +93,12 @@ export class VerifyComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     );
+  }
+
+  onItemSelected(item: any) {
+    if(item === "home"){
+      this.router.navigate(["dashboard"]);
+    }
   }
 
   ngOnDestroy(): void {
