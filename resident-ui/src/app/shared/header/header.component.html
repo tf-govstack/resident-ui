@@ -14,7 +14,7 @@
 
       <button mat-button [matMenuTriggerFor]="menu1"> <span class="mat-button-wrapper"><mat-icon>language</mat-icon> {{selectedLanguage}} <mat-icon>arrow_drop_down</mat-icon></span></button>
       <mat-menu #menu1="matMenu">
-        <button mat-menu-item (click)="onlanguagechange(item)" *ngFor="let item of defaultJsonValue.languages">{{item.nativeName}}</button>
+        <button mat-menu-item (click)="onlanguagechange(item)" *ngFor="let item of selectLanguagesArr">{{item.value}}</button>
       </mat-menu>
     </mat-toolbar>
   </mat-sidenav-content>

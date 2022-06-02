@@ -11,7 +11,7 @@ import { MaterialModule } from './shared/material.module';
 import { CommonModule } from "@angular/common";
 import { I18nModule } from 'src/app/i18n.module';
 /*import {NgxCaptchaModule} from '@binssoft/ngx-captcha';*/
-
+import { CoreModule } from './core/core.module';
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {
     return appConfig.loadAppConfig();
@@ -32,7 +32,8 @@ const appInitialization = (appConfig: AppConfigService) => {
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
-    I18nModule
+    I18nModule,
+    CoreModule
   ],
   providers: [
     {
