@@ -5,7 +5,6 @@ import { TranslateService } from "@ngx-translate/core";
 import { DataStorageService } from "src/app/core/services/data-storage.service";
 import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
-import {NgxCaptchaService} from '@binssoft/ngx-captcha';
 
 @Component({
   selector: "app-verify",
@@ -14,31 +13,17 @@ import {NgxCaptchaService} from '@binssoft/ngx-captcha';
 })
 export class VerifyComponent implements OnInit, OnDestroy {
   transactionID:any;
-  userPreferredLangCode = localStorage.getItem("langCode");
-  captchaStatus:any = '';
-  
-  captchaConfig:any = {
-    type:1, 
-    length:6, 
-    cssClass:'custom',
-    back: {
-     stroke:"#2F9688",
-     solid:"#f2efd2"
-    } , 
-    font:{
-      color:"#000000", 
-      size:"35px"
-    }
-  };
+  individualId:string = "";
+  otp:string = "";
+  otpChannel:any=[];
 
   constructor(
     private router: Router,
     private dataStorageService: DataStorageService,
     private translateService: TranslateService,
     private appConfigService: AppConfigService,
-    /*private captchaService: NgxCaptchaService*/
   ) {
-    this.translateService.use(this.userPreferredLangCode);
+    this.translateService.use(localStorage.getItem("langCode"));
   }
 
   async ngOnInit() {
@@ -52,21 +37,32 @@ export class VerifyComponent implements OnInit, OnDestroy {
     });*/
   }
 
+  radioChange(event: any){
+    this.otpChannel = [];
+    this.otpChannel.push(event.value);
+  }
+
+  captureValue(event: any, formControlName: string) {
+    this[formControlName] = event.target.value;
+  }
+
   generateOTP() {
     this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    let self = this;
     const request = {
-      "id": "mosip.identity.otp.internal",
-      "version": "1.0",
-      "transactionID": this.transactionID,
+      "id": self.appConfigService.getConfig()['mosip.resident.api.id.otp.request'],
+      "version": self.appConfigService.getConfig()["mosip.resident.api.version.otp.request"],
+      "transactionID": self.transactionID,
       "requestTime": Utils.getCurrentDate(),
-      "individualId": "8251649601",
-      "otpChannel": [
-        "EMAIL"
-      ]
+      "individualId": self.individualId,
+      "otpChannel": self.otpChannel
     };
-    this.dataStorageService.generateOTP(request).subscribe(response => 
-      {
-        console.log("response>>>"+JSON.stringify(response));
+    this.dataStorageService.generateOTP(request).subscribe(response => {
+        if(!response["errors"].length){
+          alert(JSON.stringify(response["response"]));
+        }else{
+          alert(JSON.stringify(response["errors"]));
+        }
       },
       error => {
         console.log(error);
@@ -74,20 +70,24 @@ export class VerifyComponent implements OnInit, OnDestroy {
     );
   }
 
-  verifyOTP() {    
+  verifyOTP() {  
+    let self = this;  
     const request = {
-      "id": "mosip.identity.otp.internal",
-      "version": "1.0",
+      "id": self.appConfigService.getConfig()['mosip.resident.api.id.otp.request'],
+      "version": self.appConfigService.getConfig()["mosip.resident.api.version.otp.request"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": this.transactionID,
-        "individualId": "8251649601",
-        "otp": "111111"
+        "transactionID": self.transactionID,
+        "individualId": self.individualId,
+        "otp": self.otp
       }
     };
-    this.dataStorageService.verifyOTP(request).subscribe(response => 
-      {
-        console.log("response>>>"+JSON.stringify(response));
+    this.dataStorageService.verifyOTP(request).subscribe(response => {
+        if(!response["errors"].length){
+          alert(JSON.stringify(response["response"]));
+        }else{
+          alert(JSON.stringify(response["errors"]));
+        }
       },
       error => {
         console.log(error);

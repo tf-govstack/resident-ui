@@ -34,6 +34,7 @@
     "json-rules-engine": "^6.0.0",
     "jsonpath-plus": "^4.0.0",
     "jstz": "^2.1.1",
+    "jwt-decode": "^3.1.2",
     "material-icons": "^0.2.3",
     "moment": "^2.23.0",
     "nanoscroller": "^0.8.7",

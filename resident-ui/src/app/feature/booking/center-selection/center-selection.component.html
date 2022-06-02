@@ -15,7 +15,7 @@
       <!-- search container -->
       <div class="center_selection-intial-recommendation-container" *ngIf="searchClick; else elseBlock">
         <span class="spacer"></span>
-        <button
+        <!-- <button
           type="button"
           matTooltip="{{ 'helpText.magnifying_glass' | translate }}"
           mat-icon-button
@@ -23,7 +23,7 @@
           (click)="setSearchClick(false)"
         >
           <img src="assets\search.png" />
-        </button>
+        </button> -->
       </div>
 
       <ng-template #elseBlock>

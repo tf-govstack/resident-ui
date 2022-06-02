@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppConfigService } from './app-config.service';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,9 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   title = 'resident-ui';
+  constructor(
+    private appConfigService: AppConfigService
+  ) {
+    this.appConfigService.getConfig();
+  }
 }

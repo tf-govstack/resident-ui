@@ -4,6 +4,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import Utils from 'src/app/app.utils';
+import { AppConfigService } from 'src/app/app-config.service';
 
 @Component({
   selector: "app-revokevid",
@@ -19,7 +20,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   vidType:string = "";
   notificationType:Array<string>=[];
   vidValue:string = "";
-  constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  constructor(private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
@@ -69,8 +70,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   generateVID(){
     const request = {
-      "id": "mosip.resident.vid",
-      "version": "v1",
+      "id": this.appConfigService.getConfig()["resident.vid.id"],
+      "version": this.appConfigService.getConfig()["resident.vid.version"],
       "requesttime": Utils.getCurrentDate(),
       "request":{
         "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),      
@@ -80,7 +81,11 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     };
     this.dataStorageService.generateVID(request).subscribe(response => 
       {
-        console.log("response>>>"+JSON.stringify(response));
+        if(!response["errors"].length){
+          alert(JSON.stringify(response["response"]));
+        }else{
+          alert(JSON.stringify(response["errors"]));
+        }
       },
       error => {
         console.log(error);
@@ -95,8 +100,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   revokeVID(){
     const request = {
-      "id": "mosip.resident.vidstatus",
-      "version": "v1",
+      "id": this.appConfigService.getConfig()["resident.revokevid.id"],
+      "version": this.appConfigService.getConfig()["resident.vid.version"],
       "requesttime": Utils.getCurrentDate(),
       "request":{
         "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),      
@@ -105,7 +110,11 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     };
     this.dataStorageService.revokeVID(request, this.vidValue).subscribe(response => 
       {
-        console.log("response>>>"+JSON.stringify(response));
+        if(!response["errors"].length){        
+          alert(JSON.stringify(response["response"]));
+        }else{
+          alert(JSON.stringify(response["errors"]));
+        }
       },
       error => {
         console.log(error);

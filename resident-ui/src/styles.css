@@ -349,3 +349,7 @@ app-document > ul{
   margin-right:auto;  
   vertical-align:middle;
 }
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background{
+  background-color: #03A64A;
+}

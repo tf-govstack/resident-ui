@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
 import defaultJson from "src/assets/i18n/default.json";
+import { AppConfigService } from 'src/app/app-config.service';
 
 @Component({
   selector: "app-header",
@@ -16,25 +17,47 @@ export class HeaderComponent implements OnInit, OnDestroy {
   textDir = localStorage.getItem("dir");
   defaultJsonValue: any;
   selectedLanguage: any;
+  supportedLanguages: Array<string>;
+  selectLanguagesArr: any;
   constructor(
     private router: Router,
+    private appConfigService: AppConfigService,
     private translateService: TranslateService
   ) {}
 
   ngOnInit() {
     this.defaultJsonValue = defaultJson;
-    if(!localStorage.getItem("langCode")){
+    this.supportedLanguages = [];
+    this.selectLanguagesArr = []; 
+    let self = this;   
+    setTimeout(()=>{          
+      if(self.appConfigService.getConfig()){
+        let supportedLanguagesArr = self.appConfigService.getConfig()['supportedLanguages'].split(',');
+        supportedLanguagesArr.map(function(lang){if(lang.trim()){self.supportedLanguages.push(lang.trim())}});
+        if(supportedLanguagesArr){
+          supportedLanguagesArr.forEach((language) => {
+            if (defaultJson.languages && defaultJson.languages[language]) {
+              self.selectLanguagesArr.push({
+                code: language,
+                value: defaultJson.languages[language].nativeName,
+              });
+            }
+          });
+        }
+      } 
+      if(!localStorage.getItem("langCode")){
       localStorage.setItem("langCode", "eng");
-      this.selectedLanguage = defaultJson["languages"][0].nativeName;
-    }else{
-      for (let language of defaultJson["languages"]) {
-        if(localStorage.getItem("langCode") === language.code){
-          this.selectedLanguage = language.nativeName;
-        }        
+      self.selectedLanguage = defaultJson["languages"][0].nativeName;
+      }else{
+        Object.keys(defaultJson["languages"]).forEach(function(key) {
+          if(localStorage.getItem("langCode") === key){
+            self.selectedLanguage = defaultJson["languages"][key].nativeName;
+          }
+        });                
       }
-    }
-    this.translateService.use(localStorage.getItem("langCode")); 
-    this.textDir = localStorage.getItem("dir");
+      self.translateService.use(localStorage.getItem("langCode")); 
+      self.textDir = localStorage.getItem("dir");
+    }, 1000);     
   }
 
   textDirection() {

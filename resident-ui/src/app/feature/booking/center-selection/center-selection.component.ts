@@ -40,7 +40,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   searchTextFlag = false;
   displayMessage = "Showing nearby registration centers";
   subscriptions: Subscription[] = [];
-  userPreferredLangCode = localStorage.getItem("langCode");
+  langCode = localStorage.getItem("langCode");
   workingDays: string;
   preRegId = [];
   recommendedCenterLocCode = 1;
@@ -62,7 +62,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.translate.use(this.userPreferredLangCode);
+    this.translate.use(this.langCode);
   }
 
   async ngOnInit() {
@@ -82,6 +82,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     ));
     console.log(`recommendedCenterLocCode: ${this.recommendedCenterLocCode}`);*/
     //await this.getIdentityJsonFormat();
+    this.recommendedCenterLocCode = 5;
     const subs = this.dataService
       .getLocationHierarchyLevel("eng")
       .subscribe((response) => {
@@ -97,7 +98,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
           (locType) =>
             locType.hierarchyLevel <= this.recommendedCenterLocCode
         );
-        //console.log(this.locationTypes);
+        console.log(this.locationTypes);
         //sort the filtered array in ascending order of hierarchyLevel
         this.locationTypes.sort(function (a, b) {
           return a.hierarchyLevel - b.hierarchylevel;
@@ -202,8 +203,11 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
         }
       });*/
       //console.log(this.locationCodes);
-      this.getRecommendedCentersApiCall();
-      await this.getLocationNamesByCodes();      
+      //this.getRecommendedCentersApiCall();
+      this.showTable = true;
+      this.isWorkingDaysAvailable = true;   
+      await this.getLocationNamesByCodes();   
+      
     /*}*/
   }
 
@@ -223,7 +227,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     this.REGISTRATION_CENTRES = [];
     const subs = this.dataService
       .recommendedCenters(
-        this.userPreferredLangCode,
+        this.langCode,
         5,
         ["14022"]
       )
@@ -241,7 +245,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   getLocationNames(locationCode) {
     return new Promise((resolve) => {
       this.dataService
-        .getLocationInfoForLocCode(locationCode, this.userPreferredLangCode)
+        .getLocationInfoForLocCode(locationCode, this.langCode)
         .subscribe((response) => {
           if (response[appConstants.RESPONSE]) {
             let locName = response[appConstants.RESPONSE]["name"];
@@ -256,9 +260,10 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   }
 
   setSearchClick(flag: boolean) {
-    this.searchClick = flag;
+    //this.searchClick = flag;
     this.nearbyClicked = false;
   }
+
   onSubmit() {
     this.searchTextFlag = true;
     if (this.searchText.length !== 0 || this.searchText !== null) {
@@ -440,7 +445,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
 
   routeDashboard() {
     this.canDeactivateFlag = false;
-    this.router.navigate([`${this.userPreferredLangCode}/dashboard`]);
+    this.router.navigate([`${this.langCode}/dashboard`]);
   }
 
  /* routeBack() {
@@ -476,7 +481,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     return new Promise((resolve) => {
       this.REGISTRATION_CENTRES.forEach((center) => {
         this.dataService
-          .getWorkingDays(center.id, this.userPreferredLangCode)
+          .getWorkingDays(center.id, this.langCode)
           .subscribe((response) => {
             center.workingDays = "";
             if (response[appConstants.RESPONSE] && response[appConstants.RESPONSE]["workingdays"]) {
@@ -529,7 +534,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
         } else {
           localStorage.setItem(appConstants.MODIFY_USER, "true");
           this.router.navigate([
-            `${this.userPreferredLangCode}/pre-registration/demographic/${this.preRegId[0]}`,
+            `${this.langCode}/pre-registration/demographic/${this.preRegId[0]}`,
           ]);
         }
       }

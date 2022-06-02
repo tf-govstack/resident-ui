@@ -1,0 +1,16 @@
+import { Injectable } from '@angular/core';
+import { v4 as uuid } from 'uuid';
+import { AppConfigService } from 'src/app/app-config.service';
+
+
+@Injectable()
+export class LoginRedirectService {
+
+  constructor(private appService: AppConfigService) { }
+
+  redirect(url: string) {
+    const stateParam = uuid();
+   // console.log('returning false login redirect' + stateParam);
+    window.location.href = `${this.appService.getConfig().baseUrl}${this.appService.getConfig().login}` + btoa(url)+"?state="+stateParam;
+  }
+}

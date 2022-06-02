@@ -9,6 +9,7 @@ export const DIALOG = 'dialog';
 export const PRE_REGISTRATION_ID = 'pre_registration_id';
 export const APPENDER = '/';
 export const IDSchemaVersionLabel = 'IDSchemaVersion';
+export const AUTH_ERROR_CODE = ['KER-ATH-007','KER-ATH-006'];
 
 export const IDS = {
   newUser: 'mosip.pre-registration.demographic.create',

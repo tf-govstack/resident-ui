@@ -6,7 +6,7 @@
     <table class="table-style">
       <tr>
         <td>
-          <mat-radio-group aria-label="Select an option">
+          <mat-radio-group aria-label="Select an option" (change)="radioChange($event)">
             <mat-radio-button value="MOBILE">{{'verifyuinvid.mobileno' | translate }}</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
             <mat-radio-button value="EMAIL">{{'verifyuinvid.email' | translate }}</mat-radio-button>
           </mat-radio-group>
@@ -23,7 +23,7 @@
             class="search-input"/>
           </mat-form-field> -->
           <label for="uin">{{'verifyuinvid.uid' | translate }}</label>
-          <input type="text" id="uin" name="uin" placeholder="{{'verifyuinvid.uid' | translate}}" />
+          <input type="text" id="uin" name="uin" (blur)="captureValue($event, 'individualId')" value={{individualId}} placeholder="{{'verifyuinvid.uid' | translate}}" />
         </td>
       </tr>
      <!--  <tr>
@@ -39,7 +39,7 @@
       <tr>
         <td>
           <label for="otp">{{'verifyuinvid.otp' | translate }}</label>
-          <input type="text" id="otp" name="otp" placeholder="{{'verifyuinvid.otp' | translate}}"/>
+          <input type="text" id="otp" name="otp" (blur)="captureValue($event, 'otp')" value={{otp}} placeholder="{{'verifyuinvid.otp' | translate}}"/>
           <!-- <mat-form-field appearance="fill">
             <mat-label>{{'verifyuinvid.otp' | translate }}</mat-label>
             <input

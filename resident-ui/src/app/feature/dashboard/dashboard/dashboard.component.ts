@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   onItemSelected(item: any) {
     if(item === "redirect"){
-      window.open(window.location.hostname+"/pre-registration-ui", "_blank");
+      window.open("https://"+this.appConfigService.getConfig()["mosip-prereg-host"], "_blank");
     }else{
      this.router.navigate([item]); 
    }    

@@ -40,9 +40,9 @@ export class DataStorageService {
       langCode +
       "/" +
       locationHierarchyCode +
-      "/names?";
+      "/names";
     data.forEach((name) => {
-      url += "name=" + name;
+      url += "?name=" + name;
       if (data.indexOf(name) !== data.length - 1) {
         url += "&";
       }
