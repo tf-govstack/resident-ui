@@ -28,7 +28,7 @@ import { LogoutService } from './../../core/services/logout.service';
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss'],
+  styleUrls: ['./dialog.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent implements OnInit {
