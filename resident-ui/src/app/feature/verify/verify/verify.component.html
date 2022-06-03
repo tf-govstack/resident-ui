@@ -36,7 +36,7 @@
           <button mat-raised-button color="primary" (click)="generateOTP()">{{'verifyuinvid.sendotp' | translate}}</button>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf="showOtpPanel">
         <td>
           <label for="otp">{{'verifyuinvid.otp' | translate }}</label>
           <input type="text" id="otp" name="otp" (blur)="captureValue($event, 'otp')" value={{otp}} placeholder="{{'verifyuinvid.otp' | translate}}"/>
@@ -50,9 +50,9 @@
           </mat-form-field> -->
         </td>
       </tr>
-      <tr>
+      <tr *ngIf="showOtpPanel">
         <td>
-          <button mat-raised-button disabled (click)="verifyOTP()">{{'verifyuinvid.resendotp' | translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <!-- <button mat-raised-button disabled (click)="verifyOTP()">{{'verifyuinvid.resendotp' | translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
           <button mat-raised-button color="primary" (click)="verifyOTP()">{{'verifyuinvid.submit' | translate}}</button>
         </td>
       </tr>
