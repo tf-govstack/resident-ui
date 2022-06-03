@@ -5,6 +5,8 @@ import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: "app-revokevid",
@@ -13,6 +15,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 })
 export class RevokevidComponent implements OnInit, OnDestroy {
   langJSON:any;
+  popupMessages:any;
   subscriptions: Subscription[] = [];
   selectedValue:string = "generatevid";
   vidlist: any;
@@ -20,7 +23,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   vidType:string = "";
   notificationType:Array<string>=[];
   vidValue:string = "";
-  constructor(private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
@@ -29,8 +32,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
       this.langJSON = response;
+      this.popupMessages = response;
     });
-
     this.dataStorageService
     .getVIDs()
     .subscribe((response) => {
@@ -81,10 +84,10 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     };
     this.dataStorageService.generateVID(request).subscribe(response => 
       {
-        if(!response["errors"].length){
-          alert(JSON.stringify(response["response"]));
+        if(!response["errors"]){
+          this.showMessage(JSON.stringify(response["response"]));
         }else{
-          alert(JSON.stringify(response["errors"]));
+          this.showErrorPopup(JSON.stringify(response["errors"]));
         }
       },
       error => {
@@ -110,16 +113,43 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     };
     this.dataStorageService.revokeVID(request, this.vidValue).subscribe(response => 
       {
-        if(!response["errors"].length){        
-          alert(JSON.stringify(response["response"]));
+        if(!response["errors"]){
+          this.showMessage(JSON.stringify(response["response"]));
         }else{
-          alert(JSON.stringify(response["errors"]));
+          this.showErrorPopup(JSON.stringify(response["errors"]));
         }
       },
       error => {
         console.log(error);
       }
     );
+  }
+
+  showMessage(message: string) {    
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '850px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        message: message,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
+  }
+
+  showErrorPopup(message: string) {
+    this.dialog
+      .open(DialogComponent, {
+        width: '850px',
+        data: {
+          case: 'MESSAGE',
+          title: this.popupMessages.genericmessage.errorLabel,
+          message: message,
+          btnTxt: this.popupMessages.genericmessage.successButton
+        },
+        disableClose: true
+      });
   }
 
   onToggle(event: any){

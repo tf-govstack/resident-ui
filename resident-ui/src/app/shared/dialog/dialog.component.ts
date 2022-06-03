@@ -47,7 +47,7 @@ export class DialogComponent implements OnInit {
   options = [];
   createUpdateSteps: any  = {};
   momentDate: any;
-  primaryLangCode: string;
+  primaryLangCode: string=localStorage.getItem("langCode");
   requiredError = false;
   rangeError = false;
   fieldName = '';
@@ -84,6 +84,13 @@ export class DialogComponent implements OnInit {
   }
 
 
+  onNoClick(): void {
+    this.cancelApplied = true;
+    this.dialog.closeAll();
+  }
 
+  dismiss(): void {
+    this.dialog.closeAll();
+  }
 
 }
