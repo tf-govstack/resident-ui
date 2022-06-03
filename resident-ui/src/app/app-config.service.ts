@@ -21,7 +21,8 @@ export class AppConfigService {
         this.appConfig["resident.vid.id"] = responseData["resident.vid.id"];      
         this.appConfig["resident.vid.version"] = responseData["resident.vid.version"];      
         this.appConfig["resident.revokevid.id"] = responseData["resident.revokevid.id"]; 
-        this.appConfig["mosip-prereg-host"] = responseData["mosip-prereg-host"];        
+        this.appConfig["mosip-prereg-host"] = responseData["mosip-prereg-host"];   
+        this.appConfig["mosip-prereg-ui-url"] = responseData["mosip-prereg-ui-url"];                
       },
       (error) => {
         console.log(error);
