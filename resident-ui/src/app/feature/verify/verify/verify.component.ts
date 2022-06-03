@@ -5,6 +5,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { DataStorageService } from "src/app/core/services/data-storage.service";
 import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: "app-verify",
@@ -16,17 +18,26 @@ export class VerifyComponent implements OnInit, OnDestroy {
   individualId:string = "";
   otp:string = "";
   otpChannel:any=[];
+  popupMessages:any;
+  showOtpPanel:boolean=false;
 
   constructor(
     private router: Router,
     private dataStorageService: DataStorageService,
     private translateService: TranslateService,
     private appConfigService: AppConfigService,
+    private dialog: MatDialog,
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.showOtpPanel = false;
+    this.translateService
+      .getTranslation(localStorage.getItem("langCode"))
+      .subscribe(response => {
+        this.popupMessages = response;
+      });
     /*this.captchaService.captchStatus.subscribe((status)=>{
       this.captchaStatus = status;
       if (status == false) {
@@ -58,10 +69,12 @@ export class VerifyComponent implements OnInit, OnDestroy {
       "otpChannel": self.otpChannel
     };
     this.dataStorageService.generateOTP(request).subscribe(response => {
-        if(!response["errors"].length){
-          alert(JSON.stringify(response["response"]));
+        if(!response["errors"]){
+          self.showMessage(JSON.stringify(response["response"]));
+          self.showOtpPanel = true;
         }else{
-          alert(JSON.stringify(response["errors"]));
+          self.showErrorPopup(JSON.stringify(response["errors"]));
+          self.showOtpPanel = false;
         }
       },
       error => {
@@ -83,16 +96,43 @@ export class VerifyComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.verifyOTP(request).subscribe(response => {
-        if(!response["errors"].length){
-          alert(JSON.stringify(response["response"]));
+        if(!response["errors"]){
+          self.showMessage(JSON.stringify(response["response"]));
         }else{
-          alert(JSON.stringify(response["errors"]));
+          self.showErrorPopup(JSON.stringify(response["errors"]));
         }
       },
       error => {
         console.log(error);
       }
     );
+  }
+
+  showMessage(message: string) {    
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '850px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        message: message,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
+  }
+
+  showErrorPopup(message: string) {
+    this.dialog
+      .open(DialogComponent, {
+        width: '850px',
+        data: {
+          case: 'MESSAGE',
+          title: this.popupMessages.genericmessage.errorLabel,
+          message: message,
+          btnTxt: this.popupMessages.genericmessage.successButton
+        },
+        disableClose: true
+      });
   }
 
   onItemSelected(item: any) {
