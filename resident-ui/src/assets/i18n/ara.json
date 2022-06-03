@@ -164,5 +164,13 @@
     },
     "updatedemographic": {
         "title": "Demographic Data"
+    },
+    "genericmessage":{
+        "successLabel":"Success",
+        "successButton":"OK",
+        "errorLabel":"Error",
+        "createMessage":"Created Successfully",
+        "updateMessage":"Updated Successfully",
+        "mappingMessage":" Mapped Successfully"        
     }
 }
