@@ -36,13 +36,14 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    /*request = request.clone({withCredentials: true});
-    request = request.clone({
-      setHeaders: { 'X-XSRF-TOKEN': "e773c7db-9722-422b-9fb9-067eb9d6d5ab" }
+    request = request.clone({withCredentials: true});
+   /* request = request.clone({
+      setHeaders: { 'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN') }
     });*/
     return next.handle(request).pipe(
       tap(
         event => {
+          console.log("<<<request>>>"+JSON.stringify(request));
           if (event instanceof HttpResponse) {            
             if (event.url.split('/').includes('validateToken')) {                
                 if (event.body.response) {
