@@ -15,7 +15,11 @@ export class DataStorageService {
   public version = this.appService.getConfig().version;
   
   getI18NLanguageFiles(langCode: string) {
-    return this.httpClient.get(`./assets/i18n/${langCode}.json`);
+    return this.httpClient.get(`./assets/i18n/`+langCode+`.json`);
+  }
+
+  getConfigFiles(fileName: string) {
+    return this.httpClient.get(`./assets/`+fileName+`.json`);
   }
 
   getDocuments(langCode: string){
@@ -129,7 +133,7 @@ export class DataStorageService {
   }
 
   verifyOTP(request: any) {
-    return this.httpClient.post(this.BASE_URL   + '/req/auth', request);
+    return this.httpClient.post(this.BASE_URL   + '/validate-otp', request);
   }
 
   getSchema() {
@@ -154,6 +158,29 @@ export class DataStorageService {
 
   revokeVID(request: any, vid: string){
     return this.httpClient.patch(this.BASE_URL   + '/revoke-vid/' + vid, request);
+  }
+
+  getAuthlockStatus(){
+    return this.httpClient.get(this.BASE_URL   + '/auth-lock-status');
+  }
+
+  updateAuthlockStatus(request:any){
+    return this.httpClient.post(this.BASE_URL   + '/req/auth-type-status', request);
+  }
+
+  getProfileInfo(){
+    return this.httpClient.get('https://stoplight.io/mocks/mosip/resident/77242121/profile');
+  }
+
+  getServiceHistory(request:any){
+    let buildURL = "";
+    if (request) {
+      let pageSize = request.pageSize;
+      let pageIndex = parseInt(request.pageIndex);
+      buildURL = "?pageStart="+pageIndex+"&pageFetch="+pageSize;
+      console.log("buildURL>>>"+buildURL);
+    }
+    return this.httpClient.get(this.BASE_URL   + '/service-history'+buildURL);
   }
 
   onLogout() {

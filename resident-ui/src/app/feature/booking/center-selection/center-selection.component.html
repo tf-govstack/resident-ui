@@ -144,7 +144,7 @@
               <div>
                 <div >
                   <span>
-                    <div><img src="assets\address.png" /></div>
+                    <div><img src="assets\address.png" (click)="selectedRow(center)" style="cursor:pointer;" /></div>
                     <div><span  *ngIf="center.contactPerson !== '' && center.contactPhone !== ''">{{ center.contactPhone }}</span><span *ngIf="center.contactPerson == '' && center.contactPhone !== ''">{{ center.contactPhone }}</span></div>
                     <div [dir]="textDir">
                       {{ 'centerSelection.text_timing' | translate }} :

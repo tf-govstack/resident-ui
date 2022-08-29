@@ -27,6 +27,47 @@
   </div>
 </span>  
 
+
+<!-- UnlockConfirmation PopUp -->
+
+<div class="pop-up" *ngIf="input.case === 'UNLOCKCONFIRMATION'">
+  <div class="pop-up-header">
+    <b mat-dialog-title>{{ input.title }}</b>
+    <div mat-dialog-content>
+      <p style="white-space: pre-line">
+        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+          <mat-radio-button class="example-radio-button" id="noTime" value="noTime">Unlock until further changes are made</mat-radio-button>
+          <mat-radio-button class="example-radio-button" id="setTime" value="setTime">Unlock until DD:HH:MM</mat-radio-button>
+        </mat-radio-group>        
+      </p>
+      <table cellspacing="0" ><tr>
+        <td><mat-form-field appearance="outline">
+          <input matInput #days placeholder="Days"/>
+        </mat-form-field></td>
+        <td><mat-form-field appearance="outline">
+          <input matInput #hours placeholder="Hours"/>
+        </mat-form-field></td>
+        <td><mat-form-field appearance="outline">
+          <input matInput #minutes placeholder="Minutes"/>
+        </mat-form-field></td>
+      </tr></table>
+    </div>
+  </div>
+  <div mat-dialog-actions class="pop-up-footer">
+    <span
+      ><button
+        type="button"
+        mat-button
+        [mat-dialog-close]="confirm"
+        cdkFocusInitial
+        id="confirmpopup"
+      >
+        {{ input.yesBtnTxt }}
+      </button></span
+    >
+  </div>
+</div>
+
 <!-- Confirmation PopUp -->
 
 <div class="pop-up" *ngIf="input.case === 'CONFIRMATION'">

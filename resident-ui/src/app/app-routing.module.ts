@@ -4,7 +4,7 @@ import { AuthguardService } from './core/services/authguard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard', loadChildren: 'src/app/feature/dashboard/dashboard.module#DashboardModule', canActivate: [AuthguardService]}, 
+  { path: 'dashboard', loadChildren: 'src/app/feature/dashboard/dashboard.module#DashboardModule'}, 
   { path: 'document', loadChildren: 'src/app/feature/document/document.module#DocumentModule'},
   { path: 'regcenter', loadChildren: 'src/app/feature/booking/booking.module#BookingModule'},
   { path: 'verify', loadChildren:'src/app/feature/verify/verify.module#VerifyModule'},

@@ -1,13 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ViewhistoryComponent } from './viewhistory/Viewhistory.component';
 import { RevokevidComponent } from './revokevid/revokevid.component';
+import { LockunlockauthComponent } from './lockunlockauth/lockunlockauth.component';
 import { UpdatedemographicComponent } from './updatedemographic/updatedemographic.component';
+import { TrackservicerequestComponent } from './trackservicerequest/trackservicerequest.component';
+import { PersonalisedcardComponent } from './personalisedcard/personalisedcard.component';
+import { PhysicalcardComponent } from './physicalcard/physicalcard.component';
+import { SharewithpartnerComponent } from './sharewithpartner/sharewithpartner.component';
 
 const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
-  {path: 'genrevokevid', component: RevokevidComponent},
-  {path: 'updatedemographic', component: UpdatedemographicComponent}
+  {path: 'viewhistory', component: ViewhistoryComponent},
+  {path: 'managemyvid', component: RevokevidComponent},
+  {path: 'lockunlockauth', component: LockunlockauthComponent},
+  {path: 'updatedemographic', component: UpdatedemographicComponent},
+  {path: 'trackservicerequest', component: TrackservicerequestComponent},
+  {path: 'personalisedcard', component: PersonalisedcardComponent},
+  {path: 'physicalcard', component: PhysicalcardComponent},
+  {path: 'sharewithpartner', component: SharewithpartnerComponent}
 ];
 
 @NgModule({

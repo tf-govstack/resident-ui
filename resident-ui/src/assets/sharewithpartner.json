@@ -1,0 +1,84 @@
+{
+	"schema": [
+		{
+			"attributeName": "name",
+			"maskRequired": false,
+			"formatRequired": true,
+			"label": {
+				"eng": "Name"
+			}
+		},
+		{
+			"attributeName": "dob",
+			"maskRequired": false,
+			"formatRequired": true,
+			"label": {
+				"eng": "DOB"
+			}
+		},
+		{
+			"attributeName": "uin",
+			"maskRequired": true,
+			"formatRequired": false,
+			"label": {
+				"eng": "UIN"
+			}
+		},
+		{
+			"attributeName": "Perpetual VID",
+			"maskRequired": true,
+			"formatRequired": false,
+			"label": {
+				"eng": "Perpetual VID"
+			}
+		},
+		{
+			"attributeName": "Phone Number",
+			"maskRequired": true,
+			"formatRequired": false,
+			"label": {
+				"eng": "Phone Number"
+			}
+		},
+		{
+			"attributeName": "Email ID",
+			"maskRequired": true,
+			"formatRequired": false,
+			"label": {
+				"eng": "Email ID"
+			}
+		},
+		{
+			"attributeName": "Address",
+			"maskRequired": false,
+			"formatRequired": true,
+			"label": {
+				"eng": "Address"
+			}
+		},
+		{
+			"attributeName": "Gender",
+			"maskRequired": false,
+			"formatRequired": false,
+			"label": {
+				"eng": "Gender"
+			}
+		},
+		{
+			"attributeName": "QR Code",
+			"maskRequired": false,
+			"formatRequired": false,
+			"label": {
+				"eng": "QR Code"
+			}
+		},
+		{
+			"attributeName": "Image",
+			"maskRequired": false,
+			"formatRequired": false,
+			"label": {
+				"eng": "Image"
+			}
+		}
+	]
+}

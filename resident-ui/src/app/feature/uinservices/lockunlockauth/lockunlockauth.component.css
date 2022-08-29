@@ -1,0 +1,44 @@
+ul, li{
+  list-style-type:none;
+  padding: 2px 0px 3px 9px;
+}
+.mini-card {
+  width: 90%;
+  height: 60%;
+  border-radius: 5px;
+  background: #F4F4F4 0% 0% no-repeat padding-box;
+}
+.tp-radio-group {  
+  display: inline-flex;  
+  flex-direction: column;  
+}  
+.tp-radio-button {  
+  margin: 5px;  
+}  
+.tp-selected-value {  
+  margin: 15px 0;  
+}  
+
+.mat-button-toggle-checked{
+  background-color: #03a64a;
+  color: white !important;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background{
+  background-color: #03a64a !important;
+}
+
+.mat-card-sm-image{
+  width: 32px;
+  height: 32px;
+}
+
+mat-card-content > p{
+  width: 100%;
+  text-align: center;
+}
+
+mat-card-actions{
+  width: 100%;
+  text-align: center;
+}

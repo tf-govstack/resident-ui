@@ -20,6 +20,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   otpChannel:any=[];
   popupMessages:any;
   showOtpPanel:boolean=false;
+  siteKey:any;
 
   constructor(
     private router: Router,
@@ -38,6 +39,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.popupMessages = response;
       });
+    this.loadRecaptchaSiteKey();
     /*this.captchaService.captchStatus.subscribe((status)=>{
       this.captchaStatus = status;
       if (status == false) {
@@ -48,9 +50,13 @@ export class VerifyComponent implements OnInit, OnDestroy {
     });*/
   }
 
+  loadRecaptchaSiteKey() {
+    this.siteKey = "6LcM7OAeAAAAAChEa_jqFzlipTC7nf6hHG5eAGki";
+  }
+
   radioChange(event: any){
     this.otpChannel = [];
-    this.otpChannel.push(event.value);
+    this.otpChannel.push(event);
   }
 
   captureValue(event: any, formControlName: string) {
@@ -90,7 +96,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
       "version": self.appConfigService.getConfig()["mosip.resident.api.version.otp.request"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": self.transactionID,
+        "transactionId": self.transactionID,
         "individualId": self.individualId,
         "otp": self.otp
       }

@@ -6,10 +6,10 @@
     <table class="table-style">
       <tr>
         <td>
-          <mat-radio-group aria-label="Select an option" (change)="radioChange($event)">
-            <mat-radio-button value="PHONE">{{'verifyuinvid.mobileno' | translate }}</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <mat-radio-button value="EMAIL">{{'verifyuinvid.email' | translate }}</mat-radio-button>
-          </mat-radio-group>
+          <mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color">
+            <mat-button-toggle  (click)="radioChange('PHONE')" value="PHONE"><mat-icon style="color: green;">stay_current_portrait</mat-icon>&nbsp;&nbsp;{{'verifyuinvid.mobileno' | translate }}</mat-button-toggle>
+            <mat-button-toggle  (click)="radioChange('EMAIL')" value="EMAIL"><mat-icon style="color:red;">email</mat-icon>&nbsp;&nbsp;{{'verifyuinvid.email' | translate }}</mat-button-toggle>
+          </mat-button-toggle-group>
         </td>
       </tr>
       <tr>
@@ -22,15 +22,15 @@
             name="uin"
             class="search-input"/>
           </mat-form-field> -->
-          <label for="uin">{{'verifyuinvid.uid' | translate }}</label>
+          <label for="uin">{{'verifyuinvid.uid' | translate }}<mat-icon style="color: green;font-size: 18px;">info</mat-icon></label>
           <input type="text" id="uin" name="uin" (blur)="captureValue($event, 'individualId')" value={{individualId}} placeholder="{{'verifyuinvid.uid' | translate}}" />
         </td>
       </tr>
-     <!--  <tr>
+      <tr>
         <td>
-          <ngx-captcha [config]="captchaConfig" ></ngx-captcha>
+          <!-- <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha" (captchaEvent)="getCaptchaToken($event)"></app-captcha> -->
         </td>
-      </tr>   -->    
+      </tr>      
       <tr>
         <td>
           <button mat-raised-button color="primary" (click)="generateOTP()">{{'verifyuinvid.sendotp' | translate}}</button>
