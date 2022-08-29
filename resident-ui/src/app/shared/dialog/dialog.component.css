@@ -231,3 +231,7 @@ td.mat-footer-cell:last-child {
   opacity: 0.2;
 }
 */
+
+.mat-form-field-infix{
+  width: 80px !important;
+}

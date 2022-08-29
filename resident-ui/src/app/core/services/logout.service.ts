@@ -22,9 +22,10 @@ export class LogoutService {
   ) {}
 
   logout() {
-    let adminUrl = this.appService.getConfig().adminUrl;
+    window.location.href = `${this.appService.getConfig().baseUrl}/logout/user?redirecturi=`+btoa(window.location.href);
+    /*let adminUrl = this.appService.getConfig().adminUrl;
     this.http
-      .delete(`${this.appService.getConfig().baseUrl}${this.appService.getConfig().logout}`, {
+      .get(`${this.appService.getConfig().baseUrl}${this.appService.getConfig().logout}`, {
         observe: 'response'
       })
       .subscribe(
@@ -40,6 +41,6 @@ export class LogoutService {
         (error: HttpErrorResponse) => {
           window.alert(error.message);
         }
-      );
+      );*/
   }
 }

@@ -7,3 +7,11 @@ ul, li{
   height: 50%;
   border-radius: 5px;
 }
+
+mat-card > span img{
+  margin: 0 16px;
+}
+
+mat-card-title {
+  cursor: pointer;
+}

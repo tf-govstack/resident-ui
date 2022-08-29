@@ -23,6 +23,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   vidType:string = "";
   notificationType:Array<string>=[];
   vidValue:string = "";
+  finalTypeList = {};
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
   async ngOnInit() {
@@ -33,28 +34,43 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     .subscribe(response => {
       this.langJSON = response;
       this.popupMessages = response;
-    });
+    });    
+    this.getVID();    
+  }
+
+  getVID(){
     this.dataStorageService
     .getVIDs()
     .subscribe((response) => {
       if(response["response"])
         this.vidlist = response["response"];
+        this.getPolicy();
     });
-    
-    this.getPolicy();
-  }
+  } 
 
   getPolicy(){
+    let self = this;
+    let results = [];
+    self.finalTypeList = {};
     this.dataStorageService.getPolicy().subscribe(response => {
         if(response["response"]){
           this.policyType = JSON.parse(response["response"]);
+          for (var i=0 ; i < this.policyType.vidPolicies.length ; i++){
+            results = [];
+            for (var j=0 ; j < self.vidlist.length ; j++){
+              if(self.vidlist[j].vidType.toUpperCase() === this.policyType.vidPolicies[i].vidType.toUpperCase()) {
+                results.push(self.vidlist[j]);
+              }
+            }
+            self.finalTypeList[this.policyType.vidPolicies[i].vidType] = results;
+          }
         }
       },
       error => {
         console.log(error);
       }
     );
-  }
+  }  
 
   setvidType(event: any){
     this.vidType = "";
@@ -71,37 +87,32 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     }
   }
 
-  generateVID(){
+  generateVID(vidType){
+    let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["resident.vid.id"],
       "version": this.appConfigService.getConfig()["resident.vid.version"],
       "requesttime": Utils.getCurrentDate(),
       "request":{
         "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),      
-        "vidType": this.vidType,
-        "channels": this.notificationType
+        "vidType": vidType,
+        "channels": ["PHONE", "EMAIL"]
       }
     };
-    this.dataStorageService.generateVID(request).subscribe(response => 
-      {
-        if(!response["errors"]){
-          this.showMessage(JSON.stringify(response["response"]));
-        }else{
-          this.showErrorPopup(JSON.stringify(response["errors"]));
-        }
-      },
-      error => {
-        console.log(error);
+    this.dataStorageService.generateVID(request).subscribe(response => {    
+      if(!response["errors"].length){
+        setTimeout(() => {
+          self.getVID();
+        }, 300);
+        this.showMessage(JSON.stringify(response["response"]));
+      }else {
+        this.showErrorPopup(response["errors"][0].message);
       }
-    );
+    });
   }
 
-  revokevidvalueset(event: any){
-    this.vidValue = "";
-    this.vidValue = event.value.vid;
-  }
-
-  revokeVID(){
+  revokeVID(vidValue){
+    let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["resident.revokevid.id"],
       "version": this.appConfigService.getConfig()["resident.vid.version"],
@@ -111,12 +122,15 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         "vidStatus": "REVOKED"
       }
     };
-    this.dataStorageService.revokeVID(request, this.vidValue).subscribe(response => 
+    this.dataStorageService.revokeVID(request, vidValue).subscribe(response => 
       {
-        if(!response["errors"]){
+        if(!response["errors"].length){
+          setTimeout(() => {
+            self.getVID();
+          }, 300);
           this.showMessage(JSON.stringify(response["response"]));
         }else{
-          this.showErrorPopup(JSON.stringify(response["errors"]));
+          this.showErrorPopup(response["errors"][0].message);
         }
       },
       error => {

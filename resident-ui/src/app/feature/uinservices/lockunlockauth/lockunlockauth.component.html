@@ -1,0 +1,29 @@
+<span class="breadcrumb">
+	<a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<span class="active">{{'lockunlockauth.title' | translate}}</span>
+</span>
+
+<div class="main-div" *ngIf="langJSON">
+	<mat-card>
+		<mat-grid-list cols="3" rowHeight="2:1" *ngIf="authlist">
+			<mat-grid-tile *ngFor="let authInfo of authlist">
+				<mat-card class="mini-card" (click)="setAuthlockStatus(authInfo)">
+				  <mat-card-header>
+				  	<mat-icon mat-card-avatar>{{authInfo.icon}}</mat-icon>
+				    <mat-card-title><span style="padding-right: 20px;">{{authInfo.authType}}</span><span style="padding-right: 20px;">{{authInfo.authSubType}}</span></mat-card-title>	    
+				  </mat-card-header>
+				  <mat-card-content>
+				    <p *ngIf="authInfo.locked"><img mat-card-sm-image src="assets\images\lock.png" ></p>
+				    <p *ngIf="!authInfo.locked"><img mat-card-sm-image src="assets\images\unlock.png" ></p>
+				  </mat-card-content>
+				  <mat-card-actions>
+				    <button *ngIf="authInfo.locked" mat-stroked-button color="primary">Unlock</button>
+				    <button *ngIf="!authInfo.locked" mat-stroked-button color="primary">Lock</button>
+				  </mat-card-actions>
+				</mat-card>
+			</mat-grid-tile>		  
+		</mat-grid-list>
+		<button mat-raised-button color="primary" (click)="updateAuthlockStatus()">{{'verifyuinvid.submit' | translate}}</button>
+	</mat-card>	
+</div>
+
+

@@ -7,8 +7,8 @@
 		<mat-grid-list cols="4" rowHeight="2:1" *ngIf="menuItems">
 			<mat-grid-tile *ngFor="let item of menuItems[0].subMenus">
 				<mat-card class="mini-card">
-				  <mat-card-header>
-				  	<mat-icon mat-card-avatar>{{item.icon}}</mat-icon>
+				  <span><img mat-card-xs-image [src]=item.icon/></span>
+				  <mat-card-header>				  	
 				    <mat-card-title (click)="onItemSelected(item.route)">{{item.displayName}}</mat-card-title>	    
 				  </mat-card-header>
 				</mat-card>

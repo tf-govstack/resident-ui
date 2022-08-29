@@ -22,7 +22,10 @@ export class AppConfigService {
         this.appConfig["resident.vid.version"] = responseData["resident.vid.version"];      
         this.appConfig["resident.revokevid.id"] = responseData["resident.revokevid.id"]; 
         this.appConfig["mosip-prereg-host"] = responseData["mosip-prereg-host"];   
-        this.appConfig["mosip-prereg-ui-url"] = responseData["mosip-prereg-ui-url"];                
+        this.appConfig["mosip-prereg-ui-url"] = responseData["mosip-prereg-ui-url"];     
+        this.appConfig["auth.types.allowed"] = responseData["auth.types.allowed"];   
+        this.appConfig["resident.view.history.serviceType.filters"] = responseData["resident.view.history.serviceType.filters"];   
+        this.appConfig["resident.view.history.status.filters"] = responseData["resident.view.history.status.filters"];   
       },
       (error) => {
         console.log(error);

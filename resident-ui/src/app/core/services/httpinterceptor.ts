@@ -43,7 +43,6 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap(
         event => {
-          console.log("<<<request>>>"+JSON.stringify(request));
           if (event instanceof HttpResponse) {            
             if (event.url.split('/').includes('validateToken')) {                
                 if (event.body.response) {
@@ -75,7 +74,7 @@ export class AuthInterceptor implements HttpInterceptor {
               this.redirectService.redirect(window.location.href);
             }else if (err.status === 403) {
               this.translateService
-                .getTranslation(this.appService.getConfig().primaryLangCode)
+                .getTranslation(localStorage.getItem("langCode"))
                 .subscribe(response => {
                   this.errorMessages = response.errorPopup;
                   this.dialog.open(DialogComponent, {
@@ -92,7 +91,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 });
             }else if (err.status === 413) {
               this.translateService
-                .getTranslation(this.appService.getConfig().primaryLangCode)
+                .getTranslation(localStorage.getItem("langCode"))
                 .subscribe(response => {
                   this.errorMessages = response.errorPopup;
                   this.dialog.open(DialogComponent, {
@@ -109,7 +108,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 });
             }else if (err.status === 503) {
               this.translateService
-                .getTranslation(this.appService.getConfig().primaryLangCode)
+                .getTranslation(localStorage.getItem("langCode"))
                 .subscribe(response => {
                   this.errorMessages = response.errorPopup;
                   this.dialog.open(DialogComponent, {
@@ -128,7 +127,7 @@ export class AuthInterceptor implements HttpInterceptor {
               if (err.url.includes('validateToken')) {
 
                 this.translateService
-                .getTranslation(this.appService.getConfig().primaryLangCode)
+                .getTranslation(localStorage.getItem("langCode"))
                 .subscribe(response => {
                   this.errorMessages = response.errorPopup;
                   this.dialog.open(DialogComponent, {
@@ -146,7 +145,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
               }else{
                 this.translateService
-                .getTranslation(this.appService.getConfig().primaryLangCode)
+                .getTranslation(localStorage.getItem("langCode"))
                 .subscribe(response => {
                   this.errorMessages = response.errorPopup;
                   this.dialog.open(DialogComponent, {

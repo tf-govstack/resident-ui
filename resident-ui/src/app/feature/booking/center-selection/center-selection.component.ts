@@ -3,7 +3,7 @@ import { MatDialog } from "@angular/material";
 import { DataStorageService } from "src/app/core/services/data-storage.service";
 import { RegistrationCentre } from "./registration-center-details.model";
 import { Router, ActivatedRoute } from "@angular/router";
-
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { BookingService } from "../booking.service";
 import { TranslateService } from "@ngx-translate/core";
 import * as appConstants from "./../../../app.constants";
@@ -82,6 +82,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     ));
     console.log(`recommendedCenterLocCode: ${this.recommendedCenterLocCode}`);*/
     //await this.getIdentityJsonFormat();
+    //this.openDialog();
     this.recommendedCenterLocCode = 5;
     const subs = this.dataService
       .getLocationHierarchyLevel("eng")
@@ -360,6 +361,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   }
 
   getLocation() {
+    console.log("getLocation>>>");
     this.REGISTRATION_CENTRES = [];
     this.nearbyClicked = true;
     //console.log(navigator.geolocation);
@@ -541,13 +543,17 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     });*/
   }
 
- /* openDialog(data, width) {
-    const dialogRef = this.dialog.open(DialougComponent, {
-      width: width,
-      data: data,
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '850px',
+      data: {
+        case: 'CONFIRMATION',
+        title: "",
+        message: "message",
+      },
     });
     return dialogRef;
-  }*/
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

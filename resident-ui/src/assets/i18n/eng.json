@@ -8,9 +8,44 @@
             "cols":2,
             "rows":2,
             "subMenus" : [{
-                "displayName": "Generate / Revoke VID",
-                "icon": "",
-                "route": "uinservices/genrevokevid",
+                "displayName": "View History",
+                "icon": "assets/images/viewhistory.png",
+                "route": "uinservices/viewhistory",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Manage my VID",
+                "icon": "assets/images/managemyvid.png",
+                "route": "uinservices/managemyvid",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Secure My ID",
+                "icon": "assets/images/lockunlockauth.png",
+                "route": "uinservices/lockunlockauth",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Update Demographic Data",
+                "icon": "assets/images/updatedemographic.png",
+                "route": "uinservices/updatedemographic",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Track Service Request",
+                "icon": "assets/images/trackservicerequest.png",
+                "route": "uinservices/trackservicerequest",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Download Your Personalised Card",
+                "icon": "assets/images/personalisedcard.png",
+                "route": "uinservices/personalisedcard",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Order A Physical Card",
+                "icon": "assets/images/physicalcard.png",
+                "route": "uinservices/physicalcard",
+                "auditEventId": "ADM-004"
+            },{
+                "displayName": "Share With Partner",
+                "icon": "assets/images/sharewithpartner.png",
+                "route": "uinservices/sharewithpartner",
                 "auditEventId": "ADM-004"
             }]
         },
@@ -115,8 +150,25 @@
         "submit": "Submit",
         "resendotp": "Resend OTP"
     },
-    "genrevokevid": {
-        "title": "Generate / Revoke VID",
+    "viewhistory":{
+        "title": "View History",
+        "inputAppId" : "Application Id",
+        "inputHistory" : "History Type",
+        "inputStatus" : "Status",
+        "inputFrom" : "From",
+        "inputTo" : "To",
+        "searchBtn" : "Go"
+    },
+    "managemyvid": {
+        "title": "Manage my VID",
+        "generatevid": [{"vidType":"Perpetual VID","message":"No limit to usage or expiry"},{"vidType":"One-time VID","message":"Has no expiry date but  can be used only once"},{"vidType":"Temporary VID","message":"Expires after 30 mins and can be used only once"}],
+        "revokevid": "",
+        "create":"Create",
+        "generatevidtoggle": "Generate VID",
+        "revokevidtoggle": "Revoke VID"
+    },
+    "lockunlockauth": {
+        "title": "Secure My ID",
         "generatevid": [{"title":"Perpetual","message":"No limit to usage or expiry"},{"title":"Temporary","message":"Expires after 30 mins and can be used only once"},{"title":"One-time","message":"Has no expiry date but  can be used only once"}],
         "revokevid": "",
         "generatevidtoggle": "Generate VID",
@@ -124,6 +176,18 @@
     },
     "updatedemographic": {
         "title": "Demographic Data"
+    },    
+    "trackservicerequest":{
+        "title": "Track Service Request"
+    },
+    "personalisedcard":{
+        "title": "Download Your Personalised Card"
+    },
+    "physicalcard":{
+        "title": "Order A Physical Card"
+    },
+    "sharewithpartner":{
+        "title": "Share With Partner"
     },
     "genericmessage":{
         "successLabel":"Success",

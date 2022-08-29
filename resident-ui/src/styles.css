@@ -23,10 +23,6 @@
   font-style: normal;
 }
 
-button {
-  text-transform: uppercase;
-}
-
 .mar_right-30 {
   margin-right: 30px;
 }
@@ -280,7 +276,7 @@ mat-keyboard-container mat-keyboard-key .mat-keyboard-key {
   border: 1px solid #ff4081;
   color: #ff4081;
 }
-app-center-selection, app-document, app-verify, app-demographic, uin-dashboard, app-uindashboard, app-revokevid {
+app-center-selection, app-document, app-verify, uin-dashboard, app-uindashboard, app-viewhistory, app-revokevid, app-lockunlockauth, app-demographic, app-trackservicerequest, app-personalisedcard, app-physicalcard, app-sharewithpartner {
   margin-left: 60px !important;
   margin-right: 60px !important;
 }
@@ -329,6 +325,11 @@ app-document > ul{
   background-color: #03A64A;
 }
 
+.mat-stroked-button.mat-primary{
+  border-color: #03A64A;
+  color: #03A64A;
+}
+
 .mat-form-field-appearance-fill .mat-form-field-flex{
   background-color: transparent;
 }
@@ -352,4 +353,12 @@ app-document > ul{
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background{
   background-color: #03A64A;
+}
+
+.mat-card-header .mat-card-title{
+  font-size: 18px !important;
+}
+
+.mat-form-field-infix{
+  border-top:  0px !important;
 }

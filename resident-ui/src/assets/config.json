@@ -1,5 +1,5 @@
 {
-    "baseUrl": "https://api-internal.dev3.mosip.net/resident/v1",
+    "baseUrl": "https://api-internal.dev1.mosip.net/resident/v1",
     "version": "v1",
     "validateToken": "admin/authorize/admin/validateToken",
     "login": "/login/",

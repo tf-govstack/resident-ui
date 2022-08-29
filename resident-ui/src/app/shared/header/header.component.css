@@ -78,3 +78,9 @@
 .mat-button-wrapper{
   color: white;
 }
+
+
+.mat-menu-content:not(:empty) {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
