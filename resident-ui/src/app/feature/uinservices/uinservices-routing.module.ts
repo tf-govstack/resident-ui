@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ViewhistoryComponent } from './viewhistory/Viewhistory.component';
+import { ViewhistoryComponent } from './viewhistory/viewhistory.component';
 import { RevokevidComponent } from './revokevid/revokevid.component';
 import { LockunlockauthComponent } from './lockunlockauth/lockunlockauth.component';
 import { UpdatedemographicComponent } from './updatedemographic/updatedemographic.component';

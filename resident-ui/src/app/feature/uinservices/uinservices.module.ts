@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { I18nModule } from '../../i18n.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ViewhistoryComponent } from './viewhistory/Viewhistory.component';
+import { ViewhistoryComponent } from './viewhistory/viewhistory.component';
 import { RevokevidComponent } from './revokevid/revokevid.component';
 import { LockunlockauthComponent } from './lockunlockauth/lockunlockauth.component';
 import { UpdatedemographicComponent } from './updatedemographic/updatedemographic.component';
