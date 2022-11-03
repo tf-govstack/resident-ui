@@ -141,7 +141,7 @@ export class DataStorageService {
   }
 
   getDemographicdetail() {
-    return this.httpClient.get(this.BASE_URL   + '/identity/input-attributes/values');
+    return this.httpClient.get(this.BASE_URL   + '/identity/info');
   }
 
   getPolicy() {
@@ -172,15 +172,25 @@ export class DataStorageService {
     return this.httpClient.get('https://stoplight.io/mocks/mosip/resident/77242121/profile');
   }
 
-  getServiceHistory(request:any){
+  getServiceHistory(request:any, filters:any){
     let buildURL = "";
     if (request) {
       let pageSize = request.pageSize;
       let pageIndex = parseInt(request.pageIndex);
-      buildURL = "?pageStart="+pageIndex+"&pageFetch="+pageSize;
-      console.log("buildURL>>>"+buildURL);
+      buildURL = "?pageStart="+pageIndex+"&pageFetch="+pageSize;     
+      if(request){
+        buildURL = buildURL+"&"+filters;
+      }
     }
+    if(!request && filters){
+      buildURL = "?"+filters;
+    }
+    console.log("buildURL>>>"+buildURL);
     return this.httpClient.get(this.BASE_URL   + '/service-history'+buildURL);
+  }
+
+  pinData(eventId:string){
+    return this.httpClient.post(this.BASE_URL   + '/pinned/'+eventId, "");
   }
 
   onLogout() {

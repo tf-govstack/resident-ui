@@ -4,7 +4,7 @@
 
 <div class="main-div" *ngIf="langJSON">
 	<mat-card>
-		<!-- <table *ngIf="responselist" style="width: 100%;">
+		<table *ngIf="responselist" style="width: 100%;">
 			<tr>
 				<td style="width: 20%;padding: 10px;"><span>Search</span></td>
 				<td style="width: 20%;padding: 10px;"><span>History Type</span></td>
@@ -14,19 +14,19 @@
 			</tr>
 			<tr>
 				<td style="width: 20%;padding: 10px;">
-          			<input type="text" id="appIdValue" name="appIdValue" (blur)="captureValue($event, 'appIdValue')" placeholder="{{'viewhistory.inputAppId' | translate}}" />
+          			<input type="text" id="appIdValue" name="appIdValue" (blur)="captureValue($event, 'searchText', 'textbox')" placeholder="{{'viewhistory.inputAppId' | translate}}" />
 				</td>
 				<td style="width: 20%;padding: 10px;">
 					<mat-form-field>
-					  <mat-select multiple placeholder="{{'viewhistory.inputHistory' | translate}}" >
-					    <mat-option *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType" [value]="serviceTypeValue" (onSelectionChange)="captureValue($event, 'serviceTypeValue')">{{serviceType}}</mat-option>
+					  <mat-select multiple placeholder="{{'viewhistory.inputHistory' | translate}}" (selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
+					    <mat-option *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType" [value]="serviceType" >{{serviceType}}</mat-option>
 					  </mat-select>
 					</mat-form-field>
 				</td>
 				<td style="width: 20%;padding: 10px;">
 					<mat-form-field>
-					  <mat-select multiple placeholder="{{'viewhistory.inputStatus' | translate}}" >
-					    <mat-option *ngFor="let status of statusFilter" [id]="status" [value]="statusTypeValue" (onSelectionChange)="captureValue($event, 'statusTypeValue')">{{status}}</mat-option>
+					  <mat-select multiple placeholder="{{'viewhistory.inputStatus' | translate}}" (selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
+					    <mat-option *ngFor="let status of statusTypeFilter" [id]="status" [value]="status">{{status}}</mat-option>
 					  </mat-select>
 					</mat-form-field>
 				</td>
@@ -35,14 +35,19 @@
 				</td>
 				<td style="width: 20%;padding: 10px;"><button mat-button (click)="search()">{{'viewhistory.searchBtn' | translate}}</button></td>
 			</tr>
-		</table> -->
-		<table *ngIf="responselist" style="width: 100%;border-collapse: separate;border-spacing: 1em;">
-			<tr *ngFor="let data of responselist; let i = index" style="outline: thin solid silver;border-radius: 5px;">
-				<td style="width: 25%;padding: 10px;"><span>Application ID : </span>{{data.eventId}}</td>
-				<td style="width: 25%;padding: 10px;"><span>Summary : </span>{{data.purpose}}</td>
-				<td style="width: 25%;padding: 10px;"><span>Timestamp : </span>{{data.timeStamp}}</td>
-				<td style="width: 25%;padding: 10px;"><span>Satus : </span>{{data.eventStatus}}</td>
-			</tr>
+		</table>
+		<table *ngIf="responselist" style="width: 100%;border-collapse: separate;border-spacing: 1em;">				
+			<tr *ngFor="let data of responselist; let i = index" style="outline: thin solid silver;border-radius: 5px;"  multi>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<td style="width: 25%;padding: 10px;"><span>Application ID : </span>{{data.eventId}}</td>
+						<td style="width: 25%;padding: 10px;"><span>Purpose : </span>{{data.purpose}}</td>
+						<td style="width: 25%;padding: 10px;"><span>Timestamp : </span>{{data.timeStamp}}</td>
+						<td style="width: 25%;padding: 10px;"><span>Satus : </span>{{data.eventStatus}}</td>
+					</mat-expansion-panel-header>
+						<p style="width: 25%;padding: 10px;" (click)="pinData(data)">{{data.eventId}}</p>
+				</mat-expansion-panel>
+			</tr>					
 		</table>
 		<div  dir="ltr">
 	      	<span *ngIf="this.totalItems !== 0">

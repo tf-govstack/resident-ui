@@ -24,11 +24,12 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 15, 20];
   serviceTypeFilter:any;
-  statusFilter:any;
+  statusTypeFilter:any;
 
-  appIdValue:string = "";
-  serviceTypeValue:string = "";
-  statusTypeValue:string = "";
+  searchText:string = "";
+  serviceType:string = "";
+  statusFilter:string = "";
+  controlTypes = ["searchText", "serviceType", "statusFilter"]
   datas:{};
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
@@ -42,25 +43,27 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       this.popupMessages = response;
     });
     
-    this.getServiceHistory("");    
+    this.getServiceHistory("","");    
   }
 
-  getServiceHistory(pageEvent:any){   
+  getServiceHistory(pageEvent:any, filters:any){   
     this.dataStorageService
-    .getServiceHistory(pageEvent)
+    .getServiceHistory(pageEvent, filters)
     .subscribe((response) => {
       if(response["response"])     
         this.responselist = response["response"]["data"];
         this.totalItems = response["response"]["totalItems"];
         this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
-        this.statusFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
+        this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
     });
   }
 
-  captureValue(event: any, formControlName: string) {
-    console.log("<<<event.target.value>>>"+event.target.value);
-    this[formControlName] = event.target.value;
-    //this.datas[formControlName] = event.target.value;
+  captureValue(event: any, formControlName: string, controlType: string) {
+    if(controlType === "dropdown"){
+      this[formControlName] = event.value.toString().toUpperCase();
+    }else{
+      this[formControlName] = event.target.value;
+    }
   }
 
   showMessage(message: string) {    
@@ -76,8 +79,28 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     return dialogRef;
   }
 
-  search(){
+  pinData(data:any){
+    console.log("eventId>>>"+data.eventId);
+    this.dataStorageService
+    .pinData(data.eventId)
+    .subscribe((response) => {
+      console.log("response>>>"+response);
+    });
+  }
 
+  search(){    
+    let searchParam = "", self = this;    
+    this.controlTypes.forEach(controlType => {
+      if(self[controlType]){
+        if(searchParam){
+          searchParam = searchParam+"&"+controlType+"="+self[controlType];
+        }else{
+          searchParam = controlType+"="+self[controlType];
+        }
+      }     
+    });
+    console.log("searchParam>>>"+JSON.stringify(searchParam));
+    this.getServiceHistory("",searchParam);    
   }
 
   showErrorPopup(message: string) {

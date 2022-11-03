@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.fullName = response["response"].fullName;
         this.lastLogin = response["response"].lastLogin;
         this.userImage = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${response["response"].photo.data}`);
-        console.log("response>>>"+JSON.stringify(response["response"]));
+        //console.log("response>>>"+JSON.stringify(response["response"]));
     });
   }
 
