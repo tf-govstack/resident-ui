@@ -59,9 +59,11 @@ export class RevokevidComponent implements OnInit, OnDestroy {
             results = [];
             for (var j=0 ; j < self.vidlist.length ; j++){
               if(self.vidlist[j].vidType.toUpperCase() === this.policyType.vidPolicies[i].vidType.toUpperCase()) {
+                self.vidlist[j].showvid = false;
                 results.push(self.vidlist[j]);
               }
             }
+            console.log("this.policyType.vidPolicies[i].vidType>>>"+this.policyType.vidPolicies[i].vidType);
             self.finalTypeList[this.policyType.vidPolicies[i].vidType] = results;
           }
         }
@@ -71,6 +73,22 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       }
     );
   }  
+
+  displayVid(finalTypeList, policyType, policy, showvid){
+    let self = this;
+    let results = [];
+    for (var j=0 ; j < self.vidlist.length ; j++){
+      if(self.vidlist[j].vidType.toUpperCase() === policyType.toUpperCase()) {
+        if(self.vidlist[j].vid === policy.vid){
+          self.vidlist[j].showvid = showvid;
+        }else{
+          self.vidlist[j].showvid = false;
+        }        
+        results.push(self.vidlist[j]);
+      }
+    }
+    self.finalTypeList[policyType] = results;
+  }
 
   setvidType(event: any){
     this.vidType = "";

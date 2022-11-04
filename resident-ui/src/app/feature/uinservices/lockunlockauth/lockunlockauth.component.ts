@@ -55,6 +55,8 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
             authTypesJSON["authSubType"] =  authTypes[i].split('-')[1];
             authTypesJSON["locked"] = false;
             authTypesJSON["unlockForSeconds"] = null;
+            authTypesJSON["recorddirty"] = false;
+            authTypesJSON["label"] = this.langJSON.lockunlockauth.labelmap[authTypes[i]];
             this.authlist.push(authTypesJSON);
           }
         }else{
@@ -72,13 +74,13 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
               })
             }else{
               newAuthlist.find(el => {  
-                if(el.authType === authTypes[i]){
+                if(el.authType === authTypes[i]){                  
                   return authTypesJSON["locked"] = el.locked;
                 }                    
               })
-              console.log(newAuthlist.find(el => el.authType === authTypes[i]))
-            }            
-            
+            }   
+            authTypesJSON["label"] = this.langJSON.lockunlockauth.labelmap[authTypes[i]];         
+            authTypesJSON["recorddirty"] = false;
             authTypesJSON["unlockForSeconds"] = null;
             this.authlist.push(authTypesJSON);
           }
@@ -102,6 +104,11 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
           }else{
             this.authlist[i].locked = true;
           }
+          if(authTypes.recorddirty){
+            this.authlist[i].recorddirty = false;
+          }else{
+            this.authlist[i].recorddirty = true;
+          }
         }
       }else{
         if(authTypeValidate === this.authlist[i].authType) {
@@ -110,6 +117,12 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
             this.authlist[i].locked = false;
           }else{
             this.authlist[i].locked = true;
+          }
+
+          if(authTypes.recorddirty){
+            this.authlist[i].recorddirty = false;
+          }else{
+            this.authlist[i].recorddirty = true;
           }
         }
       }      

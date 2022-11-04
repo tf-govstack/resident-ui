@@ -4,12 +4,11 @@
 
 <div class="main-div" *ngIf="langJSON">
 	<mat-card>
-		<mat-grid-list cols="3" rowHeight="2:1" *ngIf="authlist">
+		<mat-grid-list cols="4" rowHeight="2:1" *ngIf="authlist">
 			<mat-grid-tile *ngFor="let authInfo of authlist">
-				<mat-card class="mini-card" (click)="setAuthlockStatus(authInfo)">
-				  <mat-card-header>
-				  	<mat-icon mat-card-avatar>{{authInfo.icon}}</mat-icon>
-				    <mat-card-title><span style="padding-right: 20px;">{{authInfo.authType}}</span><span style="padding-right: 20px;">{{authInfo.authSubType}}</span></mat-card-title>	    
+				<mat-card [ngClass]="authInfo.recorddirty == false ? 'mini-card' : 'mini-card-yellow'" (click)="setAuthlockStatus(authInfo)">
+				  <mat-card-header>			  	
+				    <mat-card-title><span><img src="assets\{{authInfo.label}}.png"></span>&nbsp;&nbsp;&nbsp;<span style="font-size: 14px;font-weight: 800;">{{authInfo.label}}</span></mat-card-title>	    
 				  </mat-card-header>
 				  <mat-card-content>
 				    <p *ngIf="authInfo.locked"><img mat-card-sm-image src="assets\images\lock.png" ></p>

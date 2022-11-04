@@ -3,9 +3,13 @@ ul, li{
   padding: 2px 0px 3px 9px;
 }
 .mini-card {
-  width: 90%;
-  height: 50%;
+  width: 360px;
+  height: 172px;
   border-radius: 5px;
+  background: #FAF8F8 0% 0% no-repeat padding-box;
+  box-shadow: none;
+  border: 1px solid silver;
+  background: #FAF8F8 0% 0% no-repeat padding-box;
 }
 .tp-radio-group {  
   display: inline-flex;  
@@ -27,10 +31,9 @@ ul, li{
   background-color: #03a64a !important;
 }
 
-.mini-card{
-  box-shadow: none;
-  border: 1px solid silver;
-  background: #0000001A;
+td.label{
+  font-size: 12px;
+  color: #909090;
 }
 
 mat-card-subtitle{

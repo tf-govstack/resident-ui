@@ -3,10 +3,22 @@ ul, li{
   padding: 2px 0px 3px 9px;
 }
 .mini-card {
-  width: 90%;
-  height: 60%;
+  width: 362px;
+  height: 170px;
   border-radius: 5px;
   background: #F4F4F4 0% 0% no-repeat padding-box;
+  box-shadow: none;
+  border: 1px solid silver;
+  cursor: pointer;
+}
+.mini-card-yellow {
+  width: 362px;
+  height: 170px;
+  border-radius: 5px;
+  background: #FFF9DB 0% 0% no-repeat padding-box;
+  box-shadow: none;
+  border: 1px solid #F2CC0C;
+  cursor: pointer;
 }
 .tp-radio-group {  
   display: inline-flex;  
@@ -41,4 +53,10 @@ mat-card-content > p{
 mat-card-actions{
   width: 100%;
   text-align: center;
+}
+
+mat-card-header, .mat-card-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

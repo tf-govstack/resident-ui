@@ -141,7 +141,7 @@ export class DataStorageService {
   }
 
   getDemographicdetail() {
-    return this.httpClient.get(this.BASE_URL   + '/identity/info');
+    return this.httpClient.get(this.BASE_URL   + '/identity/input-attributes/values');
   }
 
   getPolicy() {
@@ -186,7 +186,7 @@ export class DataStorageService {
       buildURL = "?"+filters;
     }
     console.log("buildURL>>>"+buildURL);
-    return this.httpClient.get(this.BASE_URL   + '/service-history'+buildURL);
+    return this.httpClient.get(this.BASE_URL   + '/service-history'+"/"+localStorage.getItem("langCode")+buildURL);
   }
 
   pinData(eventId:string){

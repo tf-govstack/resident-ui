@@ -172,10 +172,15 @@
         "generatevid": [{"title":"Perpetual","message":"No limit to usage or expiry"},{"title":"Temporary","message":"Expires after 30 mins and can be used only once"},{"title":"One-time","message":"Has no expiry date but  can be used only once"}],
         "revokevid": "",
         "generatevidtoggle": "Generate VID",
-        "revokevidtoggle": "Revoke VID"
+        "revokevidtoggle": "Revoke VID",
+        "labelmap":{"demo" : "Demographic Authentication", "bio-FINGER" : "Fingerprint Authentication", "bio-IRIS" : "Iris Authentication", "bio-FACE" : "Face Authentication", "otp-email" : "Email OTP Authentication", "otp-phone" : "Mobile OTP Authentication"}
     },
     "updatedemographic": {
-        "title": "Demographic Data"
+        "title": "Demographic Data",
+        "identity": "Identity",
+        "address": "Address",
+        "contact": "Contact",
+        "languagePreference": "Language Preference"
     },    
     "trackservicerequest":{
         "title": "Track Service Request"

@@ -8,15 +8,47 @@
 		<table *ngIf="policyType" style="width:100%">
 			<tr *ngFor = "let policy of policyType.vidPolicies">
 				<td style="width:100%">					 
-				    <span style="padding-left: 20px;">{{policy.vidType}}  <mat-icon style="color: green;font-size: 18px;" matTooltip="">info</mat-icon> <button mat-raised-button color="primary" (click)="generateVID(policy.vidType)">{{'managemyvid.create' | translate}}</button></span>		
+				    <span style="padding-left: 20px;">{{policy.vidType}}  <mat-icon style="color: green;font-size: 18px;" matTooltip="">info</mat-icon> <button mat-raised-button color="primary" (click)="generateVID(policy.vidType)">{{'managemyvid.create' | translate}}</button></span>
+
 				    <mat-grid-list style="width:100%" cols="4" rowHeight="2:1" *ngIf=finalTypeList[policy.vidType]>
 						<mat-grid-tile *ngFor = "let list of finalTypeList[policy.vidType]">
 							<mat-card class="mini-card">
-							  <mat-card-header>							  	
-							    <mat-card-title class="mat-card-header-text">{{list.vid}}</mat-card-title><mat-icon style="color: green;font-size: 18px;" matTooltip="">remove_red_eye</mat-icon>	    
-							  </mat-card-header>
-							   <mat-card-subtitle>{{list.expiryTimestamp | date:'dd/MM/yyyy h:mm'}}</mat-card-subtitle>
-							   <p style="margin: 0 35px;"><mat-icon style="color: maroon;font-size: 18px;cursor:pointer;" (click)="revokeVID(list.vid)">delete</mat-icon></p>
+							  <table style="width:100%">
+							  <tr>
+							    <td colspan="2" class="label">VID</td>
+							  </tr>
+							  <tr>
+							    <td colspan="2" class="mat-card-header-text">
+							    	<span *ngIf=list.showvid>{{list.vid}}&nbsp;&nbsp;&nbsp;<span style="cursor:pointer;" (click)="displayVid(finalTypeList, policy.vidType, list, false)"><img src="assets\eye_slash.png" style="color: green;width: 18px;"></span></span>
+							    	<span *ngIf=!list.showvid>{{list.maskedVid}}<mat-icon style="color: green;font-size: 18px;padding-left: 20px;cursor:pointer;" (click)="displayVid(finalTypeList, policy.vidType, list, true)">remove_red_eye</mat-icon></span>
+							    </td>
+							  </tr>
+							  <tr>
+							    <td style="width:50%" class="label">Generated On</td>
+							    <td style="width:50%" class="label">Expiry</td>
+							  </tr>
+							  <tr>
+							    <td style="width:50%">
+							    	{{list.genratedOnTimestamp | date:'dd:MM:yyyy hh:mm'}}&nbsp;{{ list.genratedOnTimestamp | date : 'a' | lowercase }}
+							    </td>
+							    <td style="width:50%">
+							    	{{list.expiryTimestamp | date:'dd:MM:yyyy hh:mm'}}&nbsp;{{ list.expiryTimestamp | date : 'a' | lowercase }}
+							    </td>
+							  </tr>
+							  <tr>
+							    <td style="width:50%" class="label">Transaction Left</td>
+							    <td style="width:50%" class="label"></td>
+							  </tr>
+							  <tr>
+							    <td style="width:50%">
+							    	{{list.transactionsLeftCount}}
+							    </td>
+							    <td style="width:50%;float: right;">
+							    	<span style="color: green;font-size: 24px;cursor:pointer;" (click)="revokeVID(list.vid)"><img src="assets\download.png"></span>&nbsp;&nbsp;&nbsp;
+							    	<mat-icon style="color: #DB4F4F;font-size: 24px;cursor:pointer;" (click)="revokeVID(list.vid)">delete</mat-icon>
+							    </td>
+							  </tr>
+							  </table>
 							</mat-card>
 						</mat-grid-tile>		  
 					</mat-grid-list>		   	
