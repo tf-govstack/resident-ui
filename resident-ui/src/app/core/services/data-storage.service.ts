@@ -193,6 +193,14 @@ export class DataStorageService {
     return this.httpClient.post(this.BASE_URL   + '/pinned/'+eventId, "");
   }
 
+  unpinData(eventId:string){
+    return this.httpClient.post(this.BASE_URL   + '/unpinned/'+eventId, "");
+  }
+
+  getAIDStatus(aid:string){
+    return this.httpClient.get(this.BASE_URL   + '/events'+"/"+aid+"?langCode="+localStorage.getItem("langCode"));
+  }
+
   onLogout() {
     const url =
       this.BASE_URL +

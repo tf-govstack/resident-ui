@@ -40,15 +40,17 @@
 			<tr *ngFor="let data of responselist; let i = index" style="outline: thin solid silver;border-radius: 5px;"  multi>
 				<mat-expansion-panel>
 					<mat-expansion-panel-header>
-						<td style="width: 35%;padding: 10px;color: #008CED;"><span>Application ID : </span>{{data.eventId}}</td>
+						<td style="width: 2%;padding: 10px;"><span *ngIf="data.pinnedStatus === 'true'"><img src="assets\pin.png" style="color: green;width: 8px;"></span></td>
+						<td style="width: 33%;padding: 10px;color: #008CED;"><span>Application ID : </span>{{data.eventId}}</td>
 						<td style="width: 25%;padding: 10px;"><span>Purpose : </span>{{data.purpose}}</td>
 						<td style="width: 25%;padding: 10px;"><span>Timestamp : </span>{{data.timeStamp}}</td>
 						<td style="width: 15%;padding: 10px;"><span>Satus : </span>{{data.eventStatus}}</td>
 					</mat-expansion-panel-header>
-						<p style="width: 25%;padding: 10px;" (click)="pinData(data)">
-							<span><img src="assets\report.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">Report an issue&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<span><img src="assets\pin.png" style="color: green;width: 8px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">Pin to top&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<span><img src="assets\view.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">View Details</span></span>
+						<p style="width: 100%;padding: 10px 35px;">
+							<span style="cursor:pointer;"><img src="assets\report.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">Report an issue&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>			
+							<span style="cursor:pointer;" *ngIf="data.pinnedStatus === 'false'" (click)="pinData(data)"><img src="assets\pin.png" style="color: green;width: 8px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">Pin to top&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<span style="cursor:pointer;" *ngIf="data.pinnedStatus === 'true'" (click)="unpinData(data)"><img src="assets\pin.png" style="color: green;width: 8px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">Unpin from top&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<span style="cursor:pointer;"><img src="assets\view.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">View Details</span></span>
 						</p>
 				</mat-expansion-panel>
 			</tr>					

@@ -17,6 +17,8 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   langJSON:any;
   popupMessages:any;
   subscriptions: Subscription[] = [];
+  aidVal:string = "";
+  aidStatus:any;
 
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
@@ -29,6 +31,19 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
       this.langJSON = response;
       this.popupMessages = response;
     }); 
+  }
+
+  captureValue(event: any, formControlName: string) {
+    this[formControlName] = event.target.value;
+  }
+
+  getAIDStatus(){
+    this.dataStorageService
+    .getAIDStatus(this.aidVal)
+    .subscribe((response) => {
+      if(response["response"]) 
+        this.aidStatus = response["response"];
+    });
   }
 
   showMessage(message: string) {    

@@ -183,7 +183,19 @@
         "languagePreference": "Language Preference"
     },    
     "trackservicerequest":{
-        "title": "Track Service Request"
+        "title": "Track Service Request",
+        "searchLabel": "Enter AID you want to track",
+        "searchPlaceholder": "Enter the 16-digit AID",
+        "searchButton": "Track",
+        "eventId":"Event Id",
+        "eventType":"Event Type",
+        "eventStatus":"Event Status",
+        "description":"Description",
+        "individualId":"IndividualId",
+        "authenticationMode":"Authentication Mode",
+        "vidType":"VID Type",
+        "vid":"VID",
+        "timestamp":"Timestamp"
     },
     "personalisedcard":{
         "title": "Download Your Personalised Card"

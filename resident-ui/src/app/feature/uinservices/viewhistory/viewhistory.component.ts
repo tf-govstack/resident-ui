@@ -88,6 +88,14 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
   }
 
+  unpinData(data:any){
+    this.dataStorageService
+    .unpinData(data.eventId)
+    .subscribe((response) => {
+      console.log("response>>>"+response);
+    });
+  }
+
   search(){    
     let searchParam = "", self = this;    
     this.controlTypes.forEach(controlType => {
