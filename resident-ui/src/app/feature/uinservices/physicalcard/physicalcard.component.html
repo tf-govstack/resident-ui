@@ -3,7 +3,29 @@
 </span>
 
 <div class="main-div" *ngIf="langJSON">
-	
+	<mat-card *ngIf="partnerDetails">
+		<label style="color: #505050;padding:10px;line-height: 2.5;"></label>
+		<table style="width:100%;">
+			<tr>
+				<td style="width:70%;vertical-align: top;">
+					<table style="width:500px;">
+						<tr>
+							<td style="padding-bottom: 10px;font-size: 14px;">
+								<mat-label>{{'physicalcard.mainlabel' | translate}}</mat-label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							  	<mat-select style="width: 350px;">
+								    <mat-option *ngFor="let partnerDetail of partnerDetails" [value]="partnerDetail.partnerID">{{partnerDetail.organizationName}}</mat-option>
+							  	</mat-select>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>		
+	</mat-card>
 </div>
 
 

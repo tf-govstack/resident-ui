@@ -1,20 +1,42 @@
 {
 	"schema": [
 		{
-			"attributeName": "name",
-			"maskRequired": false,
+			"attributeName": "fullName",
+			"maskRequired": false,			
 			"formatRequired": true,
 			"label": {
 				"eng": "Name"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"formatOptionLabel":{
+				"eng": "Name Format"
+			},
+			"formatOption":{
+				"eng": [{"label":"First Name", "value":"firstName"}, {"label":"Middle Name", "value":"middleName"}, {"label":"Last Name", "value":"lastName"}, {"label":"Full Name", "value":"fullName"}]
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":true
 		},
 		{
-			"attributeName": "dob",
+			"attributeName": "dateOfBirth",
 			"maskRequired": false,
 			"formatRequired": true,
 			"label": {
 				"eng": "DOB"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"formatOptionLabel":{
+				"eng": "Date Format"
+			},
+			"formatOption":{
+				"eng": [{"label":"DD/MM", "value":"DD/MM"}, {"label":"DD/MM/YYYY", "value":"DD/MM/YYYY"}]
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":true
 		},
 		{
 			"attributeName": "uin",
@@ -22,7 +44,12 @@
 			"formatRequired": false,
 			"label": {
 				"eng": "UIN"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":false
 		},
 		{
 			"attributeName": "Perpetual VID",
@@ -30,39 +57,70 @@
 			"formatRequired": false,
 			"label": {
 				"eng": "Perpetual VID"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":false
 		},
 		{
-			"attributeName": "Phone Number",
+			"attributeName": "phone",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
 				"eng": "Phone Number"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":true
 		},
 		{
-			"attributeName": "Email ID",
+			"attributeName": "email",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
 				"eng": "Email ID"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":true
 		},
 		{
-			"attributeName": "Address",
+			"attributeName": "addressLine1",
 			"maskRequired": false,
 			"formatRequired": true,
 			"label": {
 				"eng": "Address"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"formatOptionLabel":{
+				"eng": "Address Format"
+			},
+			"formatOption":{
+				"eng": [{"label":"Region", "value":"region"}, {"label":"Province", "value":"province"}, {"label":"City", "value":"city"}, {"label":"Full Address", "value":"fullAddress"}]
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":true
 		},
 		{
-			"attributeName": "Gender",
+			"attributeName": "gender",
 			"maskRequired": false,
 			"formatRequired": false,
 			"label": {
 				"eng": "Gender"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":true
 		},
 		{
 			"attributeName": "QR Code",
@@ -70,15 +128,25 @@
 			"formatRequired": false,
 			"label": {
 				"eng": "QR Code"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":false
 		},
 		{
-			"attributeName": "Image",
+			"attributeName": "photo",
 			"maskRequired": false,
 			"formatRequired": false,
 			"label": {
 				"eng": "Image"
-			}
+			},
+			"maskRequiredLabel": {
+				"eng": "Mask It"
+			},
+			"displaykeyinsharewithpartner":true,
+			"displaykeyinpersonalisedcard":true
 		}
 	]
 }

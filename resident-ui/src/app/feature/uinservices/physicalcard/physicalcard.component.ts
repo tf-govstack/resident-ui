@@ -17,6 +17,7 @@ export class PhysicalcardComponent implements OnInit, OnDestroy {
   langJSON:any;
   popupMessages:any;
   subscriptions: Subscription[] = [];
+  partnerDetails : any;
 
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
@@ -28,7 +29,17 @@ export class PhysicalcardComponent implements OnInit, OnDestroy {
     .subscribe(response => {
       this.langJSON = response;
       this.popupMessages = response;
-    }); 
+    });
+
+    this.getPartnerDetails(); 
+  }
+
+  getPartnerDetails(){
+    this.dataStorageService
+    .getPartnerDetails("Print_Partner")
+    .subscribe((response) => {
+      this.partnerDetails = response["response"]["partners"];
+    });
   }
 
   showMessage(message: string) {    

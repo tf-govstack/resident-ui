@@ -34,7 +34,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
   async ngOnInit() {
-    this.translateService.use(localStorage.getItem("langCode"));    
+    this.translateService.use(localStorage.getItem("langCode"));      
 
     this.translateService
     .getTranslation(localStorage.getItem("langCode"))
@@ -80,11 +80,11 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   pinData(data:any){
-    console.log("eventId>>>"+data.eventId);
     this.dataStorageService
     .pinData(data.eventId)
     .subscribe((response) => {
       console.log("response>>>"+response);
+      this.getServiceHistory("",""); 
     });
   }
 
@@ -93,7 +93,17 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     .unpinData(data.eventId)
     .subscribe((response) => {
       console.log("response>>>"+response);
+      this.getServiceHistory("",""); 
     });
+  }
+
+  viewDetails(data:any){
+    this.router.navigateByUrl(`uinservices/trackservicerequest?aid=`+data.eventId);
+  }
+
+  reportDetails(data:any){
+    let URL = this.appConfigService.getConfig()["mosip.resident.grievance.url"];
+    window.open(URL, '_blank');
   }
 
   search(){    

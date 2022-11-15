@@ -47,10 +47,10 @@
 						<td style="width: 15%;padding: 10px;"><span>Satus : </span>{{data.eventStatus}}</td>
 					</mat-expansion-panel-header>
 						<p style="width: 100%;padding: 10px 35px;">
-							<span style="cursor:pointer;"><img src="assets\report.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">Report an issue&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>			
+							<span style="cursor:pointer;" (click)="reportDetails(data)"><img src="assets\report.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">Report an issue&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>			
 							<span style="cursor:pointer;" *ngIf="data.pinnedStatus === 'false'" (click)="pinData(data)"><img src="assets\pin.png" style="color: green;width: 8px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">Pin to top&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							<span style="cursor:pointer;" *ngIf="data.pinnedStatus === 'true'" (click)="unpinData(data)"><img src="assets\pin.png" style="color: green;width: 8px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">Unpin from top&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<span style="cursor:pointer;"><img src="assets\view.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">View Details</span></span>
+							<span style="cursor:pointer;" (click)="viewDetails(data)"><img src="assets\view.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span style="font-size:12px;color:#505050;">View Details</span></span>
 						</p>
 				</mat-expansion-panel>
 			</tr>					

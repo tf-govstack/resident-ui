@@ -147,21 +147,27 @@ body {
   border-radius: 0 !important;
   background: rgba(255, 255, 255, 1);
 }
+
+.mat-option:focus:not(.mat-option-disabled), .mat-option:hover:not(.mat-option-disabled){
+  background: rgba(3, 166, 74, 1) !important;
+  color: rgba(255, 255, 255, 1) !important;
+}
+
 .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple):hover,
 .select-option > mat-option:hover {
-  background-color: rgba(230, 58, 116, 1) !important;
+  background: rgba(3, 166, 74, 1) !important;
   color: rgba(255, 255, 255, 1) !important;
 }
 
 .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple):active,
 .select-option > mat-option:active {
-  background-color: rgba(179, 45, 90, 1) !important;
+  background: rgba(3, 166, 74, 1) !important;
   color: rgba(255, 255, 255, 1) !important;
 }
 
 .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
-  background: rgba(255, 255, 255, 1) !important;
-  color: rgba(102, 102, 102, 1) !important;
+  background: rgba(3, 166, 74, 1) !important;
+  color: rgba(255, 255, 255, 1) !important;
 }
 
 .icon {
@@ -361,4 +367,34 @@ app-document > ul{
 
 .mat-form-field-infix{
   border-top:  0px !important;
+}
+
+mat-select {
+  outline: auto !important;
+  outline-color: #909090 !important;
+  outline-width: thin;
+  border-radius: 5px;
+  color: #BCBCBC !important;
+}
+
+.mat-select-trigger {
+  height: 36px !important;
+}
+
+.mat-select-value{
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.mat-select-arrow{  
+  color: #909090;
+}
+
+.mat-select-value-text{
+  color: #000000 !important;
+  font-size: 14px;
+}
+
+.mat-checkbox-frame {
+  border-color: #03a64a;
 }

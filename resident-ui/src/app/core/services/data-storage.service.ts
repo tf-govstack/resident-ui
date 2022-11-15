@@ -201,6 +201,14 @@ export class DataStorageService {
     return this.httpClient.get(this.BASE_URL   + '/events'+"/"+aid+"?langCode="+localStorage.getItem("langCode"));
   }
 
+  getPartnerDetails(partnerType: string){
+    return this.httpClient.get(this.BASE_URL   + '/auth-proxy/partners?partnerType='+partnerType);
+  }
+
+  getUserInfo(){
+    return this.httpClient.get(this.BASE_URL   + '/identity/info/type/personalized-card');
+  }  
+
   onLogout() {
     const url =
       this.BASE_URL +

@@ -7,11 +7,12 @@ import { HeaderComponent } from './header/header.component';
 import { CaptchaComponent } from './captcha/captcha.component';
 import { I18nModule } from 'src/app/i18n.module';
 import { RecaptchaModule, RECAPTCHA_LANGUAGE } from "ng-recaptcha";
+import { SanitizePipe } from './pipes/sanitize.pipe';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, I18nModule, RecaptchaModule],
-  declarations: [DialogComponent, HeaderComponent, CaptchaComponent ],
-  exports: [DialogComponent, MaterialModule, HeaderComponent, CaptchaComponent ],
+  declarations: [DialogComponent, HeaderComponent, CaptchaComponent, SanitizePipe],
+  exports: [DialogComponent, MaterialModule, HeaderComponent, CaptchaComponent, SanitizePipe],
   entryComponents: [DialogComponent],
   providers: []
 })

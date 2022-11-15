@@ -10,7 +10,7 @@
 			</tr>
 			<tr>
 				<td style="padding: 10px;">
-          			<input type="text" id="appIdValue" name="appIdValue" (blur)="captureValue($event, 'aidVal', 'textbox')" placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;<button mat-raised-button style="width:100px;height: 36px;font-size: 16px;" color="primary" (click)="getAIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
+          			<input type="text" id="appIdValue" name="appIdValue" value={{aidVal}} (blur)="captureValue($event, 'aidVal', 'textbox')" placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;<button mat-raised-button style="width:100px;height: 36px;font-size: 16px;" color="primary" (click)="getAIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
 				</td>
 			</tr>
 		</table>

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
@@ -20,10 +20,17 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   aidVal:string = "";
   aidStatus:any;
 
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute) {}
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
+
+    this.route.queryParams
+      .subscribe(params => {
+        this.aidVal = params.aid;
+        this.getAIDStatus();
+      }
+    );  
 
     this.translateService
     .getTranslation(localStorage.getItem("langCode"))

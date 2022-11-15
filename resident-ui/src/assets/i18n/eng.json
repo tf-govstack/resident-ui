@@ -198,13 +198,19 @@
         "timestamp":"Timestamp"
     },
     "personalisedcard":{
-        "title": "Download Your Personalised Card"
+        "title": "Download Your Personalised Card",
+        "mainlabel" : "Choose the data you want to include the credential"
     },
     "physicalcard":{
-        "title": "Order A Physical Card"
+        "title": "Order A Physical Card",
+        "mainlabel" : "Select a print provider"
     },
     "sharewithpartner":{
-        "title": "Share With Partner"
+        "title": "Share With Partner",
+        "mainlabel" : "Choose the data you want to include the credential",
+        "partnerName" : "Authorization Partner Name",
+        "sharingReason" : "Purpose of sharing your credential",
+        "sharingReasonPlaceholder" : "Enter the purpose here"
     },
     "genericmessage":{
         "successLabel":"Success",

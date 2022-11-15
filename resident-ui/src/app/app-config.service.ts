@@ -25,7 +25,8 @@ export class AppConfigService {
         this.appConfig["mosip-prereg-ui-url"] = responseData["mosip-prereg-ui-url"];     
         this.appConfig["auth.types.allowed"] = responseData["auth.types.allowed"];   
         this.appConfig["resident.view.history.serviceType.filters"] = responseData["resident.view.history.serviceType.filters"];   
-        this.appConfig["resident.view.history.status.filters"] = responseData["resident.view.history.status.filters"];   
+        this.appConfig["resident.view.history.status.filters"] = responseData["resident.view.history.status.filters"];  
+        this.appConfig["mosip.resident.grievance.url"] = responseData["mosip.resident.grievance.url"];         
       },
       (error) => {
         console.log(error);
