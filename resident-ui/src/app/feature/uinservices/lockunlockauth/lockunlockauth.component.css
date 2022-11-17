@@ -53,6 +53,7 @@ mat-card-content > p{
 mat-card-actions{
   width: 100%;
   text-align: center;
+  padding-left: 15px;
 }
 
 mat-card-header, .mat-card-title{

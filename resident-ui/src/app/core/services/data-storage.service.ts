@@ -141,7 +141,7 @@ export class DataStorageService {
   }
 
   getDemographicdetail() {
-    return this.httpClient.get(this.BASE_URL   + '/identity/input-attributes/values');
+    return this.httpClient.get(this.BASE_URL   + '/identity/info/type/personalized-card');
   }
 
   getPolicy() {
