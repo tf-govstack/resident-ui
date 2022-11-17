@@ -1,0 +1,112 @@
+.main-container {
+    padding: 0 6rem 0 6rem;
+}
+
+.login-card {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 5px #00000014;
+    border-radius: 10px;
+    opacity: 1;
+    /* width: 1160px; */
+    height: 628px;
+    padding: .7rem 2rem .5rem 2rem;
+    text-align: center;
+    margin-top: 6px;
+}
+
+.login-heading {
+    text-align: center;
+    font: normal normal medium 20px/30px Poppins;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    font-weight: 600;
+}
+
+.line {
+    border: 1px solid #D3D3D3;
+    opacity: 1;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 450px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #D3D3D3;
+    border-radius: 10px;
+    opacity: 1;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+.login-Input-heading {
+    font-weight: 500;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+
+.input-text {
+    width: 250px;
+    height: 36px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #909090;
+    border-radius: 5px;
+    opacity: 1;
+    padding: 5px;
+    outline: none;
+}
+.uin-login-title-card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.info-icon{
+    margin-bottom: 14px;
+    margin-left: 12px;
+}
+
+.label-text {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+
+.not-robot-verifing-card {
+    background: #F9F9F9 0% 0% no-repeat padding-box;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+    opacity: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.input-checkbox {
+    width: 18px;
+    height: 18px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #03A64A;
+    border-radius: 2px;
+    opacity: 1;
+}
+
+
+
+.login-uin-otp-btn {
+    width: 120px;
+    height: 36px;
+    
+    border-radius: 5px;
+    opacity: 1;
+    border: none;
+    margin-top: 1rem;
+    color: #ffffff;
+}
