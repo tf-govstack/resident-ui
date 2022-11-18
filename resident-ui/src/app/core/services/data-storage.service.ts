@@ -207,7 +207,19 @@ export class DataStorageService {
 
   getUserInfo(){
     return this.httpClient.get(this.BASE_URL   + '/identity/info/type/personalized-card');
-  }  
+  } 
+
+  convertpdf(request:any){
+    return this.httpClient.post<Blob>(this.BASE_URL   + '/download/personalized-card', request, { observe: 'response', responseType: 'blob' as 'json' });
+  }
+
+  shareInfo(request:any){
+    return this.httpClient.post(this.BASE_URL   + '/share-credential', request);
+  }
+
+  downloadAcknowledgement(eventId:string){
+    return this.httpClient.get<Blob>(this.BASE_URL   + '/ack/download/pdf/event/'+eventId+'/language/'+localStorage.getItem("langCode"), { observe: 'response', responseType: 'blob' as 'json' });   
+  }
 
   onLogout() {
     const url =

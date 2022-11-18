@@ -50,6 +50,7 @@
     "osm": "^1.0.0",
     "rxjs": "^6.0.0",
     "smoothscroll-polyfill": "^0.4.4",
+    "url-safe-base64": "^1.2.0",
     "vm": "^0.1.0",
     "zone.js": "~0.8.26"
   },

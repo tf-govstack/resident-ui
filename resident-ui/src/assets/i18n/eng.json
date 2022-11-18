@@ -199,7 +199,8 @@
     },
     "personalisedcard":{
         "title": "Download Your Personalised Card",
-        "mainlabel" : "Choose the data you want to include the credential"
+        "mainlabel" : "Choose the data you want to include the credential",
+        "downloadbutton" : "Download"
     },
     "physicalcard":{
         "title": "Order A Physical Card",
@@ -210,7 +211,8 @@
         "mainlabel" : "Choose the data you want to include the credential",
         "partnerName" : "Authorization Partner Name",
         "sharingReason" : "Purpose of sharing your credential",
-        "sharingReasonPlaceholder" : "Enter the purpose here"
+        "sharingReasonPlaceholder" : "Enter the purpose here",
+        "sharebutton" : "Share"
     },
     "genericmessage":{
         "successLabel":"Success",
