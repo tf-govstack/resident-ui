@@ -19,7 +19,16 @@ input{
 td > label{
   font-size: 12px;
 }
+table{
+  border: none;
+}
 
 td{
   padding: 10px;
+}
+
+.trackDetails{
+  padding: 1rem  !important;
+  border-radius: 10px;
+  border: 2px solid #909090;
 }

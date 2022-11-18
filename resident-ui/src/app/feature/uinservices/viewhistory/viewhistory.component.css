@@ -56,7 +56,7 @@ input{
   width: 75%;
   height: 35px;
   background: #FFFFFF 0% 0% no-repeat padding-box;
-  border: 1px solid #909090;
+  border: 2px solid #909090;
   border-radius: 5px;
   opacity: 1;
   padding: 10px;
@@ -76,4 +76,7 @@ input{
 
 .mat-primary .mat-option.mat-selected:not(.mat-option-disabled){
   color: black !important;
+}
+.date-input{
+  border: 2px solid #8B8B8B;
 }

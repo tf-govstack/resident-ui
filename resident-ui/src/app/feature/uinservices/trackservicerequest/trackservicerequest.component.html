@@ -6,16 +6,19 @@
 	<mat-card>
 		<table style="width: 100%;">
 			<tr>
-				<td style="padding: 10px;"><span>{{'trackservicerequest.searchLabel' | translate}} </span></td>
+				<td style="padding: 10px; color:#505050; size: 20px;"><span>{{'trackservicerequest.title' | translate}} </span></td>
 			</tr>
 			<tr>
 				<td style="padding: 10px;">
+					<label style="color: #909090; size: 12px;">{{'trackservicerequest.searchLabel' | translate}}<span style="color: #FF0000; margin-bottom:8px;">*</span></label>
+					<br/>
           			<input type="text" id="appIdValue" name="appIdValue" value={{aidVal}} (blur)="captureValue($event, 'aidVal', 'textbox')" placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;<button mat-raised-button style="width:100px;height: 36px;font-size: 16px;" color="primary" (click)="getAIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
 				</td>
 			</tr>
 		</table>
-
-		<table *ngIf="aidStatus" style="width: 100%;border: 1px solid silver;border-radius: 10px; border-collapse: collapse;">
+		<!-- *ngIf="aidStatus" -->
+		<div *ngIf="aidStatus" class="trackDetails">
+		<table   style="width: 100%;border-radius: 10px; border-collapse: collapse;">
 			<tr style="border-bottom: 1px solid silver;">
 				<td colspan="2">
 					<table style="width: 100%;">
@@ -52,11 +55,13 @@
 				<td><label>{{'trackservicerequest.vid' | translate}}</label></td>
 				<td><label>{{'trackservicerequest.timestamp' | translate}}</label></td>
 			</tr>
-			<tr style="border-bottom: 1px solid silver;padding:10px;">
+			<!-- style="border-bottom: 1px solid silver;padding:10px;" -->
+			<tr>
 				<td>{{aidStatus.info.vid}}</td>
 				<td>{{aidStatus.timestamp}}</td>
 			</tr>
 		</table>
+	</div>
 
 	</mat-card>	
 </div>

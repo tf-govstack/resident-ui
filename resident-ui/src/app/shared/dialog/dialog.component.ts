@@ -51,11 +51,10 @@ export class DialogComponent implements OnInit {
   requiredError = false;
   rangeError = false;
   fieldName = '';
-
+  popMsgbgColor:string = "#E8FDF2"
+  popMsgColor:string = "#03A64A"
   cancelApplied = false;
-
   filterOptions: any = {};
-
   holidayForm: FormGroup;
   sitealignment = 'ltr';
 
@@ -72,17 +71,23 @@ export class DialogComponent implements OnInit {
     /*private headerService: HeaderService,*/
     private logoutService: LogoutService
   ) {
-
     this.translate.use(this.primaryLangCode);
+    console.log(this.data)
     if(this.primaryLangCode === "ara"){
       this.sitealignment = 'rtl';
+    }
+    if(this.data.title === "Error"){
+      this.popMsgbgColor = "#FFD9D8"
+      this.popMsgColor = "#C90500"
+    }else if (this.data.title === "Warning"){
+      this.popMsgbgColor = "#ebbf67"
+      this.popMsgColor = "#fc7303"
     }
   }
 
   async ngOnInit() {
     this.input = this.data;
   }
-
 
   onNoClick(): void {
     this.cancelApplied = true;
@@ -92,5 +97,6 @@ export class DialogComponent implements OnInit {
   dismiss(): void {
     this.dialog.closeAll();
   }
-
 }
+
+
