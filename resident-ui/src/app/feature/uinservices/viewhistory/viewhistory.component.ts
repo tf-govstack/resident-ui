@@ -113,6 +113,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   search(){    
     let searchParam = "", self = this;    
     this.controlTypes.forEach(controlType => {
+      console.log(controlType)
       if(self[controlType]){
         if(searchParam){
           searchParam = searchParam+"&"+controlType+"="+self[controlType];

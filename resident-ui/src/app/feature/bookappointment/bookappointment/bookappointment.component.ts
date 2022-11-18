@@ -26,6 +26,7 @@ export class BookappointmentComponent implements OnInit {
   showPopupForUidCard: boolean = false;
   popupMessages: any;
   interval:any;
+  channelType: any= "99XXXXXX80"
 
   userPreferredLangCode = localStorage.getItem("langCode");
 

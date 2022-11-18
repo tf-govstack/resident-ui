@@ -4,7 +4,9 @@
 <div class="spinner" *ngIf="!isWorkingDaysAvailable">
   <mat-spinner></mat-spinner>
 </div>
-<mat-tab-group *ngIf="isWorkingDaysAvailable" class="mat-tab-group mat-background-primary mat-primary" (selectedTabChange)="onItemSelected($event)">
+<div class="details-main-card" *ngIf="isWorkingDaysAvailable">
+<div class="details-card">
+<mat-tab-group  class="tabs" (selectedTabChange)="onItemSelected($event)">
   <mat-tab label="{{'dashboard.regcenter' | translate}}"></mat-tab>
   <mat-tab label="{{'dashboard.document' | translate}}"></mat-tab>
 </mat-tab-group>
@@ -25,7 +27,6 @@
           <img src="assets\search.png" />
         </button> -->
       </div>
-
       <ng-template #elseBlock>
         <div class="center_selection-form-container">
           <div *ngIf="REGISTRATION_CENTRES" class="center_selection-center_recommendation-display">
@@ -193,4 +194,5 @@
     </div>
   </div>
 </div>
-
+</div>
+</div>

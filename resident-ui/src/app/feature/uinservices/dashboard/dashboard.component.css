@@ -1,17 +1,43 @@
-ul, li{
-  list-style-type:none;
+ul,
+li {
+  list-style-type: none;
   padding: 2px 0px 3px 9px;
 }
+
 .mini-card {
   width: 90%;
-  height: 50%;
-  border-radius: 5px;
+  height: 100%;
+  border-radius: 10px 10px 10px 10px;
+  margin-bottom: .5rem;
+  padding: 1rem;
 }
 
-mat-card > span img{
+mat-card>span img {
   margin: 0 16px;
 }
 
 mat-card-title {
   cursor: pointer;
+}
+
+.services-description {
+  font-size: 13px;
+  padding-left: 12px;
+  color: #909090;
+  opacity: 1;
+}
+
+.main-card {
+  background: #d7d1d11a;
+  height: 33rem;
+}
+
+.uin-heading {
+  text-align: left;
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0px;
+  color: #505050;
+  cursor: none;
 }

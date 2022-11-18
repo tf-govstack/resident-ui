@@ -1,16 +1,19 @@
 <span class="breadcrumb">
 	<a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<span class="active">{{'dashboard.uinservices' | translate}}</span>
+
 </span>
 <div class="main-div">
-	<mat-card style="background: #d7d1d11a;">
-		<mat-card-title>{{'dashboard.uinservices' | translate}}</mat-card-title>
-		<mat-grid-list cols="4" rowHeight="2:1" *ngIf="menuItems">
+	<mat-card  class="main-card">
+		<mat-card-title class="uin-heading">{{'dashboard.uinservices' | translate}}</mat-card-title>
+		<mat-card-subtitle class="services-description">{{'dashboard.uindescription' | translate}}</mat-card-subtitle>
+		<mat-grid-list cols="4" rowHeight="2:1" *ngIf="menuItems" [gutterSize]="'10px'" rowHeight="200px">
 			<mat-grid-tile *ngFor="let item of menuItems[0].subMenus">
 				<mat-card class="mini-card">
 				  <span><img mat-card-xs-image [src]=item.icon/></span>
 				  <mat-card-header>				  	
 				    <mat-card-title (click)="onItemSelected(item.route)">{{item.displayName}}</mat-card-title>	    
 				  </mat-card-header>
+				  <mat-card-subtitle class="services-description">{{item.description}}</mat-card-subtitle>
 				</mat-card>
 			</mat-grid-tile>		  
 		</mat-grid-list>
