@@ -7,6 +7,7 @@ import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: "app-sharewithpartner",
@@ -20,11 +21,16 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   schema : any;
   langCode: string = "";
   partnerDetails : any;
-  dataDisplay:any={};
+  partnerId:string = "";
+  purpose:string = "";
+  sharableAttributes:any={};
+  showAcknowledgement:boolean = false;
+  aidStatus:any;
 
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
   async ngOnInit() {
+    this.showAcknowledgement = false;
     this.langCode = localStorage.getItem("langCode");
     
     this.translateService.use(localStorage.getItem("langCode"));
@@ -53,29 +59,92 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     });
   }
 
-   captureCheckboxValue($event:any, data:any){
-    console.log("<<<data.attributeName>>>"+JSON.stringify(data)); 
-    
-    /*if(data.attributeName.toString() in this.dataDisplay){
-      delete this.dataDisplay[data.attributeName];
-    }else{
-      let value = "";
-      if (typeof this.userInfo[data.attributeName] === "string") {
-        value = this.userInfo[data.attributeName];
-      }else{
-        value = this.userInfo[data.attributeName][0].value;
-      }
-      this.dataDisplay[data.attributeName] = {"label":data.label[this.langCode], "value": value};
-    }      
-    let row = "";
-    for (const key in this.dataDisplay) {
-      row = row+"<tr><td>"+this.dataDisplay[key].label+"</td><td>"+this.dataDisplay[key].value+"</td></tr>";
-    }
-    console.log("this.dataDisplay>>>"+JSON.stringify(this.dataDisplay));
-    this.buildHTML = `<html><head></head><body><table>`+row+`</table></body></html>`;*/
+  captureCheckboxValue($event:any, data:any, type:string){
 
+    console.log("<<<data.attributeName>>>"+JSON.stringify(data)); 
+    if(type === "datacheck"){
+      if(data.attributeName.toString() in this.sharableAttributes){
+        delete this.sharableAttributes[data.attributeName];
+      }else{
+        this.sharableAttributes[data.attributeName] = {"attributeName":data.attributeName, "format": "", "isMasked": false};
+      }
+    }else if(type === "maskcheck"){
+      console.log("$event>>>"+$event.checked+">>>this.sharableAttributes[data.attributeName]>>>"+this.sharableAttributes[data.attributeName]);
+      if(this.sharableAttributes[data.attributeName]){
+        this.sharableAttributes[data.attributeName]["isMasked"] = $event.checked;
+      }else{
+        this.sharableAttributes[data.attributeName] = {"attributeName":data.attributeName, "format": "", "isMasked": $event.checked};
+      }
+    }
+    console.log("<<<this.sharableAttributes>>>"+JSON.stringify(this.sharableAttributes));     
+  }
+
+  stopPropagation($event:any){
     $event.stopPropagation();
   }
+
+  captureDropDownValue(event: any) {    
+    if (event.source.selected) {
+      this.partnerId = event.source.value;
+    }
+  }
+
+  shareInfo(){
+    let sharableAttributes = [];    
+    for (const key in this.sharableAttributes) {      
+      sharableAttributes.push(this.sharableAttributes[key]);  
+    }
+
+    let self = this;
+    const request = {
+      "id": "mosip.resident.share.credential",
+      "version": "1.0",
+      "requesttime": Utils.getCurrentDate(),
+      "request":{
+        "partnerId": this.partnerId,
+        "purpose": this.purpose,
+        "consent": "Accepted",
+        "sharableAttributes": sharableAttributes,
+      }
+    };
+
+    this.dataStorageService
+    .shareInfo(request)
+    .subscribe(data => {
+      this.dataStorageService
+      .getAIDStatus(data["response"].eventId)
+      .subscribe((response) => {
+        if(response["response"]) 
+          this.aidStatus = response["response"];
+          this.showAcknowledgement = true;
+      });
+      console.log("data>>>"+data);
+    },
+    err => {
+      console.error(err);
+    });
+    
+  }
+
+  downloadAcknowledgement(eventId:string){
+    this.dataStorageService
+    .downloadAcknowledgement(eventId)
+    .subscribe(data => {
+      var fileName = eventId+".pdf";
+      const contentDisposition = data.headers.get('Content-Disposition');
+      if (contentDisposition) {
+        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = fileNameRegex.exec(contentDisposition);
+        if (matches != null && matches[1]) {
+          fileName = matches[1].replace(/['"]/g, '');
+        }
+      }
+      saveAs(data.body, fileName);
+    },
+    err => {
+      console.error(err);
+    });
+  }   
 
   showMessage(message: string) {    
     const dialogRef = this.dialog.open(DialogComponent, {

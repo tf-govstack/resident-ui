@@ -7,6 +7,8 @@ import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { encode } from 'url-safe-base64'
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: "app-personalisedcard",
@@ -50,7 +52,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .getUserInfo()
     .subscribe((response) => {
-      console.log("response>>>"+JSON.stringify(response["response"]));
       this.userInfo = response["response"];
     });
   }
@@ -64,7 +65,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       delete this.dataDisplay[data.attributeName];
     }else{
       let value = "";
-      if (typeof this.userInfo[data.attributeName] === "string") {
+      if (typeof this.userInfo[data.attributeName] === "string") {        
         value = this.userInfo[data.attributeName];
       }else{
         value = this.userInfo[data.attributeName][0].value;
@@ -72,13 +73,48 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       this.dataDisplay[data.attributeName] = {"label":data.label[this.langCode], "value": value};
     }      
     let row = "";
+    console.log("data.attributeName>>>"+data.attributeName);
     for (const key in this.dataDisplay) {
-      row = row+"<tr><td>"+this.dataDisplay[key].label+"</td><td>"+this.dataDisplay[key].value+"</td></tr>";
+      if(data.attributeName === "photo"){
+        row = row+"<tr><td>"+this.dataDisplay[key].label+"</td><td><img src='data:image/png;base64, "+this.dataDisplay[key].value+"' alt=''/></td></tr>";  
+      }else{
+       row = row+"<tr><td>"+this.dataDisplay[key].label+"</td><td>"+this.dataDisplay[key].value+"</td></tr>";
+      }      
     }
-    console.log("this.dataDisplay>>>"+JSON.stringify(this.dataDisplay));
+    console.log("this.dataDisplay>>>"+this.dataDisplay);
     this.buildHTML = `<html><head></head><body><table>`+row+`</table></body></html>`;
-
+    console.log("this.buildHTML>>>"+JSON.stringify(this.buildHTML));
     $event.stopPropagation();
+  }
+
+  convertpdf(){
+    let self = this;
+    const request = {
+      "id": "mosip.resident.euin",
+      "version": this.appConfigService.getConfig()["resident.vid.version"],
+      "requesttime": Utils.getCurrentDate(),
+      "request":{
+        "html": btoa(this.buildHTML)
+      }
+    };
+
+    this.dataStorageService
+    .convertpdf(request)
+    .subscribe(data => {
+      var fileName = self.userInfo.fullName+".pdf";
+      const contentDisposition = data.headers.get('Content-Disposition');
+      if (contentDisposition) {
+        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = fileNameRegex.exec(contentDisposition);
+        if (matches != null && matches[1]) {
+          fileName = matches[1].replace(/['"]/g, '');
+        }
+      }
+      saveAs(data.body, fileName);
+    },
+    err => {
+      console.error(err);
+    });
   }
 
   showMessage(message: string) {    
