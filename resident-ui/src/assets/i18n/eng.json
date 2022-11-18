@@ -98,7 +98,7 @@
         {
             "displayName": "Get My UIN",
             "icon": "location_on",
-            "route": "",
+            "route": "getuin",
             "auditEventId": "ADM-004",
             "cols":1,
             "rows":1
@@ -121,6 +121,23 @@
         "document" : "List of Supporting Documents",
         "verify" : "Verify Phone Number / Email ID",
         "uinservices" : "UIN Services"
+    },
+    "uinservices": {
+        "login":"Login",
+        "title":"Enter your AID/UIN/VID",
+        "description":"Please enter the AID you received during registration",
+        "plaginLabel":"I’m not a robot",
+        "buttonText": "Send OTP",
+        "home" : "Home",
+        "label":"Get My UIN",
+        "icon":"assets/images/info_black_24dp (1).png"
+    },
+    "bookappointment":{
+        "home":"Home",
+        "label":"Book an Appointment",
+        "subTitle":"The OTP will expire in",
+        "inputLabel":"Enter One Time Password (OTP)",
+        "otpDescription":"One Time Password (OTP) has been sent to your registered Mobile Number"
     },
     "centerSelection": {
         "title": " Book Appointment ",
@@ -148,7 +165,11 @@
         "sendotp": "Send OTP",
         "otp": "Enter OTP",
         "submit": "Submit",
-        "resendotp": "Resend OTP"
+        "resendotp": "Resend OTP",
+        "phoneicon": "assets/images/phone_iphone_black_24dp.png",
+        "subTitle":"The OTP will expire in",
+        "inputLabel":"Enter One Time Password (OTP)",
+        "otpDescription":"One Time Password (OTP) has been sent to your registered Mobile Number"
     },
     "viewhistory":{
         "title": "View History",
@@ -216,6 +237,7 @@
         "successLabel":"Success",
         "successButton":"OK",
         "errorLabel":"Error",
+		"warningLabel":"Warning",
         "createMessage":"Created Successfully",
         "updateMessage":"Updated Successfully",
         "mappingMessage":" Mapped Successfully"        

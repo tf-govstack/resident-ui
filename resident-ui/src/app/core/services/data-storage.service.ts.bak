@@ -4,8 +4,6 @@ import { AppConfigService } from 'src/app/app-config.service';
 import * as appConstants from "../../app.constants";
 import { ConfigService } from "./config.service";
 
-let headers : any = new Headers();
-headers.append('Content-Type','application/json');
 @Injectable({
   providedIn: 'root'
 })

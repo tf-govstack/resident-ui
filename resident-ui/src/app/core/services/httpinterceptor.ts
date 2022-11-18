@@ -16,7 +16,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from 'src/app/app-config.service';
 import * as appConstants from 'src/app/app.constants';
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
           if (event instanceof HttpResponse) {            
             if (event.url.split('/').includes('validateToken')) {                
                 if (event.body.response) {
-                  this.decoded = jwt_decode(event.body.response.token);
+                  // this.decoded = jwt_decode(event.body.response.token);
                 }
                 if (
                   event.body.errors !== null &&

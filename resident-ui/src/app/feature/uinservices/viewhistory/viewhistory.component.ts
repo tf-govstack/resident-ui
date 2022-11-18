@@ -7,6 +7,8 @@ import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
+
 
 @Component({
   selector: "app-viewhistory",
@@ -31,7 +33,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   statusFilter:string = "";
   controlTypes = ["searchText", "serviceType", "statusFilter"]
   datas:{};
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>) {
+    this.dateAdapter.setLocale('en-GB'); 
+  }
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));      
