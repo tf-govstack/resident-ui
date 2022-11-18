@@ -14,7 +14,7 @@
       <input #box (keyup)="captureValue(box.value)" placeholder="Enter OTP here" id="otp-input" class="enter-opt-input" type="text" />
       <div class="otp-infromation-card">
         <p class="otp-infromation-text">{{bookAppointmentData.otpDescription | translate}} <span
-            class="mobile-number"> 99XXXXXX80</span>.</p>
+            class="mobile-number"> {{channelType}}</span>.</p>
       </div>
       <div class="get-uin-btn-card">
         <button (click)="onItemSelected('resendOtp')" [style.backgroundColor]="resendOtpBtnBgColor" class="button">Resend OTP</button>

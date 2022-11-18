@@ -6,19 +6,24 @@
 	<mat-card>
 		<table style="width: 100%;">
 			<tr>
-				<td style="padding: 10px; color:#505050; size: 20px;"><span>{{'trackservicerequest.title' | translate}} </span></td>
+				<td style="padding: 10px; color:#505050; font-size: 22px;"><span>{{'trackservicerequest.title' | translate}} </span></td>
+			</tr>
+			<tr>
+				<td style="color: #909090;">
+					{{'trackservicerequest.descriptionText' | translate}}
+				</td>
 			</tr>
 			<tr>
 				<td style="padding: 10px;">
 					<label style="color: #909090; size: 12px;">{{'trackservicerequest.searchLabel' | translate}}<span style="color: #FF0000; margin-bottom:8px;">*</span></label>
 					<br/>
-          			<input type="text" id="appIdValue" name="appIdValue" value={{aidVal}} (blur)="captureValue($event, 'aidVal', 'textbox')" placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;<button mat-raised-button style="width:100px;height: 36px;font-size: 16px;" color="primary" (click)="getAIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
+          			<input type="text" id="appIdValue" name="appIdValue" value={{aidVal}} (blur)="captureValue($event, 'aidVal', 'textbox')" placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;
+					<button mat-raised-button style="width:100px;height: 36px;font-size: 16px;" color="primary" (click)="getAIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
 				</td>
 			</tr>
 		</table>
-		<!-- *ngIf="aidStatus" -->
 		<div *ngIf="aidStatus" class="trackDetails">
-		<table   style="width: 100%;border-radius: 10px; border-collapse: collapse;">
+		<table   style="width: 100%; border-radius: 10px; border-collapse: collapse;">
 			<tr style="border-bottom: 1px solid silver;">
 				<td colspan="2">
 					<table style="width: 100%;">
@@ -44,7 +49,7 @@
 				<td>{{aidStatus.individualId}}</td>
 			</tr>
 			<tr style="padding:10px;">
-				<td><label>{{'trackservicerequest.authenticationMode' | translate}}</label></td>
+				<td><label>{{'trackservicerequest.authenticationMode' | translate}} </label></td>
 				<td><label>{{'trackservicerequest.vidType' | translate}}</label></td>
 			</tr>
 			<tr style="border-bottom: 1px solid silver;padding:10px;">
@@ -56,11 +61,14 @@
 				<td><label>{{'trackservicerequest.timestamp' | translate}}</label></td>
 			</tr>
 			<!-- style="border-bottom: 1px solid silver;padding:10px;" -->
-			<tr>
+			<tr style="padding:10px;">
 				<td>{{aidStatus.info.vid}}</td>
 				<td>{{aidStatus.timestamp}}</td>
 			</tr>
 		</table>
+		<div style="text-align: right;">
+			<button class="download-btn"><img class="save-icon" src="./assets/images/save.png"/>Download</button>&nbsp;&nbsp;&nbsp;<button>Clear</button>
+		</div>
 	</div>
 
 	</mat-card>	

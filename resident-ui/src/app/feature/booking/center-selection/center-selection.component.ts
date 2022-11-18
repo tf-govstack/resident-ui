@@ -310,6 +310,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
         )
         .subscribe(
           (response) => {
+            console.log(response)
             if (response[appConstants.RESPONSE]) {
               this.totalItems = response[appConstants.RESPONSE].totalItems;
               this.displayResults(response[appConstants.RESPONSE]);

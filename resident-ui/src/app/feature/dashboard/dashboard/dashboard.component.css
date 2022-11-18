@@ -12,9 +12,6 @@
   opacity: 1;
 }
 
-
-
-
 .grid-container {
   display: grid;
   grid-template-columns: auto auto auto;
@@ -31,11 +28,11 @@
 .item1 {
   grid-row-start: 1;
   grid-row-end: 3;
-  height: 315px !important;
+  height: 385px !important;
 }
 
 .item-card {
-  height: 150px;
+  height: 190px;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 10px #00000029;
   border-radius: 10px;
@@ -72,12 +69,23 @@ mat-icon.mat-card-avatar {
   height: 40px;
   font-size: 40px;
 }
+.dashboard-icons{
+  width: 60px;
+  height: 60px;
+  font-size: 40px;
+  margin-right: 6px;
+}
 
 .mat-card-title {
   text-align: left; 
-  font: normal normal medium 22px/25px Roboto;
+  font-size: 22px;
   letter-spacing: 0px;
   color: #464A8C;
-   opacity: 1;
+  opacity: 1;
+  font-weight: bold;
 }
 
+.title{
+  display: flex;
+  align-items: center;
+}
