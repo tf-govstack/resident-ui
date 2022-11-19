@@ -2,7 +2,7 @@
     "menuItems": [
         {
             "displayName": "UIN Services",
-            "icon": "/assets/icons/iconfont/uin_services.svg",
+            "icon": "./assets/icons/iconfont/uin_services.svg",
             "route": "",
             "auditEventId": "ADM-004",
             "cols":2,
@@ -59,7 +59,7 @@
         },
         {
             "displayName": "Get Information",
-            "icon": "/assets/icons/iconfont/get_information.svg",
+            "icon": "./assets/icons/iconfont/get_information.svg",
             "route": "",
             "auditEventId": "ADM-004",
             "cols":1,
@@ -79,7 +79,7 @@
         },
         {
             "displayName": "Booking an Appointment",
-            "icon": "/assets/icons/iconfont/book_appointment.svg",
+            "icon": "./assets/icons/iconfont/book_appointment.svg",
             "route": "",
             "auditEventId": "ADM-004",
             "cols":1,
@@ -105,7 +105,7 @@
         },
         {
             "displayName": "Get My UIN",
-            "icon": "/assets/icons/iconfont/get_my_uin.svg",
+            "icon": "./assets/icons/iconfont/get_my_uin.svg",
             "route": "getuin",
             "auditEventId": "ADM-004",
             "cols":1,
@@ -113,7 +113,7 @@
         }, 
         {
             "displayName": "Verify Phone Number / Email ID",
-            "icon": "/assets/icons/iconfont/verify_phone_number.svg",
+            "icon": "./assets/icons/iconfont/verify_phone_number.svg",
             "route": "verify",
             "auditEventId": "ADM-004",
             "cols":1,
