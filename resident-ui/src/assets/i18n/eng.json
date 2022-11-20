@@ -3,6 +3,7 @@
         {
             "displayName": "UIN Services",
             "icon": "./assets/icons/iconfont/uin_services.svg",
+            "activeIcon":"./assets/images/UIN Services.png",
             "route": "",
             "auditEventId": "ADM-004",
             "cols":2,
@@ -60,6 +61,7 @@
         {
             "displayName": "Get Information",
             "icon": "./assets/icons/iconfont/get_information.svg",
+            "activeIcon":"./assets/images/Get Information.png",
             "route": "",
             "auditEventId": "ADM-004",
             "cols":1,
@@ -80,6 +82,7 @@
         {
             "displayName": "Booking an Appointment",
             "icon": "./assets/icons/iconfont/book_appointment.svg",
+            "activeIcon":"./assets/images/Book an Appointment.png",
             "route": "",
             "auditEventId": "ADM-004",
             "cols":1,
@@ -106,6 +109,7 @@
         {
             "displayName": "Get My UIN",
             "icon": "./assets/icons/iconfont/get_my_uin.svg",
+            "activeIcon":"./assets/images/Get My UIN.png",
             "route": "getuin",
             "auditEventId": "ADM-004",
             "cols":1,
@@ -114,6 +118,7 @@
         {
             "displayName": "Verify Phone Number / Email ID",
             "icon": "./assets/icons/iconfont/verify_phone_number.svg",
+            "activeIcon":"./assets/images/Verify Phone Number-Email ID.png",
             "route": "verify",
             "auditEventId": "ADM-004",
             "cols":1,
@@ -136,7 +141,7 @@
         "login":"Login",
         "title":"Enter your AID/UIN/VID",
         "description":"Please enter the AID you received during registration",
-        "plaginLabel":"I�m not a robot",
+        "plaginLabel":"I'm not a robot",
         "buttonText": "Send OTP",
         "home" : "Home",
         "label":"Get My UIN",
