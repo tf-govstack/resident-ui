@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private appConfigService: AppConfigService,
   ) {
-
+  
   }
 
   async ngOnInit() {
