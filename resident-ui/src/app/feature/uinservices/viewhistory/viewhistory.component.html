@@ -9,56 +9,45 @@
 		<h3 style="color: #505050; font-size:20px;">{{'viewhistory.title' | translate}}</h3>
 		<table *ngIf="responselist" style="width: 100%;">
 			<tr>
-				<td style="width: 20%;padding: 10px;"><span>Search</span></td>
-				<td style="width: 20%;padding: 10px;"><span>History Type</span></td>
-				<td style="width: 20%;padding: 10px;"><span>Status</span></td>
-				<td style="width: 20%;padding: 10px;"><span>From (dd/mm/yyyy)</span></td>
-				<td style="width: 20%;padding: 10px;"><span>To (dd/mm/yyyy)</span></td>
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputsearch' | translate}}</span></td>
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputHistory' | translate}}</span></td>
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputFrom' | translate}}</span></td>
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputTo' | translate}}</span></td>
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputStatus' | translate}}</span></td>			
+				<td style="width: 20%;padding: 10px;"></td>
 			</tr>
-			<tr>
-				<td style="width: 20%;padding: 10px;">
+			<tr style="vertical-align: baseline;">
+				<td style="width: 16%;padding: 10px;">
 					<input type="text" id="appIdValue" name="appIdValue" style="margin-bottom: 1.2rem;"
 						(blur)="captureValue($event, 'searchText', 'textbox')"
 						placeholder="{{'viewhistory.inputAppId' | translate}}" />
 				</td>
-				<td style="width: 20%;padding: 10px;">
-					<mat-form-field>
-						<mat-select multiple placeholder="{{'viewhistory.inputHistory' | translate}}"
-							(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
-							<mat-option *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType"
-								[value]="serviceType">{{serviceType}}</mat-option>
-						</mat-select>
-					</mat-form-field>
+				<td style="width: 16%;padding: 10px;">
+					<mat-select multiple placeholder="{{'viewhistory.inputHistory' | translate}}"
+						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
+						<mat-option *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
+							[value]="serviceType.value">{{serviceType.label}}</mat-option>
+					</mat-select>
+				</td>				
+				<td style="width: 16%;padding: 10px;">
+					<input  matInput [matDatepicker]="fromPicker" style="width:80%;height:37px;"  (dateChange)="captureValue($event, 'fromDateTime', 'datepicker')">
+					<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+					<mat-datepicker #fromPicker></mat-datepicker>
 				</td>
-				<td style="width: 20%;padding: 10px;">
-					<mat-form-field>
-						<mat-select multiple placeholder="{{'viewhistory.inputStatus' | translate}}"
-							(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
-							<mat-option *ngFor="let status of statusTypeFilter" [id]="status" [value]="status">
-								{{status}}</mat-option>
-						</mat-select>
-					</mat-form-field>
+				<td style="width: 16%;padding: 10px;">
+					<input  matInput [matDatepicker]="toPicker" style="width:80%;height:37px;"  (dateChange)="captureValue($event, 'toDateTime', 'datepicker')">
+					<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+					<mat-datepicker #toPicker></mat-datepicker>
 				</td>
-				<td style="width: 15%;padding: 10px;">
-					<mat-form-field >
-						<mat-label style="margin-top: 10px;">Choose a date</mat-label>
-						<input  matInput [matDatepicker]="fromPicker">
-						<!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
-						<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-						<mat-datepicker #fromPicker></mat-datepicker>
-					  </mat-form-field>
+				<td style="width: 16%;padding: 10px;">
+					<mat-select multiple placeholder="{{'viewhistory.inputStatus' | translate}}"
+						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
+						<mat-option *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value">
+							{{status.label}}</mat-option>
+					</mat-select>
 				</td>
-				<td style="width: 15%;padding: 10px;">
-					<mat-form-field>
-						<mat-label>Choose a date</mat-label>
-						<input  matInput [matDatepicker]="toPicker">
-						<!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
-						<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-						<mat-datepicker #toPicker></mat-datepicker>
-					  </mat-form-field>
-				</td>
-				<td style="width: 20%;padding: 10px;"><button mat-button (click)="search()">{{'viewhistory.searchBtn' |
-						translate}}</button>
+				<td style="width: 20%;padding: 10px;"><button mat-raised-button color="primary" (click)="search()">{{'viewhistory.searchBtn' |
+						translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;<button mat-raised-button color="default" (click)="downloadServiceHistory()"><img class="save-icon" src="./assets/images/save.png"/></button>
 				</td>
 			</tr>
 		</table>
@@ -69,11 +58,11 @@
 					<mat-expansion-panel-header>
 						<td style="width: 2%;padding: 10px;"><span *ngIf="data.pinnedStatus === 'true'"><img
 									src="assets\pin.png" style="color: green;width: 8px;"></span></td>
-						<td style="width: 33%;padding: 10px;color: #008CED;"><span>Application ID :
+						<td style="width: 33%;padding: 10px;color: #008CED;"><span>{{'viewhistory.inputAppId' | translate}} :
 							</span>{{data.eventId}}</td>
-						<td style="width: 25%;padding: 10px;"><span>Purpose : </span>{{data.description}}</td>
-						<td style="width: 25%;padding: 10px;"><span>Timestamp : </span>{{data.timeStamp | date:'dd/MM/yyyy hh:mm'}}</td>
-						<td style="width: 15%;padding: 10px;"><span>Satus : </span>{{data.eventStatus}}</td>
+						<td style="width: 39%;padding: 10px;"><span>{{'viewhistory.description' | translate}} : </span>{{data.description}}</td>
+						<td style="width: 13%;padding: 10px;"><!-- <span>{{'viewhistory.timestamp' | translate}} : </span> -->{{data.timeStamp | date:'dd/MM/yyyy hh:mm'}}</td>
+						<td style="width: 13%;padding: 10px;"><!-- <span>{{'viewhistory.inputStatus' | translate}} : </span> -->{{data.eventStatus}}</td>
 					</mat-expansion-panel-header>
 					<p style="width: 100%;padding: 10px 35px;">
 						<span style="cursor:pointer;" (click)="reportDetails(data)"><img src="assets\report.png"

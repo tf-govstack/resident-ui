@@ -7,7 +7,6 @@ import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
-import { encode } from 'url-safe-base64'
 import { saveAs } from 'file-saver';
 
 @Component({
