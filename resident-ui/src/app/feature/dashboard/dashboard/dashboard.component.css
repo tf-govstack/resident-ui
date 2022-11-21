@@ -33,6 +33,7 @@
 
 .item-card {
   height: 190px;
+  min-width: 21rem;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 10px #00000029;
   border-radius: 10px;
@@ -42,6 +43,24 @@
 div.item-card:hover{
   background-color: rgb(3, 166, 74);
 }
+div.item-card:hover .icon{
+  display: none;
+}
+div.item-card:hover .active-icon{
+  display: block;
+}
+
+.active-icon{
+  display: none;
+}
+
+.active-dashboard-icons{
+  width: 50px;
+  height: 50px;
+  margin-right: 6px;
+}
+
+
 
 div.item-card:hover mat-card{
   background-color: rgb(3, 166, 74);
@@ -72,7 +91,6 @@ mat-icon.mat-card-avatar {
 .dashboard-icons{
   width: 60px;
   height: 60px;
-  font-size: 40px;
   margin-right: 6px;
 }
 
