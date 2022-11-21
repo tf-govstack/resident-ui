@@ -369,6 +369,11 @@ app-document > ul{
   border-top:  0px !important;
 }
 
+
+.mat-form-field-underline{
+  background-color: transparent !important;
+}
+
 mat-select {
   outline: auto !important;
   outline-color: #909090 !important;
@@ -397,4 +402,12 @@ mat-select {
 
 .mat-checkbox-frame {
   border-color: #03a64a;
+}
+
+.mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+  background: #03a64a;
+}
+
+.mat-select-placeholder{
+  font-size: 14px !important;
 }

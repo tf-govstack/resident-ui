@@ -167,11 +167,11 @@ export class DataStorageService {
   }
 
   updateAuthlockStatus(request:any){
-    return this.httpClient.post(this.BASE_URL   + '/req/auth-type-status', request);
+    return this.httpClient.post(this.BASE_URL   + '/auth-lock-unlock', request);
   }
 
   getProfileInfo(){
-    return this.httpClient.get('https://stoplight.io/mocks/mosip/resident/77242121/profile');
+    return this.httpClient.get(this.BASE_URL   + '/profile');
   }
 
   getServiceHistory(request:any, filters:any){
@@ -242,6 +242,22 @@ export class DataStorageService {
 
   validateUinCardOtp(reqData:any){
     return this.httpClient.post(this.BASE_URL   + '/download-card', reqData , { headers: headers});
+  }
+
+  downloadpdf(request:any){
+    return this.httpClient.get<Blob>(this.BASE_URL   + '/download/personalized-card', { observe: 'response', responseType: 'blob' as 'json' });
+  }
+
+  downloadServiceHistory(filters:any){
+    let buildURL = "";
+    if(filters){
+      buildURL = "?"+filters+"&languageCode="+localStorage.getItem("langCode");
+    }
+    if(!filters){
+      buildURL = "?languageCode="+localStorage.getItem("langCode");
+    }
+    console.log("buildURL>>>"+buildURL);
+    return this.httpClient.get<Blob>(this.BASE_URL   + '/download/service-history'+buildURL, { observe: 'response', responseType: 'blob' as 'json' });
   }
 
 }
