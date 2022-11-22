@@ -24,6 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
 /*import { OptionalFilterValuesModel } from 'src/app/core/models/optional-filter-values.model';
 import { HeaderService } from 'src/app/core/services/header.service';*/
 import { LogoutService } from './../../core/services/logout.service';
+import { InteractionService } from 'src/app/core/services/interaction.service';
 
 @Component({
   selector: 'app-dialog',
@@ -69,7 +70,8 @@ export class DialogComponent implements OnInit {
     /*private auditService: AuditService,*/
     private translate: TranslateService,
     /*private headerService: HeaderService,*/
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private interactionService:InteractionService
   ) {
     this.translate.use(this.primaryLangCode);
     console.log(this.data)
@@ -96,6 +98,11 @@ export class DialogComponent implements OnInit {
 
   dismiss(): void {
     this.dialog.closeAll();
+  }
+
+  shareInfo():void{
+    this.dialog.closeAll();
+    this.interactionService.sendClickEvent()
   }
 }
 

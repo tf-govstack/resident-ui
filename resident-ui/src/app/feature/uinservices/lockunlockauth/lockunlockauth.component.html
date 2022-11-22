@@ -4,6 +4,8 @@
 
 <div class="main-div" *ngIf="langJSON">
 	<mat-card>
+		<h3 class="main-heading">{{'lockunlockauth.title' | translate}}</h3>
+		<p class="intro-description">{{'lockunlockauth.introDescription' | translate}}</p>
 		<mat-grid-list cols="4" rowHeight="2:1" *ngIf="authlist">
 			<mat-grid-tile *ngFor="let authInfo of authlist">
 				<mat-card [ngClass]="authInfo.recorddirty == false ? 'mini-card' : 'mini-card-yellow'" (click)="setAuthlockStatus(authInfo)">

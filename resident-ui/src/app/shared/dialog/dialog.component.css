@@ -43,7 +43,7 @@ h5 {
 }
 .footer-button {
   border: 0.8px solid #FF4081;
-  border-radius: 2px;
+  border-radius: 12px;
   margin: 5px;
   text-transform: capitalize;
   font-size: 11px;
@@ -58,7 +58,7 @@ h5 {
   margin: 120px;
 }
 .mat-dialog-container {
-  border-radius: 0;
+  border-radius: 8px;
   padding: 0;
 }
 
@@ -129,9 +129,9 @@ th.mat-header-cell {
   text-align: center;
   white-space: nowrap;
 }
-tr:nth-child(odd) {
+/* tr:nth-child(odd) {
   background-color: #e8e9e9;
-}
+} */
 th.mat-header-cell,
 td.mat-cell,
 td.mat-footer-cell {
@@ -196,7 +196,7 @@ td.mat-footer-cell:last-child {
 }
 
 .mat-menu {
-  border-radius: 0 !important;
+  border-radius: 12px !important;
 }
 
 :host::ng-deep .mat-menu-content {
@@ -244,13 +244,45 @@ td.mat-footer-cell:last-child {
   width: 80px !important;
 }
 
-.pop-up{
-  border: 2px solid ;
-  border-radius: 6px;
+.pop-up {
+  border: 2px solid;
   padding: 1rem;
-} 
-.infro-card{
+}
+
+.infro-card {
   display: flex;
   align-items: center;
 }
 
+.conditions-card {
+  border: 1px solid #D3D3D3;
+  border-radius: 10px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+}
+
+.agree-test-card{
+  display: flex;
+  align-items: center;
+}
+
+.agree-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.agree-text {
+  color: #000000;
+  font-size: 14px;
+}
+
+.share-btn {
+  width: 100px;
+  height: 36px;
+  background: #03A64A;
+  border-radius: 5px;
+  border: none;
+  color: #ffffff;
+}

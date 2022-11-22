@@ -39,3 +39,9 @@ td.label{
 mat-card-subtitle{
   margin: 0 35px;
 }
+
+.intro-description {
+  font: normal normal medium 16px/22px Montserrat Medium;
+  letter-spacing: 0px;
+  color: #505050;
+}

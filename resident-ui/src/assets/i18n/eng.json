@@ -201,7 +201,8 @@
         "revokevid": "",
         "create":"Create",
         "generatevidtoggle": "Generate VID",
-        "revokevidtoggle": "Revoke VID"
+        "revokevidtoggle": "Revoke VID",
+        "introDescription":"In this service, you can view details of the existing VIDs, generate new VIDs, revoke existing VIDs or download a VID card."
     },
     "lockunlockauth": {
         "title": "Secure My ID",
@@ -209,7 +210,8 @@
         "revokevid": "",
         "generatevidtoggle": "Generate VID",
         "revokevidtoggle": "Revoke VID",
-        "labelmap":{"demo" : "Demographic Authentication", "bio-FINGER" : "Fingerprint Authentication", "bio-IRIS" : "Iris Authentication", "bio-FACE" : "Face Authentication", "otp-email" : "Email OTP Authentication", "otp-phone" : "Mobile OTP Authentication"}
+        "labelmap":{"demo" : "Demographic Authentication", "bio-FINGER" : "Fingerprint Authentication", "bio-IRIS" : "Iris Authentication", "bio-FACE" : "Face Authentication", "otp-email" : "Email OTP Authentication", "otp-phone" : "Mobile OTP Authentication"},
+        "introDescription":"In secure my Id, you can view the status of all the authentication types. You can lock or unlock various authentication types."
     },
     "updatedemographic": {
         "title": "Demographic Data",
@@ -232,16 +234,21 @@
         "vidType":"VID Type",
         "vid":"VID",
         "timestamp":"Timestamp",
-        "descriptionText":"This service can be used to track the status of an EID that is associated with the logged-in UIN/VID. This will give information about the entered EID in detail."
+        "descriptionText":"This service can be used to track the status of an EID that is associated with the logged-in UIN/VID. This will give information about the entered EID in detail.",
+        "transactionTitle":"Transaction Details",
+        "partnerName":"Partner name",
+        "transactionDate":"Transaction Date"
     },
     "personalisedcard":{
         "title": "Download Your Personalised Card",
         "mainlabel" : "Choose the data you want to include the credential",
-        "downloadbutton" : "Download"
+        "downloadbutton" : "Download",
+        "introDescription":"This service can be used by the resident to choose the data that he wants to be added to the card, preview the card, and download it."
     },
     "physicalcard":{
         "title": "Order A Physical Card",
-        "mainlabel" : "Select a print provider"
+        "mainlabel" : "Select a print provider",
+        "introDescription":"This service can be used to order a physical card to the preferred address. The types of cards available, tariffs and other features will depend on the partner chosen in the process."
     },
     "sharewithpartner":{
         "title": "Share With Partner",
@@ -249,7 +256,10 @@
         "partnerName" : "Authorization Partner Name",
         "sharingReason" : "Purpose of sharing your credential",
         "sharingReasonPlaceholder" : "Enter the purpose here",
-        "sharebutton" : "Share"
+        "sharebutton" : "Share",
+        "sharePartnerSuccessMsg":"Your data has been successfully shared with the chosen partner",
+        "successIcon":"./assets/sucess_icon.png",
+        "introDescription":"This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself."
     },
     "genericmessage":{
         "successLabel":"Success",
@@ -258,6 +268,14 @@
 		"warningLabel":"Warning",
         "createMessage":"Created Successfully",
         "updateMessage":"Updated Successfully",
-        "mappingMessage":" Mapped Successfully"        
+        "mappingMessage":" Mapped Successfully",
+        "termsAndConditionsLabel":"Terms and Conditions",
+        "termsAndConditionsDescription":[
+            "Your data will be shared with the chosen third party (credential partner)",
+            "You are responsible for any and all costs and fees associated with agreements entered into with the third-party provider.",
+            "Under no circumstances will we be liable for loss or misuse of data whatsoever, arising from the usage of data shared with the partner.",
+            "if a third-party provider ceases to make its service available or requires MOSIP to suspend or terminate the provision of all or any part of its services to you that part of data or services will be terminated immediately without notice or further obligation to you."
+        ],
+        "agreeLabel":"I agree to the terms and conditions to share my credentials with the chosen partner"
     }
 }
