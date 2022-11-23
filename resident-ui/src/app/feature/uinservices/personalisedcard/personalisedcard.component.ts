@@ -87,6 +87,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   }
 
   convertpdf(){
+    this.conditionsForPersonalisedCard()
     let self = this;
     const request = {
       "id": "mosip.resident.euin",
@@ -114,6 +115,17 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     err => {
       console.error(err);
     });
+  }
+
+  conditionsForPersonalisedCard() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '650px',
+      data: {
+        case: 'conditionsForPersonalisedCard',
+        description: this.popupMessages.genericmessage.personalisedcardConditions
+      }
+    });
+    return dialogRef;
   }
 
   showMessage(message: string) {    
@@ -151,3 +163,5 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.router.navigate([item]);
   }
 }
+
+

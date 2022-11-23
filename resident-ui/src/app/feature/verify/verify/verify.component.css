@@ -24,6 +24,7 @@
   letter-spacing: 0px;
   color: #909090;
   opacity: 1;
+  cursor: pointer;
 }
 
 .btn-card {
@@ -84,11 +85,12 @@ input {
 
 .button2 {
   width: 108px;
-  /* height: 36px; */
+  height: 36px;
   background: #909090 0% 0% no-repeat padding-box;
-  opacity: 1;
   border:none;
   color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .get-uin-btn-card {
   margin-top: 1.7rem;

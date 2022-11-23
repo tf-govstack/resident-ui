@@ -5,14 +5,14 @@
     <h2 class="filter-heading">{{ input.title[primaryLangCode] }}</h2>
     <mat-divider></mat-divider>
     <table class="mat-table">
-      <tr class="mat-row sticky-header" >
-        <th class="mat-header-cell table-header sticky-header"  *ngFor="let col of input.columnNames;">
+      <tr class="mat-row sticky-header">
+        <th class="mat-header-cell table-header sticky-header" *ngFor="let col of input.columnNames;">
           <span>{{col[primaryLangCode]}}</span>
         </th>
       </tr>
       <tr *ngFor="let data of missingData; index as i" class="mat-header-row">
         <td id="data{{i}}" (click)="navigateToItem(data)" class="mat-cell">{{data.id}}</td>
-        <td  (click)="navigateToItem(data)" class="mat-cell">{{data.fieldValue}}</td>
+        <td (click)="navigateToItem(data)" class="mat-cell">{{data.fieldValue}}</td>
       </tr>
     </table>
     <p *ngIf="noMissingDataFlag" style="text-align: center">{{'center.popupMessages.noData.message' | translate}}</p>
@@ -22,10 +22,11 @@
   </div>
   <div class="pop-up">
     <div mat-dialog-actions class="pop-up-footer">
-      <span><button mat-button cdkFocusInitial id="dismiss" (click)="dismiss()">{{'center.cancel' | translate}}</button></span>
+      <span><button mat-button cdkFocusInitial id="dismiss" (click)="dismiss()">{{'center.cancel' |
+          translate}}</button></span>
     </div>
   </div>
-</span>  
+</span>
 
 
 <!-- UnlockConfirmation PopUp -->
@@ -36,35 +37,37 @@
     <div mat-dialog-content>
       <p style="white-space: pre-line">
         <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
-          <mat-radio-button class="example-radio-button" id="noTime" value="noTime">Unlock until further changes are made</mat-radio-button>
-          <mat-radio-button class="example-radio-button" id="setTime" value="setTime">Unlock until DD:HH:MM</mat-radio-button>
-        </mat-radio-group>        
+          <mat-radio-button class="example-radio-button" id="noTime" value="noTime">Unlock until further changes are
+            made</mat-radio-button>
+          <mat-radio-button class="example-radio-button" id="setTime" value="setTime">Unlock until DD:HH:MM
+          </mat-radio-button>
+        </mat-radio-group>
       </p>
-      <table cellspacing="0" ><tr>
-        <td><mat-form-field appearance="outline">
-          <input matInput #days placeholder="Days"/>
-        </mat-form-field></td>
-        <td><mat-form-field appearance="outline">
-          <input matInput #hours placeholder="Hours"/>
-        </mat-form-field></td>
-        <td><mat-form-field appearance="outline">
-          <input matInput #minutes placeholder="Minutes"/>
-        </mat-form-field></td>
-      </tr></table>
+      <table cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field appearance="outline">
+              <input matInput #days placeholder="Days" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <input matInput #hours placeholder="Hours" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <input matInput #minutes placeholder="Minutes" />
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
   <div mat-dialog-actions class="pop-up-footer">
-    <span
-      ><button
-        type="button"
-        mat-button
-        [mat-dialog-close]="confirm"
-        cdkFocusInitial
-        id="confirmpopup"
-      >
+    <span><button type="button" mat-button [mat-dialog-close]="confirm" cdkFocusInitial id="confirmpopup">
         {{ input.yesBtnTxt }}
-      </button></span
-    >
+      </button></span>
   </div>
 </div>
 
@@ -78,60 +81,48 @@
     </div>
   </div>
   <div mat-dialog-actions class="pop-up-footer">
-    <span
-      ><button mat-button id="closeconfirmpopup" [mat-dialog-close]="!confirm">
+    <span><button mat-button id="closeconfirmpopup" [mat-dialog-close]="!confirm">
         {{ input.noBtnTxt }}
-      </button></span
-    >
-    <span
-      ><button
-        type="button"
-        mat-button
-        [mat-dialog-close]="confirm"
-        cdkFocusInitial
-        id="confirmpopup"
-      >
+      </button></span>
+    <span><button type="button" mat-button [mat-dialog-close]="confirm" cdkFocusInitial id="confirmpopup">
         {{ input.yesBtnTxt }}
-      </button></span
-    >
+      </button></span>
   </div>
 </div>
 
 <!-- Message PopUp -->
-<div class="pop-up" *ngIf="input.case === 'MESSAGE'" [style.backgroundColor] = "popMsgbgColor" [style.color]="popMsgColor" [style.borderColor]="popMsgColor">
+<div class="pop-up" *ngIf="input.case === 'MESSAGE'" [style.backgroundColor]="popMsgbgColor" [style.color]="popMsgColor"
+  [style.borderColor]="popMsgColor">
   <div class="infro-card">
-  <img
-    src="assets/images/icon_Suceess right.png"
-    height="45px"
-    width="45px"
-    class="success-img"
-   *ngIf="input.title === ('Success' || 'نجاح' || 'Succès'|| 'सफलता' || 'ಯಶಸ್ಸು' || 'வெற்றி')"   />
-  <div class="pop-up-header">
-    <b mat-dialog-title>{{ input.title }}</b> 
-    <!-- <p>Dear Resident, Your registered email ID Sanjay.kumar30@gmail.com has now been verified.</p> -->
-    <div mat-dialog-content>
-      <div [innerText]="input.message">hello</div>
-       
+    <!-- *ngIf="input.title === ('Success' || 'نجاح' || 'Succès'|| 'सफलता' || 'ಯಶಸ್ಸು' || 'வெற்றி')" -->
+    <img [src]="icon" height="35px" width="35px" class="success-img" />
+    <div class="pop-up-header">
+      <!-- <b mat-dialog-title>{{ input.title }}</b> -->
+      <!-- <p>Dear Resident, Your registered email ID Sanjay.kumar30@gmail.com has now been verified.</p> -->
+      <div mat-dialog-content>
+        <div [innerText]="input.message"></div>
+
+      </div>
     </div>
   </div>
-</div>
   <div mat-dialog-actions class="pop-up-footer">
-    <span
-      ><button mat-button cdkFocusInitial id="confirmmessagepopup" (click)="dismiss()">
+    <span><button mat-button cdkFocusInitial id="confirmmessagepopup" (click)="dismiss()">
         {{ input.btnTxt }}
-      </button></span
-    >
+      </button></span>
   </div>
 </div>
 
 <div class="pop-up" *ngIf="input.case === 'ERROR'">
+  <div class="infro-card">
+  <img [src]="icon" height="35px" width="35px" class="success-img"/>
   <div class="pop-up-header">
     <b mat-dialog-title>{{ input.title }}</b>
     <div mat-dialog-content>
-      <!-- <p>{{ input.message }}</p> -->
+      <p>{{ input.message }}</p>
       <div [innerText]="input.message"></div>
     </div>
   </div>
+</div>
 </div>
 
 <div class="pop-up" *ngIf="input.case === 'STEPS-MESSAGE'">
@@ -142,11 +133,9 @@
     </div>
   </div>
   <div mat-dialog-actions class="pop-up-footer">
-    <span
-      ><button mat-button cdkFocusInitial (click)="dismiss()">
+    <span><button mat-button cdkFocusInitial (click)="dismiss()">
         OK
-      </button></span
-    >
+      </button></span>
   </div>
 </div>
 
@@ -158,12 +147,52 @@
     </div>
   </div>
   <div mat-dialog-actions class="pop-up-footer">
-    <span
-      ><button mat-button cdkFocusInitial id="confirmmessagepopup" (click)="logout()">
+    <span><button mat-button cdkFocusInitial id="confirmmessagepopup" (click)="logout()">
         {{ input.btnTxt }}
-      </button></span
-    >
+      </button></span>
   </div>
 </div>
-<!-- </div> -->
 
+<!-- terms and  Conditions-->
+<div style="padding: 1rem;" *ngIf="input.case === 'termsAndConditions'">
+  <h4>{{ input.title }}</h4>
+  <ol class="conditions-card">
+    <ng-container *ngFor="let condition of input.conditions">
+      <li>{{condition}}</li>
+    </ng-container>
+  </ol>
+  <div class="agree-card">
+    <div class="agree-test-card">
+      <img src="./assets/images/checkbox_sel.png" />
+      &nbsp;
+      <p class="agree-text">{{input.agreeLabel}}</p>
+    </div>
+    <button mat-button (click)="shareInfo()" class="share-btn">Share</button>
+  </div>
+</div>
+
+<!-- Conditions for personalised card -->
+
+<div style="padding: 1rem;" *ngIf="input.case === 'conditionsForPersonalisedCard'">
+    <h3 style="color: #000000; text-align:center;">{{input.description.title}}</h3>
+    <div class="permission-card">
+        <mat-card-subtitle class="permission-card-text">{{input.description.wishes}}</mat-card-subtitle>
+        <mat-card-subtitle class="permission-card-text">{{input.description.description}}</mat-card-subtitle>
+        <mat-card-subtitle class="permission-card-text" style="margin-bottom: 0px;">{{input.description.sendVid}}</mat-card-subtitle>
+        <div class="personalised-agree-card">
+          <img src="./assets/images/checkbox_sel.png"/>
+          &nbsp;
+          <mat-card-subtitle class="permission-card-text" style="margin-top: 1rem;">{{input.description.agreeLabel1}}</mat-card-subtitle>
+        </div>
+        <div class="personalised-agree-card">
+          <img src="./assets/images/checkbox_sel.png"/>
+          &nbsp;
+          <mat-card-subtitle class="permission-card-text" style="margin-top: 1rem;">{{input.description.agreeLabel1}}</mat-card-subtitle>
+        </div>
+    </div>
+    <div style="text-align: right; margin-top: 12px;">
+    <button mat-button class="share-btn" (click)="dismiss()">Send</button>
+  </div>
+</div>
+
+<!-- </div> -->

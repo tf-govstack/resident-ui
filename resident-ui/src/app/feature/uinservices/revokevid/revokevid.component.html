@@ -4,7 +4,8 @@
 
 <div class="main-div" *ngIf="langJSON">
 	<mat-card>
-
+        <h3 style="color: #505050;">{{'managemyvid.title' | translate}}</h3>
+        <p class="intro-description">{{'managemyvid.introDescription' | translate}}</p>
 		<table *ngIf="policyType" style="width:100%">
 			<tr *ngFor = "let policy of policyType.vidPolicies">
 				<td style="width:100%">					 

@@ -8,6 +8,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
+import { InteractionService } from "src/app/core/services/interaction.service";
 
 @Component({
   selector: "app-sharewithpartner",
@@ -26,8 +27,13 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   sharableAttributes:any={};
   showAcknowledgement:boolean = false;
   aidStatus:any;
+  clickEventSubscription:Subscription;
 
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  constructor(private interactionService:InteractionService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
+    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe(()=>{
+      this.shareInfo()
+    })
+  }
 
   async ngOnInit() {
     this.showAcknowledgement = false;
@@ -61,7 +67,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
   captureCheckboxValue($event:any, data:any, type:string){
 
-    console.log("<<<data.attributeName>>>"+JSON.stringify(data)); 
+    // console.log("<<<data.attributeName>>>"+JSON.stringify(data)); 
     if(type === "datacheck"){
       if(data.attributeName.toString() in this.sharableAttributes){
         delete this.sharableAttributes[data.attributeName];
@@ -89,6 +95,10 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     }
   }
 
+  shareInfo1(){
+    this.termAndConditions()
+  }
+
   shareInfo(){
     let sharableAttributes = [];    
     for (const key in this.sharableAttributes) {      
@@ -114,6 +124,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       this.dataStorageService
       .getAIDStatus(data["response"].eventId)
       .subscribe((response) => {
+        console.log(response)
         if(response["response"]) 
           this.aidStatus = response["response"];
           this.showAcknowledgement = true;
@@ -123,7 +134,20 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     err => {
       console.error(err);
     });
-    
+  }
+
+  termAndConditions() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '850px',
+      data: {
+        case: 'termsAndConditions',
+        title: this.popupMessages.genericmessage.termsAndConditionsLabel,
+        conditions:this.popupMessages.genericmessage.termsAndConditionsDescription,
+        agreeLabel: this.popupMessages.genericmessage.agreeLabel,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
   }
 
   downloadAcknowledgement(eventId:string){
