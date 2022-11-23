@@ -128,6 +128,10 @@ export class VerifyComponent implements OnInit, OnDestroy {
     this[formControlName] = event.target.value;
   }
 
+  sendOtpBtn(){
+    this.isVerifiedPhoneNumEmailId()
+  }
+
   resendOtp() {
     this.resendBtnBgColor = "#909090";
     clearInterval(this.interval)
@@ -140,8 +144,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   submitOtp() {
-    // this.verifyOTP()
-    this.isVerifiedPhoneNumEmailId()
+    this.verifyOTP()
+    // this.isVerifiedPhoneNumEmailId()
     clearInterval(this.interval)
   }
 
@@ -185,13 +189,17 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   isVerifiedPhoneNumEmailId(){
     this.dataStorageService.isVerified(this.otpChannel[0],this.individualId).subscribe(response =>{
-      if(response["response"].verificationStatus){
-        // this.verifyOTP()
-        this.showMessageWarning(JSON.stringify(response["response"]));
-        this.router.navigate(["dashboard"])
+      if(!response["errors"]){
+        if(response["response"].verificationStatus){
+          this.showMessageWarning(JSON.stringify(response["response"]));
+          this.router.navigate(["dashboard"])
+        }else{
+          this.generateOTP()
+        }
       }else{
-        this.verifyOTP()
+        this.showErrorPopup(response["errors"])
       }
+      
     })
  }
 
@@ -237,7 +245,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   showMessageWarning(message: string) {
-    this.message = `Your ${this.channelType} has already been verified.`
+    this.message = `Your phone number/ Email Id  has already been verified.`
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {

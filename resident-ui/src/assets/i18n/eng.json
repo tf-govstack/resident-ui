@@ -296,6 +296,7 @@
         "IDA-OTA-008":"Please choose the channel that you want to verify.",
         "IDA-MLC-009":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
         "IDA-MLC-018":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
-        "RES-SER-422":"Invalid OTP was entered. Please try again with a valid OTP."
+        "RES-SER-422":"Invalid OTP was entered. Please try again with a valid OTP.",
+        "RES-SER-410":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again."
     }
 }

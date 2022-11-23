@@ -30,15 +30,14 @@
 					</mat-select>
 				</td>				
 				<td style="width: 16%;padding: 10px;">
-					<input [max]="today" matInput [matDatepicker]="fromPicker" style="width:80%;height:37px;"  (dateChange)="captureValue($event, 'fromDateTime', 'datepicker')">
+					<input value="01/01/2020" [max]="today" matInput [matDatepicker]="fromPicker" style="width:80%;height:37px;"  (dateChange)="captureValue($event, 'fromDateTime', 'datepicker')">
 					<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
 					<mat-datepicker #fromPicker></mat-datepicker>
 				</td>
 				<td style="width: 15%;padding: 10px;">
 					<mat-form-field>
-						<mat-label>Choose a date</mat-label>
-						<input  matInput [matDatepicker]="toPicker">
-						<!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+						<!-- <mat-label>Choose a date</mat-label> -->
+						<input [max]="today" matInput [matDatepicker]="toPicker">
 						<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
 						<mat-datepicker #toPicker></mat-datepicker>
 					</mat-form-field>
