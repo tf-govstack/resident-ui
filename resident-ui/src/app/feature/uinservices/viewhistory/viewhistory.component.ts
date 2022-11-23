@@ -8,7 +8,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { DateAdapter } from '@angular/material/core';
-
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: "app-viewhistory",
@@ -33,7 +33,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   searchText:string = "";
   serviceType:string = "";
   statusFilter:string = "";
-  controlTypes = ["searchText", "serviceType", "statusFilter"]
+  controlTypes = ["searchText", "serviceType", "statusFilter", "fromDateTime", "toDateTime"]
   datas:{};
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('en-GB'); 
@@ -63,12 +63,37 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
         this.totalItems = response["response"]["totalItems"];
         this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
         this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
+        this.parsedrodowndata();
+    });
+  }
+
+  parsedrodowndata(){
+    let serviceTypeFilter = this.serviceTypeFilter;
+    this.serviceTypeFilter = [];
+    let statusTypeFilter = this.statusTypeFilter;
+    this.statusTypeFilter = [];
+
+    serviceTypeFilter.forEach( (element) => {      
+      console.log("serviceTypeFilter>>>"+this.langJSON.viewhistory.serviceTypeFilter[element]);
+      if(this.langJSON.viewhistory.serviceTypeFilter[element]){
+        this.serviceTypeFilter.push({"label":this.langJSON.viewhistory.serviceTypeFilter[element], "value": element});
+      }
+    });
+
+    statusTypeFilter.forEach( (element) => {
+      if(this.langJSON.viewhistory.statusTypeFilter[element]){
+        this.statusTypeFilter.push({"label":this.langJSON.viewhistory.statusTypeFilter[element], "value": element});
+      }
     });
   }
 
   captureValue(event: any, formControlName: string, controlType: string) {
     if(controlType === "dropdown"){
       this[formControlName] = event.value.toString().toUpperCase();
+    }else if(controlType === "datepicker"){
+      let dateFormat = new Date(event.target.value);
+      let formattedDate = dateFormat.getFullYear() + "-" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "-" + ("0" + dateFormat.getDate()).slice(-2);
+      this[formControlName] = formattedDate;
     }else{
       this[formControlName] = event.target.value;
     }
@@ -128,6 +153,37 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
     console.log("searchParam>>>"+JSON.stringify(searchParam));
     this.getServiceHistory("",searchParam);    
+  }
+
+  downloadServiceHistory(){
+    let searchParam = "", self = this;    
+    this.controlTypes.forEach(controlType => {
+      console.log(controlType)
+      if(self[controlType]){
+        if(searchParam){
+          searchParam = searchParam+"&"+controlType+"="+self[controlType];
+        }else{
+          searchParam = controlType+"="+self[controlType];
+        }
+      }     
+    });
+    this.dataStorageService
+    .downloadServiceHistory(searchParam)
+    .subscribe(data => {
+      var fileName = "viewhistory.pdf";
+      const contentDisposition = data.headers.get('Content-Disposition');
+      if (contentDisposition) {
+        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = fileNameRegex.exec(contentDisposition);
+        if (matches != null && matches[1]) {
+          fileName = matches[1].replace(/['"]/g, '');
+        }
+      }
+      saveAs(data.body, fileName);
+    },
+    err => {
+      console.error(err);
+    });
   }
 
   showErrorPopup(message: string) {
