@@ -51,7 +51,7 @@
 				<td style="width: 15%;padding: 10px;">
 					<mat-form-field>
 						<mat-label>Choose a date</mat-label>
-						<input  matInput [matDatepicker]="toPicker">
+						<input [max]="today" matInput [matDatepicker]="toPicker">
 						<!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
 						<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
 						<mat-datepicker #toPicker></mat-datepicker>

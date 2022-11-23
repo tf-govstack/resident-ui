@@ -27,7 +27,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
 
     this.route.queryParams
       .subscribe(params => {
-        this.aidVal = params.aid;
+        this.aidVal = params.eid;
         this.getAIDStatus();
       }
     );  
