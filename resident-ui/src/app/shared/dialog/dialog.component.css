@@ -247,6 +247,7 @@ td.mat-footer-cell:last-child {
 .pop-up {
   border: 2px solid;
   padding: 1rem;
+  border-radius: 8px;
 }
 
 .infro-card {
@@ -285,4 +286,21 @@ td.mat-footer-cell:last-child {
   border-radius: 5px;
   border: none;
   color: #ffffff;
+}
+
+.permission-card{
+  border: 2px solid #D3D3D3;
+  border-radius: 10px;
+  padding: 1.4rem;
+}
+
+.permission-card-text{
+  color: #000000; 
+  font-size: 1rem;
+}
+
+.personalised-agree-card{
+  display: flex;
+  align-items: center;
+  margin-bottom: -10px;
 }

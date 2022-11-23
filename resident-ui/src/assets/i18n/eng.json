@@ -222,8 +222,9 @@
     },    
     "trackservicerequest":{
         "title": "Track Service Request",
-        "searchLabel": "Enter AID you want to track",
-        "searchPlaceholder": "Enter the 16-digit AID",
+        "title2":"Track status",
+        "searchLabel": "Enter the Event Id that you want to track",
+        "searchPlaceholder": "Enter the 16-digit EID",
         "searchButton": "Track",
         "eventId":"Event Id",
         "eventType":"Event Type",
@@ -276,6 +277,20 @@
             "Under no circumstances will we be liable for loss or misuse of data whatsoever, arising from the usage of data shared with the partner.",
             "if a third-party provider ceases to make its service available or requires MOSIP to suspend or terminate the provision of all or any part of its services to you that part of data or services will be terminated immediately without notice or further obligation to you."
         ],
-        "agreeLabel":"I agree to the terms and conditions to share my credentials with the chosen partner"
+        "agreeLabel":"I agree to the terms and conditions to share my credentials with the chosen partner",
+        "personalisedcardConditions":{
+            "title":"Download Your Personalised Card",
+            "wishes":"Dear Resident,",
+            "description":"It will take some time for us to get the card ready. We will send you a link using which you can download the requested card. You can also download the card from the notification section once it is ready.",
+            "sendVid":"Send VID",
+            "agreeLabel1":"Send VID to registred phone",
+            "agreeLabel":"Send VID to registered email ID"
+        }
+    },
+    "serverErrors":{
+        "IDA-OTA-008":"Please choose the channel that you want to verify.",
+        "IDA-MLC-009":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
+        "IDA-MLC-018":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
+        "RES-SER-422":"Invalid OTP was entered. Please try again with a valid OTP."
     }
 }

@@ -58,6 +58,7 @@ export class DialogComponent implements OnInit {
   filterOptions: any = {};
   holidayForm: FormGroup;
   sitealignment = 'ltr';
+  icon:string = "./assets/sucess_icon.png"
 
   constructor(
     public dialog: MatDialog,
@@ -74,16 +75,16 @@ export class DialogComponent implements OnInit {
     private interactionService:InteractionService
   ) {
     this.translate.use(this.primaryLangCode);
-    console.log(this.data)
     if(this.primaryLangCode === "ara"){
       this.sitealignment = 'rtl';
     }
     if(this.data.title === "Error"){
       this.popMsgbgColor = "#FFD9D8"
       this.popMsgColor = "#C90500"
+      this.icon = "./assets/cancel_icon.png"
     }else if (this.data.title === "Warning"){
-      this.popMsgbgColor = "#ebbf67"
-      this.popMsgColor = "#fc7303"
+      this.popMsgbgColor = "#FFF9DB"
+      this.popMsgColor = "#F2CC0C"
     }
   }
 

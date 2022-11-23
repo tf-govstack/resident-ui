@@ -42,7 +42,7 @@
 				<td style="width: 15%;padding: 10px;">
 					<mat-form-field >
 						<mat-label style="margin-top: 10px;">Choose a date</mat-label>
-						<input  matInput [matDatepicker]="fromPicker">
+						<input [max]="today"  matInput [matDatepicker]="fromPicker">
 						<!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
 						<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
 						<mat-datepicker #fromPicker></mat-datepicker>
@@ -55,7 +55,7 @@
 						<!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
 						<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
 						<mat-datepicker #toPicker></mat-datepicker>
-					  </mat-form-field>
+					</mat-form-field>
 				</td>
 				<td style="width: 20%;padding: 10px;"><button mat-button (click)="search()">{{'viewhistory.searchBtn' |
 						translate}}</button>

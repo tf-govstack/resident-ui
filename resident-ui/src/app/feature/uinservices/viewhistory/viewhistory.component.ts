@@ -28,6 +28,8 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   serviceTypeFilter:any;
   statusTypeFilter:any;
 
+  today: Date;
+
   searchText:string = "";
   serviceType:string = "";
   statusFilter:string = "";
@@ -46,6 +48,8 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       this.langJSON = response;
       this.popupMessages = response;
     });
+
+    this.today = new Date()
     
     this.getServiceHistory("","");    
   }
@@ -72,7 +76,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
   showMessage(message: string) {    
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '850px',
+      width: '650px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
@@ -102,7 +106,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   viewDetails(data:any){
-    this.router.navigateByUrl(`uinservices/trackservicerequest?aid=`+data.eventId);
+    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+data.eventId);
   }
 
   reportDetails(data:any){
@@ -129,7 +133,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   showErrorPopup(message: string) {
     this.dialog
       .open(DialogComponent, {
-        width: '850px',
+        width: '650px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,

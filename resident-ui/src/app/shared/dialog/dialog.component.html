@@ -94,13 +94,13 @@
 <div class="pop-up" *ngIf="input.case === 'MESSAGE'" [style.backgroundColor]="popMsgbgColor" [style.color]="popMsgColor"
   [style.borderColor]="popMsgColor">
   <div class="infro-card">
-    <img src="assets/images/icon_Suceess right.png" height="45px" width="45px" class="success-img"
-      *ngIf="input.title === ('Success' || 'نجاح' || 'Succès'|| 'सफलता' || 'ಯಶಸ್ಸು' || 'வெற்றி')" />
+    <!-- *ngIf="input.title === ('Success' || 'نجاح' || 'Succès'|| 'सफलता' || 'ಯಶಸ್ಸು' || 'வெற்றி')" -->
+    <img [src]="icon" height="35px" width="35px" class="success-img" />
     <div class="pop-up-header">
-      <b mat-dialog-title>{{ input.title }}</b>
+      <!-- <b mat-dialog-title>{{ input.title }}</b> -->
       <!-- <p>Dear Resident, Your registered email ID Sanjay.kumar30@gmail.com has now been verified.</p> -->
       <div mat-dialog-content>
-        <div [innerText]="input.message">hello</div>
+        <div [innerText]="input.message"></div>
 
       </div>
     </div>
@@ -113,13 +113,16 @@
 </div>
 
 <div class="pop-up" *ngIf="input.case === 'ERROR'">
+  <div class="infro-card">
+  <img [src]="icon" height="35px" width="35px" class="success-img"/>
   <div class="pop-up-header">
     <b mat-dialog-title>{{ input.title }}</b>
     <div mat-dialog-content>
-      <!-- <p>{{ input.message }}</p> -->
+      <p>{{ input.message }}</p>
       <div [innerText]="input.message"></div>
     </div>
   </div>
+</div>
 </div>
 
 <div class="pop-up" *ngIf="input.case === 'STEPS-MESSAGE'">
@@ -167,4 +170,29 @@
     <button mat-button (click)="shareInfo()" class="share-btn">Share</button>
   </div>
 </div>
+
+<!-- Conditions for personalised card -->
+
+<div style="padding: 1rem;" *ngIf="input.case === 'conditionsForPersonalisedCard'">
+    <h3 style="color: #000000; text-align:center;">{{input.description.title}}</h3>
+    <div class="permission-card">
+        <mat-card-subtitle class="permission-card-text">{{input.description.wishes}}</mat-card-subtitle>
+        <mat-card-subtitle class="permission-card-text">{{input.description.description}}</mat-card-subtitle>
+        <mat-card-subtitle class="permission-card-text" style="margin-bottom: 0px;">{{input.description.sendVid}}</mat-card-subtitle>
+        <div class="personalised-agree-card">
+          <img src="./assets/images/checkbox_sel.png"/>
+          &nbsp;
+          <mat-card-subtitle class="permission-card-text" style="margin-top: 1rem;">{{input.description.agreeLabel1}}</mat-card-subtitle>
+        </div>
+        <div class="personalised-agree-card">
+          <img src="./assets/images/checkbox_sel.png"/>
+          &nbsp;
+          <mat-card-subtitle class="permission-card-text" style="margin-top: 1rem;">{{input.description.agreeLabel1}}</mat-card-subtitle>
+        </div>
+    </div>
+    <div style="text-align: right; margin-top: 12px;">
+    <button mat-button class="share-btn" (click)="dismiss()">Send</button>
+  </div>
+</div>
+
 <!-- </div> -->
