@@ -188,12 +188,17 @@
     },
     "viewhistory":{
         "title": "View History",
-        "inputAppId" : "Application Id",
+        "inputsearch" : "Search",
+        "inputAppId" : "Event Id",
         "inputHistory" : "History Type",
         "inputStatus" : "Status",
-        "inputFrom" : "From",
-        "inputTo" : "To",
-        "searchBtn" : "Go"
+        "inputFrom" : "From (dd/mm/yyyy)",
+        "inputTo" : "To (dd/mm/yyyy)",
+        "searchBtn" : "Go",
+        "description" : "Description",
+        "timestamp" : "Timestamp",
+        "serviceTypeFilter":{"AUTHENTICATION_REQUEST" : "Authentication Request", "SERVICE_REQUEST" : "Service Request", "DATA_UPDATE_REQUEST" : "Data Update Request", "ID_MANAGEMENT_REQUEST" : "ID Management Request", "DATA_SHARE_REQUEST" : "Data Share Request"},
+        "statusTypeFilter":{"success" : "Success", "in-progress" : "InProgress", "failed" : "Failed"}
     },
     "managemyvid": {
         "title": "Manage my VID",

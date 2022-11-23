@@ -78,7 +78,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if(response["response"])     
         this.fullName = response["response"].fullName;
         this.lastLogin = response["response"].lastLogin;
-        this.userImage = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${response["response"].photo.data}`);
+        if(response["response"].photo.data){
+          this.userImage = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${response["response"].photo.data}`);
+        }else{
+          this.userImage = "../assets/profile.png";
+        }
+        
         //console.log("response>>>"+JSON.stringify(response["response"]));
     });
   }
