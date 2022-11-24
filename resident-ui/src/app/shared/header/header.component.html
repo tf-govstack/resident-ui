@@ -19,7 +19,7 @@
       </mat-menu>
 
       <button mat-button [matMenuTriggerFor]="menu1"> <span class="mat-button-wrapper"><mat-icon>g_translate</mat-icon> {{selectedLanguage}} <mat-icon>keyboard_arrow_down</mat-icon></span></button>
-      <mat-menu #menu1="matMenu" *ngIf="selectLanguagesArr">
+      <mat-menu #menu1="matMenu">
         <button mat-menu-item (click)="onlanguagechange(item)" *ngFor="let item of selectLanguagesArr">{{item.value}}</button>
       </mat-menu>
 
