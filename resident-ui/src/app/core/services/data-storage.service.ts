@@ -199,8 +199,8 @@ export class DataStorageService {
     return this.httpClient.post(this.BASE_URL   + '/unpinned/'+eventId, "");
   }
 
-  getAIDStatus(aid:string){
-    return this.httpClient.get(this.BASE_URL   + '/events'+"/"+aid+"?langCode="+localStorage.getItem("langCode"));
+  getEIDStatus(eid:string){
+    return this.httpClient.get(this.BASE_URL   + '/events'+"/"+eid+"?langCode="+localStorage.getItem("langCode"));
   }
 
   getPartnerDetails(partnerType: string){
@@ -260,4 +260,15 @@ export class DataStorageService {
     return this.httpClient.get<Blob>(this.BASE_URL   + '/download/service-history'+buildURL, { observe: 'response', responseType: 'blob' as 'json' });
   }
 
+  getNotificationCount(){
+    return this.httpClient.get(this.BASE_URL   + '/unread/notification-count');
+  }
+
+  updateNotificationTime(){
+    return this.httpClient.put(this.BASE_URL   + '/bell/updatedttime', "");
+  }
+
+  getNotificationData(){
+    return this.httpClient.get(this.BASE_URL   + '/unread/service-list');
+  }
 }

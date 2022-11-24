@@ -7,6 +7,7 @@ import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: "app-trackservicerequest",
@@ -17,8 +18,8 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   langJSON:any;
   popupMessages:any;
   subscriptions: Subscription[] = [];
-  aidVal:string = "";
-  aidStatus:any;
+  eidVal:string = "";
+  eidStatus:any;
 
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute) {}
 
@@ -27,8 +28,8 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
 
     this.route.queryParams
       .subscribe(params => {
-        this.aidVal = params.aid;
-        this.getAIDStatus();
+        this.eidVal = params.eid;
+        this.getEIDStatus();
       }
     );  
 
@@ -44,12 +45,32 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
     this[formControlName] = event.target.value;
   }
 
-  getAIDStatus(){
+  getEIDStatus(){
     this.dataStorageService
-    .getAIDStatus(this.aidVal)
+    .getEIDStatus(this.eidVal)
     .subscribe((response) => {
       if(response["response"]) 
-        this.aidStatus = response["response"];
+        this.eidStatus = response["response"];
+    });
+  }
+
+  downloadAcknowledgement(){
+    this.dataStorageService
+    .downloadAcknowledgement(this.eidVal)
+    .subscribe(data => {
+      var fileName = this.eidVal+".pdf";
+      const contentDisposition = data.headers.get('Content-Disposition');
+      if (contentDisposition) {
+        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = fileNameRegex.exec(contentDisposition);
+        if (matches != null && matches[1]) {
+          fileName = matches[1].replace(/['"]/g, '');
+        }
+      }
+      saveAs(data.body, fileName);
+    },
+    err => {
+      console.error(err);
     });
   }
 

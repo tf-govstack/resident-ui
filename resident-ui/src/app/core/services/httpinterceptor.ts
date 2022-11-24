@@ -24,6 +24,7 @@ import * as appConstants from 'src/app/app.constants';
 export class AuthInterceptor implements HttpInterceptor {
   errorMessages: any;
   decoded: any;
+  invokedurl:any;
   constructor(
     private redirectService: LoginRedirectService,
     private router: Router,
@@ -43,7 +44,8 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap(
         event => {
-          if (event instanceof HttpResponse) {            
+          if (event instanceof HttpResponse) {    
+            this.invokedurl = event.url;        
             if (event.url.split('/').includes('validateToken')) {                
                 if (event.body.response) {
                   // this.decoded = jwt_decode(event.body.response.token);
@@ -68,10 +70,12 @@ export class AuthInterceptor implements HttpInterceptor {
         },
         err => {
           if (err instanceof HttpErrorResponse) {
-            console.log(err.status);
-            console.log(err);
             if (err.status === 401) {
-              this.redirectService.redirect(window.location.href);
+              if(err.url.includes("profile") && window.location.href.includes("dashboard")){
+                this.router.navigateByUrl(`dashboard`);
+              }else{
+                this.redirectService.redirect(window.location.href);
+              }
             }else if (err.status === 403) {
               this.translateService
                 .getTranslation(localStorage.getItem("langCode"))
