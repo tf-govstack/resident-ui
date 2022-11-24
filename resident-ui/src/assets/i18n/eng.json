@@ -225,8 +225,8 @@
     },    
     "trackservicerequest":{
         "title": "Track Service Request",
-        "searchLabel": "Enter AID you want to track",
-        "searchPlaceholder": "Enter the 16-digit AID",
+        "searchLabel": "Enter EID you want to track",
+        "searchPlaceholder": "Enter the 16-digit EID",
         "searchButton": "Track",
         "eventId":"Event Id",
         "eventType":"Event Type",

@@ -19,15 +19,18 @@
       </mat-menu>
 
       <button mat-button [matMenuTriggerFor]="menu1"> <span class="mat-button-wrapper"><mat-icon>g_translate</mat-icon> {{selectedLanguage}} <mat-icon>keyboard_arrow_down</mat-icon></span></button>
-      <mat-menu #menu1="matMenu">
+      <mat-menu #menu1="matMenu" *ngIf="selectLanguagesArr">
         <button mat-menu-item (click)="onlanguagechange(item)" *ngFor="let item of selectLanguagesArr">{{item.value}}</button>
       </mat-menu>
 
       <mat-list-item>
-        <button mat-menu-item style="border: 1px solid white;border-radius: 5px;padding: 0px 8px;line-height: 36px;height: 36px;background-color: white;"><mat-icon style="margin-right: 0px;color: darkgrey;">notifications</mat-icon></button>
+        <button mat-menu-item [matMenuTriggerFor]="notificationMenu" (click)="loadNotificationData()"  ><mat-icon style="margin-right: 0px;color: white;" matBadge="{{notificationCount}}" matBadgeColor="warn" matBadgeSize="small"  *ngIf="notificationCount">notifications</mat-icon></button>
       </mat-list-item>&nbsp;&nbsp;&nbsp;
+      <mat-menu #notificationMenu="matMenu" [overlapTrigger]="false" id="notificationMenu">
+        <div *ngFor="let data of notificationList; let i = index"><button mat-menu-item (click)="viewDetails(data)">{{data.requestType}}&nbsp;|&nbsp;{{data.summary}}</button><mat-divider></mat-divider></div>        
+      </mat-menu>
 
-      <mat-list-item>
+      <mat-list-item  *ngIf="fullName">
         <button mat-menu-item [matMenuTriggerFor]="profilemenu" style="border: 1px solid white;border-radius: 5px;padding: 0px 8px;line-height: 36px;height: 36px;background-color: white;"><mat-icon style="margin-right: 0px;color: green;">person</mat-icon></button>
       </mat-list-item>      
       <mat-menu #profilemenu="matMenu" [overlapTrigger]="false" id="profileMenu">        

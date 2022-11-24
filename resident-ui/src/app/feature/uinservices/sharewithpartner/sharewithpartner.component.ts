@@ -112,7 +112,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     .shareInfo(request)
     .subscribe(data => {
       this.dataStorageService
-      .getAIDStatus(data["response"].eventId)
+      .getEIDStatus(data["response"].eventId)
       .subscribe((response) => {
         if(response["response"]) 
           this.aidStatus = response["response"];

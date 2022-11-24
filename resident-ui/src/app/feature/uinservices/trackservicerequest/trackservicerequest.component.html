@@ -17,12 +17,12 @@
 				<td style="padding: 10px;">
 					<label style="color: #909090; size: 12px;">{{'trackservicerequest.searchLabel' | translate}}<span style="color: #FF0000; margin-bottom:8px;">*</span></label>
 					<br/>
-          			<input type="text" id="appIdValue" name="appIdValue" value={{aidVal}} (blur)="captureValue($event, 'aidVal', 'textbox')" placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;
-					<button mat-raised-button style="width:100px;height: 36px;font-size: 16px;" color="primary" (click)="getAIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
+          			<input type="text" id="appIdValue" name="appIdValue" value={{eidVal}} (blur)="captureValue($event, 'eidVal', 'textbox')" placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;
+					<button mat-raised-button style="width:100px;height: 36px;font-size: 16px;" color="primary" (click)="getEIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
 				</td>
 			</tr>
 		</table>
-		<div *ngIf="aidStatus" class="trackDetails">
+		<div *ngIf="eidStatus" class="trackDetails">
 		<table   style="width: 100%; border-radius: 10px; border-collapse: collapse;">
 			<tr style="border-bottom: 1px solid silver;">
 				<td colspan="2">
@@ -33,9 +33,9 @@
 							<td><label>{{'trackservicerequest.eventStatus' | translate}}</label></td>
 						</tr>
 						<tr>
-							<td>{{aidStatus.eventId}}</td>
-							<td>{{aidStatus.eventType}}</td>
-							<td>{{aidStatus.eventStatus}}</td>
+							<td>{{eidStatus.eventId}}</td>
+							<td>{{eidStatus.eventType}}</td>
+							<td>{{eidStatus.eventStatus}}</td>
 						</tr>
 					</table>					
 				</td>
@@ -45,16 +45,16 @@
 				<td><label>{{'trackservicerequest.individualId' | translate}}</label></td>
 			</tr>
 			<tr style="border-bottom: 1px solid silver;padding:10px;">
-				<td>{{aidStatus.info.description}}</td>
-				<td>{{aidStatus.individualId}}</td>
+				<td>{{eidStatus.info.description}}</td>
+				<td>{{eidStatus.individualId}}</td>
 			</tr>
 			<tr style="padding:10px;">
 				<td><label>{{'trackservicerequest.authenticationMode' | translate}} </label></td>
 				<td><label>{{'trackservicerequest.vidType' | translate}}</label></td>
 			</tr>
 			<tr style="border-bottom: 1px solid silver;padding:10px;">
-				<td>{{aidStatus.info.authenticationMode}}</td>
-				<td>{{aidStatus.info.vidType}}</td>
+				<td>{{eidStatus.info.authenticationMode}}</td>
+				<td>{{eidStatus.info.vidType}}</td>
 			</tr>
 			<tr style="padding:10px;">
 				<td><label>{{'trackservicerequest.vid' | translate}}</label></td>
@@ -62,12 +62,12 @@
 			</tr>
 			<!-- style="border-bottom: 1px solid silver;padding:10px;" -->
 			<tr style="padding:10px;">
-				<td>{{aidStatus.info.vid}}</td>
-				<td>{{aidStatus.timestamp}}</td>
+				<td>{{eidStatus.info.vid}}</td>
+				<td>{{eidStatus.timestamp}}</td>
 			</tr>
 		</table>
 		<div style="text-align: right;">
-			<button class="download-btn"><img class="save-icon" src="./assets/images/save.png"/>Download</button>&nbsp;&nbsp;&nbsp;<button>Clear</button>
+			<button style="cursor: pointer;" class="download-btn" (click)="downloadAcknowledgement()"><img class="save-icon" src="./assets/images/save.png"/>Download</button>
 		</div>
 	</div>
 

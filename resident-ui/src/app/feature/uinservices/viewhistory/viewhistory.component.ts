@@ -127,7 +127,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   viewDetails(data:any){
-    this.router.navigateByUrl(`uinservices/trackservicerequest?aid=`+data.eventId);
+    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+data.eventId);
   }
 
   reportDetails(data:any){
