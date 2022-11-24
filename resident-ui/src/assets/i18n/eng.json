@@ -270,6 +270,7 @@
     "genericmessage":{
         "successLabel":"Success",
         "successButton":"OK",
+        "submitButton":"Submit",
         "errorLabel":"Error",
 		"warningLabel":"Warning",
         "createMessage":"Created Successfully",

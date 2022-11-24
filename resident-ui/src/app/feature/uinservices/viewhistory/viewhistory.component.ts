@@ -29,6 +29,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   statusTypeFilter:any;
 
   today: Date;
+  startdate: Date = new Date(2022, 0, 1)
 
   searchText:string = "";
   serviceType:string = "";

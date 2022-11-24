@@ -9,7 +9,7 @@
 		<table *ngIf="policyType" style="width:100%">
 			<tr *ngFor = "let policy of policyType.vidPolicies">
 				<td style="width:100%">					 
-				    <span style="padding-left: 20px;">{{policy.vidType}}  <mat-icon style="color: green;font-size: 18px;" matTooltip="">info</mat-icon> <button mat-raised-button color="primary" (click)="generateVID(policy.vidType)">{{'managemyvid.create' | translate}}</button></span>
+				    <span style="padding-left: 20px;">{{policy.vidType}}  <mat-icon style="color: green;font-size: 18px;" matTooltip="">info</mat-icon> <button mat-raised-button color="primary" (click)="generateVID1(policy.vidType)">{{'managemyvid.create' | translate}}</button></span>
 
 				    <mat-grid-list style="width:100%" cols="4" rowHeight="2:1" *ngIf=finalTypeList[policy.vidType]>
 						<mat-grid-tile *ngFor = "let list of finalTypeList[policy.vidType]">

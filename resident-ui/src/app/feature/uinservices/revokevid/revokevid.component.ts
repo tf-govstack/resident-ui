@@ -63,8 +63,9 @@ export class RevokevidComponent implements OnInit, OnDestroy {
                 results.push(self.vidlist[j]);
               }
             }
-            console.log("this.policyType.vidPolicies[i].vidType>>>"+this.policyType.vidPolicies[i].vidType);
+            // console.log("this.policyType.vidPolicies[i].vidType>>>"+this.policyType.vidPolicies[i].vidType);
             self.finalTypeList[this.policyType.vidPolicies[i].vidType] = results;
+            console.log(this.finalTypeList)
           }
         }
       },
@@ -105,7 +106,11 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     }
   }
 
-  generateVID(vidType){
+  generateVID1(vidType:any){
+    this.generateVID(vidType)
+  }
+
+  generateVID(vidType:any){
     let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["resident.vid.id"],
@@ -129,7 +134,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     });
   }
 
-  revokeVID(vidValue){
+  revokeVID(vidValue:any){
     let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["resident.revokevid.id"],
@@ -165,6 +170,19 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         title: this.popupMessages.genericmessage.successLabel,
         message: message,
         btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
+  }
+
+  showWarningMessage(message: string) {    
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '850px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.warningLabel,
+        message: message,
+        btnTxt: this.popupMessages.genericmessage.submitButton
       }
     });
     return dialogRef;
