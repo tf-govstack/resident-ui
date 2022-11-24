@@ -1,4 +1,4 @@
-.mat-select-panel{
+.mat-select-panel {
   position: absolute;
   top: 32px;
   left: 4px;
@@ -8,13 +8,13 @@
   border-top-style: none;
 }
 
-.mat-form-field-appearance-outline .mat-form-field-outline-start{
+.mat-form-field-appearance-outline .mat-form-field-outline-start {
   border-radius: 0px !important;
   border: 1px solid blue !important;
   border-right-style: none !important;
 }
 
-.mat-form-field-appearance-outline .mat-form-field-outline-end{
+.mat-form-field-appearance-outline .mat-form-field-outline-end {
   border-radius: 0px !important;
   border: 1px solid blue !important;
   border-left-style: none !important;
@@ -22,4 +22,69 @@
 
 .mat-select-panel ng-animating {
   visibility: hidden;
+}
+
+::ng-deep .successMsg-card {
+  width: 100%;
+  background: #E8FDF2 0% 0% no-repeat padding-box;
+  border: 1px solid #03A64A;
+  border-radius: 10px !important;
+  padding: 1.4rem;
+}
+
+.success-msg-description {
+  text-align: left;
+  font: normal normal medium 14px/22px Poppins;
+  letter-spacing: 0px;
+  color: #505050;
+  margin-left: 1.5rem;
+  font-size: 16px;
+  margin-top: 0px;
+}
+
+.success-msg-text {
+  font: normal normal medium 20px/20px Poppins;
+  letter-spacing: 0px;
+  color: #03A64A;
+  font-size: 21px;
+}
+
+.succcess-title-card {
+  display: flex;
+  align-items: center;
+}
+
+.transaction-title {
+  text-align: left;
+  font: normal normal medium 22px/24px Montserrat SemiBold;
+  letter-spacing: 0px;
+  color: #505050;
+  margin-bottom: 0px;
+}
+
+.translation-details {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.translation-details-card {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.partner-logo {
+  border: 1px solid #909090;
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  margin-bottom: 0px;
+}
+
+.intro-description {
+  font: normal normal medium 16px/22px Montserrat Medium;
+  letter-spacing: 0px;
+  color: #505050;
 }

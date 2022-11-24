@@ -41,10 +41,10 @@
           class="mobile-number"> 99XXXXXX80</span>.</p>
     </div>
     <div class="get-uin-btn-card">
-      <mat-button-toggle aria-disabled="true" readonly="true" (click)="resendOtp()" [style.backgroundColor]="resendBtnBgColor" class="button2">Resend OTP</mat-button-toggle>
+      <button mat-button-toggle [disabled]="resetBtnDisable" readonly="true" (click)="resendOtp()" [style.backgroundColor]="resendBtnBgColor" class="button2">Resend OTP</button>
       &nbsp;
       &nbsp;
-      <mat-button-toggle  (click)="submitOtp()" class="button2" [style.backgroundColor]="submitBtnBgColor">Submit</mat-button-toggle>
+      <button mat-button-toggle  [disabled]="submitBtnDisable" (click)="submitOtp()" class="button2" [style.backgroundColor]="submitBtnBgColor">Submit</button>
     </div>
   </div>
   </mat-card>

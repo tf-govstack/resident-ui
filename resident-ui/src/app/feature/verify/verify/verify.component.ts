@@ -7,6 +7,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { resolve } from "url";
 
 
 
@@ -31,11 +32,14 @@ export class VerifyComponent implements OnInit, OnDestroy {
   submitBtnBgColor: string = "#BFBCBC";
   resendBtnBgColor: string = "#909090";
   resetBtnDisable: boolean = true;
+  submitBtnDisable: boolean = false;
   otpTimeMinutes: number = 1;
   otpTimeSeconds: number = 59;
   displaySeconds: any = this.otpTimeSeconds
   interval: any;
   message: string;
+  errorCode:any;
+  channelType:string;
 
   constructor(
     private router: Router,
@@ -104,9 +108,11 @@ export class VerifyComponent implements OnInit, OnDestroy {
         this.otpTimeSeconds = 0;
         this.otpTimeMinutes = 0;
         clearInterval(this.interval)
-        this.resendBtnBgColor = "#03A64A"
+        this.resendBtnBgColor = "#03A64A";
         // this.showErrorPopup(this.otpExpairMsg);
-        this.displaySeconds = "00"
+        this.displaySeconds = "00";
+        this.resetBtnDisable = false;
+        this.submitBtnDisable = true;
       } else {
         if (this.otpTimeSeconds < 10) {
           this.displaySeconds = "0" + this.otpTimeSeconds.toString()
@@ -127,6 +133,9 @@ export class VerifyComponent implements OnInit, OnDestroy {
     clearInterval(this.interval)
     this.otpTimeSeconds = 59
     this.otpTimeMinutes = 1
+    setInterval(this.interval)
+    this.resetBtnDisable = true;
+    this.submitBtnDisable = false;
     this.generateOTP()
   }
 
@@ -151,15 +160,19 @@ export class VerifyComponent implements OnInit, OnDestroy {
       "individualId": self.individualId,
       "otpChannel": self.otpChannel
     };
+
     this.dataStorageService.generateOTP(request).subscribe(response => {
-      console.log(response)
       if (!response["errors"]) {
-        // self.showMessage(JSON.stringify(response["response"]));
+        if(this.otpChannel[0] === "PHONE"){
+          this.channelType = response["response"].maskedMobile
+        }else{
+          this.channelType = response["response"].maskedEmail
+        }
         self.showOtpPanel = true;
         self.showOtpEnterPanel = false;
         self.setOtpTime();
       } else {
-        self.showErrorPopup(JSON.stringify(response["errors"]));
+        self.showErrorPopup(response["errors"]);
         self.showOtpPanel = false;
         self.showOtpEnterPanel = true;
       }
@@ -173,6 +186,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   isVerifiedPhoneNumEmailId(){
     this.dataStorageService.isVerified(this.otpChannel[0],this.individualId).subscribe(response =>{
       if(response["response"].verificationStatus){
+        // this.verifyOTP()
         this.showMessageWarning(JSON.stringify(response["response"]));
         this.router.navigate(["dashboard"])
       }else{
@@ -199,7 +213,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
         this.router.navigate(["dashboard"])
         self.showMessage(JSON.stringify(response["response"]));
       } else {
-        self.showErrorPopup(JSON.stringify(response["errors"]));
+        self.showErrorPopup(response["errors"]);
       }
     },
       error => {
@@ -209,12 +223,13 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   showMessage(message: string) {
+    this.message = `Your ${this.channelType} has been successfully verified against the the Event Id: ${this.transactionID}`
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '650px',
+      width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        message: message,
+        message: this.message,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -222,12 +237,13 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   showMessageWarning(message: string) {
+    this.message = `Your ${this.channelType} has already been verified.`
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '850px',
+      width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.warningLabel,
-        message: message,
+        message: this.message,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -235,13 +251,15 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   showErrorPopup(message: string) {
+    this.errorCode = message[0]["errorCode"]
+    this.message = this.popupMessages.serverErrors[this.errorCode]
     this.dialog
       .open(DialogComponent, {
-        width: '850px',
+        width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
-          message: message,
+          message: this.message,
           btnTxt: this.popupMessages.genericmessage.successButton
         },
         disableClose: true

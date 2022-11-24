@@ -4,6 +4,8 @@
 
 <div class="main-div" *ngIf="langJSON">
 	<mat-card *ngIf="schema.schema">
+		<h3 style="color: #505050;">{{'personalisedcard.title' | translate}}</h3>
+		<p class="intro-description">{{'personalisedcard.introDescription' | translate}}</p>
 		<label style="color: #505050;padding:10px;line-height: 2.5;">{{'personalisedcard.mainlabel' | translate}}</label>
 		<table style="width:100%;">
 			<tr>

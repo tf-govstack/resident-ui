@@ -24,6 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
 /*import { OptionalFilterValuesModel } from 'src/app/core/models/optional-filter-values.model';
 import { HeaderService } from 'src/app/core/services/header.service';*/
 import { LogoutService } from './../../core/services/logout.service';
+import { InteractionService } from 'src/app/core/services/interaction.service';
 
 @Component({
   selector: 'app-dialog',
@@ -57,6 +58,7 @@ export class DialogComponent implements OnInit {
   filterOptions: any = {};
   holidayForm: FormGroup;
   sitealignment = 'ltr';
+  icon:string = "./assets/sucess_icon.png"
 
   constructor(
     public dialog: MatDialog,
@@ -69,19 +71,20 @@ export class DialogComponent implements OnInit {
     /*private auditService: AuditService,*/
     private translate: TranslateService,
     /*private headerService: HeaderService,*/
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private interactionService:InteractionService
   ) {
     this.translate.use(this.primaryLangCode);
-    console.log(this.data)
     if(this.primaryLangCode === "ara"){
       this.sitealignment = 'rtl';
     }
     if(this.data.title === "Error"){
       this.popMsgbgColor = "#FFD9D8"
       this.popMsgColor = "#C90500"
+      this.icon = "./assets/cancel_icon.png"
     }else if (this.data.title === "Warning"){
-      this.popMsgbgColor = "#ebbf67"
-      this.popMsgColor = "#fc7303"
+      this.popMsgbgColor = "#FFF9DB"
+      this.popMsgColor = "#F2CC0C"
     }
   }
 
@@ -96,6 +99,11 @@ export class DialogComponent implements OnInit {
 
   dismiss(): void {
     this.dialog.closeAll();
+  }
+
+  shareInfo():void{
+    this.dialog.closeAll();
+    this.interactionService.sendClickEvent()
   }
 }
 
