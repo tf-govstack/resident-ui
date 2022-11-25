@@ -8,8 +8,8 @@ import { Observable, Subject} from 'rxjs';
 export class InteractionService {
   private subject = new Subject<any>();
   
-  sendClickEvent(){
-    this.subject.next();
+  sendClickEvent(id:any){
+    this.subject.next(id);
   }
   getClickEvent():Observable<any>{
     return this.subject.asObservable();

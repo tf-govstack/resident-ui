@@ -76,7 +76,7 @@
 			</tr>
 			<tr>
 				<td style="float:right;width: 100%" colspan="2"><button mat-raised-button color="primary"
-						(click)="shareInfo1()">{{'sharewithpartner.sharebutton' | translate}}</button></td>
+						(click)="shareInfoBtn()">{{'sharewithpartner.sharebutton' | translate}}</button></td>
 			</tr>
 		</table>
 	</mat-card>
@@ -89,10 +89,14 @@
 			&nbsp;&nbsp;
 			<p class="success-msg-text">{{'sharewithpartner.sharePartnerSuccessMsg' | translate}}</p>
 		</div>
-		<p class="success-msg-description">Dear Resident, Your data has been successfully share with the chosen partner
+		<!-- <p class="success-msg-description">Dear Resident, Your data has been successfully share with the chosen partner
 			against the EID :
 			<span>{{aidStatus.eventId}}</span>. In order to track the status of the transaction use the above AID in <a
 				href="#">Track My Service Request</a> or in <a href="#">view history</a>.
+		</p> -->
+		<p class="success-msg-description">{{'sharewithpartner.messageDescription1' | translate}}
+			<span>{{aidStatus.eventId}}</span>{{'sharewithpartner.messageDescription2' | translate}} <a
+				href="#">{{'sharewithpartner.trackMyserviceLink' | translate}}</a> {{'sharewithpartner.orin' | translate}} <a href="#">{{'sharewithpartner.viewHistoryLink' | translate}}</a>.
 		</p>
 	</mat-card>
 	&nbsp;
@@ -100,7 +104,7 @@
 		<h4 class="transaction-title">{{'trackservicerequest.transactionTitle' | translate}}</h4>
 		<div class="translation-details">
 			<div class="partner-logo">
-				<p>Partner logo</p>
+				<p>{{'trackservicerequest.partnerLogo' | translate}}</p>
 			</div>
 			&nbsp;
 			&nbsp;

@@ -30,8 +30,10 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   clickEventSubscription:Subscription;
 
   constructor(private interactionService:InteractionService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
-    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe(()=>{
-      this.shareInfo()
+    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
+      if(id === "shareInfo"){
+        this.shareInfo()
+      }
     })
   }
 
@@ -95,7 +97,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     }
   }
 
-  shareInfo1(){
+  shareInfoBtn(){
     this.termAndConditions()
   }
 
@@ -104,7 +106,6 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     for (const key in this.sharableAttributes) {      
       sharableAttributes.push(this.sharableAttributes[key]);  
     }
-
     let self = this;
     const request = {
       "id": "mosip.resident.share.credential",
@@ -122,7 +123,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     .shareInfo(request)
     .subscribe(data => {
       this.dataStorageService
-      .getAIDStatus(data["response"].eventId)
+      .getEIDStatus(data["response"].eventId)
       .subscribe((response) => {
         console.log(response)
         if(response["response"]) 
@@ -144,7 +145,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         title: this.popupMessages.genericmessage.termsAndConditionsLabel,
         conditions:this.popupMessages.genericmessage.termsAndConditionsDescription,
         agreeLabel: this.popupMessages.genericmessage.agreeLabel,
-        btnTxt: this.popupMessages.genericmessage.successButton
+        btnTxt: this.popupMessages.genericmessage.shareButton
       }
     });
     return dialogRef;

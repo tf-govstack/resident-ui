@@ -17,8 +17,8 @@
 				    <p *ngIf="!authInfo.locked"><img mat-card-sm-image src="assets\images\unlock.png" ></p>
 				  </mat-card-content>
 				  <mat-card-actions>
-				    <button *ngIf="authInfo.locked" mat-stroked-button color="primary">Unlock</button>
-				    <button *ngIf="!authInfo.locked" mat-stroked-button color="primary">Lock</button>
+				    <button *ngIf="authInfo.locked" mat-stroked-button color="primary">{{'lockunlockauth.unlockLabel' | translate}}</button>
+				    <button *ngIf="!authInfo.locked" mat-stroked-button color="primary">{{'lockunlockauth.lockLabel' | translate}}</button>
 				  </mat-card-actions>
 				</mat-card>
 			</mat-grid-tile>		  

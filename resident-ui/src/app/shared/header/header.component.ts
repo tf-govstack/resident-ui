@@ -26,6 +26,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   fullName: string;
   lastLogin: string;
   userImage:any;
+  notificationCount:number=0;
+  notificationList:any;
+
   constructor(
     private router: Router,
     private appConfigService: AppConfigService,
@@ -41,20 +44,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.selectLanguagesArr = []; 
     let self = this;   
     setTimeout(()=>{          
-      /*if(self.appConfigService.getConfig()){
-        let supportedLanguagesArr = self.appConfigService.getConfig()['supportedLanguages'].split(',');
-        supportedLanguagesArr.map(function(lang){if(lang.trim()){self.supportedLanguages.push(lang.trim())}});
-        if(supportedLanguagesArr){
-          supportedLanguagesArr.forEach((language) => {
-            if (defaultJson.languages && defaultJson.languages[language]) {
-              self.selectLanguagesArr.push({
-                code: language,
-                value: defaultJson.languages[language].nativeName,
-              });
-            }
-          });
-        }
-      } */
       if(!localStorage.getItem("langCode")){
       localStorage.setItem("langCode", "eng");
       self.selectedLanguage = defaultJson["languages"][0].nativeName;
@@ -68,7 +57,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
       self.translateService.use(localStorage.getItem("langCode")); 
       self.textDir = localStorage.getItem("dir");
     }, 1000);    
-    this.getProfileInfo(); 
+    this.getProfileInfo();
+  }
+
+  getNotificationInfo(){
+    this.dataStorageService
+    .getNotificationCount()
+    .subscribe((response) => {
+      if(response["response"])     
+        this.notificationCount = response["response"].unreadCount;
+    });
+  }
+
+  loadNotificationData(){
+    this.dataStorageService
+    .updateNotificationTime()
+    .subscribe((response) => {
+    });
+
+    this.dataStorageService
+    .getNotificationData()
+    .subscribe((response) => {
+      if(response["response"])     
+        this.notificationList = response["response"];
+    });
+
+    this.getNotificationInfo();
+  }
+
+  viewDetails(data:any){
+    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+data.eventId);
   }
 
   getProfileInfo(){
@@ -83,9 +101,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }else{
           this.userImage = "../assets/profile.png";
         }
-        
-        //console.log("response>>>"+JSON.stringify(response["response"]));
-    });
+        this.getNotificationInfo();
+    });    
   }
 
   textDirection() {

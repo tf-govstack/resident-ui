@@ -139,7 +139,9 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
         "authTypes": this.authlist
       }
     };
+    console.log(request)
     this.dataStorageService.updateAuthlockStatus(request).subscribe(response => {
+      console.log(response)
         if(!response["errors"]){
           this.showMessage(JSON.stringify(response["response"]));
         }else{
