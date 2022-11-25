@@ -41,7 +41,7 @@
     "nanoscroller": "^0.8.7",
     "ng-multiselect-dropdown": "^1.0.0-beta.19",
     "ng-recaptcha": "^5.0.0",
-    "ng2-pdf-viewer": "^8.0.0",
+    "ng2-pdf-viewer": "^5.3.3",
     "ngx-cookie-service": "^14.0.0",
     "ngx-mat-select-search": "^1.8.0",
     "ngx-print": "^1.1.4",
@@ -53,10 +53,11 @@
     "smoothscroll-polyfill": "^0.4.4",
     "url-safe-base64": "^1.2.0",
     "vm": "^0.1.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+	  "pdfjs-dist": "2.0.943"
   },
   "devDependencies": {
-    "@angular/cli": "^15.0.1",
+    "@angular/cli": "7.2.1",
     "@angular/compiler-cli": "7.2.0",
     "@angular/language-service": "7.2.0",
     "@types/jasmine": "~2.8.6",
