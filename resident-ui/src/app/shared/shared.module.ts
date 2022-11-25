@@ -8,11 +8,12 @@ import { CaptchaComponent } from './captcha/captcha.component';
 import { I18nModule } from 'src/app/i18n.module';
 import { RecaptchaModule, RECAPTCHA_LANGUAGE } from "ng-recaptcha";
 import { SanitizePipe } from './pipes/sanitize.pipe';
+import { PDFViewerComponent } from './pdf-viewer/pdf-viewer.component';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, I18nModule, RecaptchaModule],
-  declarations: [DialogComponent, HeaderComponent, CaptchaComponent, SanitizePipe],
-  exports: [DialogComponent, MaterialModule, HeaderComponent, CaptchaComponent, SanitizePipe],
+  declarations: [DialogComponent, HeaderComponent, CaptchaComponent, SanitizePipe, PDFViewerComponent],
+  exports: [DialogComponent, MaterialModule, HeaderComponent, CaptchaComponent, SanitizePipe, PDFViewerComponent],
   entryComponents: [DialogComponent],
   providers: []
 })

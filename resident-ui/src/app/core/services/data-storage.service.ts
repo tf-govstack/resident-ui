@@ -271,4 +271,8 @@ export class DataStorageService {
   getNotificationData(){
     return this.httpClient.get(this.BASE_URL   + '/unread/service-list');
   }
+
+  getSupportingDocument(){
+    return this.httpClient.get<Blob>(this.BASE_URL   + '/download/supportingDocs/'+localStorage.getItem("langCode"), { responseType: 'blob' as 'json' });
+  }
 }
