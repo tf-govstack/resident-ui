@@ -17,10 +17,10 @@
             class="mobile-number"> {{channelType}}</span>.</p>
       </div>
       <div class="get-uin-btn-card">
-        <button (click)="onItemSelected('resendOtp')" [style.backgroundColor]="resendOtpBtnBgColor" class="button">Resend OTP</button>
+        <button (click)="onItemSelected('resendOtp')" [style.backgroundColor]="resendOtpBtnBgColor" class="button">{{bookAppointmentData.resendBtnLabel | translate}}</button>
         &nbsp;
         &nbsp;
-        <button (click)="onItemSelected('submit')" class="button" [style.backgroundColor]="submitBtnBgColor">Submit</button>
+        <button (click)="onItemSelected('submit')" class="button" [style.backgroundColor]="submitBtnBgColor">{{bookAppointmentData.submitBtnLabel | translate}}</button>
       </div>
     </div>
   </mat-card>

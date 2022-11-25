@@ -38,8 +38,10 @@ export class VerifyComponent implements OnInit, OnDestroy {
   displaySeconds: any = this.otpTimeSeconds
   interval: any;
   message: string;
-  errorCode:any;
-  channelType:string;
+  errorCode: any;
+  channelType: string;
+  disableSendOtp: boolean = false
+
 
   constructor(
     private router: Router,
@@ -49,6 +51,12 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
+    // this.disableSendOtp = false
+    // if (this.individualId.length >= 10 && this.otpChannel[0] !== undefined) {
+    //   this.disableSendOtp = false
+    // } else {
+    //   this.disableSendOtp = true
+    // }
   }
 
   ngOnInit() {
@@ -128,6 +136,10 @@ export class VerifyComponent implements OnInit, OnDestroy {
     this[formControlName] = event.target.value;
   }
 
+  sendOtpBtn() {
+    this.isVerifiedPhoneNumEmailId()
+  }
+
   resendOtp() {
     this.resendBtnBgColor = "#909090";
     clearInterval(this.interval)
@@ -140,8 +152,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   submitOtp() {
-    // this.verifyOTP()
-    this.isVerifiedPhoneNumEmailId()
+    this.verifyOTP()
+    // this.isVerifiedPhoneNumEmailId()
     clearInterval(this.interval)
   }
 
@@ -163,9 +175,9 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
     this.dataStorageService.generateOTP(request).subscribe(response => {
       if (!response["errors"]) {
-        if(this.otpChannel[0] === "PHONE"){
+        if (this.otpChannel[0] === "PHONE") {
           this.channelType = response["response"].maskedMobile
-        }else{
+        } else {
           this.channelType = response["response"].maskedEmail
         }
         self.showOtpPanel = true;
@@ -184,16 +196,19 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   isVerifiedPhoneNumEmailId(){
-    this.dataStorageService.isVerified(this.otpChannel[0],this.individualId).subscribe(response =>{
-      if(response["response"].verificationStatus){
-        // this.verifyOTP()
-        this.showMessageWarning(JSON.stringify(response["response"]));
-        this.router.navigate(["dashboard"])
-      }else{
-        this.verifyOTP()
+    this.dataStorageService.isVerified(this.otpChannel[0], this.individualId).subscribe(response => {
+      if (!response["errors"]) {
+        if (response["response"].verificationStatus) {
+          this.showMessageWarning(JSON.stringify(response["response"]));
+          this.router.navigate(["dashboard"])
+        } else {
+          this.generateOTP()
+        }
+      } else {
+        this.showErrorPopup(response["errors"])
       }
     })
- }
+  }
 
   verifyOTP() {
     let self = this;
@@ -237,7 +252,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   showMessageWarning(message: string) {
-    this.message = `Your ${this.channelType} has already been verified.`
+    this.message = `Your phone number/ Email Id  has already been verified.`
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
@@ -252,7 +267,15 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   showErrorPopup(message: string) {
     this.errorCode = message[0]["errorCode"]
-    this.message = this.popupMessages.serverErrors[this.errorCode]
+    if(this.errorCode === "RES-SER-410"){
+      if(message[0]["message"] === "Invalid Input Parameter- individualId"){
+        this.message = this.popupMessages.serverErrors[this.errorCode].individualIdError
+      }else{
+        this.message = this.popupMessages.serverErrors[this.errorCode].channelError
+      }
+    }else{
+      this.message = this.popupMessages.serverErrors[this.errorCode]
+    }
     this.dialog
       .open(DialogComponent, {
         width: '550px',
@@ -281,7 +304,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
   }
 
 }

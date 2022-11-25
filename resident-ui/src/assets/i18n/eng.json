@@ -152,7 +152,9 @@
         "label":"Book an Appointment",
         "subTitle":"The OTP will expire in",
         "inputLabel":"Enter One Time Password (OTP)",
-        "otpDescription":"One Time Password (OTP) has been sent to your registered Mobile Number"
+        "otpDescription":"One Time Password (OTP) has been sent to your registered Mobile Number",
+        "resendBtnLabel":"Resend OTP",
+        "submitBtnLabel":"Submit"
     },
     "centerSelection": {
         "title": " Book Appointment ",
@@ -184,7 +186,9 @@
         "phoneicon": "assets/images/phone_iphone_black_24dp.png",
         "subTitle":"The OTP will expire in",
         "inputLabel":"Enter One Time Password (OTP)",
-        "otpDescription":"One Time Password (OTP) has been sent to your registered Mobile Number"
+        "otpDescription":"One Time Password (OTP) has been sent to your registered Mobile Number",
+        "resendBtnLabel":"Resend OTP",
+        "submitBtnLabel":"Submit"
     },
     "viewhistory":{
         "title": "View History",
@@ -198,7 +202,11 @@
         "description" : "Description",
         "timestamp" : "Timestamp",
         "serviceTypeFilter":{"AUTHENTICATION_REQUEST" : "Authentication Request", "SERVICE_REQUEST" : "Service Request", "DATA_UPDATE_REQUEST" : "Data Update Request", "ID_MANAGEMENT_REQUEST" : "ID Management Request", "DATA_SHARE_REQUEST" : "Data Share Request"},
-        "statusTypeFilter":{"success" : "Success", "in-progress" : "InProgress", "failed" : "Failed"}
+        "statusTypeFilter":{"success" : "Success", "in-progress" : "InProgress", "failed" : "Failed"},
+        "reportIssueLabel":"Report an issue",
+        "pinToTopLabel":"Pin to top",
+        "unpinToToplabel":"Unpin from top",
+        "viewhistoryLabel":"View Details"
     },
     "managemyvid": {
         "title": "Manage my VID",
@@ -207,7 +215,11 @@
         "create":"Create",
         "generatevidtoggle": "Generate VID",
         "revokevidtoggle": "Revoke VID",
-        "introDescription":"In this service, you can view details of the existing VIDs, generate new VIDs, revoke existing VIDs or download a VID card."
+        "introDescription":"In this service, you can view details of the existing VIDs, generate new VIDs, revoke existing VIDs or download a VID card.",
+        "generatedOn":"Generated On",
+        "expiry":"Expiry",
+        "vid":"VID",
+        "transactionLeft":"Transaction Left"
     },
     "lockunlockauth": {
         "title": "Secure My ID",
@@ -216,7 +228,9 @@
         "generatevidtoggle": "Generate VID",
         "revokevidtoggle": "Revoke VID",
         "labelmap":{"demo" : "Demographic Authentication", "bio-FINGER" : "Fingerprint Authentication", "bio-IRIS" : "Iris Authentication", "bio-FACE" : "Face Authentication", "otp-email" : "Email OTP Authentication", "otp-phone" : "Mobile OTP Authentication"},
-        "introDescription":"In secure my Id, you can view the status of all the authentication types. You can lock or unlock various authentication types."
+        "introDescription":"In secure my Id, you can view the status of all the authentication types. You can lock or unlock various authentication types.",
+        "unlockLabel":"Unlock",
+        "lockLabel":"Lock"
     },
     "updatedemographic": {
         "title": "Demographic Data",
@@ -243,7 +257,9 @@
         "descriptionText":"This service can be used to track the status of an EID that is associated with the logged-in UIN/VID. This will give information about the entered EID in detail.",
         "transactionTitle":"Transaction Details",
         "partnerName":"Partner name",
-        "transactionDate":"Transaction Date"
+        "partnerLogo":"Partner logo",
+        "transactionDate":"Transaction Date",
+        "downloadbuttonLabel":"Download"
     },
     "personalisedcard":{
         "title": "Download Your Personalised Card",
@@ -265,11 +281,20 @@
         "sharebutton" : "Share",
         "sharePartnerSuccessMsg":"Your data has been successfully shared with the chosen partner",
         "successIcon":"./assets/sucess_icon.png",
-        "introDescription":"This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself."
+        "introDescription":"This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself.",
+        "messageDescription1":"Dear Resident, Your data has been successfully share with the chosen partneragainst the EID :",
+        "messageDescription2":". In order to track the status of the transaction use the above AID in ",
+        "trackMyserviceLink":"Track My Service Request",
+        "orin":"or in",
+        "viewHistoryLink":"view history"
     },
     "genericmessage":{
         "successLabel":"Success",
         "successButton":"OK",
+        "submitButton":"Submit",
+        "shareButton":"Share",
+        "sendButton":"Send",
+        "deleteButton":"Delete",
         "errorLabel":"Error",
 		"warningLabel":"Warning",
         "createMessage":"Created Successfully",
@@ -290,12 +315,44 @@
             "sendVid":"Send VID",
             "agreeLabel1":"Send VID to registred phone",
             "agreeLabel":"Send VID to registered email ID"
+        },
+        "manageMyVidMessages":{
+            "Perpetual":{
+                "WarningMessageLabel":"Generating a new perpetual VID will revoke the already existing VID. Click on submit if you want to proceed.",
+                "confirmationMessageForCreateVid":"Are you sure you want to create a perpetual VID?",
+                "confirmationMessageForDeleteVid":"Are you sure you want to delete the chosen perpetual VID?"
+            },
+            "Temporary":{
+                "confirmationMessageForCreateVid":"Are you sure you want to create a temporary VID?",
+                "confirmationMessageForDeleteVid":"Are you sure you want to delete the chosen temporary VID?"
+            },
+            "OneTimeUse":{
+                "confirmationMessageForCreateVid":"Are you sure you want to create a one-time VID?",
+                "confirmationMessageForDeleteVid":"Are you sure you want to delete the chosen one-time VID?"
+            },
+            "createdSuccessfully":"Dear resident, your VID has been successfully generated against the the Event Id: $eventId. In order to track the status of the event, you can click here to track service request with pre-filled EID.",
+            "deletedSuccessfully":"Dear resident, your VID has been successfully deleted against the the Event Id: $eventId. In order to track the status of the event, you can click here to track service request with pre-filled EID."
+        },
+        "personalisedcardMessages":{
+            "downloadedSuccessFully":"Dear resident, your personalized card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id &/or phone number. In order to track the status of the event, you can click here to track service request with pre-filled EID."
+        },
+        "sharewithpartnerMessages":{
+            "choosePartner":"Kindly choose a partner to proceed.",
+            "purpose":"Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential."
         }
     },
     "serverErrors":{
         "IDA-OTA-008":"Please choose the channel that you want to verify.",
-        "IDA-MLC-009":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
+        "IDA-MLC-009":"No registered email Id/phone number associated with the entered UIN was found. To add an email Id/phone number, go to the nearest registration center. click here to find registration center.",
         "IDA-MLC-018":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
-        "RES-SER-422":"Invalid OTP was entered. Please try again with a valid OTP."
+        "RES-SER-422":"Invalid OTP was entered. Please try again with a valid OTP.",
+        "RES-SER-410":{"individualIdError": "Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again..",
+       "channelError":"Please choose the channel that you want to verify."    
+    },
+        "RES-SER-459":"The entered EID is not associated with the VID/UIN used to log in",
+        "RES-SER-412":"There seems to be some issue fetching the required page. Please try again in some time."
     }
 }
+
+
+

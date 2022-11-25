@@ -103,7 +103,21 @@ export class DialogComponent implements OnInit {
 
   shareInfo():void{
     this.dialog.closeAll();
-    this.interactionService.sendClickEvent()
+    this.interactionService.sendClickEvent("shareInfo")
+  }
+
+  vidWarning():void{
+    this.dialog.closeAll();
+    this.interactionService.sendClickEvent("createVId")
+  }
+
+  vidDelete():void{
+    this.dialog.closeAll();
+    this.interactionService.sendClickEvent("deleteVID")
+  }
+  downloadPersonalCard(){
+    this.dialog.closeAll();
+    this.interactionService.sendClickEvent("downloadPersonalCard")
   }
 }
 

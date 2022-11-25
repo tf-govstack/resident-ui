@@ -7,6 +7,7 @@ import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { InteractionService } from "src/app/core/services/interaction.service";
 
 @Component({
   selector: "app-revokevid",
@@ -14,152 +15,181 @@ import { MatDialog } from '@angular/material';
   styleUrls: ["revokevid.component.css"],
 })
 export class RevokevidComponent implements OnInit, OnDestroy {
-  langJSON:any;
-  popupMessages:any;
+  langJSON: any;
+  popupMessages: any;
   subscriptions: Subscription[] = [];
-  selectedValue:string = "generatevid";
+  selectedValue: string = "generatevid";
   vidlist: any;
   policyType: any;
-  vidType:string = "";
-  notificationType:Array<string>=[];
-  vidValue:string = "";
+  vidType: string = "";
+  notificationType: Array<string> = [];
+  vidValue: string = "";
   finalTypeList = {};
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  clickEventSubscription: Subscription;
+  newVidType: any;
+  message: string;
+  newVidValue:string;
+
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
+    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
+      if (id === "createVId") {
+        this.generateVID(this.newVidType)
+      }else if (id === "deleteVID"){
+        this.revokeVID(this.newVidValue)
+      }
+
+    })
+  }
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
 
     this.translateService
-    .getTranslation(localStorage.getItem("langCode"))
-    .subscribe(response => {
-      this.langJSON = response;
-      this.popupMessages = response;
-    });    
-    this.getVID();    
+      .getTranslation(localStorage.getItem("langCode"))
+      .subscribe(response => {
+        this.langJSON = response;
+        this.popupMessages = response;
+      });
+    this.getVID();
   }
 
-  getVID(){
+  getVID() {
     this.dataStorageService
-    .getVIDs()
-    .subscribe((response) => {
-      if(response["response"])
-        this.vidlist = response["response"];
+      .getVIDs()
+      .subscribe((response) => {
+        if (response["response"])
+          this.vidlist = response["response"];
         this.getPolicy();
-    });
-  } 
+      });
+  }
 
-  getPolicy(){
+  getPolicy() {
     let self = this;
     let results = [];
     self.finalTypeList = {};
     this.dataStorageService.getPolicy().subscribe(response => {
-        if(response["response"]){
-          this.policyType = JSON.parse(response["response"]);
-          for (var i=0 ; i < this.policyType.vidPolicies.length ; i++){
-            results = [];
-            for (var j=0 ; j < self.vidlist.length ; j++){
-              if(self.vidlist[j].vidType.toUpperCase() === this.policyType.vidPolicies[i].vidType.toUpperCase()) {
-                self.vidlist[j].showvid = false;
-                results.push(self.vidlist[j]);
-              }
+      if (response["response"]) {
+        this.policyType = JSON.parse(response["response"]);
+        for (var i = 0; i < this.policyType.vidPolicies.length; i++) {
+          results = [];
+          for (var j = 0; j < self.vidlist.length; j++) {
+            if (self.vidlist[j].vidType.toUpperCase() === this.policyType.vidPolicies[i].vidType.toUpperCase()) {
+              self.vidlist[j].showvid = false;
+              results.push(self.vidlist[j]);
             }
-            console.log("this.policyType.vidPolicies[i].vidType>>>"+this.policyType.vidPolicies[i].vidType);
-            self.finalTypeList[this.policyType.vidPolicies[i].vidType] = results;
           }
+          // console.log("this.policyType.vidPolicies[i].vidType>>>"+this.policyType.vidPolicies[i].vidType);
+          self.finalTypeList[this.policyType.vidPolicies[i].vidType] = results;
+          console.log(this.finalTypeList)
         }
-      },
+      }
+    },
       error => {
         console.log(error);
       }
     );
-  }  
+  }
 
-  displayVid(finalTypeList, policyType, policy, showvid){
+  displayVid(finalTypeList, policyType, policy, showvid) {
+    console.log(policyType)
     let self = this;
     let results = [];
-    for (var j=0 ; j < self.vidlist.length ; j++){
-      if(self.vidlist[j].vidType.toUpperCase() === policyType.toUpperCase()) {
-        if(self.vidlist[j].vid === policy.vid){
+    for (var j = 0; j < self.vidlist.length; j++) {
+      if (self.vidlist[j].vidType.toUpperCase() === policyType.toUpperCase()) {
+        if (self.vidlist[j].vid === policy.vid) {
           self.vidlist[j].showvid = showvid;
-        }else{
+        } else {
           self.vidlist[j].showvid = false;
-        }        
+        }
         results.push(self.vidlist[j]);
       }
     }
     self.finalTypeList[policyType] = results;
   }
 
-  setvidType(event: any){
+  setvidType(event: any) {
     this.vidType = "";
     this.vidType = event.value;
   }
 
-  sendNotification(event: any){    
-    if(!this.notificationType.includes(event.source.value)){
+  sendNotification(event: any) {
+    if (!this.notificationType.includes(event.source.value)) {
       this.notificationType.push(event.source.value);
-    }else{
-      this.notificationType.forEach( (item, index) => {
-        if(item === event.source.value) this.notificationType.splice(index,1);
+    } else {
+      this.notificationType.forEach((item, index) => {
+        if (item === event.source.value) this.notificationType.splice(index, 1);
       });
     }
   }
 
-  generateVID(vidType){
+  generateVID1(vidType: any) {
+    this.newVidType = vidType
+    this.showWarningMessage(vidType)
+    // this.generateVID(vidType)
+  }
+
+  generateVID(vidType: any) {
     let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["resident.vid.id"],
       "version": this.appConfigService.getConfig()["resident.vid.version"],
       "requesttime": Utils.getCurrentDate(),
-      "request":{
-        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),      
+      "request": {
+        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
         "vidType": vidType,
         "channels": ["PHONE", "EMAIL"]
       }
     };
-    this.dataStorageService.generateVID(request).subscribe(response => {    
-      if(!response["errors"].length){
+    this.dataStorageService.generateVID(request).subscribe(response => {
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully
+      console.log(response)
+      if (!response["errors"].length) {
         setTimeout(() => {
           self.getVID();
         }, 300);
-        this.showMessage(JSON.stringify(response["response"]));
-      }else {
+        this.showMessage(this.message.replace("$eventId", response["response"].vid));
+      } else {
         this.showErrorPopup(response["errors"][0].message);
       }
     });
   }
 
-  revokeVID(vidValue){
+  revokeVID1(vidValue: any,vidType:any){
+    this.showDeleteMessage(vidType,vidValue)
+    this.newVidValue = vidValue
+  }
+
+  revokeVID(vidValue: any) {
     let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["resident.revokevid.id"],
       "version": this.appConfigService.getConfig()["resident.vid.version"],
       "requesttime": Utils.getCurrentDate(),
-      "request":{
-        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),      
+      "request": {
+        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
         "vidStatus": "REVOKED"
       }
     };
-    this.dataStorageService.revokeVID(request, vidValue).subscribe(response => 
-      {
-        if(!response["errors"].length){
-          setTimeout(() => {
-            self.getVID();
-          }, 300);
-          this.showMessage(JSON.stringify(response["response"]));
-        }else{
-          this.showErrorPopup(response["errors"][0].message);
-        }
-      },
+    this.dataStorageService.revokeVID(request, vidValue).subscribe(response => {
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully
+      if (!response["errors"].length) {
+        setTimeout(() => {
+          self.getVID();
+        }, 300);
+        this.showMessage(this.message);
+      } else {
+        this.showErrorPopup(response["errors"][0].message);
+      }
+    },
       error => {
         console.log(error);
       }
     );
   }
 
-  showMessage(message: string) {    
+  showMessage(message: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '850px',
+      width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
@@ -170,10 +200,49 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     return dialogRef;
   }
 
+  showDeleteMessage(vidType: string,vidValue:string) {
+    this.message = this.popupMessages.genericmessage.manageMyVidMessages[vidType].confirmationMessageForDeleteVid.replace("$event",vidValue)
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.warningLabel,
+        message: this.message,
+        btnTxt: this.popupMessages.genericmessage.deleteButton
+      }
+    });
+    return dialogRef;
+  }
+  
+
+
+  showWarningMessage(vidType: any) {
+    if (vidType === "Perpetual") {
+      if (this.finalTypeList["Perpetual"].length) {
+        this.message = this.popupMessages.genericmessage.manageMyVidMessages[vidType].WarningMessageLabel
+      } else {
+        this.message = this.popupMessages.genericmessage.manageMyVidMessages[vidType].confirmationMessageForCreateVid
+      }
+    }else{
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages[vidType].confirmationMessageForCreateVid
+    }
+
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.warningLabel,
+        message: this.message,
+        btnTxt: this.popupMessages.genericmessage.submitButton
+      }
+    });
+    return dialogRef;
+  }
+
   showErrorPopup(message: string) {
     this.dialog
       .open(DialogComponent, {
-        width: '850px',
+        width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
@@ -184,7 +253,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       });
   }
 
-  onToggle(event: any){
+  onToggle(event: any) {
     this.selectedValue = event.source.value;
   }
 
@@ -193,6 +262,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-      this.router.navigate([item]);
+    this.router.navigate([item]);
   }
 }

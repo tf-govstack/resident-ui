@@ -1,5 +1,5 @@
 <!-- Missing Data-->
-<!-- <div dir="{{sitealignment}}"> -->
+<div dir="{{sitealignment}}">
 <span *ngIf="input.case === 'missingData'">
   <div class="table-container">
     <h2 class="filter-heading">{{ input.title[primaryLangCode] }}</h2>
@@ -106,7 +106,13 @@
     </div>
   </div>
   <div mat-dialog-actions class="pop-up-footer">
-    <span><button mat-button cdkFocusInitial id="confirmmessagepopup" (click)="dismiss()">
+    <span><button style="background-color:#03A64A;" *ngIf="input.btnTxt === 'OK' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="dismiss()">
+        {{ input.btnTxt }}
+      </button></span>
+      <span><button style="background-color:#03A64A;" *ngIf="input.btnTxt === 'Submit' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="vidWarning()">
+        {{ input.btnTxt }}
+      </button></span>
+      <span><button *ngIf="input.btnTxt === 'Delete' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="vidDelete()">
         {{ input.btnTxt }}
       </button></span>
   </div>
@@ -167,7 +173,7 @@
       &nbsp;
       <p class="agree-text">{{input.agreeLabel}}</p>
     </div>
-    <button mat-button (click)="shareInfo()" class="share-btn">Share</button>
+    <button mat-button (click)="shareInfo()" class="share-btn">{{ input.btnTxt }}</button>
   </div>
 </div>
 
@@ -191,8 +197,8 @@
         </div>
     </div>
     <div style="text-align: right; margin-top: 12px;">
-    <button mat-button class="share-btn" (click)="dismiss()">Send</button>
+    <button mat-button class="share-btn" (click)="downloadPersonalCard()">{{input.btnTxt}}</button>
   </div>
 </div>
 
-<!-- </div> -->
+</div>

@@ -8,6 +8,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
+import { InteractionService } from "src/app/core/services/interaction.service";
 
 @Component({
   selector: "app-personalisedcard",
@@ -23,8 +24,17 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   userInfo: any;
   buildHTML: any;
   dataDisplay:any={};
+  clickEventSubscription:Subscription;
+  message:string;
 
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  constructor(private interactionService:InteractionService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
+    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
+      if(id === "downloadPersonalCard"){
+        this.convertpdf()
+      }
+      
+    })
+  }
 
   async ngOnInit() {
     this.langCode = localStorage.getItem("langCode");
@@ -86,8 +96,11 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     $event.stopPropagation();
   }
 
-  convertpdf(){
+  downloadFile(){
     this.conditionsForPersonalisedCard()
+  }
+
+  convertpdf(){
     let self = this;
     const request = {
       "id": "mosip.resident.euin",
@@ -111,6 +124,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         }
       }
       saveAs(data.body, fileName);
+      this.showMessage()
     },
     err => {
       console.error(err);
@@ -122,19 +136,21 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       width: '650px',
       data: {
         case: 'conditionsForPersonalisedCard',
-        description: this.popupMessages.genericmessage.personalisedcardConditions
+        description: this.popupMessages.genericmessage.personalisedcardConditions,
+        btnTxt: this.popupMessages.genericmessage.sendButton
       }
     });
     return dialogRef;
   }
 
-  showMessage(message: string) {    
+  showMessage() {    
+    this.message = this.popupMessages.genericmessage.personalisedcardMessages.downloadedSuccessFully
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '850px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        message: message,
+        message: this.message,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });

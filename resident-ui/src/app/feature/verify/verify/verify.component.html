@@ -18,7 +18,7 @@
         &nbsp;
         &nbsp;
         &nbsp;
-        <button mat-raised-button color="primary" (click)="generateOTP()">{{'verifyuinvid.sendotp' | translate}}</button>
+        <button [disabled]="disableSendOtp" mat-raised-button color="primary" (click)="sendOtpBtn()">{{'verifyuinvid.sendotp' | translate}}</button>
     </div>
   </mat-card>
 
@@ -38,13 +38,13 @@
     <input #box (keyup)="captureOtpValue(box.value)" placeholder="Enter OTP here" id="otp-input" class="enter-opt-input" type="text" />
     <div class="otp-infromation-card">
       <p class="otp-infromation-text">{{'verifyuinvid.otpDescription' | translate}} <span
-          class="mobile-number"> 99XXXXXX80</span>.</p>
+          class="mobile-number"> {{channelType}}</span>.</p>
     </div>
     <div class="get-uin-btn-card">
-      <button mat-button-toggle [disabled]="resetBtnDisable" readonly="true" (click)="resendOtp()" [style.backgroundColor]="resendBtnBgColor" class="button2">Resend OTP</button>
+      <button mat-button-toggle [disabled]="resetBtnDisable" readonly="true" (click)="resendOtp()" [style.backgroundColor]="resendBtnBgColor" class="button2">{{'verifyuinvid.resendBtnLabel' | translate}}</button>
       &nbsp;
       &nbsp;
-      <button mat-button-toggle  [disabled]="submitBtnDisable" (click)="submitOtp()" class="button2" [style.backgroundColor]="submitBtnBgColor">Submit</button>
+      <button mat-button-toggle  [disabled]="submitBtnDisable" (click)="submitOtp()" class="button2" [style.backgroundColor]="submitBtnBgColor">{{'verifyuinvid.submitBtnLabel' | translate}}</button>
     </div>
   </div>
   </mat-card>
