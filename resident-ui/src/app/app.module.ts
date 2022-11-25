@@ -12,6 +12,7 @@ import { CommonModule } from "@angular/common";
 import { I18nModule } from 'src/app/i18n.module';
 /*import {NgxCaptchaModule} from '@binssoft/ngx-captcha';*/
 import { CoreModule } from './core/core.module';
+
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {
     return appConfig.loadAppConfig();

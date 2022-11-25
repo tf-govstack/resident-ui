@@ -5,7 +5,13 @@
   <mat-tab label="{{'dashboard.regcenter' | translate}}"></mat-tab>
   <mat-tab label="{{'dashboard.document' | translate}}"></mat-tab>
 </mat-tab-group>
-<ul *ngFor="let item of documentInfo">
+ <app-pdf-viewer
+      #pdfViewer
+      *ngIf="pdfSrc"
+      [pdfSrc]="pdfSrc"
+      [zoom]="5.0"
+    ></app-pdf-viewer>
+<!-- <ul *ngFor="let item of documentInfo">
 <li *ngIf="item.isActive">
 	<b>{{item.name}}</b>
 	<ul *ngFor="let documenttype of item.documenttypes">
@@ -15,3 +21,4 @@
 	</ul>
 </li>
 </ul>
+ -->

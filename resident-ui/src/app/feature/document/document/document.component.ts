@@ -12,6 +12,8 @@ import { Router } from "@angular/router";
 export class DocumentComponent implements OnInit, OnDestroy {
   documentInfo : any;
   subscriptions: Subscription[] = [];
+  pdfSrc = "";
+
   constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
 
   async ngOnInit() {
@@ -23,6 +25,21 @@ export class DocumentComponent implements OnInit, OnDestroy {
       if(response["response"])
         this.documentInfo = response["response"]["documentcategories"];
     });
+
+    this.dataStorageService
+    .getSupportingDocument()
+    .subscribe((response:Blob) => {
+      console.log("response>>>");
+      let reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.pdfSrc = e.target.result;
+      };
+
+      reader.readAsArrayBuffer(response);
+    });
+
+    
   }
 
   ngOnDestroy(): void {
