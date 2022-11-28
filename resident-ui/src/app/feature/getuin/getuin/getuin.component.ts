@@ -17,8 +17,8 @@ export class GetuinComponent implements OnInit {
   isChecked: boolean = false;
   buttonbgColor: string = "#BFBCBC";
   otpChannel: any = [];
-  
-
+  siteKey:string = "6LfFWhQiAAAAAIyjCco9njIoJ0wMHz5jQjSFGSQm";
+  resetCaptcha: boolean;
   userPreferredLangCode = localStorage.getItem("langCode");
 
   constructor(
@@ -53,7 +53,16 @@ export class GetuinComponent implements OnInit {
       this.buttonbgColor = "#BFBCBC"
     }
   }
-
+  
+  getCaptchaToken(event: Event) {
+    if (event !== undefined && event != null) {
+      console.log("Captcha event " + event);
+      this.buttonbgColor = "#03A64A";
+    } else {
+      console.log("Captcha has expired" + event);
+      this.buttonbgColor = "#BFBCBC";
+    }
+  }
 
   submitUserID(data: NgForm) {
     if (this.isChecked && data["AID"] !== "") {
