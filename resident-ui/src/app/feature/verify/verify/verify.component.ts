@@ -8,6 +8,7 @@ import Utils from 'src/app/app.utils';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { resolve } from "url";
+import { runInThisContext } from "vm";
 
 
 
@@ -51,16 +52,10 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
-    // this.disableSendOtp = false
-    // if (this.individualId.length >= 10 && this.otpChannel[0] !== undefined) {
-    //   this.disableSendOtp = false
-    // } else {
-    //   this.disableSendOtp = true
-    // }
+    
   }
 
   ngOnInit() {
-    // this.showOtpPanel = false;
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
@@ -153,7 +148,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   submitOtp() {
     this.verifyOTP()
-    // this.isVerifiedPhoneNumEmailId()
     clearInterval(this.interval)
   }
 
@@ -224,9 +218,10 @@ export class VerifyComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.verifyOTP(request).subscribe(response => {
+      console.log(response)
       if (!response["errors"]) {
         this.router.navigate(["dashboard"])
-        self.showMessage(JSON.stringify(response["response"]));
+        self.showMessage(response["response"]);
       } else {
         self.showErrorPopup(response["errors"]);
       }
@@ -238,13 +233,21 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   showMessage(message: string) {
-    this.message = `Your ${this.channelType} has been successfully verified against the the Event Id: ${this.transactionID}`
+    if(this.channelType === "PHONE"){
+      this.message = this.popupMessages.genericmessage.verifyChannel.phoneSuccess.replace("$channel",this.channelType)
+    }else{
+      this.message = this.popupMessages.genericmessage.verifyChannel.emailSuccess.replace("$channel",this.channelType)
+    }
+  
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        message: this.message,
+        responseData:message,
+        message:this.message,
+        clickHere: this.popupMessages.genericmessage.clickHere,
+        endMsg:this.popupMessages.genericmessage.successRemainMsg,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });

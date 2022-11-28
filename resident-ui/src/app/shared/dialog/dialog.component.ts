@@ -101,7 +101,7 @@ export class DialogComponent implements OnInit {
     this.dialog.closeAll();
   }
 
-  shareInfo():void{
+  shareInfoBtn():void{
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("shareInfo")
   }
@@ -118,6 +118,10 @@ export class DialogComponent implements OnInit {
   downloadPersonalCard(){
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("downloadPersonalCard")
+  }
+  
+  viewDetails(eventId:any){
+    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+ eventId);
   }
 }
 

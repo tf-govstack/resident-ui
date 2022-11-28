@@ -3,158 +3,163 @@
         {
             "displayName": "UIN Services",
             "icon": "./assets/icons/iconfont/uin_services.svg",
-            "activeIcon":"./assets/images/UIN Services.png",
+            "activeIcon": "./assets/images/UIN Services.png",
             "route": "",
             "auditEventId": "ADM-004",
-            "cols":2,
-            "rows":2,
-            "subMenus" : [{
-                "displayName": "View History",
-                "icon": "assets/images/viewhistory.png",
-                "route": "uinservices/viewhistory",
-                "description":"This service can be used to view the history of all the transactions associated with your logged-in UIN/AID/VID. One can also view details about those transactions and if an unaccounted entry is found, a report can be raised against the same.",
-                "auditEventId": "ADM-004"
-            },{
-                "displayName": "Manage my VID",
-                "icon": "assets/images/managemyvid.png",
-                "route": "uinservices/managemyvid",
-                "description":"This service can be used to view details of the existing VIDs, generate new VID,  revoke existing VID or download a VID card.",
-                "auditEventId": "ADM-004"
-            },{
-                "displayName": "Secure My ID",
-                "icon": "assets/images/lockunlockauth.png",
-                "route": "uinservices/lockunlockauth",
-                "description":"This service can be used to view the status of all the authentication types. One can lock or unlock various authentication types.",
-                "auditEventId": "ADM-004"
-            },{
-                "displayName": "Update Demographic Data",
-                "icon": "assets/images/updatedemographic.png",
-                "route": "uinservices/updatedemographic",
-                "description":"This service can be used to update the already existing data associated with the UIN/VID of the logged-in user. The data that can be updated includes name, gender, DOB,  address, documents uploaded, phone number, email Id, preferred language etc.",
-                "auditEventId": "ADM-004"
-            },{
-                "displayName": "Track Service Request",
-                "icon": "assets/images/trackservicerequest.png",
-                "route": "uinservices/trackservicerequest",
-                "description":"This service can be used to track the status of an EID that is associated with the logged-in UIN/VID. This will give information about the entered EID in detail.",
-                "auditEventId": "ADM-004"
-            },{
-                "displayName": "Download Your Personalised Card",
-                "icon": "assets/images/personalisedcard.png",
-                "route": "uinservices/personalisedcard",
-                "description":"This service can be used by the resident to choose the data that he wants to be added to the credential, preview the card and download it.",
-                "auditEventId": "ADM-004"
-            },{
-                "displayName": "Order A Physical Card",
-                "icon": "assets/images/physicalcard.png",
-                "route": "uinservices/physicalcard",
-                "description":"This service can be used to order a physical card to the preferred address. The types of cards available, tariffs and other features will depend on the partner chosen in the process.",
-                "auditEventId": "ADM-004"
-            },{
-                "displayName": "Share With Partner",
-                "icon": "assets/images/sharewithpartner.png",
-                "route": "uinservices/sharewithpartner",
-                "description":"This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself.",
-                "auditEventId": "ADM-004"
-            }]
+            "cols": 2,
+            "rows": 2,
+            "subMenus": [
+                {
+                    "displayName": "View History",
+                    "icon": "assets/images/viewhistory.png",
+                    "route": "uinservices/viewhistory",
+                    "description": "This service can be used to view the history of all the transactions associated with your logged-in UIN/AID/VID. One can also view details about those transactions and if an unaccounted entry is found, a report can be raised against the same.",
+                    "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Manage my VID",
+                    "icon": "assets/images/managemyvid.png",
+                    "route": "uinservices/managemyvid",
+                    "description": "This service can be used to view details of the existing VIDs, generate new VID,  revoke existing VID or download a VID card.",
+                    "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Secure My ID",
+                    "icon": "assets/images/lockunlockauth.png",
+                    "route": "uinservices/lockunlockauth",
+                    "description": "This service can be used to view the status of all the authentication types. One can lock or unlock various authentication types.",
+                    "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Update Demographic Data",
+                    "icon": "assets/images/updatedemographic.png",
+                    "route": "uinservices/updatedemographic",
+                    "description": "This service can be used to update the already existing data associated with the UIN/VID of the logged-in user. The data that can be updated includes name, gender, DOB,  address, documents uploaded, phone number, email Id, preferred language etc.",
+                    "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Track Service Request",
+                    "icon": "assets/images/trackservicerequest.png",
+                    "route": "uinservices/trackservicerequest",
+                    "description": "This service can be used to track the status of an EID that is associated with the logged-in UIN/VID. This will give information about the entered EID in detail.",
+                    "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Download Your Personalised Card",
+                    "icon": "assets/images/personalisedcard.png",
+                    "route": "uinservices/personalisedcard",
+                    "description": "This service can be used by the resident to choose the data that he wants to be added to the credential, preview the card and download it.",
+                    "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Share With Partner",
+                    "icon": "assets/images/sharewithpartner.png",
+                    "route": "uinservices/sharewithpartner",
+                    "description": "This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself.",
+                    "auditEventId": "ADM-004"
+                }
+            ]
         },
         {
             "displayName": "Get Information",
             "icon": "./assets/icons/iconfont/get_information.svg",
-            "activeIcon":"./assets/images/Get Information.png",
+            "activeIcon": "./assets/images/Get Information.png",
             "route": "",
             "auditEventId": "ADM-004",
-            "cols":1,
-            "rows":1,
-            "subMenus" : [{
-                "displayName": "Search Registration Center",
-                "icon": "",
-                "route": "regcenter",
-                "auditEventId": "ADM-004"
-            },
-            {
-                "displayName": "Acceptable Documents",
-                "icon": "",
-                "route": "document",
-                "auditEventId": "ADM-004"
-            }]
+            "cols": 1,
+            "rows": 1,
+            "subMenus": [
+                {
+                    "displayName": "Search Registration Center",
+                    "icon": "",
+                    "route": "regcenter",
+                    "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Acceptable Documents",
+                    "icon": "",
+                    "route": "document",
+                    "auditEventId": "ADM-004"
+                }
+            ]
         },
         {
             "displayName": "Booking an Appointment",
             "icon": "./assets/icons/iconfont/book_appointment.svg",
-            "activeIcon":"./assets/images/Book an Appointment.png",
+            "activeIcon": "./assets/images/Book an Appointment.png",
             "route": "",
             "auditEventId": "ADM-004",
-            "cols":1,
-            "rows":1,
-            "subMenus" : [{
-                "displayName": "Pre-registration",
-                "icon": "",
-                "route": "redirect",
-                "auditEventId": "ADM-004"
-            },
-            {
-                "displayName": "Retrieving lost UIN",
-                "icon": "",
-                "route": "redirect",
-                "auditEventId": "ADM-004"
-            },
-            {
-                "displayName": "Booking an appointment",
-                "icon": "",
-                "route": "redirect",
-                "auditEventId": "ADM-004"
-            }]
+            "cols": 1,
+            "rows": 1,
+            "subMenus": [
+                {
+                    "displayName": "Pre-registration",
+                    "icon": "",
+                    "route": "redirect",
+                    "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Retrieving lost UIN",
+                    "icon": "",
+                    "route": "redirect",
+                    "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Booking an appointment",
+                    "icon": "",
+                    "route": "redirect",
+                    "auditEventId": "ADM-004"
+                }
+            ]
         },
         {
             "displayName": "Get My UIN",
             "icon": "./assets/icons/iconfont/get_my_uin.svg",
-            "activeIcon":"./assets/images/Get My UIN.png",
+            "activeIcon": "./assets/images/Get My UIN.png",
             "route": "getuin",
             "auditEventId": "ADM-004",
-            "cols":1,
-            "rows":1
-        }, 
+            "cols": 1,
+            "rows": 1
+        },
         {
             "displayName": "Verify Phone Number / Email ID",
             "icon": "./assets/icons/iconfont/verify_phone_number.svg",
-            "activeIcon":"./assets/images/Verify Phone Number-Email ID.png",
+            "activeIcon": "./assets/images/Verify Phone Number-Email ID.png",
             "route": "verify",
             "auditEventId": "ADM-004",
-            "cols":1,
-            "rows":1
-        }       
+            "cols": 1,
+            "rows": 1
+        }
     ],
     "dashboard": {
-        "welcomeMessage":"Welcome to Mosip Partner portal !",
-        "Logout":"Logout",
-        "home" : "Home",
-        "getinformation" : "Get Information",
-        "regcenter" : "Find a Registration Center",
-        "document" : "List of Supporting Documents",
-        "verify" : "Verify Phone Number / Email ID",
-        "uinservices" : "UIN Services",
-        "uindescription":"The below services can be used by the resident to view, update, change or share the logged-in user's data. The user can also report an issue in case of any grievance."
-
+        "welcomeMessage": "Welcome to Mosip Partner portal !",
+        "Logout": "Logout",
+        "home": "Home",
+        "getinformation": "Get Information",
+        "regcenter": "Find a Registration Center",
+        "document": "List of Supporting Documents",
+        "verify": "Verify Phone Number / Email ID",
+        "uinservices": "UIN Services",
+        "uindescription": "The below services can be used by the resident to view, update, change or share the logged-in user's data. The user can also report an issue in case of any grievance."
     },
     "uinservices": {
-        "login":"Login",
-        "title":"Enter your AID/UIN/VID",
-        "description":"Please enter the AID you received during registration",
-        "plaginLabel":"I'm not a robot",
+        "login": "Login",
+        "title": "Enter your AID/UIN/VID",
+        "description": "Please enter the AID you received during registration",
+        "plaginLabel": "I'm not a robot",
         "buttonText": "Send OTP",
-        "home" : "Home",
-        "label":"Get My UIN",
-        "icon":"assets/images/info_black_24dp (1).png"
+        "home": "Home",
+        "label": "Get My UIN",
+        "icon": "assets/images/info_black_24dp (1).png"
     },
-    "bookappointment":{
-        "home":"Home",
-        "label":"Book an Appointment",
-        "subTitle":"The OTP will expire in",
-        "inputLabel":"Enter One Time Password (OTP)",
-        "otpDescription":"One Time Password (OTP) has been sent to your registered Mobile Number",
-        "resendBtnLabel":"Resend OTP",
-        "submitBtnLabel":"Submit"
+    "bookappointment": {
+        "home": "Home",
+        "label": "Book an Appointment",
+        "subTitle": "The OTP will expire in",
+        "inputLabel": "Enter One Time Password (OTP)",
+        "otpDescription": "One Time Password (OTP) has been sent to your registered Mobile Number",
+        "resendBtnLabel": "Resend OTP",
+        "submitBtnLabel": "Submit"
     },
     "centerSelection": {
         "title": " Book Appointment ",
@@ -184,53 +189,96 @@
         "submit": "Submit",
         "resendotp": "Resend OTP",
         "phoneicon": "assets/images/phone_iphone_black_24dp.png",
-        "subTitle":"The OTP will expire in",
-        "inputLabel":"Enter One Time Password (OTP)",
-        "otpDescription":"One Time Password (OTP) has been sent to your registered Mobile Number",
-        "resendBtnLabel":"Resend OTP",
-        "submitBtnLabel":"Submit"
+        "subTitle": "The OTP will expire in",
+        "inputLabel": "Enter One Time Password (OTP)",
+        "otpDescription": "One Time Password (OTP) has been sent to your registered Mobile Number",
+        "resendBtnLabel": "Resend OTP",
+        "submitBtnLabel": "Submit"
     },
-    "viewhistory":{
+    "viewhistory": {
         "title": "View History",
-        "inputsearch" : "Search",
-        "inputAppId" : "Event Id",
-        "inputHistory" : "History Type",
-        "inputStatus" : "Status",
-        "inputFrom" : "From (dd/mm/yyyy)",
-        "inputTo" : "To (dd/mm/yyyy)",
-        "searchBtn" : "Go",
-        "description" : "Description",
-        "timestamp" : "Timestamp",
-        "serviceTypeFilter":{"AUTHENTICATION_REQUEST" : "Authentication Request", "SERVICE_REQUEST" : "Service Request", "DATA_UPDATE_REQUEST" : "Data Update Request", "ID_MANAGEMENT_REQUEST" : "ID Management Request", "DATA_SHARE_REQUEST" : "Data Share Request"},
-        "statusTypeFilter":{"success" : "Success", "in-progress" : "InProgress", "failed" : "Failed"},
-        "reportIssueLabel":"Report an issue",
-        "pinToTopLabel":"Pin to top",
-        "unpinToToplabel":"Unpin from top",
-        "viewhistoryLabel":"View Details"
+        "inputsearch": "Search",
+        "inputAppId": "Event Id",
+        "inputHistory": "History Type",
+        "inputStatus": "Status",
+        "inputFrom": "From (dd/mm/yyyy)",
+        "inputTo": "To (dd/mm/yyyy)",
+        "searchBtn": "Go",
+        "description": "Description",
+        "timestamp": "Timestamp",
+        "serviceTypeFilter": {
+            "AUTHENTICATION_REQUEST": "Authentication Request",
+            "SERVICE_REQUEST": "Service Request",
+            "DATA_UPDATE_REQUEST": "Data Update Request",
+            "ID_MANAGEMENT_REQUEST": "ID Management Request",
+            "DATA_SHARE_REQUEST": "Data Share Request"
+        },
+        "statusTypeFilter": {
+            "success": "Success",
+            "in-progress": "InProgress",
+            "failed": "Failed"
+        },
+        "reportIssueLabel": "Report an issue",
+        "pinToTopLabel": "Pin to top",
+        "unpinToToplabel": "Unpin from top",
+        "viewhistoryLabel": "View Details"
     },
     "managemyvid": {
         "title": "Manage my VID",
-        "generatevid": [{"vidType":"Perpetual VID","message":"No limit to usage or expiry"},{"vidType":"One-time VID","message":"Has no expiry date but  can be used only once"},{"vidType":"Temporary VID","message":"Expires after 30 mins and can be used only once"}],
+        "generatevid": [
+            {
+                "vidType": "Perpetual VID",
+                "message": "No limit to usage or expiry"
+            },
+            {
+                "vidType": "One-time VID",
+                "message": "Has no expiry date but  can be used only once"
+            },
+            {
+                "vidType": "Temporary VID",
+                "message": "Expires after 30 mins and can be used only once"
+            }
+        ],
         "revokevid": "",
-        "create":"Create",
+        "create": "Create",
         "generatevidtoggle": "Generate VID",
         "revokevidtoggle": "Revoke VID",
-        "introDescription":"In this service, you can view details of the existing VIDs, generate new VIDs, revoke existing VIDs or download a VID card.",
-        "generatedOn":"Generated On",
-        "expiry":"Expiry",
-        "vid":"VID",
-        "transactionLeft":"Transaction Left"
+        "introDescription": "In this service, you can view details of the existing VIDs, generate new VIDs, revoke existing VIDs or download a VID card.",
+        "generatedOn": "Generated On",
+        "expiry": "Expiry",
+        "vid": "VID",
+        "transactionLeft": "Transaction Left"
     },
     "lockunlockauth": {
         "title": "Secure My ID",
-        "generatevid": [{"title":"Perpetual","message":"No limit to usage or expiry"},{"title":"Temporary","message":"Expires after 30 mins and can be used only once"},{"title":"One-time","message":"Has no expiry date but  can be used only once"}],
+        "generatevid": [
+            {
+                "title": "Perpetual",
+                "message": "No limit to usage or expiry"
+            },
+            {
+                "title": "Temporary",
+                "message": "Expires after 30 mins and can be used only once"
+            },
+            {
+                "title": "One-time",
+                "message": "Has no expiry date but  can be used only once"
+            }
+        ],
         "revokevid": "",
         "generatevidtoggle": "Generate VID",
         "revokevidtoggle": "Revoke VID",
-        "labelmap":{"demo" : "Demographic Authentication", "bio-FINGER" : "Fingerprint Authentication", "bio-IRIS" : "Iris Authentication", "bio-FACE" : "Face Authentication", "otp-email" : "Email OTP Authentication", "otp-phone" : "Mobile OTP Authentication"},
-        "introDescription":"In secure my Id, you can view the status of all the authentication types. You can lock or unlock various authentication types.",
-        "unlockLabel":"Unlock",
-        "lockLabel":"Lock"
+        "labelmap": {
+            "demo": "Demographic Authentication",
+            "bio-FINGER": "Fingerprint Authentication",
+            "bio-IRIS": "Iris Authentication",
+            "bio-FACE": "Face Authentication",
+            "otp-email": "Email OTP Authentication",
+            "otp-phone": "Mobile OTP Authentication"
+        },
+        "introDescription": "In secure my Id, you can view the status of all the authentication types. You can lock or unlock various authentication types.",
+        "unlockLabel": "Unlock",
+        "lockLabel": "Lock"
     },
     "updatedemographic": {
         "title": "Demographic Data",
@@ -238,121 +286,133 @@
         "address": "Address",
         "contact": "Contact",
         "languagePreference": "Language Preference"
-    },    
-    "trackservicerequest":{
+    },
+    "trackservicerequest": {
         "title": "Track Service Request",
-        "title2":"Track status",
+        "title2": "Track status",
         "searchLabel": "Enter the Event Id that you want to track",
         "searchPlaceholder": "Enter the 16-digit EID",
         "searchButton": "Track",
-        "eventId":"Event Id",
-        "eventType":"Event Type",
-        "eventStatus":"Event Status",
-        "description":"Description",
-        "individualId":"IndividualId",
-        "authenticationMode":"Authentication Mode",
-        "vidType":"VID Type",
-        "vid":"VID",
-        "timestamp":"Timestamp",
-        "descriptionText":"This service can be used to track the status of an EID that is associated with the logged-in UIN/VID. This will give information about the entered EID in detail.",
-        "transactionTitle":"Transaction Details",
-        "partnerName":"Partner name",
-        "partnerLogo":"Partner logo",
-        "transactionDate":"Transaction Date",
-        "downloadbuttonLabel":"Download"
+        "eventId": "Event Id",
+        "eventType": "Event Type",
+        "eventStatus": "Event Status",
+        "description": "Description",
+        "individualId": "IndividualId",
+        "authenticationMode": "Authentication Mode",
+        "vidType": "VID Type",
+        "vid": "VID",
+        "timestamp": "Timestamp",
+        "descriptionText": "This service can be used to track the status of an EID that is associated with the logged-in UIN/VID. This will give information about the entered EID in detail.",
+        "transactionTitle": "Transaction Details",
+        "partnerName": "Partner name",
+        "partnerLogo": "Partner logo",
+        "transactionDate": "Transaction Date",
+        "downloadbuttonLabel": "Download"
     },
-    "personalisedcard":{
+    "personalisedcard": {
         "title": "Download Your Personalised Card",
-        "mainlabel" : "Choose the data you want to include the credential",
-        "downloadbutton" : "Download",
-        "introDescription":"This service can be used by the resident to choose the data that he wants to be added to the card, preview the card, and download it."
+        "mainlabel": "Choose the data you want to include the credential",
+        "downloadbutton": "Download",
+        "introDescription": "This service can be used by the resident to choose the data that he wants to be added to the card, preview the card, and download it."
     },
-    "physicalcard":{
+    "physicalcard": {
         "title": "Order A Physical Card",
-        "mainlabel" : "Select a print provider",
-        "introDescription":"This service can be used to order a physical card to the preferred address. The types of cards available, tariffs and other features will depend on the partner chosen in the process."
+        "mainlabel": "Select a print provider",
+        "introDescription": "This service can be used to order a physical card to the preferred address. The types of cards available, tariffs and other features will depend on the partner chosen in the process."
     },
-    "sharewithpartner":{
+    "sharewithpartner": {
         "title": "Share With Partner",
-        "mainlabel" : "Choose the data you want to include the credential",
-        "partnerName" : "Authorization Partner Name",
-        "sharingReason" : "Purpose of sharing your credential",
-        "sharingReasonPlaceholder" : "Enter the purpose here",
-        "sharebutton" : "Share",
-        "sharePartnerSuccessMsg":"Your data has been successfully shared with the chosen partner",
-        "successIcon":"./assets/sucess_icon.png",
-        "introDescription":"This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself.",
-        "messageDescription1":"Dear Resident, Your data has been successfully share with the chosen partneragainst the EID :",
-        "messageDescription2":". In order to track the status of the transaction use the above AID in ",
-        "trackMyserviceLink":"Track My Service Request",
-        "orin":"or in",
-        "viewHistoryLink":"view history"
+        "mainlabel": "Choose the data you want to include the credential",
+        "partnerName": "Authorization Partner Name",
+        "sharingReason": "Purpose of sharing your credential",
+        "sharingReasonPlaceholder": "Enter the purpose here",
+        "sharebutton": "Share",
+        "sharePartnerSuccessMsg": "Your data has been successfully shared with the chosen partner",
+        "successIcon": "./assets/sucess_icon.png",
+        "introDescription": "This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself.",
+        "messageDescription1": "Dear Resident, Your data has been successfully share with the chosen partneragainst the EID :",
+        "messageDescription2": ". In order to track the status of the transaction use the above AID in ",
+        "trackMyserviceLink": "Track My Service Request",
+        "orin": "or in",
+        "viewHistoryLink": "view history"
     },
-    "genericmessage":{
-        "successLabel":"Success",
-        "successButton":"OK",
-        "submitButton":"Submit",
-        "shareButton":"Share",
-        "sendButton":"Send",
-        "deleteButton":"Delete",
-        "errorLabel":"Error",
-		"warningLabel":"Warning",
-        "createMessage":"Created Successfully",
-        "updateMessage":"Updated Successfully",
-        "mappingMessage":" Mapped Successfully",
-        "termsAndConditionsLabel":"Terms and Conditions",
-        "termsAndConditionsDescription":[
+    "genericmessage": {
+        "successLabel": "Success",
+        "successButton": "OK",
+        "submitButton": "Submit",
+        "shareButton": "Share",
+        "sendButton": "Send",
+        "deleteButton": "Delete",
+        "errorLabel": "Error",
+        "warningLabel": "Warning",
+        "createMessage": "Created Successfully",
+        "updateMessage": "Updated Successfully",
+        "mappingMessage": " Mapped Successfully",
+        "termsAndConditionsLabel": "Terms and Conditions",
+        "clickHere":"click here ",
+        "successRemainMsg":"to track service request with pre-filled EID.",
+        "termsAndConditionsDescription": [
             "Your data will be shared with the chosen third party (credential partner)",
             "You are responsible for any and all costs and fees associated with agreements entered into with the third-party provider.",
             "Under no circumstances will we be liable for loss or misuse of data whatsoever, arising from the usage of data shared with the partner.",
             "if a third-party provider ceases to make its service available or requires MOSIP to suspend or terminate the provision of all or any part of its services to you that part of data or services will be terminated immediately without notice or further obligation to you."
         ],
-        "agreeLabel":"I agree to the terms and conditions to share my credentials with the chosen partner",
-        "personalisedcardConditions":{
-            "title":"Download Your Personalised Card",
-            "wishes":"Dear Resident,",
-            "description":"It will take some time for us to get the card ready. We will send you a link using which you can download the requested card. You can also download the card from the notification section once it is ready.",
-            "sendVid":"Send VID",
-            "agreeLabel1":"Send VID to registred phone",
-            "agreeLabel":"Send VID to registered email ID"
+        "agreeLabel": "I agree to the terms and conditions to share my credentials with the chosen partner",
+        "personalisedcardConditions": {
+            "title": "Download Your Personalised Card",
+            "wishes": "Dear Resident,",
+            "description": "It will take some time for us to get the card ready. We will send you a link using which you can download the requested card. You can also download the card from the notification section once it is ready.",
+            "sendVid": "Send VID",
+            "agreeLabel1": "Send VID to registred phone",
+            "agreeLabel": "Send VID to registered email ID"
         },
-        "manageMyVidMessages":{
-            "Perpetual":{
-                "WarningMessageLabel":"Generating a new perpetual VID will revoke the already existing VID. Click on submit if you want to proceed.",
-                "confirmationMessageForCreateVid":"Are you sure you want to create a perpetual VID?",
-                "confirmationMessageForDeleteVid":"Are you sure you want to delete the chosen perpetual VID?"
+        "manageMyVidMessages": {
+            "Perpetual": {
+                "WarningMessageLabel": "Generating a new perpetual VID will revoke the already existing VID. Click on submit if you want to proceed.",
+                "confirmationMessageForCreateVid": "Are you sure you want to create a perpetual VID?",
+                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen perpetual VID?"
             },
-            "Temporary":{
-                "confirmationMessageForCreateVid":"Are you sure you want to create a temporary VID?",
-                "confirmationMessageForDeleteVid":"Are you sure you want to delete the chosen temporary VID?"
+            "Temporary": {
+                "confirmationMessageForCreateVid": "Are you sure you want to create a temporary VID?",
+                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen temporary VID?"
             },
-            "OneTimeUse":{
-                "confirmationMessageForCreateVid":"Are you sure you want to create a one-time VID?",
-                "confirmationMessageForDeleteVid":"Are you sure you want to delete the chosen one-time VID?"
+            "OneTimeUse": {
+                "confirmationMessageForCreateVid": "Are you sure you want to create a one-time VID?",
+                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen one-time VID?"
             },
-            "createdSuccessfully":"Dear resident, your VID has been successfully generated against the the Event Id: $eventId. In order to track the status of the event, you can click here to track service request with pre-filled EID.",
-            "deletedSuccessfully":"Dear resident, your VID has been successfully deleted against the the Event Id: $eventId. In order to track the status of the event, you can click here to track service request with pre-filled EID."
+            "createdSuccessfully": "Dear resident, your VID has been successfully generated against the the Event Id: $eventId. In order to track the status of the event, you can ",
+            "deletedSuccessfully": "Dear resident, your VID has been successfully deleted against the the Event Id: $eventId. In order to track the status of the event, you can "
         },
-        "personalisedcardMessages":{
-            "downloadedSuccessFully":"Dear resident, your personalized card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id &/or phone number. In order to track the status of the event, you can click here to track service request with pre-filled EID."
+        "personalisedcardMessages": {
+            "downloadedSuccessFully": "Dear resident, your personalized card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can click here to track service request with pre-filled EID."
         },
-        "sharewithpartnerMessages":{
-            "choosePartner":"Kindly choose a partner to proceed.",
-            "purpose":"Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential."
+        "sharewithpartnerMessages": {
+            "choosePartner": "Kindly choose a partner to proceed.",
+            "purpose": "Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential."
+        },
+        "sharewithpartner":{
+            "needPartner":"Kindly choose a partner to proceed.",
+            "needPurpose":"Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential.",
+            "successMessage":"Your chosen data has been successfully shared with the chosen partner. You can track the status of the request using the Event Id: $eventId"
+        },
+        "verifyChannel":{
+            "emailSuccess":"Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can ",
+            "phoneSuccess":"Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can "
         }
+        
     },
-    "serverErrors":{
-        "IDA-OTA-008":"Please choose the channel that you want to verify.",
-        "IDA-MLC-009":"No registered email Id/phone number associated with the entered UIN was found. To add an email Id/phone number, go to the nearest registration center. click here to find registration center.",
-        "IDA-MLC-018":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
-        "RES-SER-422":"Invalid OTP was entered. Please try again with a valid OTP.",
-        "RES-SER-410":{"individualIdError": "Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again..",
-       "channelError":"Please choose the channel that you want to verify."    
-    },
-        "RES-SER-459":"The entered EID is not associated with the VID/UIN used to log in",
-        "RES-SER-412":"There seems to be some issue fetching the required page. Please try again in some time."
+    "serverErrors": {
+        "IDA-OTA-008": "Please choose the channel that you want to verify.",
+        "IDA-MLC-009": "No registered email Id/phone number associated with the entered UIN was found. To add an email Id/phone number, go to the nearest registration center. click here to find registration center.",
+        "IDA-MLC-018": "Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
+        "RES-SER-422": "Invalid OTP was entered. Please try again with a valid OTP.",
+        "RES-SER-410": {
+            "individualIdError": "Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again..",
+            "channelError": "Please choose the channel that you want to verify."
+        },
+        "RES-SER-459": "The entered EID is not associated with the VID/UIN used to log in",
+        "RES-SER-412": "There seems to be some issue fetching the required page. Please try again in some time.",
+        "RES-SER-405":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
+        "RES-SER-418":"Maximum allowed VIDs are active. Deactivate VID to generate new one."
     }
 }
-
-
-

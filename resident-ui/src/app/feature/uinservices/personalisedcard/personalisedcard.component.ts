@@ -53,7 +53,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     .subscribe((response) => {
       this.schema = response;
     });
-
     this.getUserInfo();
   }
 
@@ -90,6 +89,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
        row = row+"<tr><td>"+this.dataDisplay[key].label+"</td><td>"+this.dataDisplay[key].value+"</td></tr>";
       }      
     }
+    console.log(row)
     console.log("this.dataDisplay>>>"+this.dataDisplay);
     this.buildHTML = `<html><head></head><body><table>`+row+`</table></body></html>`;
     console.log("this.buildHTML>>>"+JSON.stringify(this.buildHTML));

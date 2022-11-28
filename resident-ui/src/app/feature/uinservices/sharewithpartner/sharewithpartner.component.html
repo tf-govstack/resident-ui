@@ -42,7 +42,17 @@
 						</tr>
 					</table>
 				</td>
-				<td style="width:70%;vertical-align: top;">
+
+				<td style="width:70%; vertical-align: top;">
+					<div style="height: 200px;">
+					<table *ngIf="buildHTML" style="width:500px;">
+						<tr>
+							<td>
+								<div [innerHTML]="buildHTML | sanitize"></div>
+							</td>
+						</tr>
+					</table>
+				</div>
 					<table style="width:500px;">
 						<tr>
 							<td style="padding-bottom: 10px;font-size: 14px;">
@@ -89,14 +99,10 @@
 			&nbsp;&nbsp;
 			<p class="success-msg-text">{{'sharewithpartner.sharePartnerSuccessMsg' | translate}}</p>
 		</div>
-		<!-- <p class="success-msg-description">Dear Resident, Your data has been successfully share with the chosen partner
-			against the EID :
-			<span>{{aidStatus.eventId}}</span>. In order to track the status of the transaction use the above AID in <a
-				href="#">Track My Service Request</a> or in <a href="#">view history</a>.
-		</p> -->
 		<p class="success-msg-description">{{'sharewithpartner.messageDescription1' | translate}}
-			<span>{{aidStatus.eventId}}</span>{{'sharewithpartner.messageDescription2' | translate}} <a
-				href="#">{{'sharewithpartner.trackMyserviceLink' | translate}}</a> {{'sharewithpartner.orin' | translate}} <a href="#">{{'sharewithpartner.viewHistoryLink' | translate}}</a>.
+			<span>{{aidStatus.eventId}}</span>{{'sharewithpartner.messageDescription2' | translate}} <span class="navigate-link"
+				 (click)="viewDetails(aidStatus.eventId)">{{'sharewithpartner.trackMyserviceLink' | translate}}</span> {{'sharewithpartner.orin' |
+			translate}} <span class="navigate-link" (click)="viewDetails2()">{{'sharewithpartner.viewHistoryLink' | translate}}</span>.
 		</p>
 	</mat-card>
 	&nbsp;
@@ -131,10 +137,10 @@
 				</div>
 			</div>
 		</div>
-		<div  style="text-align: right; margin-top: 1rem;">
-		<button mat-raised-button color="primary"
-			(click)="downloadAcknowledgement(aidStatus.eventId)">{{'personalisedcard.downloadbutton' |
-			translate}}</button>
+		<div style="text-align: right; margin-top: 1rem;">
+			<button mat-raised-button color="primary"
+				(click)="downloadAcknowledgement(aidStatus.eventId)">{{'personalisedcard.downloadbutton' |
+				translate}}</button>
 		</div>
 		<!-- <table style="width: 100%;">
 			<tr>
