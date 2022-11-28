@@ -94,13 +94,14 @@
 <div class="pop-up" *ngIf="input.case === 'MESSAGE'" [style.backgroundColor]="popMsgbgColor" [style.color]="popMsgColor"
   [style.borderColor]="popMsgColor">
   <div class="infro-card">
-    <!-- *ngIf="input.title === ('Success' || 'نجاح' || 'Succès'|| 'सफलता' || 'ಯಶಸ್ಸು' || 'வெற்றி')" -->
     <img [src]="icon" height="35px" width="35px" class="success-img" />
     <div class="pop-up-header">
       <!-- <b mat-dialog-title>{{ input.title }}</b> -->
-      <!-- <p>Dear Resident, Your registered email ID Sanjay.kumar30@gmail.com has now been verified.</p> -->
       <div mat-dialog-content>
-        <div [innerText]="input.message"></div>
+        <!-- <div [innerText]="input.message"></div> -->
+        <div>
+          <p>{{input.message}} <span (click)="viewDetails(input.vidValue)" class="navigate-link">{{input.clickHere}}</span>{{input.endMsg}}</p>
+        </div>
 
       </div>
     </div>
@@ -173,7 +174,7 @@
       &nbsp;
       <p class="agree-text">{{input.agreeLabel}}</p>
     </div>
-    <button mat-button (click)="shareInfo()" class="share-btn">{{ input.btnTxt }}</button>
+    <button mat-button (click)="shareInfoBtn()" class="share-btn">{{ input.btnTxt }}</button>
   </div>
 </div>
 

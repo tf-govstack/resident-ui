@@ -141,13 +141,13 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.generateVID(request).subscribe(response => {
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully 
       console.log(response)
       if (!response["errors"].length) {
         setTimeout(() => {
           self.getVID();
         }, 300);
-        this.showMessage(this.message.replace("$eventId", response["response"].vid));
+        this.showMessage(this.message.replace("$eventId", response["response"].vid),response["response"].vid);
       } else {
         this.showErrorPopup(response["errors"][0].message);
       }
@@ -171,12 +171,12 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.revokeVID(request, vidValue).subscribe(response => {
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", vidValue) 
       if (!response["errors"].length) {
         setTimeout(() => {
           self.getVID();
         }, 300);
-        this.showMessage(this.message);
+        this.showMessage(this.message ,vidValue);
       } else {
         this.showErrorPopup(response["errors"][0].message);
       }
@@ -187,13 +187,16 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     );
   }
 
-  showMessage(message: string) {
+  showMessage(message: string,vidValue:string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
+        vidValue:vidValue,
         message: message,
+        endMsg:this.popupMessages.genericmessage.successRemainMsg,
+        clickHere:this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
