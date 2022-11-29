@@ -59,6 +59,7 @@ export class DialogComponent implements OnInit {
   holidayForm: FormGroup;
   sitealignment = 'ltr';
   icon:string = "./assets/sucess_icon.png"
+  isChecked:boolean = true
 
   constructor(
     public dialog: MatDialog,
@@ -99,6 +100,11 @@ export class DialogComponent implements OnInit {
 
   dismiss(): void {
     this.dialog.closeAll();
+  }
+
+  agreeConditions(){
+      this.isChecked = !this.isChecked
+      console.log(this.isChecked)
   }
 
   shareInfoBtn():void{

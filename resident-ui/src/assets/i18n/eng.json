@@ -191,7 +191,8 @@
         "phoneicon": "assets/images/phone_iphone_black_24dp.png",
         "subTitle": "The OTP will expire in",
         "inputLabel": "Enter One Time Password (OTP)",
-        "otpDescription": "One Time Password (OTP) has been sent to your registered Mobile Number",
+        "otpDescriptionEmail": "Please enter the OTP that has been sent to your registered email Id ",
+        "otpDescriptionPhone": "Please enter the OTP that has been sent to your registered phone number ",
         "resendBtnLabel": "Resend OTP",
         "submitBtnLabel": "Submit"
     },
@@ -349,7 +350,7 @@
         "updateMessage": "Updated Successfully",
         "mappingMessage": " Mapped Successfully",
         "termsAndConditionsLabel": "Terms and Conditions",
-        "clickHere":"click here ",
+        "clickHere":"click here.",
         "successRemainMsg":"to track service request with pre-filled EID.",
         "termsAndConditionsDescription": [
             "Your data will be shared with the chosen third party (credential partner)",
@@ -384,7 +385,7 @@
             "deletedSuccessfully": "Dear resident, your VID has been successfully deleted against the the Event Id: $eventId. In order to track the status of the event, you can "
         },
         "personalisedcardMessages": {
-            "downloadedSuccessFully": "Dear resident, your personalized card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can click here to track service request with pre-filled EID."
+            "downloadedSuccessFully": "Dear resident, your personalized card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can "
         },
         "sharewithpartnerMessages": {
             "choosePartner": "Kindly choose a partner to proceed.",
@@ -392,14 +393,13 @@
         },
         "sharewithpartner":{
             "needPartner":"Kindly choose a partner to proceed.",
-            "needPurpose":"Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential.",
-            "successMessage":"Your chosen data has been successfully shared with the chosen partner. You can track the status of the request using the Event Id: $eventId"
+            "needPurpose":"Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential."
         },
         "verifyChannel":{
+            "warningMsg":"Your phone $channel has already been verified.",
             "emailSuccess":"Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can ",
             "phoneSuccess":"Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can "
         }
-        
     },
     "serverErrors": {
         "IDA-OTA-008": "Please choose the channel that you want to verify.",
@@ -413,6 +413,7 @@
         "RES-SER-459": "The entered EID is not associated with the VID/UIN used to log in",
         "RES-SER-412": "There seems to be some issue fetching the required page. Please try again in some time.",
         "RES-SER-405":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
-        "RES-SER-418":"Maximum allowed VIDs are active. Deactivate VID to generate new one."
+        "RES-SER-418":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
+        "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in."
     }
 }

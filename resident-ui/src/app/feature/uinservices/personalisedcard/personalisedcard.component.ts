@@ -28,12 +28,12 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   message:string;
 
   constructor(private interactionService:InteractionService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
-    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
-      if(id === "downloadPersonalCard"){
-        this.convertpdf()
-      }
+    // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
+    //   if(id === "downloadPersonalCard"){
+    //     this.convertpdf()
+    //   }
       
-    })
+    // })
   }
 
   async ngOnInit() {
@@ -97,7 +97,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   }
 
   downloadFile(){
-    this.conditionsForPersonalisedCard()
+    this.convertpdf()
   }
 
   convertpdf(){
@@ -114,6 +114,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .convertpdf(request)
     .subscribe(data => {
+      console.log(data)
       var fileName = self.userInfo.fullName+".pdf";
       const contentDisposition = data.headers.get('Content-Disposition');
       if (contentDisposition) {
@@ -130,6 +131,8 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       console.error(err);
     });
   }
+
+  
 
   conditionsForPersonalisedCard() {
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -150,6 +153,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
+        clickHere: this.popupMessages.genericmessage.clickHere,
         message: this.message,
         btnTxt: this.popupMessages.genericmessage.successButton
       }

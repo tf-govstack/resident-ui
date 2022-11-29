@@ -34,8 +34,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
   resendBtnBgColor: string = "#909090";
   resetBtnDisable: boolean = true;
   submitBtnDisable: boolean = false;
-  otpTimeMinutes: number = 1;
-  otpTimeSeconds: number = 59;
+  otpTimeSeconds: any = "00";
+  otpTimeMinutes: number = 2;
   displaySeconds: any = this.otpTimeSeconds
   interval: any;
   message: string;
@@ -52,7 +52,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
-    
+
   }
 
   ngOnInit() {
@@ -100,29 +100,28 @@ export class VerifyComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
   setOtpTime() {
     this.interval = setInterval(() => {
-      if (this.otpTimeSeconds < 0) {
+      if (this.otpTimeSeconds < 0 || this.otpTimeSeconds === "00") {
         this.otpTimeSeconds = 59
         this.otpTimeMinutes -= 1
-      } else if (this.otpTimeMinutes === 0 && this.otpTimeSeconds === 0) {
+      }
+      if (this.otpTimeMinutes < 0 && this.displaySeconds === "00") {
+        console.log("hello2")
         this.otpTimeSeconds = 0;
         this.otpTimeMinutes = 0;
         clearInterval(this.interval)
         this.resendBtnBgColor = "#03A64A";
-        // this.showErrorPopup(this.otpExpairMsg);
         this.displaySeconds = "00";
         this.resetBtnDisable = false;
         this.submitBtnDisable = true;
-      } else {
-        if (this.otpTimeSeconds < 10) {
-          this.displaySeconds = "0" + this.otpTimeSeconds.toString()
-        } else {
-          this.displaySeconds = this.otpTimeSeconds
-        }
       }
+      if (this.otpTimeSeconds < 10) {
+        this.displaySeconds = "0" + this.otpTimeSeconds.toString()
+      } else {
+        this.displaySeconds = this.otpTimeSeconds
+      }
+      console.log(this.displaySeconds)
       this.otpTimeSeconds -= 1
     }, 1000);
   }
@@ -138,8 +137,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
   resendOtp() {
     this.resendBtnBgColor = "#909090";
     clearInterval(this.interval)
-    this.otpTimeSeconds = 59
-    this.otpTimeMinutes = 1
+    this.otpTimeSeconds = "00"
+    this.otpTimeMinutes = 2
     setInterval(this.interval)
     this.resetBtnDisable = true;
     this.submitBtnDisable = false;
@@ -189,7 +188,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
     );
   }
 
-  isVerifiedPhoneNumEmailId(){
+  isVerifiedPhoneNumEmailId() {
     this.dataStorageService.isVerified(this.otpChannel[0], this.individualId).subscribe(response => {
       if (!response["errors"]) {
         if (response["response"].verificationStatus) {
@@ -233,21 +232,21 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   showMessage(message: string) {
-    if(this.channelType === "PHONE"){
-      this.message = this.popupMessages.genericmessage.verifyChannel.phoneSuccess.replace("$channel",this.channelType)
-    }else{
-      this.message = this.popupMessages.genericmessage.verifyChannel.emailSuccess.replace("$channel",this.channelType)
+    if (this.channelType === "PHONE") {
+      this.message = this.popupMessages.genericmessage.verifyChannel.phoneSuccess.replace("$channel", this.channelType)
+    } else {
+      this.message = this.popupMessages.genericmessage.verifyChannel.emailSuccess.replace("$channel", this.channelType)
     }
-  
+
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        responseData:message,
-        message:this.message,
+        responseData: message,
+        message: this.message,
         clickHere: this.popupMessages.genericmessage.clickHere,
-        endMsg:this.popupMessages.genericmessage.successRemainMsg,
+        endMsg: this.popupMessages.genericmessage.successRemainMsg,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -255,7 +254,12 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   showMessageWarning(message: string) {
-    this.message = `Your phone number/ Email Id  has already been verified.`
+    if (this.otpChannel[0] === "PHONE") {
+      this.message = this.popupMessages.genericmessage.verifyChannel.warningMsg.replace("$channel", "Phone Number")
+    } else {
+      this.message = this.popupMessages.genericmessage.verifyChannel.warningMsg.replace("$channel", "Email")
+    }
+
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
@@ -270,13 +274,13 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   showErrorPopup(message: string) {
     this.errorCode = message[0]["errorCode"]
-    if(this.errorCode === "RES-SER-410"){
-      if(message[0]["message"] === "Invalid Input Parameter- individualId"){
+    if (this.errorCode === "RES-SER-410") {
+      if (message[0]["message"] === "Invalid Input Parameter- individualId") {
         this.message = this.popupMessages.serverErrors[this.errorCode].individualIdError
-      }else{
+      } else {
         this.message = this.popupMessages.serverErrors[this.errorCode].channelError
       }
-    }else{
+    } else {
       this.message = this.popupMessages.serverErrors[this.errorCode]
     }
     this.dialog

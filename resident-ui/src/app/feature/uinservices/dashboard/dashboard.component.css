@@ -29,7 +29,7 @@ mat-card-title {
 
 .main-card {
   background: #d7d1d11a;
-  height: 33rem;
+  height: 33.5rem;
 }
 
 .uin-heading {
@@ -41,3 +41,16 @@ mat-card-title {
   color: #505050;
   cursor: none;
 }
+
+@media  screen and (max-width: 1690px) and (min-width:1410px) {
+  .main-card{
+    height: 35.5rem;
+  }
+}
+
+@media  screen and (max-width: 1409px) {
+  .main-card{
+    height: 37rem;
+  }
+}
+
