@@ -165,7 +165,6 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         if(response["response"]) 
           this.aidStatus = response["response"];
           this.showAcknowledgement = true;
-          this.showMessage(response["response"])
       });
       console.log("data>>>"+data);
     },

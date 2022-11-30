@@ -10,25 +10,49 @@ import { Router } from "@angular/router";
   styleUrls: ["dashboard.component.css"],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  menuItems:any;
+  menuItems: any;
   subscriptions: Subscription[] = [];
-  constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  rowHeight: any = "200px"
+  constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) { }
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
     this.translateService
-    .getTranslation(localStorage.getItem("langCode"))
-    .subscribe(response => {
-      this.menuItems = response.menuItems;
-    });
+      .getTranslation(localStorage.getItem("langCode"))
+      .subscribe(response => {
+        this.menuItems = response.menuItems;
+      });
+    
+    if(window.innerWidth < 1680 && window.innerWidth >= 1440){
+      this.rowHeight = "220px"
+    }else if (window.innerWidth <= 1400 && window.innerWidth >= 1370){
+      this.rowHeight = "250px"
+    }else if (window.innerWidth <= 1366){
+      this.rowHeight = "220px"
+    }else{
+      this.rowHeight = "200px"
+    }
+  }
+
+  onResize(event: any) {
+    if(event.target.innerWidth < 1680 && event.target.innerWidth >= 1440){
+      this.rowHeight = "220px"
+    }else if (event.target.innerWidth <= 1400 && event.target.innerWidth >= 1370){
+      this.rowHeight = "250px"
+    }else if (event.target.innerWidth <= 1366){
+      this.rowHeight = "220px"
+    }else{
+      this.rowHeight = "200px"
+    }
+   
   }
 
   ngOnDestroy(): void {
-     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   onItemSelected(item: any) {
-    console.log("item>>>"+item);
+    console.log("item>>>" + item);
     this.router.navigate([item]);
   }
 }

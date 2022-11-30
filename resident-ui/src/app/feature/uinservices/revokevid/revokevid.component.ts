@@ -8,6 +8,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { InteractionService } from "src/app/core/services/interaction.service";
+import { ThrowStmt } from "@angular/compiler";
 
 @Component({
   selector: "app-revokevid",
@@ -29,6 +30,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   newVidType: any;
   message: string;
   newVidValue:string;
+  rowHeight:string = "2:1";
+  cols:number = 4;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -43,6 +46,9 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
+    this.cols = (window.innerWidth <= 1490) ? 3 : 4 
+    this.rowHeight = (window.innerWidth <= 1420) ? "2:1.3" : "2:1"
+   
 
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
@@ -88,6 +94,11 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     );
+  }
+
+  onResize(event:any){
+    this.cols = (event.target.innerWidth  <= 1490 ) ? 3 : 4
+    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.3" : "2:1"
   }
 
   displayVid(finalTypeList, policyType, policy, showvid) {
@@ -195,7 +206,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         title: this.popupMessages.genericmessage.successLabel,
         vidValue:vidValue,
         message: message,
-        endMsg:this.popupMessages.genericmessage.successRemainMsg,
         clickHere:this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
@@ -266,5 +276,9 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   onItemSelected(item: any) {
     this.router.navigate([item]);
+  }
+
+  openPopupMsg(){
+    console.log("hello")
   }
 }

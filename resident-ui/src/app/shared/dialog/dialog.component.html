@@ -96,13 +96,10 @@
   <div class="infro-card">
     <img [src]="icon" height="35px" width="35px" class="success-img" />
     <div class="pop-up-header">
-      <!-- <b mat-dialog-title>{{ input.title }}</b> -->
       <div mat-dialog-content>
-        <!-- <div [innerText]="input.message"></div> -->
         <div>
-          <p>{{input.message}} <span (click)="viewDetails(input.vidValue)" class="navigate-link">{{input.clickHere}}</span>{{input.endMsg}}</p>
+          <p>{{input.message}} <span (click)="viewDetails(input.vidValue)" class="navigate-link">{{input.clickHere}}</span></p>
         </div>
-
       </div>
     </div>
   </div>
@@ -170,11 +167,12 @@
   </ol>
   <div class="agree-card">
     <div class="agree-test-card">
-      <img src="./assets/images/checkbox_sel.png" />
+      <!-- <img src="./assets/images/checkbox_sel.png" /> -->
+      <input (change)="agreeConditions()" name="isChecked" class="conditions-checkbox" type="checkbox"/>
       &nbsp;
       <p class="agree-text">{{input.agreeLabel}}</p>
     </div>
-    <button mat-button (click)="shareInfoBtn()" class="share-btn">{{ input.btnTxt }}</button>
+    <button [disabled]="isChecked" mat-button (click)="shareInfoBtn()" class="share-btn">{{ input.btnTxt }}</button>
   </div>
 </div>
 
