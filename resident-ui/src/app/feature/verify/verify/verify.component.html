@@ -17,8 +17,9 @@
             src="./assets/images/email_black_24dp (1).png" />&nbsp;{{'verifyuinvid.email' | translate }}
         </mat-button-toggle>
       </div>
-      <label for="uin">{{'verifyuinvid.uid' | translate }}<mat-icon style="color: green;font-size: 18px;">info
-        </mat-icon></label>
+      <label for="uin">{{'verifyuinvid.uid' | translate }}
+        <!-- <mat-icon style="color: green;font-size: 18px;">info</mat-icon> -->
+      </label>
       <input type="text" id="uin" name="uin" (blur)="captureValue($event, 'individualId')" value={{individualId}}
         placeholder="{{'verifyuinvid.uid' | translate}}" />
       &nbsp;

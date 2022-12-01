@@ -33,9 +33,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
+    console.log(item)
     if(item === "redirect"){
       window.open(this.appConfigService.getConfig()["mosip-prereg-ui-url"], "_blank");
-    }else{
+    }else if(item === "UIN Services"){
+      this.router.navigate(['uinservices/dashboard'])
+    }else if(item === "Get Information"){
+      this.router.navigate(["regcenter"])
+    }
+    else{
      this.router.navigate([item]); 
    }    
   }

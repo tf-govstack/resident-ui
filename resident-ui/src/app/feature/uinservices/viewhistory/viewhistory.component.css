@@ -91,9 +91,15 @@ span.label {
   padding: 10px;
 }
 
-@media screen and (max-width: 1500px) {
-  .md-datepicker-button {
-    display: none !important;   
+.datepicker-card{
+  width:80%;
+  height:37px;
+}
+
+@media screen and (max-width:1500px) {
+  .datepicker-card{
+    width:60%;
+    height:37px;
   }
 }
 

@@ -30,7 +30,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   newVidType: any;
   message: string;
   newVidValue:string;
-  rowHeight:string = "2:1";
+  rowHeight:string = "2:1.2";
   cols:number = 4;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
@@ -46,8 +46,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
-    this.cols = (window.innerWidth <= 1490) ? 3 : 4 
-    this.rowHeight = (window.innerWidth <= 1420) ? "2:1.3" : "2:1"
+    this.cols = (window.innerWidth === 1400) ? 3 : 4 
+    this.rowHeight = (window.innerWidth <= 1420) ? "2:1.5" : "2:1.2"
    
 
     this.translateService
@@ -97,8 +97,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   onResize(event:any){
-    this.cols = (event.target.innerWidth  <= 1490 ) ? 3 : 4
-    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.3" : "2:1"
+    this.cols = (event.target.innerWidth  === 1400 ) ? 3 : 4
+    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.5" : "2:1.2"
   }
 
   displayVid(finalTypeList, policyType, policy, showvid) {
@@ -136,7 +136,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   generateVID1(vidType: any) {
     this.newVidType = vidType
     this.showWarningMessage(vidType)
-    // this.generateVID(vidType)
   }
 
   generateVID(vidType: any) {
@@ -151,6 +150,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         "channels": ["PHONE", "EMAIL"]
       }
     };
+    console.log(request)
     this.dataStorageService.generateVID(request).subscribe(response => {
       this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully 
       console.log(response)
@@ -246,7 +246,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.warningLabel,
         message: this.message,
-        btnTxt: this.popupMessages.genericmessage.submitButton
+        btnTxt: this.popupMessages.genericmessage.yesButton,
+        btnTxtNo: this.popupMessages.genericmessage.noButton
       }
     });
     return dialogRef;
