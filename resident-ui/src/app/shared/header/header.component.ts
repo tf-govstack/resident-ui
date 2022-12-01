@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   fullName: string;
   lastLogin: string;
   userImage:any;
-  notificationCount:number=0;
+  notificationCount:any="";
   notificationList:any;
 
   constructor(
@@ -65,7 +65,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     .getNotificationCount()
     .subscribe((response) => {
       if(response["response"])     
-        this.notificationCount = response["response"].unreadCount;
+        if(parseInt(response["response"].unreadCount) < 100){          
+          this.notificationCount = response["response"].unreadCount;
+        }else{
+          this.notificationCount = "99+";
+        }
     });
   }
 
