@@ -26,7 +26,11 @@ export class AppConfigService {
         this.appConfig["auth.types.allowed"] = responseData["auth.types.allowed"];   
         this.appConfig["resident.view.history.serviceType.filters"] = responseData["resident.view.history.serviceType.filters"];   
         this.appConfig["resident.view.history.status.filters"] = responseData["resident.view.history.status.filters"];  
-        this.appConfig["mosip.resident.grievance.url"] = responseData["mosip.resident.grievance.url"];         
+        this.appConfig["mosip.resident.grievance.url"] = responseData["mosip.resident.grievance.url"]; 
+        this.appConfig["resident.vid.id.generate"] = responseData["resident.vid.id.generate"]; 
+        this.appConfig["resident.vid.version.new"] = responseData["resident.vid.version.new"];   
+        this.appConfig["mosip.resident.revokevid.id"] = responseData["mosip.resident.revokevid.id"]; 
+        this.appConfig["resident.revokevid.version.new"] = responseData["resident.revokevid.version.new"]; 
       },
       (error) => {
         console.log(error);

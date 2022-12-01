@@ -45,7 +45,8 @@
 							  </tr>
 							  <tr>
 							    <td style="width:50%">
-							    	{{list.transactionsLeftCount}}
+							    	<span *ngIf="list.transactionsLeftCount">{{list.transactionsLeftCount}}</span>
+							    	<span *ngIf="!list.transactionsLeftCount">NA</span>							    	
 							    </td>
 							    <td style="width:50%;float: right;">
 							    	<span style="color: green;font-size: 24px;cursor:pointer;" (click)="revokeVID(list.vid)"><img src="assets\download.png"></span>&nbsp;&nbsp;&nbsp;
