@@ -8,10 +8,13 @@
         <p class="intro-description">{{'managemyvid.introDescription' | translate}}</p>
 		<table *ngIf="policyType" style="width:100%">
 			<tr *ngFor = "let policy of policyType.vidPolicies">
-				<td style="width:100%">					 
-				    <span style="padding-left: 20px;">{{policy.vidType}}  <mat-icon  (click)="openPopupMsg()" style="color: green;font-size: 18px; cursor: pointer;" matTooltip="">info</mat-icon> <button mat-raised-button color="primary" (click)="generateVID1(policy.vidType)">{{'managemyvid.create' | translate}}</button></span>
-
-				    <mat-grid-list  style="width:100%" [cols]="cols"  [rowHeight]="rowHeight" (window:resize)="onResize($event)" *ngIf=finalTypeList[policy.vidType] class="each-vid-card">
+				<td style="width:100%">	
+					<div style="margin-bottom: .8rem; margin-top: .3rem;">				 
+				    <span style="padding-left: 10px;">{{policy.vidType}} 
+						<!-- <mat-icon  (click)="openPopupMsg()" style="color: green;font-size: 18px; cursor: pointer;" matTooltip="">info</mat-icon>  -->
+						<button mat-raised-button color="primary" (click)="generateVID1(policy.vidType)">{{'managemyvid.create' | translate}}</button></span>
+				</div>
+				    <mat-grid-list  style="width:100%;" gutterSize="10px" [cols]="cols"  [rowHeight]="rowHeight" (window:resize)="onResize($event)" *ngIf=finalTypeList[policy.vidType] class="each-vid-card">
 						<mat-grid-tile *ngFor = "let list of finalTypeList[policy.vidType]">
 							<mat-card class="mini-card">
 							  <table style="width:100%">

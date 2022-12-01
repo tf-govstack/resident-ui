@@ -1,10 +1,11 @@
 <div class="main-div" *ngIf="menuItems">
   <div class="grid-container">
-    <div class="item1 item-card">
+    <div class="item1 item-card" (click)="onItemSelected(menuItems[0].displayName)">
       <mat-card>
         <div class="title">
-          <span class="icon"><img mat-card-xs-image class="dashboard-icons"  [src]='menuItems[0].icon' /></span>
-          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"  [src]='menuItems[0].activeIcon' /></span>
+          <span class="icon"><img mat-card-xs-image class="dashboard-icons" [src]='menuItems[0].icon' /></span>
+          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"
+              [src]='menuItems[0].activeIcon' /></span>
           <mat-card-title class="mat-card-title" *ngIf="!menuItems[0].route">{{ menuItems[0].displayName | translate }}
           </mat-card-title>
           <mat-card-title class="mat-card-title" *ngIf="menuItems[0].route"
@@ -19,11 +20,12 @@
         </mat-card-header>
       </mat-card>
     </div>
-    <div class="item2 item-card">
+    <div class="item2 item-card" (click)="onItemSelected(menuItems[1].displayName)">
       <mat-card>
         <div class="title">
           <span class="icon"><img mat-card-xs-image class="dashboard-icons" [src]='menuItems[1].icon' /></span>
-          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"  [src]='menuItems[1].activeIcon' /></span>
+          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"
+              [src]='menuItems[1].activeIcon' /></span>
           <mat-card-title class="mat-card-title" *ngIf="!menuItems[1].route">{{ menuItems[1].displayName | translate }}
           </mat-card-title>
           <mat-card-title class="mat-card-title" *ngIf="menuItems[1].route"
@@ -37,16 +39,17 @@
         </mat-card-header>
       </mat-card>
     </div>
-    <div class="item3 item-card">
+    <div class="item3 item-card" >
       <mat-card>
         <div class="title">
           <span class="icon"><img mat-card-xs-image class="dashboard-icons" [src]='menuItems[2].icon' /></span>
-          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"  [src]='menuItems[2].activeIcon' /></span>
+          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"
+              [src]='menuItems[2].activeIcon' /></span>
           <mat-card-title class="mat-card-title" *ngIf="!menuItems[2].route">{{ menuItems[2].displayName | translate }}
           </mat-card-title>
           <mat-card-title class="mat-card-title" *ngIf="menuItems[2].route"
-          (click)="onItemSelected(menuItems[2].route)">{{
-          menuItems[2].displayName | translate }}</mat-card-title>
+            (click)="onItemSelected(menuItems[2].route)">{{
+            menuItems[2].displayName | translate }}</mat-card-title>
         </div>
         <mat-card-header>
           <mat-card-subtitle *ngFor="let subMenu of menuItems[2].subMenus" (click)="onItemSelected(subMenu.route)">{{
@@ -55,24 +58,26 @@
         </mat-card-header>
       </mat-card>
     </div>
-    <div class="item4 item-card">
+    <div class="item4 item-card" (click)="onItemSelected(menuItems[3].route)">
       <mat-card>
         <div class="title">
           <span class="icon"><img mat-card-xs-image class="dashboard-icons" [src]="menuItems[3].icon" /></span>
-          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"  [src]='menuItems[3].activeIcon' /></span>
+          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"
+              [src]='menuItems[3].activeIcon' /></span>
           <mat-card-title class="mat-card-title" *ngIf="!menuItems[3].route">{{ menuItems[3].displayName | translate }}
           </mat-card-title>
-          <mat-card-title class="mat-card-title" *ngIf="menuItems[3].route"
-            (click)="onItemSelected(menuItems[3].route)" style="cursor: pointer;">{{
+          <mat-card-title class="mat-card-title" *ngIf="menuItems[3].route" (click)="onItemSelected(menuItems[3].route)"
+            style="cursor: pointer;">{{
             menuItems[3].displayName | translate }}</mat-card-title>
         </div>
       </mat-card>
     </div>
-    <div class="item5 item-card">
+    <div class="item5 item-card" (click)="onItemSelected(menuItems[4].route)">
       <mat-card>
         <div class="title">
-          <span class="icon"><img mat-card-xs-image class="dashboard-icons"  [src]='menuItems[4].icon' /></span>
-          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"  [src]='menuItems[4].activeIcon' /></span>
+          <span class="icon"><img mat-card-xs-image class="dashboard-icons" [src]='menuItems[4].icon' /></span>
+          <span class="active-icon"><img mat-card-xs-image class="active-dashboard-icons"
+              [src]='menuItems[4].activeIcon' /></span>
           <mat-card-title class="mat-card-title" *ngIf="!menuItems[4].route">{{ menuItems[4].displayName | translate }}
           </mat-card-title>
           <mat-card-title class="mat-card-title" style="cursor: pointer;" *ngIf="menuItems[4].route"

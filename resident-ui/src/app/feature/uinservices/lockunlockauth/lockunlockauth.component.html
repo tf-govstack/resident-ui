@@ -11,7 +11,7 @@
 				<mat-card [ngClass]="authInfo.recorddirty == false ? 'mini-card' : 'mini-card-yellow'" (click)="setAuthlockStatus(authInfo)">
 				  <mat-card-header>			  	
 				    <mat-card-title><span><img src="assets\{{authInfo.label}}.png"></span>&nbsp;&nbsp;&nbsp;<span style="font-size: 14px;font-weight: 800;">{{authInfo.label}}</span></mat-card-title>	
-					<mat-icon (click)="openPopUp()" style="color: green;font-size: 18px; cursor: pointer; text-align: right;">info</mat-icon>  
+					<!-- <mat-icon (click)="openPopUp()" style="color: green;font-size: 18px; cursor: pointer; text-align: right;">info</mat-icon>   -->
 				  </mat-card-header>
 				  <mat-card-content>
 				    <p *ngIf="authInfo.locked"><img mat-card-sm-image src="assets\images\lock.png" ></p>
