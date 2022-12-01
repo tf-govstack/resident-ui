@@ -94,14 +94,12 @@
 <div class="pop-up" *ngIf="input.case === 'MESSAGE'" [style.backgroundColor]="popMsgbgColor" [style.color]="popMsgColor"
   [style.borderColor]="popMsgColor">
   <div class="infro-card">
-    <!-- *ngIf="input.title === ('Success' || 'نجاح' || 'Succès'|| 'सफलता' || 'ಯಶಸ್ಸು' || 'வெற்றி')" -->
-    <img [src]="icon" height="35px" width="35px" class="success-img" />
+    <img style="background-color: transparent;" [src]="icon" height="35px" width="35px" class="success-img" />
     <div class="pop-up-header">
-      <!-- <b mat-dialog-title>{{ input.title }}</b> -->
-      <!-- <p>Dear Resident, Your registered email ID Sanjay.kumar30@gmail.com has now been verified.</p> -->
       <div mat-dialog-content>
-        <div [innerText]="input.message"></div>
-
+        <div>
+          <p>{{input.message}} <span (click)="viewDetails(input.vidValue)" class="navigate-link">{{input.clickHere}}</span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -109,9 +107,14 @@
     <span><button style="background-color:#03A64A;" *ngIf="input.btnTxt === 'OK' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="dismiss()">
         {{ input.btnTxt }}
       </button></span>
-      <span><button style="background-color:#03A64A;" *ngIf="input.btnTxt === 'Submit' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="vidWarning()">
+      <div>
+      <span><button style="background-color:#03A64A;" *ngIf="input.btnTxt === 'Yes' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="vidWarning()">
         {{ input.btnTxt }}
       </button></span>
+      <span><button *ngIf="input.btnTxtNo === 'No' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="dismiss()">
+        {{ input.btnTxtNo }}
+      </button></span>
+    </div>
       <span><button *ngIf="input.btnTxt === 'Delete' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="vidDelete()">
         {{ input.btnTxt }}
       </button></span>
@@ -169,11 +172,12 @@
   </ol>
   <div class="agree-card">
     <div class="agree-test-card">
-      <img src="./assets/images/checkbox_sel.png" />
+      <!-- <img src="./assets/images/checkbox_sel.png" /> -->
+      <input (change)="agreeConditions()" name="isChecked" class="conditions-checkbox" type="checkbox"/>
       &nbsp;
       <p class="agree-text">{{input.agreeLabel}}</p>
     </div>
-    <button mat-button (click)="shareInfo()" class="share-btn">{{ input.btnTxt }}</button>
+    <button [disabled]="isChecked" mat-button (click)="shareInfoBtn()" class="share-btn">{{ input.btnTxt }}</button>
   </div>
 </div>
 

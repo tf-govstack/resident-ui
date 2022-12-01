@@ -85,3 +85,22 @@ span.label {
   color:#707070;
   font-size: 14px;
 }
+
+.input-cards{
+  width: 16%;
+  padding: 10px;
+}
+
+.datepicker-card{
+  width:80%;
+  height:37px;
+}
+
+@media screen and (max-width:1500px) {
+  .datepicker-card{
+    width:60%;
+    height:37px;
+  }
+}
+
+

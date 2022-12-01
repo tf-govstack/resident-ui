@@ -59,6 +59,7 @@ export class DialogComponent implements OnInit {
   holidayForm: FormGroup;
   sitealignment = 'ltr';
   icon:string = "./assets/sucess_icon.png"
+  isChecked:boolean = true
 
   constructor(
     public dialog: MatDialog,
@@ -85,6 +86,7 @@ export class DialogComponent implements OnInit {
     }else if (this.data.title === "Warning"){
       this.popMsgbgColor = "#FFF9DB"
       this.popMsgColor = "#F2CC0C"
+      this.icon = "./assets/AdobeStock_547798501-modified.png"
     }
   }
 
@@ -101,7 +103,12 @@ export class DialogComponent implements OnInit {
     this.dialog.closeAll();
   }
 
-  shareInfo():void{
+  agreeConditions(){
+      this.isChecked = !this.isChecked
+      console.log(this.isChecked)
+  }
+
+  shareInfoBtn():void{
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("shareInfo")
   }
@@ -118,6 +125,10 @@ export class DialogComponent implements OnInit {
   downloadPersonalCard(){
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("downloadPersonalCard")
+  }
+  
+  viewDetails(eventId:any){
+    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+ eventId);
   }
 }
 

@@ -4,13 +4,13 @@
       class="active">{{'uinservices.label' | translate}}</span>
   </span>
   <mat-card class="login-card">
-    <!-- <mat-card-subtitle  class="login-heading" *ngIf="getUinData.login">{{getUinData.login | translate}}</mat-card-subtitle> -->
+    <mat-card-subtitle  class="login-heading" *ngIf="getUinData.login">{{getUinData.login | translate}}</mat-card-subtitle>
     <hr class="line" />
     <div class="form-container">
       <form #basicForm="ngForm" (submit)="submitUserID(basicForm.value)">
         <div class="uin-login-title-card">
-          <!-- <mat-card-subtitle class="login-Input-heading" *ngIf="getUinData.title">{{getUinData.title | translate}}</mat-card-subtitle> -->
-          <img alt="info-icon" class="info-icon" src="./assets/images/info_black_24dp (1).png" />
+          <mat-card-subtitle class="login-Input-heading" *ngIf="getUinData.title">{{getUinData.title | translate}}</mat-card-subtitle>
+          <!-- <img alt="info-icon" class="info-icon" src="./assets/images/info_black_24dp (1).png" /> -->
         </div>
         <input class="input-text" type="text" ngModel name="AID" />
         <br />

@@ -8,6 +8,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { InteractionService } from "src/app/core/services/interaction.service";
+import { ThrowStmt } from "@angular/compiler";
 
 @Component({
   selector: "app-revokevid",
@@ -29,6 +30,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   newVidType: any;
   message: string;
   newVidValue:string;
+  rowHeight:string = "2:1.2";
+  cols:number = 4;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -43,6 +46,9 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
+    this.cols = (window.innerWidth === 1400) ? 3 : 4 
+    this.rowHeight = (window.innerWidth <= 1420) ? "2:1.5" : "2:1.2"
+   
 
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
@@ -90,6 +96,11 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     );
   }
 
+  onResize(event:any){
+    this.cols = (event.target.innerWidth  === 1400 ) ? 3 : 4
+    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.5" : "2:1.2"
+  }
+
   displayVid(finalTypeList, policyType, policy, showvid) {
     console.log(policyType)
     let self = this;
@@ -125,7 +136,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   generateVID1(vidType: any) {
     this.newVidType = vidType
     this.showWarningMessage(vidType)
-    // this.generateVID(vidType)
   }
 
   generateVID(vidType: any) {
@@ -140,14 +150,15 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         "channels": ["PHONE", "EMAIL"]
       }
     };
+    console.log(request)
     this.dataStorageService.generateVID(request).subscribe(response => {
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully 
       console.log(response)
       if (!response["errors"].length) {
         setTimeout(() => {
           self.getVID();
         }, 300);
-        this.showMessage(this.message.replace("$eventId", response["response"].vid));
+        this.showMessage(this.message.replace("$eventId", response["response"].vid),response["response"].vid);
       } else {
         this.showErrorPopup(response["errors"][0].message);
       }
@@ -171,12 +182,12 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.revokeVID(request, vidValue).subscribe(response => {
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", vidValue) 
       if (!response["errors"].length) {
         setTimeout(() => {
           self.getVID();
         }, 300);
-        this.showMessage(this.message);
+        this.showMessage(this.message ,vidValue);
       } else {
         this.showErrorPopup(response["errors"][0].message);
       }
@@ -187,13 +198,15 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     );
   }
 
-  showMessage(message: string) {
+  showMessage(message: string,vidValue:string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
+        vidValue:vidValue,
         message: message,
+        clickHere:this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -233,7 +246,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.warningLabel,
         message: this.message,
-        btnTxt: this.popupMessages.genericmessage.submitButton
+        btnTxt: this.popupMessages.genericmessage.yesButton,
+        btnTxtNo: this.popupMessages.genericmessage.noButton
       }
     });
     return dialogRef;
@@ -263,5 +277,9 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   onItemSelected(item: any) {
     this.router.navigate([item]);
+  }
+
+  openPopupMsg(){
+    console.log("hello")
   }
 }

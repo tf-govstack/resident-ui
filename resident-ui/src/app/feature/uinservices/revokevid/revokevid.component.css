@@ -45,3 +45,13 @@ mat-card-subtitle{
   letter-spacing: 0px;
   color: #505050;
 }
+
+/* .each-vid-card{
+  grid-column: 3rem;
+} */
+
+@media screen and (max-width: 1600px) {
+    .each-vid-card{
+      grid-column-gap: 16px;
+    }
+}

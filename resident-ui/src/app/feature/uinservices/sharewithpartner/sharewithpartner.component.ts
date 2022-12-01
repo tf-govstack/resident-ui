@@ -28,6 +28,9 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   showAcknowledgement:boolean = false;
   aidStatus:any;
   clickEventSubscription:Subscription;
+  buildHTML:any;
+  userInfo:any;
+  message:any;
 
   constructor(private interactionService:InteractionService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -42,7 +45,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     this.langCode = localStorage.getItem("langCode");
     
     this.translateService.use(localStorage.getItem("langCode"));
-
+ 
     this.translateService
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
@@ -57,6 +60,15 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     });
 
     this.getPartnerDetails();
+    this.getUserInfo()
+  }
+
+  getUserInfo(){
+    this.dataStorageService
+    .getUserInfo()
+    .subscribe((response) => {
+      this.userInfo = response["response"];
+    });
   }
 
   getPartnerDetails(){
@@ -68,37 +80,63 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   }
 
   captureCheckboxValue($event:any, data:any, type:string){
-
+    this.buildHTML = ""
     // console.log("<<<data.attributeName>>>"+JSON.stringify(data)); 
     if(type === "datacheck"){
       if(data.attributeName.toString() in this.sharableAttributes){
         delete this.sharableAttributes[data.attributeName];
       }else{
         this.sharableAttributes[data.attributeName] = {"attributeName":data.attributeName, "format": "", "isMasked": false};
+        let value = "";
+      if (typeof this.userInfo[data.attributeName] === "string") {        
+        value = this.userInfo[data.attributeName];
+      }else{
+        value = this.userInfo[data.attributeName][0].value;
       }
+      this.sharableAttributes[data.attributeName] = {"label":data.label[this.langCode], "value": value};
+      }
+
     }else if(type === "maskcheck"){
-      console.log("$event>>>"+$event.checked+">>>this.sharableAttributes[data.attributeName]>>>"+this.sharableAttributes[data.attributeName]);
       if(this.sharableAttributes[data.attributeName]){
         this.sharableAttributes[data.attributeName]["isMasked"] = $event.checked;
       }else{
         this.sharableAttributes[data.attributeName] = {"attributeName":data.attributeName, "format": "", "isMasked": $event.checked};
       }
     }
-    console.log("<<<this.sharableAttributes>>>"+JSON.stringify(this.sharableAttributes));     
+     
+    let row = "";
+    console.log("data.attributeName>>>"+data.attributeName);
+    for (const key in this.sharableAttributes) {
+      if(data.attributeName === "photo"){
+        row = row+"<tr><td>"+this.sharableAttributes[key].label+"</td><td><img src='data:image/png;base64, "+this.sharableAttributes[key].value+"' alt=''/></td></tr>";  
+      }else{
+       row = row+"<tr><td>"+this.sharableAttributes[key].label+"</td><td>"+this.sharableAttributes[key].value+"</td></tr>";
+      }      
+    }
+    this.buildHTML = `<html><head></head><body><table>`+row+`</table></body></html>`;
+  
   }
 
   stopPropagation($event:any){
     $event.stopPropagation();
   }
 
-  captureDropDownValue(event: any) {    
+  captureDropDownValue(event: any) {
     if (event.source.selected) {
       this.partnerId = event.source.value;
     }
   }
 
   shareInfoBtn(){
-    this.termAndConditions()
+    if(!this.partnerId){
+      this.message = this.popupMessages.genericmessage.sharewithpartner.needPartner
+      this.showErrorPopup(this.message)
+    }else if(!this.purpose){
+      this.message = this.popupMessages.genericmessage.sharewithpartner.needPurpose
+       this.showErrorPopup(this.message)
+    }else{
+      this.termAndConditions()
+    }
   }
 
   shareInfo(){
@@ -118,14 +156,12 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         "sharableAttributes": sharableAttributes,
       }
     };
-
     this.dataStorageService
     .shareInfo(request)
     .subscribe(data => {
       this.dataStorageService
       .getEIDStatus(data["response"].eventId)
       .subscribe((response) => {
-        console.log(response)
         if(response["response"]) 
           this.aidStatus = response["response"];
           this.showAcknowledgement = true;
@@ -158,7 +194,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       var fileName = eventId+".pdf";
       const contentDisposition = data.headers.get('Content-Disposition');
       if (contentDisposition) {
-        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+         const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
         const matches = fileNameRegex.exec(contentDisposition);
         if (matches != null && matches[1]) {
           fileName = matches[1].replace(/['"]/g, '');
@@ -171,13 +207,14 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     });
   }   
 
-  showMessage(message: string) {    
+  showMessage(message: string) {   
+    this.message = this.popupMessages.genericmessage.sharewithpartner.successMessage.replace("$eventId", this.aidStatus.eventId)
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '850px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        message: message,
+        message: this.message,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -197,6 +234,16 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         disableClose: true
       });
   }
+
+  viewDetails(eventId:any){
+    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+ eventId);
+  }
+
+  viewDetails2(){
+    this.router.navigateByUrl('uinservices/viewhistory');
+  }
+
+
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

@@ -304,3 +304,9 @@ td.mat-footer-cell:last-child {
   align-items: center;
   margin-bottom: -10px;
 }
+
+.conditions-checkbox{
+  height: 15px !important;
+  width: 15px !important;
+  cursor: pointer;
+}

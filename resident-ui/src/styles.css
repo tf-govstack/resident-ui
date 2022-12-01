@@ -411,3 +411,10 @@ mat-select {
 .mat-select-placeholder{
   font-size: 14px !important;
 }
+
+.navigate-link{
+  text-decoration: underline;
+  border-color:#008CED ;
+  color: #008CED;
+  cursor: pointer;
+}
