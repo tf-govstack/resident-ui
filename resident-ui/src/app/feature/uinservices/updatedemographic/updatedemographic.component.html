@@ -2,20 +2,16 @@
 	<a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<span class="active">{{'updatedemographic.title' | translate}}</span>
 </span>
 
-<mat-tab-group animationDuration="0ms">
+<mat-tab-group animationDuration="0ms" *ngIf="userInfo">
   <mat-tab label="{{'updatedemographic.identity' | translate}}">
   	<div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
   		<div layout = "row" *ngIf="field.tabgroup === 'identity'">
-	        <!-- <div>{{field.description}}{{field.tabgroup}}</div> -->
-	        
-	        	<div flex = "50">
-	        		{{field.description}}
-		        </div>
-		        <div flex>
-		        	{{field.tabgroup}}
-		        </div>
-	    </div>
-  		
+        <table>
+          <tr>
+      		  <td>{{field.description}}</td><td>{{buildJSONData[field.id]}}</td>
+          </tr>
+        </table>
+  		</div>
   		<!-- <mat-form-field *ngIf="field.inputType === 'text'">           
             <input
               #{{field.id}}
@@ -33,12 +29,90 @@
   	</div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.address' | translate}}">
+
+    <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
+      <div layout = "row" *ngIf="field.tabgroup === 'address'">
+        <div flex = "50">
+          {{field.description}}
+        </div>
+        <div flex>
+          {{field.tabgroup}}
+        </div>
+      </div>
+      
+      <!-- <mat-form-field *ngIf="field.inputType === 'text'">           
+            <input
+              #{{field.id}}
+              id="{{field.id}}"
+              (blur)="captureValue($event, field.id, 'primary')"
+              matInput
+              placeholder="{{
+                field.label[primaryLang] | translate
+              }}"
+              [value]="primaryData[field.name]"                        
+              required={{field.ismandatory}}
+              readonly = true
+            />
+        </mat-form-field> -->
+    </div>
   	
   </mat-tab>
   <mat-tab label="{{'updatedemographic.contact' | translate}}">
+
+    <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
+      <div layout = "row" *ngIf="field.tabgroup === 'contact'">
+        <div flex = "50">
+          {{field.description}}
+        </div>
+        <div flex>
+          {{field.tabgroup}}
+        </div>
+      </div>
+      
+      <!-- <mat-form-field *ngIf="field.inputType === 'text'">           
+            <input
+              #{{field.id}}
+              id="{{field.id}}"
+              (blur)="captureValue($event, field.id, 'primary')"
+              matInput
+              placeholder="{{
+                field.label[primaryLang] | translate
+              }}"
+              [value]="primaryData[field.name]"                        
+              required={{field.ismandatory}}
+              readonly = true
+            />
+        </mat-form-field> -->
+    </div>
   	
   </mat-tab>
   <mat-tab label="{{'updatedemographic.languagePreference' | translate}}">
+
+    <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
+      <div layout = "row" *ngIf="field.tabgroup === 'languagePreference'">
+        <div flex = "50">
+          {{field.description}}
+        </div>
+        <div flex>
+          {{field.tabgroup}}
+        </div>
+      </div>
+      
+      <!-- <mat-form-field *ngIf="field.inputType === 'text'">           
+            <input
+              #{{field.id}}
+              id="{{field.id}}"
+              (blur)="captureValue($event, field.id, 'primary')"
+              matInput
+              placeholder="{{
+                field.label[primaryLang] | translate
+              }}"
+              [value]="primaryData[field.name]"                        
+              required={{field.ismandatory}}
+              readonly = true
+            />
+        </mat-form-field> -->
+    </div>
   	
   </mat-tab>
 </mat-tab-group>
