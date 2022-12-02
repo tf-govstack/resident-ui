@@ -265,6 +265,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.warningLabel,
+        warningForChannel:this.popupMessages.genericmessage.warningForChannel,
         message: this.message,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
