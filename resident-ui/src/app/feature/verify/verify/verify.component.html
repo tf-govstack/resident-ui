@@ -6,13 +6,13 @@
   <mat-card class="verify-phnumb-email-card" *ngIf="showOtpEnterPanel">
     <div class="send-otp-container">
       <div class="btn-card">
-        <mat-button-toggle (click)="radioChange('PHONE')" class="button" [style.color]="numBtnColors"
+        <mat-button-toggle id="phoneChannelBtn" (click)="radioChange('PHONE')" class="button" [style.color]="numBtnColors"
           [style.borderColor]="numBtnColors"><img [style.color]="numBtnColors"
             src="./assets/images/phone_iphone_black_24dp.png" />&nbsp;{{'verifyuinvid.mobileno' | translate }}
         </mat-button-toggle>
         &nbsp;
         &nbsp;
-        <mat-button-toggle [style.color]="emailBtnColors" [style.borderColor]="emailBtnColors"
+        <mat-button-toggle id="emailChannelBtn" [style.color]="emailBtnColors" [style.borderColor]="emailBtnColors"
           (click)="radioChange('EMAIL')" class="button"><img
             src="./assets/images/email_black_24dp (1).png" />&nbsp;{{'verifyuinvid.email' | translate }}
         </mat-button-toggle>
@@ -20,12 +20,12 @@
       <label for="uin">{{'verifyuinvid.uid' | translate }}
         <!-- <mat-icon style="color: green;font-size: 18px;">info</mat-icon> -->
       </label>
-      <input type="text" id="uin" name="uin" (blur)="captureValue($event, 'individualId')" value={{individualId}}
+      <input id="uidValue" type="text" id="uin" name="uin" (blur)="captureValue($event, 'individualId')" value={{individualId}}
         placeholder="{{'verifyuinvid.uid' | translate}}" />
       &nbsp;
       &nbsp;
       &nbsp;
-      <button [disabled]="disableSendOtp" mat-raised-button color="primary"
+      <button id="sendOtpBtn" [disabled]="disableSendOtp" mat-raised-button color="primary"
         (click)="sendOtpBtn()">{{'verifyuinvid.sendotp' | translate}}</button>
     </div>
   </mat-card>
@@ -35,7 +35,7 @@
 
 
   <mat-card class="show-opt-panel-card" *ngIf="showOtpPanel">
-    <button (click)="onItemSelected('back')" class="book-appointment-back-btn"><img
+    <button id="backBtn" (click)="onItemSelected('back')" class="book-appointment-back-btn"><img
         src="./assets/images/arrow_back_black_24dp.png" alt="" />Back</button>
     <hr class="line" />
     <div class="send-otp-container">
@@ -44,7 +44,7 @@
       </mat-card-subtitle>
       <label for="otp-input">{{'verifyuinvid.inputLabel' | translate}}</label>
       <br />
-      <input #box (keyup)="captureOtpValue(box.value)" placeholder="Enter OTP here" id="otp-input"
+      <input id="otpValue" #box (keyup)="captureOtpValue(box.value)" placeholder="Enter OTP here" id="otp-input"
         class="enter-opt-input" type="text" />
       <div class="otp-infromation-card">
         <p *ngIf="otpChannel[0] === 'PHONE'" class="otp-infromation-text">{{'verifyuinvid.otpDescriptionPhone' | translate}} <span class="mobile-number">
@@ -53,12 +53,12 @@
             {{channelType}}</span>.</p>
       </div>
       <div class="get-uin-btn-card">
-        <button mat-button-toggle [disabled]="resetBtnDisable" readonly="true" (click)="resendOtp()"
+        <button id="resendOtpBtn" mat-button-toggle [disabled]="resetBtnDisable" readonly="true" (click)="resendOtp()"
           [style.backgroundColor]="resendBtnBgColor" class="button2">{{'verifyuinvid.resendBtnLabel' |
           translate}}</button>
         &nbsp;
         &nbsp;
-        <button mat-button-toggle [disabled]="submitBtnDisable" (click)="submitOtp()" class="button2"
+        <button id="submitOtpBtn" mat-button-toggle [disabled]="submitBtnDisable" (click)="submitOtp()" class="button2"
           [style.backgroundColor]="submitBtnBgColor">{{'verifyuinvid.submitBtnLabel' | translate}}</button>
       </div>
     </div>

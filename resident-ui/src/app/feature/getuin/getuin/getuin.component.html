@@ -12,14 +12,14 @@
           <mat-card-subtitle class="login-Input-heading" *ngIf="getUinData.title">{{getUinData.title | translate}}</mat-card-subtitle>
           <!-- <img alt="info-icon" class="info-icon" src="./assets/images/info_black_24dp (1).png" /> -->
         </div>
-        <input class="input-text" type="text" ngModel name="AID" />
+        <input id="aidValue" class="input-text" type="text" ngModel name="AID" />
         <br />
         <label class="label-text" *ngIf="getUinData.description">{{getUinData.description | translate}}</label>
         <div class="not-robot-verifing-card">
             <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha" (captchaEvent)="getCaptchaToken($event)"></app-captcha>
         </div>
         <br />
-        <button [style.backgroundColor]="buttonbgColor" class="login-uin-otp-btn" *ngIf="getUinData.buttonText">{{getUinData.buttonText |
+        <button id="grtUinSendOtpBtn" [style.backgroundColor]="buttonbgColor" class="login-uin-otp-btn" *ngIf="getUinData.buttonText">{{getUinData.buttonText |
           translate}}</button>
       </form>
     </div>
