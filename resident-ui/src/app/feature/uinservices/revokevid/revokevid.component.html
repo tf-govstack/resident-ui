@@ -7,16 +7,16 @@
         <h3 style="color: #505050;">{{'managemyvid.title' | translate}}</h3>
         <p class="intro-description">{{'managemyvid.introDescription' | translate}}</p>
 		<table *ngIf="policyType" style="width:100%">
-			<tr *ngFor = "let policy of policyType.vidPolicies">
+			<tr *ngFor = "let policy of policyType.vidPolicies;">
 				<td style="width:100%">	
 					<div style="margin-bottom: .8rem; margin-top: .3rem;">				 
 				    <span style="padding-left: 10px;">{{policy.vidType}} 
 						<!-- <mat-icon  (click)="openPopupMsg()" style="color: green;font-size: 18px; cursor: pointer;" matTooltip="">info</mat-icon>  -->
-						<button mat-raised-button color="primary" (click)="generateVIDBtn(policy.vidType)">{{'managemyvid.create' | translate}}</button></span>
+						<button [id]="policy.vidType" mat-raised-button color="primary" (click)="generateVIDBtn(policy.vidType)">{{'managemyvid.create' | translate}}</button></span>
 				</div>
-				    <mat-grid-list  style="width:100%;" gutterSize="10px" [cols]="cols"  [rowHeight]="rowHeight" (window:resize)="onResize($event)" *ngIf=finalTypeList[policy.vidType] class="each-vid-card">
-						<mat-grid-tile *ngFor = "let list of finalTypeList[policy.vidType]">
-							<mat-card class="mini-card">
+				    <mat-grid-list   style="width:100%;" gutterSize="10px" [cols]="cols"  [rowHeight]="rowHeight" (window:resize)="onResize($event)" *ngIf=finalTypeList[policy.vidType] class="each-vid-card">
+						<mat-grid-tile *ngFor = "let list of finalTypeList[policy.vidType]; let i = index">
+							<mat-card [id]="list.vid" class="mini-card">
 							  <table style="width:100%">
 							  <tr>
 							    <td colspan="2" class="label">{{'managemyvid.vid' | translate}}</td>
@@ -49,8 +49,8 @@
 							    	<span *ngIf="!list.transactionsLeftCount">NA</span>							    	
 							    </td>
 							    <td style="width:50%;float: right;">
-							    	<span style="color: green;font-size: 24px;cursor:pointer;"><img src="assets\download.png"></span>&nbsp;&nbsp;&nbsp;
-							    	<mat-icon style="color: #DB4F4F;font-size: 24px;cursor:pointer;" (click)="revokeVIDBtn(list.vid,policy.vidType)">delete</mat-icon>
+							    	<span style="color: green;font-size: 24px;cursor:pointer;"><img id="download{{i}}" src="assets\download.png"></span>&nbsp;&nbsp;&nbsp;
+							    	<mat-icon id="delete{{i}}" style="color: #DB4F4F;font-size: 24px;cursor:pointer;" (click)="revokeVIDBtn(list.vid,policy.vidType)">delete</mat-icon>
 							    </td>
 							  </tr>
 							  </table>

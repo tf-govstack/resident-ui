@@ -18,7 +18,7 @@
 					<label style="color: #909090; size: 12px;">{{'trackservicerequest.searchLabel' | translate}}<span style="color: #FF0000; margin-bottom:8px;">*</span></label>
 					<br/>
           			<input type="text" id="appIdValue" name="appIdValue" value={{eidVal}} (blur)="captureValue($event, 'eidVal', 'textbox')" placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;
-					<button mat-raised-button style="width:100px;height: 36px;font-size: 16px;" color="primary" (click)="getEIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
+					<button id="getEIDStatusbtn" mat-raised-button style="width:100px;height: 36px;font-size: 16px;" color="primary" (click)="getEIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
 				</td>
 			</tr>
 		</table>
@@ -67,7 +67,7 @@
 			</tr>
 		</table>
 		<div style="text-align: right;">
-			<button style="cursor: pointer;" class="download-btn" (click)="downloadAcknowledgement()"><img class="save-icon" src="./assets/images/save.png"/>{{'trackservicerequest.downloadbuttonLabel' | translate}}</button>
+			<button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn" (click)="downloadAcknowledgement()"><img class="save-icon" src="./assets/images/save.png"/>{{'trackservicerequest.downloadbuttonLabel' | translate}}</button>
 		</div>
 	</div>
 
