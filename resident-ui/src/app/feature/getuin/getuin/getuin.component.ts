@@ -5,6 +5,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { AppConfigService } from 'src/app/app-config.service';
 import { DataStorageService } from "src/app/core/services/data-storage.service";
 import Utils from 'src/app/app.utils';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-getuin',
@@ -14,20 +16,24 @@ import Utils from 'src/app/app.utils';
 export class GetuinComponent implements OnInit {
   getUinData: any;
   transactionID: any;
-  isChecked: boolean = false;
+  isChecked: boolean = true;
   buttonbgColor: string = "#BFBCBC";
   otpChannel: any = [];
   siteKey:string = "6LfFWhQiAAAAAIyjCco9njIoJ0wMHz5jQjSFGSQm";
   resetCaptcha: boolean;
   userPreferredLangCode = localStorage.getItem("langCode");
+  errorCode:string;
+  message:string = "";
+  popupMessages:any;
 
   constructor(
     private router: Router,
     private translateService: TranslateService,
     private dataStorageService: DataStorageService,
     private appConfigService: AppConfigService,
+    private dialog: MatDialog,
   ) {
-      
+    this.translateService.use(localStorage.getItem("langCode")); 
   }
 
   ngOnInit() {
@@ -36,6 +42,7 @@ export class GetuinComponent implements OnInit {
     .getTranslation(this.userPreferredLangCode)
       .subscribe(response => {
         this.getUinData = response.uinservices
+        this.popupMessages = response
       });
   }
 
@@ -45,14 +52,14 @@ export class GetuinComponent implements OnInit {
     }
   }
 
-  ischecked() {
-    this.isChecked = !this.isChecked
-    if (this.isChecked) {
-      this.buttonbgColor = "#03A64A"
-    } else {
-      this.buttonbgColor = "#BFBCBC"
-    }
-  }
+  // ischecked() {
+  //   this.isChecked = !this.isChecked
+  //   if (this.isChecked) {
+  //     this.buttonbgColor = "#03A64A"
+  //   } else {
+  //     this.buttonbgColor = "#BFBCBC"
+  //   }
+  // }
   
   getCaptchaToken(event: Event) {
     if (event !== undefined && event != null) {
@@ -64,8 +71,12 @@ export class GetuinComponent implements OnInit {
     }
   }
 
+  // if (this.isChecked && data["AID"] !== "") {
+  //   this.generateOTP(data)
+  // }
+
   submitUserID(data: NgForm) {
-    if (this.isChecked && data["AID"] !== "") {
+    if ( data["AID"] !== "") {
       this.generateOTP(data)
     }
   }
@@ -91,15 +102,32 @@ export class GetuinComponent implements OnInit {
     };
     this.dataStorageService.generateOTPForUid(request)
     .subscribe((response) =>{
-      console.log(response)
       if(!response["errors"]){
         this.router.navigate(["bookappointment"],{state:{data,transactionID:this.transactionID}})
+      }else{
+        this.showErrorPopup(response["errors"])
       }
     },
     error =>{
       console.log(error)
     }
     )
+  }
+
+  showErrorPopup(message: any) {
+    this.errorCode = message[0]["errorCode"]
+    this.message = this.popupMessages.serverErrors[this.errorCode]
+    this.dialog
+      .open(DialogComponent, {
+        width: '550px',
+        data: {
+          case: 'MESSAGE',
+          title: this.popupMessages.genericmessage.errorLabel,
+          message: this.message,
+          btnTxt: this.popupMessages.genericmessage.successButton
+        },
+        disableClose: true
+      });
   }
 
 }

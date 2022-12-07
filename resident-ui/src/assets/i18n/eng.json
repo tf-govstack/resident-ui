@@ -410,6 +410,7 @@
         "RES-SER-412": "There seems to be some issue fetching the required page. Please try again in some time.",
         "RES-SER-405":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
         "RES-SER-418":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
-        "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in."
+        "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in.",
+        "RES-SER-449":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again."
     }
 }

@@ -186,6 +186,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       if (!response["errors"].length) {
         setTimeout(() => {
           self.getVID();
+          // this.showMessage(this.message ,vidValue);
         }, 300);
         this.showMessage(this.message ,vidValue);
       } else {
@@ -220,6 +221,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.warningLabel,
+        btnTxtNo: this.popupMessages.genericmessage.noButton,
         message: this.message,
         btnTxt: this.popupMessages.genericmessage.deleteButton
       }

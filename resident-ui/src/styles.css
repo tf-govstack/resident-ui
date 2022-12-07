@@ -418,3 +418,7 @@ mat-select {
   color: #008CED;
   cursor: pointer;
 }
+
+button{
+  cursor: pointer;
+}

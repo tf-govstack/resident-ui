@@ -19,7 +19,7 @@
             <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha" (captchaEvent)="getCaptchaToken($event)"></app-captcha>
         </div>
         <br />
-        <button id="grtUinSendOtpBtn" [style.backgroundColor]="buttonbgColor" class="login-uin-otp-btn" *ngIf="getUinData.buttonText">{{getUinData.buttonText |
+        <button id="getUinSendOtpBtn" (click)="submitUserID()" [style.backgroundColor]="buttonbgColor" class="login-uin-otp-btn" *ngIf="getUinData.buttonText">{{getUinData.buttonText |
           translate}}</button>
       </form>
     </div>

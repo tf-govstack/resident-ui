@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: .6rem;
 }
 
 .button {
@@ -30,7 +31,6 @@
 .btn-card {
   display: flex;
 }
-
 
 .main-container {
   padding: 0 6rem 0 6rem;
