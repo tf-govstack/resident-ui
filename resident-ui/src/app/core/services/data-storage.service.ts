@@ -273,6 +273,6 @@ export class DataStorageService {
   }
 
   getSupportingDocument(){
-    return this.httpClient.get<Blob>(this.BASE_URL   + '/download/supportingDocs/'+localStorage.getItem("langCode"), { responseType: 'blob' as 'json' });
+    return this.httpClient.get<Blob>(this.BASE_URL   + '/download/supporting-documents?langcode='+localStorage.getItem("langCode"), { responseType: 'blob' as 'json' });
   }
 }
