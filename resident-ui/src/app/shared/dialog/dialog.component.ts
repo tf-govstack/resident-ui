@@ -83,7 +83,12 @@ export class DialogComponent implements OnInit {
       this.popMsgbgColor = "#FFD9D8"
       this.popMsgColor = "#C90500"
       this.icon = "./assets/cancel_icon.png"
-    }else if (this.data.title === "Warning"){
+    }else if(this.data.warningForChannel === "warningForChannel"){
+      this.popMsgbgColor = "#FFF9DB"
+      this.popMsgColor = "#F2CC0C"
+      this.icon = "./assets/sucess_icon.png"
+    }
+    else if (this.data.title === "Warning"){
       this.popMsgbgColor = "#FFF9DB"
       this.popMsgColor = "#F2CC0C"
       this.icon = "./assets/AdobeStock_547798501-modified.png"
@@ -122,6 +127,7 @@ export class DialogComponent implements OnInit {
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("deleteVID")
   }
+
   downloadPersonalCard(){
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("downloadPersonalCard")

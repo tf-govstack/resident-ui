@@ -341,6 +341,7 @@
         "deleteButton": "Delete",
         "errorLabel": "Error",
         "warningLabel": "Warning",
+        "warningForChannel":"warningForChannel",
         "createMessage": "Created Successfully",
         "updateMessage": "Updated Successfully",
         "mappingMessage": " Mapped Successfully",
@@ -391,7 +392,7 @@
             "needPurpose":"Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential."
         },
         "verifyChannel":{
-            "warningMsg":"Your phone $channel has already been verified.",
+            "warningMsg":"Your $channel has already been verified.",
             "emailSuccess":"Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can ",
             "phoneSuccess":"Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can "
         }
@@ -409,6 +410,7 @@
         "RES-SER-412": "There seems to be some issue fetching the required page. Please try again in some time.",
         "RES-SER-405":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
         "RES-SER-418":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
-        "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in."
+        "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in.",
+        "RES-SER-449":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again."
     }
 }

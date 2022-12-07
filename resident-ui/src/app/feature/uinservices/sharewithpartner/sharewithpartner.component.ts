@@ -114,7 +114,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       }      
     }
     this.buildHTML = `<html><head></head><body><table>`+row+`</table></body></html>`;
-  
+    
   }
 
   stopPropagation($event:any){

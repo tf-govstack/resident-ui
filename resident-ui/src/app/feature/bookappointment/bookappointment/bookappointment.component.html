@@ -3,7 +3,7 @@
     <a (click)="onItemSelected('home')">{{'bookappointment.home' | translate}} &nbsp;&nbsp;</a> >&nbsp;&nbsp;<span class="active">{{'bookappointment.label' | translate}}</span>
   </span>
   <mat-card class="uin-appointment-card">
-    <button (click)="onItemSelected('back')" class="book-appointment-back-btn"><img src="./assets/images/arrow_back_black_24dp.png"
+    <button mat-button-toggle id="getUinBackBtn" (click)="onItemSelected('back')" class="book-appointment-back-btn"><img src="./assets/images/arrow_back_black_24dp.png"
         alt="" />Back</button>
     <hr class="line" />
     <div class="otp-verify-container">
@@ -11,16 +11,16 @@
       </mat-card-subtitle>
       <label for="otp-input">{{bookAppointmentData.inputLabel | translate}}</label>
       <br />
-      <input #box (keyup)="captureValue(box.value)" placeholder="Enter OTP here" id="otp-input" class="enter-opt-input" type="text" />
+      <input id="getUinOtpValue" #box (keyup)="captureValue(box.value)" placeholder="Enter OTP here" id="otp-input" class="enter-opt-input" type="text" />
       <div class="otp-infromation-card">
         <p class="otp-infromation-text">{{bookAppointmentData.otpDescription | translate}} <span
             class="mobile-number"> {{channelType}}</span>.</p>
       </div>
       <div class="get-uin-btn-card">
-        <button (click)="onItemSelected('resendOtp')" [style.backgroundColor]="resendOtpBtnBgColor" class="button">{{bookAppointmentData.resendBtnLabel | translate}}</button>
+        <button [disabled]="resetBtnDisable" mat-button-toggle id="getUinResendOtpBtn" (click)="onItemSelected('resendOtp')" [style.backgroundColor]="resendOtpBtnBgColor" class="button">{{bookAppointmentData.resendBtnLabel | translate}}</button>
         &nbsp;
         &nbsp;
-        <button (click)="onItemSelected('submit')" class="button" [style.backgroundColor]="submitBtnBgColor">{{bookAppointmentData.submitBtnLabel | translate}}</button>
+        <button [disabled]="submitBtnDisable" mat-button-toggle id="getUinsubmitBtn" (click)="onItemSelected('submit')" class="button" [style.backgroundColor]="submitBtnBgColor">{{bookAppointmentData.submitBtnLabel | translate}}</button>
       </div>
     </div>
   </mat-card>

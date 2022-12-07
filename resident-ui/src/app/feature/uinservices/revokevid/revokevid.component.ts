@@ -46,8 +46,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
-    this.cols = (window.innerWidth === 1400) ? 3 : 4 
-    this.rowHeight = (window.innerWidth <= 1420) ? "2:1.5" : "2:1.2"
+    this.cols = (window.innerWidth <= 1400) ? 3 : 4 
+    this.rowHeight = (window.innerWidth <= 1420) ? "2:1.3" : "2:1.2"
    
 
     this.translateService
@@ -97,8 +97,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   onResize(event:any){
-    this.cols = (event.target.innerWidth  === 1400 ) ? 3 : 4
-    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.5" : "2:1.2"
+    this.cols = (event.target.innerWidth  <= 1400 ) ? 3 : 4
+    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.3" : "2:1.2"
   }
 
   displayVid(finalTypeList, policyType, policy, showvid) {
@@ -133,7 +133,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     }
   }
 
-  generateVID1(vidType: any) {
+  generateVIDBtn(vidType: any) {
     this.newVidType = vidType
     this.showWarningMessage(vidType)
   }
@@ -165,7 +165,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     });
   }
 
-  revokeVID1(vidValue: any,vidType:any){
+  revokeVIDBtn(vidValue: any,vidType:any){
     this.showDeleteMessage(vidType,vidValue)
     this.newVidValue = vidValue
   }
@@ -186,6 +186,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       if (!response["errors"].length) {
         setTimeout(() => {
           self.getVID();
+          // this.showMessage(this.message ,vidValue);
         }, 300);
         this.showMessage(this.message ,vidValue);
       } else {
@@ -220,6 +221,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.warningLabel,
+        btnTxtNo: this.popupMessages.genericmessage.noButton,
         message: this.message,
         btnTxt: this.popupMessages.genericmessage.deleteButton
       }
