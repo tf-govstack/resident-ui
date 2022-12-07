@@ -26,6 +26,9 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   dataDisplay:any={};
   clickEventSubscription:Subscription;
   message:string;
+  formatData:any;
+  nameFormatValues:string[];
+  addressFormatValues:string[];
 
   constructor(private interactionService:InteractionService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -54,21 +57,52 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       this.schema = response;
     });
     this.getUserInfo();
+    this.getMappingData()
+  }
+
+  getMappingData(){
+    this.dataStorageService
+    .getMappingData()
+    .subscribe((response) =>{
+      this.formatData = {"Address Format":response["identity"]["fullAddress"]["value"].split(","),"Name Format":response["identity"]["name"]["value"].split(","),"Date Format":response["identity"]["dob"]["value"].split(",")} 
+    })
   }
 
   getUserInfo(){
     this.dataStorageService
     .getUserInfo()
     .subscribe((response) => {
+      console.log(response)
       this.userInfo = response["response"];
     });
   }
 
-  captureCheckboxValue($event:any, data:any){
-    console.log("this.dataDisplay>>>"+JSON.stringify(this.dataDisplay)+"<<<data.attributeName>>>"+data.attributeName);  
+  captureCheckboxValue($event:any, data:any,data2:any){
+    console.log(data2)
+    console.log(data)
     this.buildHTML = ""; 
-    console.log((data.attributeName.toString() in this.dataDisplay));
+    let row = "";
+    let rowImage ="";
     
+    // if(data2 !== undefined){
+    //     console.log("hello")
+    // }else{
+    //   if(data.attributeName.toString() in this.dataDisplay){
+    //     delete this.dataDisplay[data.attributeName];
+    //   }else{
+    //     let value = "";
+    //     if (typeof this.userInfo[data.attributeName] === "string") {        
+    //       value = this.userInfo[data.attributeName];
+    //     }else{
+    //       value = this.userInfo[data.attributeName][0].value;
+    //     }
+    //     if(data.attributeName === "photo"){
+    //       this.dataDisplay[data.attributeName] = {"label":"", "value": value};
+    //     }else{
+    //     this.dataDisplay[data.attributeName] = {"label":data.label[this.langCode], "value": value};
+    //     }
+    //   }  
+    // }
     if(data.attributeName.toString() in this.dataDisplay){
       delete this.dataDisplay[data.attributeName];
     }else{
@@ -78,21 +112,21 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       }else{
         value = this.userInfo[data.attributeName][0].value;
       }
-      this.dataDisplay[data.attributeName] = {"label":data.label[this.langCode], "value": value};
-    }      
-    let row = "";
-    console.log("data.attributeName>>>"+data.attributeName);
-    for (const key in this.dataDisplay) {
       if(data.attributeName === "photo"){
-        row = row+"<tr><td>"+this.dataDisplay[key].label+"</td><td><img src='data:image/png;base64, "+this.dataDisplay[key].value+"' alt=''/></td></tr>";  
+        this.dataDisplay[data.attributeName] = {"label":"", "value": value};
+      }else{
+      this.dataDisplay[data.attributeName] = {"label":data.label[this.langCode], "value": value};
+      }
+    }    
+    
+    for (const key in this.dataDisplay) {
+      if(key === "photo"){
+        rowImage = "<tr><td><img src='data:image/png;base64, "+this.dataDisplay[key].value+"' alt=''/></td></tr>";  
       }else{
        row = row+"<tr><td>"+this.dataDisplay[key].label+"</td><td>"+this.dataDisplay[key].value+"</td></tr>";
       }      
     }
-    console.log(row)
-    console.log("this.dataDisplay>>>"+this.dataDisplay);
-    this.buildHTML = `<html><head></head><body><table>`+row+`</table></body></html>`;
-    console.log("this.buildHTML>>>"+JSON.stringify(this.buildHTML));
+    this.buildHTML = `<html><head></head><body><table>`+ rowImage + row+`</table></body></html>`;
     $event.stopPropagation();
   }
 
@@ -114,7 +148,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .convertpdf(request)
     .subscribe(data => {
-      console.log(data)
       var fileName = self.userInfo.fullName+".pdf";
       const contentDisposition = data.headers.get('Content-Disposition');
       if (contentDisposition) {

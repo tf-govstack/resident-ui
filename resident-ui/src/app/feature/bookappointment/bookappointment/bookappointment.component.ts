@@ -20,13 +20,15 @@ export class BookappointmentComponent implements OnInit {
   data: any;
   submitBtnBgColor: string = "#BFBCBC";
   resendOtpBtnBgColor: string = "#909090"
-  otpTimeMinutes: number = 1;
-  otpTimeSeconds: number = 59;
+  otpTimeMinutes: number = 2;
+  otpTimeSeconds: any = "00";
   displaySeconds: any = this.otpTimeSeconds
   showPopupForUidCard: boolean = false;
   popupMessages: any;
-  interval:any;
-  channelType: any= "99XXXXXX80"
+  interval: any;
+  channelType: any = "99XXXXXX80"
+  resetBtnDisable: boolean = true;
+  submitBtnDisable: boolean = false;
 
   userPreferredLangCode = localStorage.getItem("langCode");
 
@@ -62,24 +64,29 @@ export class BookappointmentComponent implements OnInit {
     this.setOtpTime()
   }
 
-setOtpTime(){
-  this.interval = setInterval(() => {
-    this.otpTimeSeconds -= 1
-    if(this.otpTimeSeconds < 0){
-      this.otpTimeSeconds = 59
-      this.otpTimeMinutes -= 1
-    }else if(this.otpTimeSeconds === 0 && this.otpTimeMinutes === 0){
-      clearInterval(this.interval)
-      this.resendOtpBtnBgColor = "#03A64A"
-    }
+  setOtpTime() {
+    this.interval = setInterval(() => {
+      if (this.otpTimeSeconds < 0 || this.otpTimeSeconds === "00") {
+        this.otpTimeSeconds = 59
+        this.otpTimeMinutes -= 1
+      }
+      if (this.otpTimeMinutes < 0 && this.displaySeconds === "00") {
+        this.otpTimeSeconds = 0;
+        this.otpTimeMinutes = 0;
+        clearInterval(this.interval)
+        this.resendOtpBtnBgColor = "#03A64A";
+        this.displaySeconds = "00";
+        this.resetBtnDisable = false;
+        this.submitBtnDisable = true;
+      }
       if (this.otpTimeSeconds < 10) {
         this.displaySeconds = "0" + this.otpTimeSeconds.toString()
       } else {
         this.displaySeconds = this.otpTimeSeconds
-      } 
-  }, 1000)
-}
-
+      }
+      this.otpTimeSeconds -= 1
+    }, 1000);
+  }
 
   onItemSelected(item: any) {
     if (item === "home") {
@@ -87,15 +94,18 @@ setOtpTime(){
     } else if (item === "back") {
       this.router.navigate(["getuin"])
       clearInterval(this.interval)
-    }else if (item === "submit") {
+    } else if (item === "submit") {
       this.validateUinCardOtp()
       clearInterval(this.interval)
-    }else if (item === "resendOtp") {
-      this.otpTimeMinutes = 1;
-      this.otpTimeSeconds = 59;
+    } else if (item === "resendOtp") {
+      clearInterval(this.interval)
+      this.otpTimeMinutes = 2;
+      this.otpTimeSeconds = "00";
       this.generateOTP(this.data)
       this.resendOtpBtnBgColor = "#909090"
       this.setOtpTime()
+      this.resetBtnDisable = true;
+      this.submitBtnDisable = false;
     }
   }
 

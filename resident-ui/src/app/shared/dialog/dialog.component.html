@@ -107,16 +107,14 @@
     <span><button style="background-color:#03A64A;" *ngIf="input.btnTxt === 'OK' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="dismiss()">
         {{ input.btnTxt }}
       </button></span>
-      <div>
       <span><button style="background-color:#03A64A;" *ngIf="input.btnTxt === 'Yes' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="vidWarning()">
+        {{ input.btnTxt }}
+      </button></span>
+      <span><button *ngIf="input.btnTxt === 'Delete'" style="background-color:red;" mat-button cdkFocusInitial id="confirmmessagepopup" (click)="vidDelete()">
         {{ input.btnTxt }}
       </button></span>
       <span><button *ngIf="input.btnTxtNo === 'No' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="dismiss()">
         {{ input.btnTxtNo }}
-      </button></span>
-    </div>
-      <span><button *ngIf="input.btnTxt === 'Delete' " mat-button cdkFocusInitial id="confirmmessagepopup" (click)="vidDelete()">
-        {{ input.btnTxt }}
       </button></span>
   </div>
 </div>

@@ -107,7 +107,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
         this.otpTimeMinutes -= 1
       }
       if (this.otpTimeMinutes < 0 && this.displaySeconds === "00") {
-        console.log("hello2")
         this.otpTimeSeconds = 0;
         this.otpTimeMinutes = 0;
         clearInterval(this.interval)
@@ -121,7 +120,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
       } else {
         this.displaySeconds = this.otpTimeSeconds
       }
-      console.log(this.displaySeconds)
       this.otpTimeSeconds -= 1
     }, 1000);
   }

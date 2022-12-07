@@ -64,8 +64,6 @@ div.item-card:hover .active-icon{
   margin-right: 6px;
 }
 
-
-
 .item-card:hover mat-card{
   background-color: rgb(3, 166, 74);
   color: #ffffff;
@@ -74,7 +72,6 @@ div.item-card:hover .active-icon{
 .item-card:hover  mat-card-title{
   color: #ffffff;
 }
-
 
 .item-card:hover  mat-card-subtitle{
   color: #F4F4F4;
@@ -93,6 +90,7 @@ mat-icon.mat-card-avatar {
   height: 40px;
   font-size: 40px;
 }
+
 .dashboard-icons{
   width: 60px;
   height: 60px;
