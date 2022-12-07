@@ -9,17 +9,18 @@ import { TrackservicerequestComponent } from './trackservicerequest/trackservice
 import { PersonalisedcardComponent } from './personalisedcard/personalisedcard.component';
 import { PhysicalcardComponent } from './physicalcard/physicalcard.component';
 import { SharewithpartnerComponent } from './sharewithpartner/sharewithpartner.component';
+import { AuthguardService } from '../../core/services/authguard.service';
 
 const routes: Routes = [
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'viewhistory', component: ViewhistoryComponent},
-  {path: 'managemyvid', component: RevokevidComponent},
-  {path: 'lockunlockauth', component: LockunlockauthComponent},
-  {path: 'updatedemographic', component: UpdatedemographicComponent},
-  {path: 'trackservicerequest', component: TrackservicerequestComponent},
-  {path: 'personalisedcard', component: PersonalisedcardComponent},
-  {path: 'physicalcard', component: PhysicalcardComponent},
-  {path: 'sharewithpartner', component: SharewithpartnerComponent}
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthguardService]},
+  {path: 'viewhistory', component: ViewhistoryComponent, canActivate: [AuthguardService]},
+  {path: 'managemyvid', component: RevokevidComponent, canActivate: [AuthguardService]},
+  {path: 'lockunlockauth', component: LockunlockauthComponent, canActivate: [AuthguardService]},
+  {path: 'updatedemographic', component: UpdatedemographicComponent, canActivate: [AuthguardService]},
+  {path: 'trackservicerequest', component: TrackservicerequestComponent, canActivate: [AuthguardService]},
+  {path: 'personalisedcard', component: PersonalisedcardComponent, canActivate: [AuthguardService]},
+  {path: 'physicalcard', component: PhysicalcardComponent, canActivate: [AuthguardService]},
+  {path: 'sharewithpartner', component: SharewithpartnerComponent, canActivate: [AuthguardService]}
 ];
 
 @NgModule({
