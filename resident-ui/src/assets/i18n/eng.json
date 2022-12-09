@@ -145,12 +145,13 @@
         "label": "Get My UIN",
         "icon": "assets/images/info_black_24dp (1).png"
     },
-    "bookappointment": {
+    "downloadUin": {
         "home": "Home",
-        "label": "Book an Appointment",
+        "label": "Download UIN",
         "subTitle": "The OTP will expire in",
         "inputLabel": "Enter One Time Password (OTP)",
         "otpDescription": "One Time Password (OTP) has been sent to your registered Mobile Number",
+        "otpDescriptionEmail":" and your registered Email id",
         "resendBtnLabel": "Resend OTP",
         "submitBtnLabel": "Submit"
     },
@@ -348,6 +349,9 @@
         "termsAndConditionsLabel": "Terms and Conditions",
         "clickHere":"click here.",
         "successRemainMsg":"to track service request with pre-filled EID.",
+        "getMyUin":{
+            "downloadedSuccessFully":"Dear resident, your UIN card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can"
+        },
         "termsAndConditionsDescription": [
             "Your data will be shared with the chosen third party (credential partner)",
             "You are responsible for any and all costs and fees associated with agreements entered into with the third-party provider.",

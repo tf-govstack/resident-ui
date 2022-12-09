@@ -241,7 +241,7 @@ export class DataStorageService {
   }
 
   validateUinCardOtp(reqData:any){
-    return this.httpClient.post(this.BASE_URL   + '/download-card', reqData , { headers: headers});
+    return this.httpClient.post<Blob>(this.BASE_URL   + '/download-card', reqData , { observe: 'response', responseType: 'blob' as 'json' });
   }
 
   downloadpdf(request:any){

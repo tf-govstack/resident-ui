@@ -1,0 +1,28 @@
+<div class="main-container">
+  <span class="breadcrumb">
+    <a (click)="onItemSelected('home')">{{'downloadUin.home' | translate}} &nbsp;&nbsp;</a> >&nbsp;&nbsp;<span class="active">{{'downloadUin.label' | translate}}</span>
+  </span>
+  <mat-card class="uin-appointment-card">
+    <button mat-button-toggle id="getUinBackBtn" (click)="onItemSelected('back')" class="book-appointment-back-btn"><img src="./assets/images/arrow_back_black_24dp.png"
+        alt="" />Back</button>
+    <hr class="line" />
+    <div class="otp-verify-container">
+      <mat-card-subtitle class="otp-time-heading">{{downloadUinData.subTitle | translate}}<span class="otp-expire-time"> 0{{otpTimeMinutes}}:{{displaySeconds}}</span>
+      </mat-card-subtitle>
+      <label for="otp-input">{{downloadUinData.inputLabel | translate}}</label>
+      <br />
+      <input id="getUinOtpValue" #box (keyup)="captureValue(box.value)" placeholder="Enter OTP here" id="otp-input" class="enter-opt-input" type="text" />
+      <div class="otp-infromation-card">
+        <p class="otp-infromation-text">{{downloadUinData.otpDescription | translate}} <span
+            class="mobile-number"> {{phoneNumber}}</span> {{downloadUinData.otpDescriptionEmail | translate}} <span
+            class="mobile-number"> {{emailId}}</span>.</p>
+      </div>
+      <div class="get-uin-btn-card">
+        <button [disabled]="resetBtnDisable" mat-button-toggle id="getUinResendOtpBtn" (click)="onItemSelected('resendOtp')" [style.backgroundColor]="resendOtpBtnBgColor" class="button">{{downloadUinData.resendBtnLabel | translate}}</button>
+        &nbsp;
+        &nbsp;
+        <button [disabled]="submitBtnDisable" mat-button-toggle id="getUinsubmitBtn" (click)="onItemSelected('submit')" class="button" [style.backgroundColor]="submitBtnBgColor">{{downloadUinData.submitBtnLabel | translate}}</button>
+      </div>
+    </div>
+  </mat-card>
+</div>

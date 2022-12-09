@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'regcenter', loadChildren: 'src/app/feature/booking/booking.module#BookingModule'},
   { path: 'verify', loadChildren:'src/app/feature/verify/verify.module#VerifyModule'},
   { path: 'uinservices', loadChildren:'src/app/feature/uinservices/uinservices.module#UinservicesModule'},
-  {path:'bookappointment',loadChildren:'src/app/feature/bookappointment/bookappointment.module#BookappointmentModule'}
+  {path:'downloadMyUin',loadChildren:'src/app/feature/downloaduin/downloaduin.module#DownloadUinModule'}
 ];
 
 @NgModule({

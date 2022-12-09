@@ -103,7 +103,7 @@ export class GetuinComponent implements OnInit {
     this.dataStorageService.generateOTPForUid(request)
     .subscribe((response) =>{
       if(!response["errors"]){
-        this.router.navigate(["bookappointment"],{state:{data,transactionID:this.transactionID}})
+        this.router.navigate(["downloadMyUin"],{state:{data,response}})
       }else{
         this.showErrorPopup(response["errors"])
       }

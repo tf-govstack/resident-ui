@@ -282,6 +282,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   openPopupMsg(){
-    console.log("hello")
+    console.log("need to update")
   }
 }

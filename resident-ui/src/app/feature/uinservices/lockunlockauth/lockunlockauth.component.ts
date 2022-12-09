@@ -207,6 +207,6 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
       this.router.navigate([item]);
   }
   openPopUp(){
-    console.log("hello")
+    console.log("need to update")
   }
 }
