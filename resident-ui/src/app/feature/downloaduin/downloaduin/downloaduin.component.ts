@@ -29,12 +29,12 @@ export class DownloadUinComponent implements OnInit {
   popupMessages: any;
   interval: any;
   phoneNumber: any;
-  emailId:any;
+  emailId: any;
   resetBtnDisable: boolean = true;
   submitBtnDisable: boolean = false;
-  errorCode:string;
-  message:string = "";
-  pdfSrc ="";
+  errorCode: string;
+  message: string = "";
+  pdfSrc = "";
 
   userPreferredLangCode = localStorage.getItem("langCode");
 
@@ -59,7 +59,7 @@ export class DownloadUinComponent implements OnInit {
     this.phoneNumber = this.router.getCurrentNavigation().extras.state.response.response.maskedMobile
     this.emailId = this.router.getCurrentNavigation().extras.state.response.response.maskedEmail
   }
-  
+
   ngOnInit() {
     this.translateService.getTranslation(this.userPreferredLangCode).subscribe(response => {
       this.downloadUinData = response.downloadUin,
@@ -109,9 +109,10 @@ export class DownloadUinComponent implements OnInit {
     } else if (item === "resendOtp") {
       clearInterval(this.interval)
       this.otpTimeMinutes = 2;
-      this.otpTimeSeconds = "00";
+      this.displaySeconds = "00";
       this.generateOTP(this.data)
       this.resendOtpBtnBgColor = "#909090"
+      this.submitBtnBgColor = "#03A64A"
       this.setOtpTime()
       this.resetBtnDisable = true;
       this.submitBtnDisable = false;
@@ -156,32 +157,35 @@ export class DownloadUinComponent implements OnInit {
       }
     };
     self.dataStorageService.validateUinCardOtp(request).subscribe(response => {
-      if (!response["errors"]) {
-        var fileName = self.data+".pdf";
-        const contentDisposition = response.headers.get('Content-Disposition');
-        if (contentDisposition) {
-          const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-          const matches = fileNameRegex.exec(contentDisposition);
-          if (matches != null && matches[1]) {
-            fileName = matches[1].replace(/['"]/g, '');
+        if (response.body.type === "application/json") {
+          self.showErrorPopup(this.popupMessages.genericmessage.getMyUin.invalidOtp);
+          this.resetBtnDisable = false;
+          this.submitBtnDisable = true;
+          this.resendOtpBtnBgColor = "#03A64A";
+          this.submitBtnBgColor = "#909090";
+        } else {
+          var fileName = self.data + ".pdf";
+          const contentDisposition = response.headers.get('Content-Disposition');
+          console.log(contentDisposition)
+          if (contentDisposition) {
+            const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            const matches = fileNameRegex.exec(contentDisposition);
+            if (matches != null && matches[1]) {
+              fileName = matches[1].replace(/['"]/g, '');
+            }
           }
+          saveAs(response.body, fileName);
+          this.router.navigate(["dashboard"])
+          this.showMessage(response["response"]);
         }
-        saveAs(response.body, fileName);
-        this.router.navigate(["dashboard"])
-        this.showMessage(response["response"]);
-      } else {
-        this.router.navigate(["getuin"])
-        self.showErrorPopup(response["errors"]);
-        
-      }
     },
       error => {
         console.log(error)
-        
+
       }
     )
   }
-  
+
   showMessage(message: string) {
     this.message = this.popupMessages.genericmessage.getMyUin.downloadedSuccessFully;
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -190,7 +194,7 @@ export class DownloadUinComponent implements OnInit {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
         message: this.message,
-        clickHere:this.popupMessages.genericmessage.clickHere,
+        clickHere: this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -198,15 +202,15 @@ export class DownloadUinComponent implements OnInit {
   }
 
   showErrorPopup(message: string) {
-    this.errorCode = message[0]["errorCode"]
-    this.message = this.popupMessages.serverErrors[this.errorCode]
+    // this.errorCode = message[0]["errorCode"]
+    // this.message = this.popupMessages.serverErrors[this.errorCode]
     this.dialog
       .open(DialogComponent, {
         width: '850px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
-          message: this.message,
+          message: message,
           btnTxt: this.popupMessages.genericmessage.successButton
         },
         disableClose: true
