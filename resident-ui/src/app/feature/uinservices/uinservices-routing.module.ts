@@ -9,6 +9,7 @@ import { TrackservicerequestComponent } from './trackservicerequest/trackservice
 import { PersonalisedcardComponent } from './personalisedcard/personalisedcard.component';
 import { PhysicalcardComponent } from './physicalcard/physicalcard.component';
 import { SharewithpartnerComponent } from './sharewithpartner/sharewithpartner.component';
+import { AuthguardService } from '../../core/services/authguard.service';
 
 const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
