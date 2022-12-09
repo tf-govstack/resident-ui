@@ -6,6 +6,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { AppConfigService } from 'src/app/app-config.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-bookappointment',
@@ -29,6 +31,10 @@ export class BookappointmentComponent implements OnInit {
   channelType: any = "99XXXXXX80"
   resetBtnDisable: boolean = true;
   submitBtnDisable: boolean = false;
+  errorCode:string;
+  message:string = "";
+  pdfSrc ="";
+  userInfo="hello";
 
   userPreferredLangCode = localStorage.getItem("langCode");
 
@@ -45,7 +51,8 @@ export class BookappointmentComponent implements OnInit {
     private router: Router,
     private dataStorageService: DataStorageService,
     private translateService: TranslateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private appConfigService: AppConfigService
   ) {
     this.data = this.router.getCurrentNavigation().extras.state.data.AID
     this.transactionID = this.router.getCurrentNavigation().extras.state.transactionID
@@ -62,6 +69,37 @@ export class BookappointmentComponent implements OnInit {
         this.popupMessages = response;
       });
     this.setOtpTime()
+  }
+
+  convertpdf(){
+    let self = this;
+    // const request = {
+    //   "id": "mosip.resident.euin",
+    //   "version": this.appConfigService.getConfig()["resident.vid.version"],
+    //   "requesttime": Utils.getCurrentDate(),
+    //   "request":{
+    //     "html": btoa(this.buildHTML)
+    //   }
+    // };
+
+    this.dataStorageService
+    .convertpdf("hello")
+    .subscribe(data => {
+      var fileName = self.userInfo+".pdf";
+      const contentDisposition = data.headers.get('Content-Disposition');
+      if (contentDisposition) {
+        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = fileNameRegex.exec(contentDisposition);
+        if (matches != null && matches[1]) {
+          fileName = matches[1].replace(/['"]/g, '');
+        }
+      }
+      saveAs(data.body, fileName);
+      // this.showMessage()
+    },
+    err => {
+      console.error(err);
+    });
   }
 
   setOtpTime() {
@@ -97,6 +135,7 @@ export class BookappointmentComponent implements OnInit {
     } else if (item === "submit") {
       this.validateUinCardOtp()
       clearInterval(this.interval)
+      this.convertpdf()
     } else if (item === "resendOtp") {
       clearInterval(this.interval)
       this.otpTimeMinutes = 2;
@@ -151,8 +190,8 @@ export class BookappointmentComponent implements OnInit {
         this.router.navigate(["dashboard"])
         self.showMessage(JSON.stringify(response["response"]));
       } else {
-        this.router.navigate(["dashboard"])
-        self.showErrorPopup(JSON.stringify(response["errors"]));
+        this.router.navigate(["getuin"])
+        self.showErrorPopup(response["errors"]);
       }
     },
       error => {
@@ -160,7 +199,7 @@ export class BookappointmentComponent implements OnInit {
       }
     )
   }
-
+  
   showMessage(message: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '850px',
@@ -175,13 +214,15 @@ export class BookappointmentComponent implements OnInit {
   }
 
   showErrorPopup(message: string) {
+    this.errorCode = message[0]["errorCode"]
+    this.message = this.popupMessages.serverErrors[this.errorCode]
     this.dialog
       .open(DialogComponent, {
         width: '850px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
-          message: message,
+          message: this.message,
           btnTxt: this.popupMessages.genericmessage.successButton
         },
         disableClose: true

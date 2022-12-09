@@ -78,8 +78,8 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   }
 
   captureCheckboxValue($event:any, data:any,data2:any){
-    console.log(data2)
     console.log(data)
+    console.log(data2)
     this.buildHTML = ""; 
     let row = "";
     let rowImage ="";
