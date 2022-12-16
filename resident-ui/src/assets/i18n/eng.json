@@ -402,6 +402,29 @@
             "phoneSuccess":"Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can "
         }
     },
+    "autologout": {
+        "preview": "You will be timed out in 60 secs due to inactivity. Please click anywhere to re-activate your session",
+        "post": "You have been logged out due to inactivity."
+      },
+    "InfomationContent":{
+        "readMoreLabel":"Read More...",
+        "readLessLabel":"Read Less...",
+         "revokevid":{
+            "Perpetual":"A perpetual VID has no expiry date and no limit on the number of transactions that can be performed using this VID. One UIN can be associated with only one perpetual VID at a time.",
+            "Temporary":"A temporary VID is valid for 30 minutes and only one transaction can be performed using this VID. One UIN can be associated with 5 temporary VIDs at a time.",
+            "OneTimeUse":"A one-time VID has no expiry date but only one transaction can be performed using this VID. One UIN can be associated with only one one-time VID at a time."
+         },
+         "secureMyID":{
+            "Email OTP Authentication":"On locking/unlocking 'Email OTP Authentication', any authentication attempt made using an email OTP will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
+            "Mobile OTP Authentication":"On locking/unlocking 'Mobile OTP Authentication', any authentication attempt made using a mobile OTP will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
+            "Demographic Authentication":"On locking/unlocking 'Demographic Authentication', any authentication attempt made using demographic details (name, age, address, or any combination of those) will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
+            "Fingerprint Authentication":"On locking/unlocking 'Fingerprint Authentication', any authentication attempt made using a fingerprint will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
+            "Iris Authentication":"On locking/unlocking 'Iris Authentication', any authentication attempt made using an iris will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
+            "Face Authentication":"On locking/unlocking 'Face Authentication', any authentication attempt made using face will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services."
+         },
+         "trackStatus":"Please enter the EID (Event Id) associated with the event that you want to track. It is important that the EID you enter is associated with the logged-in UIN.",
+         "getUin":"An AID is your 16-digit Application ID which was provided to you after registration. A UIN is your 10-digit Unique Identity Number. A VID is your 16-digit Virtual ID."
+    },
     "serverErrors": {
         "IDA-OTA-008": "Please choose the channel that you want to verify.",
         "IDA-MLC-009": "No registered email Id/phone number associated with the entered UIN was found. To add an email Id/phone number, go to the nearest registration center. click here to find registration center.",

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy,Renderer2 } from "@angular/core";
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
@@ -23,7 +23,31 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   vidType:string = "";
   notificationType:Array<string>=[];
   vidValue:string = "";
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  clickedId:string;
+  isPopupSHow:boolean = false;
+  iconBtnClick:boolean = false;
+  infoMsg:string;
+  shortInfoMsg:any;
+  isShowMore:boolean = false;
+  readText:string;
+  popupMargin:any;
+
+  constructor(private renderer:Renderer2 ,
+    private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
+    private router: Router) {
+      this.renderer.listen('window', 'click', (e: Event) => {
+        if(this.isShowMore){
+          this.isPopupSHow = true;
+          console.log("Hello4")
+        }
+        if (!this.iconBtnClick) {
+          this.isPopupSHow = false;
+          console.log("Hello5")
+        }
+        console.log("Hello6")
+        this.iconBtnClick = false;
+      });
+    }
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
@@ -139,7 +163,6 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
         "authTypes": this.authlist
       }
     };
-    console.log(request)
     this.dataStorageService.updateAuthlockStatus(request).subscribe(response => {
       console.log(response)
         if(!response["errors"]){
@@ -206,7 +229,32 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   onItemSelected(item: any) {
       this.router.navigate([item]);
   }
-  openPopUp(){
-    console.log("need to update")
+  openPopUp(clickedId:any){
+    this.clickedId = clickedId;
+    this.isPopupSHow = !this.isPopupSHow;
+    this.infoMsg =  this.popupMessages.InfomationContent.secureMyID[clickedId].split(".")[0]+"."
+    console.log("Hello1")
+    this.popupMargin = "67%"
+    this.readText = this.popupMessages.InfomationContent.readMoreLabel
+  }
+  preventCloseOnClick(){
+    this.iconBtnClick = true
+    console.log("Hello2")
+  }
+
+  showFullInfo(clickedId:any){
+    console.log("Hello3")
+    this.isShowMore = !this.isShowMore
+    this.isPopupSHow = true
+    this.iconBtnClick = true
+    if(this.isShowMore){
+      this.readText = this.popupMessages.InfomationContent.readLessLabel
+      this.infoMsg = this.popupMessages.InfomationContent.secureMyID[clickedId]
+      this.popupMargin = "90%"
+    }else{
+      this.readText = this.popupMessages.InfomationContent.readMoreLabel
+      this.infoMsg = this.popupMessages.InfomationContent.secureMyID[clickedId].split(".")[0]+"."
+      this.popupMargin = "67%"
+    }
   }
 }

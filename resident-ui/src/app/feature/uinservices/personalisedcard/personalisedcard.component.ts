@@ -78,31 +78,11 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   }
 
   captureCheckboxValue($event:any, data:any,data2:any){
-    console.log(data)
-    console.log(data2)
     this.buildHTML = ""; 
     let row = "";
     let rowImage ="";
+    console.log(this.dataDisplay)
     
-    // if(data2 !== undefined){
-    //     console.log("hello")
-    // }else{
-    //   if(data.attributeName.toString() in this.dataDisplay){
-    //     delete this.dataDisplay[data.attributeName];
-    //   }else{
-    //     let value = "";
-    //     if (typeof this.userInfo[data.attributeName] === "string") {        
-    //       value = this.userInfo[data.attributeName];
-    //     }else{
-    //       value = this.userInfo[data.attributeName][0].value;
-    //     }
-    //     if(data.attributeName === "photo"){
-    //       this.dataDisplay[data.attributeName] = {"label":"", "value": value};
-    //     }else{
-    //     this.dataDisplay[data.attributeName] = {"label":data.label[this.langCode], "value": value};
-    //     }
-    //   }  
-    // }
     if(data.attributeName.toString() in this.dataDisplay){
       delete this.dataDisplay[data.attributeName];
     }else{

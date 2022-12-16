@@ -10,7 +10,10 @@
       <form #basicForm="ngForm" (submit)="submitUserID(basicForm.value)">
         <div class="uin-login-title-card">
           <mat-card-subtitle class="login-Input-heading" *ngIf="getUinData.title">{{getUinData.title | translate}}</mat-card-subtitle>
-          <!-- <img alt="info-icon" class="info-icon" src="./assets/images/info_black_24dp (1).png" /> -->
+          <span (click)="openPopup(); preventCloseOnClick()"><img alt="info-icon" class="info-icon" src="./assets/images/info_black_24dp (1).png" /></span>
+        </div>
+        <div *ngIf="infoPopUpShow" class="info-box">
+          <p>{{infoText}}</p>
         </div>
         <input id="aidValue" class="input-text" type="text" ngModel name="AID" />
         <br />
