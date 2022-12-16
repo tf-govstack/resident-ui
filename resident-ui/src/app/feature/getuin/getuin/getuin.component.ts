@@ -43,6 +43,8 @@ export class GetuinComponent implements OnInit {
           this.infoPopUpShow = false
        }
        this.infoIconClicked = false
+       console.log(this.infoPopUpShow+"Icon")
+       console.log(this.infoIconClicked+"outer")
     })
   }
 
@@ -143,10 +145,14 @@ export class GetuinComponent implements OnInit {
 
   openPopup(){
     this.infoPopUpShow = !this.infoPopUpShow
+    console.log(this.infoPopUpShow+"Icon")
+    console.log(this.infoIconClicked+"outer")
   }
 
   preventCloseOnClick(){
      this.infoIconClicked = true
+     console.log(this.infoPopUpShow+"Icon")
+     console.log(this.infoIconClicked+"outer")
   }
 
 }

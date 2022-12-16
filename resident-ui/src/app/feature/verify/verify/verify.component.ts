@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy,Renderer2 } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormControl, Validators } from '@angular/forms';
 import { TranslateService } from "@ngx-translate/core";
@@ -42,6 +42,9 @@ export class VerifyComponent implements OnInit, OnDestroy {
   errorCode: any;
   channelType: string;
   disableSendOtp: boolean = false
+  isPopUpShow:boolean = false;
+  isIconClicked:boolean = false;
+  infoText:string;
 
 
   constructor(
@@ -50,9 +53,16 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private appConfigService: AppConfigService,
     private dialog: MatDialog,
+    private renderer: Renderer2
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
-
+    this.renderer.listen("window","click",(e:Event) =>{
+       if(!this.isIconClicked){
+         this.isPopUpShow = false
+       }
+      // this.isIconClicked = false
+     
+    })
   }
 
   ngOnInit() {
@@ -60,6 +70,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
         this.popupMessages = response;
+        this.infoText = response.InfomationContent.verifyChannel
       });
     this.loadRecaptchaSiteKey();
     /*this.captchaService.captchStatus.subscribe((status)=>{
@@ -311,5 +322,14 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   }
+  
+  openPopUp(){
+    this.isPopUpShow = !this.isPopUpShow
+   
+  }
 
+  preventCloseOnClickd(){
+     this.isIconClicked = true
+     
+  }
 }
