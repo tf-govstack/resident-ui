@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,Renderer2 } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
@@ -36,9 +36,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   showInfoCard:boolean = false;
   iIconVidType:any;
   infoText:any;
-  iconBtnClick:boolean = false;
 
-  constructor(private renderer: Renderer2,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "createVId") {
         this.generateVID(this.newVidType)
@@ -48,12 +47,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
     })
 
-    this.renderer.listen('window', 'click', (e: Event) => {
-      if (!this.iconBtnClick) {
-        this.showInfoCard = false;
-      }
-      this.iconBtnClick = false;
-    });
+    
   }
 
   async ngOnInit() {
@@ -300,8 +294,5 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     this.iIconVidType = vidType
     this.infoText =this.popupMessages.InfomationContent.revokevid[vidType]
   }
-  
-  preventCloseOnClick() {
-    this.iconBtnClick = true;
-  }
+
 }

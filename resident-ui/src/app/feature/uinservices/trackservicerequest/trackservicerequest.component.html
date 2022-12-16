@@ -16,7 +16,7 @@
 			<tr>
 				<td style="padding: 10px;">
 					<label class="label-card">{{'trackservicerequest.searchLabel' | translate}}<span style="color: #FF0000; margin-bottom:8px;">*</span>
-						<mat-icon  (click)="openPopupMsg(); preventCloseOnClick()" class="info-icon" matTooltip="">info</mat-icon>
+						<mat-icon  (mouseover)="openPopupMsg()" (mouseout)="openPopupMsg()" class="info-icon" matTooltip="">info</mat-icon>
 					</label>
 					<div *ngIf="isPopUpShow" class="info-box">
 						<p style="margin-top: 0px;">{{infoText}}</p>

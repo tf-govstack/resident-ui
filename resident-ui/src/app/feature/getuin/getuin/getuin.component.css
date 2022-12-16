@@ -119,9 +119,7 @@
     padding: 8px 12px 8px 12px;
     position: absolute ;
     background-color: #ffffff;
-    /* top: -20px; */
-    left: 29.8rem; 
-    /* display: inline-block; */
+    left: 51%;
     z-index: 2;
     transform: translate3d(0, -50%, 0);
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);

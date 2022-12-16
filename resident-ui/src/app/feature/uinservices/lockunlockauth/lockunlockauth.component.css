@@ -79,16 +79,14 @@ mat-card-header,
 }
 
 .info-box{
-  /* margin-top: 90%; */
+  margin-bottom: 12px;
   min-height: 100px;
-  width: 160px;
+  width: 200px;
   border-radius: 8px;
   padding: 8px 12px 8px 12px;
-  position: absolute ;
+  position: absolute !important;
   background-color: #ffffff;
-  /* top: -20px; */
   left: 180px; 
-  /* display: inline-block; */
   z-index: 2;
   transform: translate3d(0, -50%, 0);
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);

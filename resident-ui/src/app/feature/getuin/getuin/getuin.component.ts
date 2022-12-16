@@ -1,4 +1,4 @@
-import { Component, OnInit,Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { TranslateService } from "@ngx-translate/core";
@@ -26,7 +26,6 @@ export class GetuinComponent implements OnInit {
   message:string = "";
   popupMessages:any;
   infoPopUpShow:boolean = false;
-  infoIconClicked:boolean = false;
   infoText:string;
 
   constructor(
@@ -34,18 +33,10 @@ export class GetuinComponent implements OnInit {
     private translateService: TranslateService,
     private dataStorageService: DataStorageService,
     private appConfigService: AppConfigService,
-    private dialog: MatDialog,
-    private renderer: Renderer2,
+    private dialog: MatDialog
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
-    this.renderer.listen("window","click",(e:Event) =>{
-       if(!this.infoIconClicked){
-          this.infoPopUpShow = false
-       }
-       this.infoIconClicked = false
-       console.log(this.infoPopUpShow+"Icon")
-       console.log(this.infoIconClicked+"outer")
-    })
+    
   }
 
   ngOnInit() {
@@ -145,14 +136,6 @@ export class GetuinComponent implements OnInit {
 
   openPopup(){
     this.infoPopUpShow = !this.infoPopUpShow
-    console.log(this.infoPopUpShow+"Icon")
-    console.log(this.infoIconClicked+"outer")
-  }
-
-  preventCloseOnClick(){
-     this.infoIconClicked = true
-     console.log(this.infoPopUpShow+"Icon")
-     console.log(this.infoIconClicked+"outer")
   }
 
 }

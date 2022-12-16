@@ -11,8 +11,7 @@
 				<td style="width:100%">	
 					<div style="margin-bottom: .8rem; margin-top: .3rem;">				 
 				    <span class="title-card">{{policy.vidType}} 
-						<mat-icon  (click)="openPopupMsg(policy.vidType);preventCloseOnClick()" style="color: green;font-size: 18px; cursor: pointer;" matTooltip="">info</mat-icon>
-						
+						<mat-icon  (mouseover)="openPopupMsg(policy.vidType)" (mouseout)="openPopupMsg()" style="color: green;font-size: 18px; cursor: pointer;" matTooltip="">info</mat-icon>
 						<div *ngIf="showInfoCard && (iIconVidType===policy.vidType)" class="info-box">
 							<p style="margin-top: 0px;">{{infoText}}</p>
 						</div>

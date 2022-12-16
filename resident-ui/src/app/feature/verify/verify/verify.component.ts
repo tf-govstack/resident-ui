@@ -43,7 +43,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
   channelType: string;
   disableSendOtp: boolean = false
   isPopUpShow:boolean = false;
-  isIconClicked:boolean = false;
   infoText:string;
 
 
@@ -56,13 +55,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private renderer: Renderer2
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
-    this.renderer.listen("window","click",(e:Event) =>{
-       if(!this.isIconClicked){
-         this.isPopUpShow = false
-       }
-      // this.isIconClicked = false
-     
-    })
   }
 
   ngOnInit() {
@@ -325,11 +317,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   
   openPopUp(){
     this.isPopUpShow = !this.isPopUpShow
-   
   }
 
-  preventCloseOnClickd(){
-     this.isIconClicked = true
-     
-  }
+ 
 }

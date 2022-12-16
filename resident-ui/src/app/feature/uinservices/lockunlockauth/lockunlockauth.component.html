@@ -2,28 +2,28 @@
 	<a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<span class="active">{{'lockunlockauth.title' | translate}}</span>
 </span>
 
-<div class="main-div" *ngIf="langJSON">
+<div class="main-div" *ngIf="langJSON" (click)="closePopup()">
 	<mat-card>
 		<h3 class="main-heading">{{'lockunlockauth.title' | translate}}</h3>
 		<p class="intro-description">{{'lockunlockauth.introDescription' | translate}}</p>
 		<mat-grid-list cols="3" rowHeight="2:1" gutterSize="10px" *ngIf="authlist">
 			<mat-grid-tile *ngFor="let authInfo of authlist; let i = index">
-				<mat-card id="setAuthlockStatus{{i}}"  [ngClass]="authInfo.recorddirty == false ? 'mini-card' : 'mini-card-yellow'" >
+				<mat-card (click)="setAuthlockStatus(authInfo)" id="setAuthlockStatus{{i}}"  [ngClass]="authInfo.recorddirty == false ? 'mini-card' : 'mini-card-yellow'" >
 				  <mat-card-header>			  	
 				    <mat-card-title><span><img src="assets\{{authInfo.label}}.png"></span>&nbsp;&nbsp;&nbsp;<span style="font-size: 14px;font-weight: 800;">{{authInfo.label}}</span></mat-card-title>	
-					<mat-icon (click)="openPopUp(authInfo.label);preventCloseOnClick()" class="info-icon">info</mat-icon> 
+					<mat-icon (mouseover)="openPopUp(authInfo.label)" class="info-icon">info</mat-icon> 
 					<div [style.margin-top]="popupMargin" *ngIf="isPopupSHow && clickedId === (authInfo.label)" class="info-box">
 						<p style="margin-top: 0px;">{{infoMsg}}</p>
-						<p (click)="showFullInfo(authInfo.label)" class="read-more-btn">{{readText}}</p>
-					</div> 
+						<p (mouseover)="showFullInfo(authInfo.label)" class="read-more-btn">{{readText}}</p>
+					</div>
 				  </mat-card-header>
 				  <mat-card-content>
 				    <p *ngIf="authInfo.locked"><img mat-card-sm-image src="assets\images\lock.png" ></p>
 				    <p *ngIf="!authInfo.locked"><img mat-card-sm-image src="assets\images\unlock.png" ></p>
 				  </mat-card-content>
 				  <mat-card-actions>
-				    <button style="margin-left: 1.5rem;" (click)="setAuthlockStatus(authInfo)" *ngIf="authInfo.locked" mat-stroked-button color="primary">{{'lockunlockauth.unlockLabel' | translate}}</button>
-				    <button style="margin-left: 1.5rem;" (click)="setAuthlockStatus(authInfo)"  *ngIf="!authInfo.locked" mat-stroked-button color="primary">{{'lockunlockauth.lockLabel' | translate}}</button>
+				    <button style="margin-left: 1.5rem;" *ngIf="authInfo.locked" mat-stroked-button color="primary">{{'lockunlockauth.unlockLabel' | translate}}</button>
+				    <button style="margin-left: 1.5rem;"  *ngIf="!authInfo.locked" mat-stroked-button color="primary">{{'lockunlockauth.lockLabel' | translate}}</button>
 				  </mat-card-actions>
 				</mat-card>
 			</mat-grid-tile>		  
