@@ -146,7 +146,7 @@ export class AutoLogoutService {
     this.popUpPostLogOut();
     this.router.navigate(["dashboard"])
     // this.dataStorageService.onLogout().subscribe();
-    // this.logoutService.logout()
+    this.logoutService.logout()
     // this.authService.onLogout();
   }
 

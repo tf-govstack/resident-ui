@@ -112,3 +112,7 @@ mat-icon.mat-card-avatar {
   display: flex;
   align-items: center;
 }
+
+.display-description{
+ margin-left: 13px;
+}

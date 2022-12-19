@@ -23,7 +23,7 @@
         <button mat-menu-item (click)="onlanguagechange(item)" *ngFor="let item of selectLanguagesArr">{{item.value}}</button>
       </mat-menu>
 
-      <mat-list-item>
+      <mat-list-item *ngIf="fullName">
         <button mat-menu-item [matMenuTriggerFor]="notificationMenu" (click)="loadNotificationData()"  >
           <mat-icon style="margin-right: 0px;color: white;" matBadge="{{notificationCount}}" matBadgeColor="warn" matBadgeSize="small"  *ngIf="notificationCount">notifications</mat-icon>
           <mat-icon style="margin-right: 0px;color: white;" *ngIf="!notificationCount">notifications</mat-icon>
