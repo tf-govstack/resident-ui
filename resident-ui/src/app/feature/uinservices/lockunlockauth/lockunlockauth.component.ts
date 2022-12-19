@@ -28,8 +28,6 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   infoMsg:string;
   shortInfoMsg:any;
   isShowMore:boolean = false;
-  readText:string;
-  popupMargin:any;
 
   constructor(private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
     private router: Router) {
@@ -218,26 +216,8 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
 
   openPopUp(clickedId:any){
     this.clickedId = clickedId;
-    this.isPopupSHow = true;
-    this.infoMsg =  this.popupMessages.InfomationContent.secureMyID[clickedId].split(".")[0]+"."
-    this.popupMargin = "67%"
-    this.readText = this.popupMessages.InfomationContent.readMoreLabel
+    this.isPopupSHow = !this.isPopupSHow;
+    this.infoMsg =  this.popupMessages.InfomationContent.secureMyID[clickedId]
   }
 
-  closePopup(){
-    this.isPopupSHow = false;
-  }
-
-  showFullInfo(clickedId:any){
-    this.isShowMore = !this.isShowMore
-    if(this.isShowMore){
-      this.readText = this.popupMessages.InfomationContent.readLessLabel
-      this.infoMsg = this.popupMessages.InfomationContent.secureMyID[clickedId]
-      this.popupMargin = "90%"
-    }else{
-      this.readText = this.popupMessages.InfomationContent.readMoreLabel
-      this.infoMsg = this.popupMessages.InfomationContent.secureMyID[clickedId].split(".")[0]+"."
-      this.popupMargin = "67%"
-    }
-  }
 }

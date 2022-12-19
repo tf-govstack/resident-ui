@@ -2,7 +2,7 @@
 	<a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<span class="active">{{'lockunlockauth.title' | translate}}</span>
 </span>
 
-<div class="main-div" *ngIf="langJSON" (click)="closePopup()">
+<div class="main-div" *ngIf="langJSON">
 	<mat-card>
 		<h3 class="main-heading">{{'lockunlockauth.title' | translate}}</h3>
 		<p class="intro-description">{{'lockunlockauth.introDescription' | translate}}</p>
@@ -11,10 +11,10 @@
 				<mat-card (click)="setAuthlockStatus(authInfo)" id="setAuthlockStatus{{i}}"  [ngClass]="authInfo.recorddirty == false ? 'mini-card' : 'mini-card-yellow'" >
 				  <mat-card-header>			  	
 				    <mat-card-title><span><img src="assets\{{authInfo.label}}.png"></span>&nbsp;&nbsp;&nbsp;<span style="font-size: 14px;font-weight: 800;">{{authInfo.label}}</span></mat-card-title>	
-					<mat-icon (mouseover)="openPopUp(authInfo.label)" class="info-icon">info</mat-icon> 
-					<div [style.margin-top]="popupMargin" *ngIf="isPopupSHow && clickedId === (authInfo.label)" class="info-box">
+					<mat-icon (mouseover)="openPopUp(authInfo.label)" (mouseout)="openPopUp(authInfo.label)" class="info-icon">info</mat-icon> 
+					<div *ngIf="isPopupSHow && clickedId === (authInfo.label)" class="info-box">
 						<p style="margin-top: 0px;">{{infoMsg}}</p>
-						<p (mouseover)="showFullInfo(authInfo.label)" class="read-more-btn">{{readText}}</p>
+						<p class="read-more-btn">{{readText}}</p>
 					</div>
 				  </mat-card-header>
 				  <mat-card-content>

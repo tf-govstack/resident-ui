@@ -50,6 +50,13 @@
                     "route": "uinservices/sharewithpartner",
                     "description": "This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself.",
                     "auditEventId": "ADM-004"
+                },
+                {
+                    "displayName": "Update Demographic Data",
+                    "icon": "assets/images/updatedemographic.png",
+                    "route": "uinservices/updatedemographic",
+                    "description": "This service can be used to update the already existing data associated with the UIN/VID of the logged-in user. The data that can be updated includes name, gender, DOB,  address, documents uploaded, phone number, email Id, preferred language etc.",
+                    "auditEventId": "ADM-004"
                 }
             ]
         },
@@ -172,6 +179,9 @@
         "noResult_found": "No results Found",
         "lunch_hours": "Lunch"
     },
+    "grievanceRedressal":{
+        "title":"Grievance Redressal Form"
+    },
     "verifyuinvid": {
         "title": "",
         "mobileno": "Verify mobile number",
@@ -271,7 +281,7 @@
             "otp-email": "Email OTP Authentication",
             "otp-phone": "Mobile OTP Authentication"
         },
-        "introDescription": "In secure my Id, you can view the status of all the authentication types. You can lock or unlock various authentication types.",
+        "introDescription": "In secure my Id, you can view the status of all the authentication types. You can lock or unlock various authentication types. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
         "unlockLabel": "Unlock",
         "lockLabel": "Lock"
     },
@@ -415,12 +425,12 @@
             "OneTimeUse":"A one-time VID has no expiry date but only one transaction can be performed using this VID. One UIN can be associated with only one one-time VID at a time."
          },
          "secureMyID":{
-            "Email OTP Authentication":"On locking/unlocking 'Email OTP Authentication', any authentication attempt made using an email OTP will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
-            "Mobile OTP Authentication":"On locking/unlocking 'Mobile OTP Authentication', any authentication attempt made using a mobile OTP will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
-            "Demographic Authentication":"On locking/unlocking 'Demographic Authentication', any authentication attempt made using demographic details (name, age, address, or any combination of those) will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
-            "Fingerprint Authentication":"On locking/unlocking 'Fingerprint Authentication', any authentication attempt made using a fingerprint will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
-            "Iris Authentication":"On locking/unlocking 'Iris Authentication', any authentication attempt made using an iris will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services.",
-            "Face Authentication":"On locking/unlocking 'Face Authentication', any authentication attempt made using face will be disabled/enabled. Caution needs to be taken when using this service as it might lead to the denial of authentication services."
+            "Email OTP Authentication":"On locking/unlocking 'Email OTP Authentication', any authentication attempt made using an email OTP will be disabled/enabled.",
+            "Mobile OTP Authentication":"On locking/unlocking 'Mobile OTP Authentication', any authentication attempt made using a mobile OTP will be disabled/enabled.",
+            "Demographic Authentication":"On locking/unlocking 'Demographic Authentication', any authentication attempt made using demographic details (name, age, address, or any combination of those) will be disabled/enabled.",
+            "Fingerprint Authentication":"On locking/unlocking 'Fingerprint Authentication', any authentication attempt made using a fingerprint will be disabled/enabled.",
+            "Iris Authentication":"On locking/unlocking 'Iris Authentication', any authentication attempt made using an iris will be disabled/enabled.",
+            "Face Authentication":"On locking/unlocking 'Face Authentication', any authentication attempt made using face will be disabled/enabled."
          },
          "trackStatus":"Please enter the EID (Event Id) associated with the event that you want to track. It is important that the EID you enter is associated with the logged-in UIN.",
          "getUin":"An AID is your 16-digit Application ID which was provided to you after registration. A UIN is your 10-digit Unique Identity Number. A VID is your 16-digit Virtual ID.",

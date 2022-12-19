@@ -1,0 +1,26 @@
+.main-container{
+    padding: 0 6rem;
+    height: 90%;
+}
+.form-container{
+    padding: 2rem;
+    background-color: #cac5c51a;
+    border-radius: 10px;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px;
+}
+.form{
+    height: 100%;
+    width: 70%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1rem 2.5rem ;
+}
+.main-heading{
+    color: #707070;
+    text-align: center;
+    font-size: 1.3rem;
+}
