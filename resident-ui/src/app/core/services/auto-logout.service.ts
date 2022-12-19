@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 import { ConfigService } from 'src/app/core/services/config.service';
 import * as appConstants from 'src/app/app.constants';
 import { DataStorageService } from './data-storage.service';
+import { Router } from "@angular/router";
+import { LogoutService } from './logout.service';
 
 /**
  * @description This class is responsible for auto logging out user when he is inactive for a
@@ -27,9 +29,9 @@ export class AutoLogoutService {
   languagelabels: any;
   langCode = localStorage.getItem('langCode');
 
-  idle: number;
-  timeout: number;
-  ping: number;
+  idle: number = 180;
+  timeout: number = 60;
+  ping: number = 30;
   dialogref;
   dialogreflogout;
 
@@ -37,8 +39,12 @@ export class AutoLogoutService {
     private userIdle: UserIdleService,
     private dialog: MatDialog,
     private configservice: ConfigService,
-    private dataStorageService: DataStorageService
-  ) {}
+    private dataStorageService: DataStorageService,
+    private router: Router,
+    private logoutService: LogoutService
+  ) {  
+   
+  }
 
   /**
    * @description This method gets value of idle,timeout and ping parameter from config file.
@@ -46,27 +52,27 @@ export class AutoLogoutService {
    * @returns void
    * @memberof AutoLogoutService
    */
-  getValues(langCode) {
-    (this.idle = Number(
-      this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_preregistration_auto_logout_idle)
-    )),
-      (this.timeout = Number(
-        this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_preregistration_auto_logout_timeout)
-      )),
-      (this.ping = Number(
-        this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_preregistration_auto_logout_ping)
-      ));
 
-      this.dataStorageService
+  getValues(langCode) {
+    // (this.idle = Number(
+    //   this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_preregistration_auto_logout_idle)
+    // )),
+    //   (this.timeout = Number(
+    //     this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_preregistration_auto_logout_timeout)
+    //   )),
+    //   (this.ping = Number(
+    //     this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_preregistration_auto_logout_ping)
+    //   ));
+    this.dataStorageService
       .getI18NLanguageFiles(langCode)
       .subscribe((response) => {
         this.languagelabels = response['autologout'];
       });
-    
   }
 
   setisActive(value: boolean) {
     this.isActive = value;
+    
   }
   getisActive() {
     return this.isActive;
@@ -100,7 +106,6 @@ export class AutoLogoutService {
   public keepWatching() {
     this.userIdle.startWatching();
     this.changeMessage({ timerFired: true });
-
     this.userIdle.onTimerStart().subscribe(
       res => {
         if (res == 1) {
@@ -112,12 +117,12 @@ export class AutoLogoutService {
           }
         }
       },
-      () => {},
-      () => {}
+      () => { },
+      () => { }
     );
 
     this.userIdle.onTimeout().subscribe(() => {
-      if (!this.isActive) {
+      if (this.isActive) {
         this.onLogOut();
       } else {
         this.userIdle.resetTimer();
@@ -139,7 +144,10 @@ export class AutoLogoutService {
     this.dialog.closeAll();
     this.userIdle.stopWatching();
     this.popUpPostLogOut();
-    //this.authService.onLogout();
+    this.router.navigate(["dashboard"])
+    // this.dataStorageService.onLogout().subscribe();
+    // this.logoutService.logout()
+    // this.authService.onLogout();
   }
 
   /**
@@ -147,24 +155,35 @@ export class AutoLogoutService {
    * @memberof AutoLogoutService
    */
 
+  // showErrorPopup(message: string) {
+  //   this.dialog
+  //     .open(DialogComponent, {
+  //       width: '850px',
+  //       data: {
+  //         case: 'MESSAGE',
+  //         title: this.popupMessages.genericmessage.errorLabel,
+  //         message: message,
+  //         btnTxt: this.popupMessages.genericmessage.successButton
+  //       },
+  //       disableClose: true
+  //     });
+  // }
   openPopUp() {
-    const data = {
-      case: 'POPUP',
-      content: this.languagelabels.preview   
-    };
     this.dialogref = this.dialog.open(DialogComponent, {
       width: '400px',
-      data: data
+      data: {
+        case: 'POPUP',
+        message: this.languagelabels.preview
+      }
     });
   }
   popUpPostLogOut() {
-    const data = {
-      case: 'POSTLOGOUT',
-      contentLogout: this.languagelabels.post
-    };
     this.dialogreflogout = this.dialog.open(DialogComponent, {
       width: '400px',
-      data: data
+      data: {
+        case: 'POPUP',
+        message: this.languagelabels.post
+      }
     });
   }
 }

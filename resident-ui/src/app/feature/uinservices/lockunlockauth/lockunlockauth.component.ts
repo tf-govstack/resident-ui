@@ -23,7 +23,15 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   vidType:string = "";
   notificationType:Array<string>=[];
   vidValue:string = "";
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  clickedId:string;
+  isPopupSHow:boolean = false;
+  infoMsg:string;
+  shortInfoMsg:any;
+  isShowMore:boolean = false;
+
+  constructor(private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
+    private router: Router) {
+    }
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
@@ -139,7 +147,6 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
         "authTypes": this.authlist
       }
     };
-    console.log(request)
     this.dataStorageService.updateAuthlockStatus(request).subscribe(response => {
       console.log(response)
         if(!response["errors"]){
@@ -206,7 +213,11 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   onItemSelected(item: any) {
       this.router.navigate([item]);
   }
-  openPopUp(){
-    console.log("hello")
+
+  openPopUp(clickedId:any){
+    this.clickedId = clickedId;
+    this.isPopupSHow = !this.isPopupSHow;
+    this.infoMsg =  this.popupMessages.InfomationContent.secureMyID[clickedId]
   }
+
 }

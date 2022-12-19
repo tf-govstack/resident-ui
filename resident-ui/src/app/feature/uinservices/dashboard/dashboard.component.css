@@ -9,7 +9,7 @@ li {
   height: 100%;
   border-radius: 13px 13px 5px 5px;
   margin-bottom: .5rem;
-  padding: 1rem;
+  padding: .5rem;
 }
 
 mat-card>span img {

@@ -2,7 +2,9 @@
   padding: 30px;
 }
 
-
+.main-div{
+  height: 100%;
+}
 .mat-card-subtitle {
   cursor: pointer;
   text-align: left;

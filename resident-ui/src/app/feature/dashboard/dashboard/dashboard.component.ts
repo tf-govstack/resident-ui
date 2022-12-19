@@ -5,6 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { DataStorageService } from "src/app/core/services/data-storage.service";
 import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-dashboard",
@@ -13,6 +14,9 @@ import Utils from 'src/app/app.utils';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   menuItems:any;
+  message:any;
+  subscriptions: Subscription[] = [];
+
   userPreferredLangCode = localStorage.getItem("langCode");
   constructor(
     private router: Router,
@@ -33,7 +37,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    console.log(item)
     if(item === "redirect"){
       window.open(this.appConfigService.getConfig()["mosip-prereg-ui-url"], "_blank");
     }else if(item === "UIN Services"){

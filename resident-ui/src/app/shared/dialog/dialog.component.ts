@@ -97,6 +97,7 @@ export class DialogComponent implements OnInit {
 
   async ngOnInit() {
     this.input = this.data;
+   
   }
 
   onNoClick(): void {
@@ -109,8 +110,7 @@ export class DialogComponent implements OnInit {
   }
 
   agreeConditions(){
-      this.isChecked = !this.isChecked
-      console.log(this.isChecked)
+    this.isChecked = !this.isChecked
   }
 
   shareInfoBtn():void{

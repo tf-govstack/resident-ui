@@ -48,7 +48,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   locationCodes = [];
   // MatPaginator Inputs
   totalItems = 0;
-  defaultPageSize = 10;
+  defaultPageSize = 5;
   pageSize = this.defaultPageSize;
   pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 15, 20];

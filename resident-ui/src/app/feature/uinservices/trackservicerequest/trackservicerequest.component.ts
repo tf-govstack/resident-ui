@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy,Renderer2 } from "@angular/core";
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
@@ -8,7 +8,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
-​
+
 @Component({
   selector: "app-trackservicerequest",
   templateUrl: "trackservicerequest.component.html",
@@ -22,32 +22,42 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   eidStatus:any;
   message:string;
   errorCode:string;
-​
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute) {}
-​
+  isPopUpShow:boolean = false;
+  iconBtnClicked:boolean = false;
+  infoText:string;
+
+  constructor(private renderer:Renderer2 ,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute) {
+    this.renderer.listen('window','click',(e:Event) =>{
+       if(!this.iconBtnClicked){
+          this.isPopUpShow = false
+       }
+       this.iconBtnClicked = false
+    })
+  }
+
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
-​
+
     this.route.queryParams
       .subscribe(params => {
         this.eidVal = params.eid;
         this.getEIDStatus();
       }
     );  
-​
+
     this.translateService
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
       this.langJSON = response;
       this.popupMessages = response;
+      this.infoText = response.InfomationContent.trackStatus
     }); 
   }
-​
+
   captureValue(event: any, formControlName: string) {
     this[formControlName] = event.target.value;
   }
 
-​
   getEIDStatus(){
     if(this.eidVal){
     this.dataStorageService
@@ -63,7 +73,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
     });
   }
   }
-​
+
   downloadAcknowledgement(){
     this.dataStorageService
     .downloadAcknowledgement(this.eidVal)
@@ -83,7 +93,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
       console.error(err);
     });
   }
-​
+
   showMessage(message: string) {    
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '850px',
@@ -96,7 +106,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
     });
     return dialogRef;
   }
-​
+
   showErrorPopup(message: string) {
     this.errorCode = message[0]["errorCode"]
     this.message = this.popupMessages.serverErrors[this.errorCode]
@@ -112,12 +122,19 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
         disableClose: true
       });
   }
-​
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
-​
+
   onItemSelected(item: any) {
     this.router.navigate([item]);
+  }
+
+  openPopupMsg(){
+    this.isPopUpShow = !this.isPopUpShow
+  }
+  preventCloseOnClick(){
+    this.iconBtnClicked = true
   }
 }
