@@ -72,7 +72,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    console.log("item>>>" + item);
     this.router.navigate([item]);
   }
 }

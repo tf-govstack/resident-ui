@@ -2,6 +2,7 @@
     "menuItems": [
         {
             "displayName": "UIN Services",
+            "displaydescription":"Click here to log in to avail the following services.",
             "icon": "./assets/icons/iconfont/uin_services.svg",
             "activeIcon": "./assets/images/UIN Services.png",
             "route": "",
@@ -70,13 +71,13 @@
             "rows": 1,
             "subMenus": [
                 {
-                    "displayName": "Search Registration Center",
+                    "displayName": "Click here to search for registration centers",
                     "icon": "",
                     "route": "regcenter",
                     "auditEventId": "ADM-004"
                 },
                 {
-                    "displayName": "Acceptable Documents",
+                    "displayName": "Click here to search for supporting documents",
                     "icon": "",
                     "route": "document",
                     "auditEventId": "ADM-004"
@@ -93,19 +94,7 @@
             "rows": 1,
             "subMenus": [
                 {
-                    "displayName": "Pre-registration",
-                    "icon": "",
-                    "route": "redirect",
-                    "auditEventId": "ADM-004"
-                },
-                {
-                    "displayName": "Retrieving lost UIN",
-                    "icon": "",
-                    "route": "redirect",
-                    "auditEventId": "ADM-004"
-                },
-                {
-                    "displayName": "Booking an appointment",
+                    "displayName": "Click here for new enrolment",
                     "icon": "",
                     "route": "redirect",
                     "auditEventId": "ADM-004"
@@ -119,7 +108,12 @@
             "route": "getuin",
             "auditEventId": "ADM-004",
             "cols": 1,
-            "rows": 1
+            "rows": 1,
+            "subMenus": [
+                {
+                    "displayName": "Click here to download your UIN card or to know the status of your UIN"
+                }
+            ]
         },
         {
             "displayName": "Verify Phone Number / Email ID",
@@ -128,7 +122,12 @@
             "route": "verify",
             "auditEventId": "ADM-004",
             "cols": 1,
-            "rows": 1
+            "rows": 1,
+            "subMenus": [
+                {
+                    "displayName": "Click here to verify your email Id or phone number"
+                }
+            ]
         }
     ],
     "dashboard": {
