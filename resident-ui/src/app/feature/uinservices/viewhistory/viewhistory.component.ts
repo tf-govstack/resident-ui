@@ -136,11 +136,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   reportDetails(data:any){
-    let URL = this.appConfigService.getConfig()["mosip.resident.grievance.url"];
-    if(URL){
-      URL = URL.replace("{name}", this.headerService.getUsername()).replace("{email}", this.headerService.getEmailId()).replace("{phone}", this.headerService.getPhoneNumber()).replace("{eventId}", data.eventId);
-      window.open(URL, '_blank');
-    }    
+    this.router.navigate(["grievanceRedressal"],{state:{eventId:data.eventId}})
   }
 
   search(){    

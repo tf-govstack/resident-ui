@@ -2,7 +2,9 @@
   padding: 30px;
 }
 
-
+.main-div{
+  height: 100%;
+}
 .mat-card-subtitle {
   cursor: pointer;
   text-align: left;
@@ -109,4 +111,8 @@ mat-icon.mat-card-avatar {
 .title{
   display: flex;
   align-items: center;
+}
+
+.display-description{
+ margin-left: 13px;
 }

@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { BookappointmentRoutingModule } from './bookappointment-routing.module';
-import { BookappointmentComponent } from './bookappointment/bookappointment.component';
+import { DownloadUinRoutingModule } from './downloaduin-routing.module';
+import { DownloadUinComponent } from './downloaduin/downloaduin.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { I18nModule } from 'src/app/i18n.module';
 
 
 @NgModule({
-  declarations: [BookappointmentComponent],
+  declarations: [DownloadUinComponent],
   imports: [
     CommonModule,
-    BookappointmentRoutingModule,
+    DownloadUinRoutingModule,
     SharedModule,
     I18nModule
   ]
 })
-export class BookappointmentModule { }
+export class DownloadUinModule { }

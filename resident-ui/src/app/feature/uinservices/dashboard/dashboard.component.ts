@@ -3,6 +3,7 @@ import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
+import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
 
 @Component({
   selector: "app-uindashboard",
@@ -13,7 +14,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   menuItems: any;
   subscriptions: Subscription[] = [];
   rowHeight: any = "180px"
-  constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) { }
+  message:any;
+
+  userPreferredLangCode = localStorage.getItem("langCode");
+
+  constructor(private autoLogout: AutoLogoutService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) { }
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
@@ -31,6 +36,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.rowHeight = "200px"
     }else{
       this.rowHeight = "180px"
+    }
+
+    const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
+      (message) => (this.message = message) //message =  {"timerFired":false}
+    );
+
+    this.subscriptions.push(subs);
+    if (!this.message["timerFired"]) {
+      this.autoLogout.getValues(this.userPreferredLangCode);
+      this.autoLogout.setValues();
+      this.autoLogout.keepWatching();
+    } else {
+      console.log(this.message["timerFired"])
+      this.autoLogout.getValues(this.userPreferredLangCode);
+      this.autoLogout.continueWatching();
     }
   }
 
@@ -52,7 +72,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    console.log("item>>>" + item);
     this.router.navigate([item]);
   }
 }

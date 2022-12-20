@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { ThrowStmt } from "@angular/compiler";
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: "app-revokevid",
@@ -32,6 +33,9 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   newVidValue:string;
   rowHeight:string = "2:1.2";
   cols:number = 4;
+  showInfoCard:boolean = false;
+  iIconVidType:any;
+  infoText:any;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -42,6 +46,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       }
 
     })
+
+    
   }
 
   async ngOnInit() {
@@ -86,6 +92,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
           }
           // console.log("this.policyType.vidPolicies[i].vidType>>>"+this.policyType.vidPolicies[i].vidType);
           self.finalTypeList[this.policyType.vidPolicies[i].vidType] = results;
+          console.log(this.finalTypeList)
           console.log(this.finalTypeList)
         }
       }
@@ -160,7 +167,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         }, 300);
         this.showMessage(this.message.replace("$eventId", response["response"].vid),response["response"].vid);
       } else {
-        this.showErrorPopup(response["errors"][0].message);
+        this.showErrorPopup(response["errors"][0].errorCode);
       }
     });
   }
@@ -190,7 +197,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         }, 300);
         this.showMessage(this.message ,vidValue);
       } else {
-        this.showErrorPopup(response["errors"][0].message);
+        this.showErrorPopup(response["errors"][0].errorCode);
       }
     },
       error => {
@@ -256,13 +263,14 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   showErrorPopup(message: string) {
+    this.message = this.popupMessages.serverErrors[message]
     this.dialog
       .open(DialogComponent, {
         width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
-          message: message,
+          message: this.message,
           btnTxt: this.popupMessages.genericmessage.successButton
         },
         disableClose: true
@@ -281,7 +289,10 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     this.router.navigate([item]);
   }
 
-  openPopupMsg(){
-    console.log("hello")
+  openPopupMsg(vidType:any){
+    this.showInfoCard = true
+    this.iIconVidType = vidType
+    this.infoText =this.popupMessages.InfomationContent.revokevid[vidType]
   }
+
 }

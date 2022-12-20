@@ -18,8 +18,11 @@
         </mat-button-toggle>
       </div>
       <label for="uin">{{'verifyuinvid.uid' | translate }}
-        <!-- <mat-icon style="color: green;font-size: 18px;">info</mat-icon> -->
+        <mat-icon class="info-icon" (mouseover)="openPopUp();" (mouseout)="openPopUp()" style="color: green;font-size: 18px; cursor: pointer;">info</mat-icon>
       </label>
+      <div *ngIf="isPopUpShow" class="info-box">
+        <p>{{infoText}}</p>
+      </div>
       <input id="uidValue" type="text" id="uin" name="uin" (blur)="captureValue($event, 'individualId')" value={{individualId}}
         placeholder="{{'verifyuinvid.uid' | translate}}" />
       &nbsp;

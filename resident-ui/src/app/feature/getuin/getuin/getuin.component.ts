@@ -25,15 +25,18 @@ export class GetuinComponent implements OnInit {
   errorCode:string;
   message:string = "";
   popupMessages:any;
+  infoPopUpShow:boolean = false;
+  infoText:string;
 
   constructor(
     private router: Router,
     private translateService: TranslateService,
     private dataStorageService: DataStorageService,
     private appConfigService: AppConfigService,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {
-    this.translateService.use(localStorage.getItem("langCode")); 
+    this.translateService.use(localStorage.getItem("langCode"));
+    
   }
 
   ngOnInit() {
@@ -43,6 +46,7 @@ export class GetuinComponent implements OnInit {
       .subscribe(response => {
         this.getUinData = response.uinservices
         this.popupMessages = response
+        this.infoText = response.InfomationContent.getUin
       });
   }
 
@@ -103,7 +107,7 @@ export class GetuinComponent implements OnInit {
     this.dataStorageService.generateOTPForUid(request)
     .subscribe((response) =>{
       if(!response["errors"]){
-        this.router.navigate(["bookappointment"],{state:{data,transactionID:this.transactionID}})
+        this.router.navigate(["downloadMyUin"],{state:{data,response}})
       }else{
         this.showErrorPopup(response["errors"])
       }
@@ -128,6 +132,10 @@ export class GetuinComponent implements OnInit {
         },
         disableClose: true
       });
+  }
+
+  openPopup(){
+    this.infoPopUpShow = !this.infoPopUpShow
   }
 
 }

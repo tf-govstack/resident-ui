@@ -6,14 +6,16 @@ import { TranslateService } from "@ngx-translate/core";
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { AppConfigService } from 'src/app/app-config.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-bookappointment',
-  templateUrl: './bookappointment.component.html',
-  styleUrls: ['./bookappointment.component.css']
+  templateUrl: './downloaduin.component.html',
+  styleUrls: ['./downloaduin.component.css']
 })
-export class BookappointmentComponent implements OnInit {
-  bookAppointmentData: any
+export class DownloadUinComponent implements OnInit {
+  downloadUinData: any
   otp: string = ""
   transactionID: any;
   individualId: string = "";
@@ -26,9 +28,13 @@ export class BookappointmentComponent implements OnInit {
   showPopupForUidCard: boolean = false;
   popupMessages: any;
   interval: any;
-  channelType: any = "99XXXXXX80"
+  phoneNumber: any;
+  emailId: any;
   resetBtnDisable: boolean = true;
   submitBtnDisable: boolean = false;
+  errorCode: string;
+  message: string = "";
+  pdfSrc = "";
 
   userPreferredLangCode = localStorage.getItem("langCode");
 
@@ -45,15 +51,18 @@ export class BookappointmentComponent implements OnInit {
     private router: Router,
     private dataStorageService: DataStorageService,
     private translateService: TranslateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private appConfigService: AppConfigService
   ) {
     this.data = this.router.getCurrentNavigation().extras.state.data.AID
-    this.transactionID = this.router.getCurrentNavigation().extras.state.transactionID
+    this.transactionID = this.router.getCurrentNavigation().extras.state.response.transactionID
+    this.phoneNumber = this.router.getCurrentNavigation().extras.state.response.response.maskedMobile
+    this.emailId = this.router.getCurrentNavigation().extras.state.response.response.maskedEmail
   }
 
   ngOnInit() {
     this.translateService.getTranslation(this.userPreferredLangCode).subscribe(response => {
-      this.bookAppointmentData = response.bookappointment,
+      this.downloadUinData = response.downloadUin,
         this.popupMessages = response;
     })
     this.translateService
@@ -100,9 +109,10 @@ export class BookappointmentComponent implements OnInit {
     } else if (item === "resendOtp") {
       clearInterval(this.interval)
       this.otpTimeMinutes = 2;
-      this.otpTimeSeconds = "00";
+      this.displaySeconds = "00";
       this.generateOTP(this.data)
       this.resendOtpBtnBgColor = "#909090"
+      this.submitBtnBgColor = "#03A64A"
       this.setOtpTime()
       this.resetBtnDisable = true;
       this.submitBtnDisable = false;
@@ -114,7 +124,7 @@ export class BookappointmentComponent implements OnInit {
     let self = this;
     const request = {
       "id": "mosip.identity.otp.internal",
-      "aid": data["AID"],
+      "aid": this.data,
       "metadata": {},
       "otpChannel": [
         "PHONE",
@@ -142,32 +152,49 @@ export class BookappointmentComponent implements OnInit {
       "requesttime": Utils.getCurrentDate(),
       "request": {
         "transactionId": self.transactionID,
-        "individualId": "27847294898879320221028021313",
+        "individualId": self.data,
         "otp": self.otp
       }
     };
     self.dataStorageService.validateUinCardOtp(request).subscribe(response => {
-      if (!response["errors"]) {
-        this.router.navigate(["dashboard"])
-        self.showMessage(JSON.stringify(response["response"]));
-      } else {
-        this.router.navigate(["dashboard"])
-        self.showErrorPopup(JSON.stringify(response["errors"]));
-      }
+        if (response.body.type === "application/json") {
+          self.showErrorPopup(this.popupMessages.genericmessage.getMyUin.invalidOtp);
+          this.resetBtnDisable = false;
+          this.submitBtnDisable = true;
+          this.resendOtpBtnBgColor = "#03A64A";
+          this.submitBtnBgColor = "#909090";
+        } else {
+          var fileName = self.data + ".pdf";
+          const contentDisposition = response.headers.get('Content-Disposition');
+          console.log(contentDisposition)
+          if (contentDisposition) {
+            const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            const matches = fileNameRegex.exec(contentDisposition);
+            if (matches != null && matches[1]) {
+              fileName = matches[1].replace(/['"]/g, '');
+            }
+          }
+          saveAs(response.body, fileName);
+          this.router.navigate(["dashboard"])
+          this.showMessage(response["response"]);
+        }
     },
       error => {
         console.log(error)
+
       }
     )
   }
 
   showMessage(message: string) {
+    this.message = this.popupMessages.genericmessage.getMyUin.downloadedSuccessFully;
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '850px',
+      width: '650px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        message: message,
+        message: this.message,
+        clickHere: this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -175,6 +202,8 @@ export class BookappointmentComponent implements OnInit {
   }
 
   showErrorPopup(message: string) {
+    // this.errorCode = message[0]["errorCode"]
+    // this.message = this.popupMessages.serverErrors[this.errorCode]
     this.dialog
       .open(DialogComponent, {
         width: '850px',
