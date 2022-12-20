@@ -375,11 +375,11 @@ app-document > ul{
 }
 
 mat-select {
-  outline: auto !important;
+  outline: 1px solid !important;
   outline-color: #909090 !important;
   outline-width: thin;
   border-radius: 5px;
-  color: #BCBCBC !important;
+  color: white !important;
 }
 
 .mat-select-trigger {

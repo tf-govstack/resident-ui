@@ -42,11 +42,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.defaultJsonValue = defaultJson;
     this.supportedLanguages = [];
     this.selectLanguagesArr = []; 
-    let self = this;   
-    setTimeout(()=>{          
+    let self = this;       
+    setTimeout(()=>{        
       if(!localStorage.getItem("langCode")){
-      localStorage.setItem("langCode", "eng");
-      self.selectedLanguage = defaultJson["languages"][0].nativeName;
+        localStorage.setItem("langCode", "eng");
+        self.selectedLanguage = defaultJson["languages"][0].nativeName;
       }else{
         Object.keys(defaultJson["languages"]).forEach(function(key) {
           if(localStorage.getItem("langCode") === key){
@@ -54,6 +54,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         });                
       }
+
+      let supportedLanguages = this.appConfigService.getConfig()['supportedLanguages'].split(',');
+      if(supportedLanguages.length > 1){
+        this.selectLanguagesArr = [];
+        supportedLanguages.map((language) => {
+          if (defaultJson.languages && defaultJson.languages[language.trim()]) {
+            this.selectLanguagesArr.push({
+              code: language.trim(),
+              value: defaultJson.languages[language.trim()].name,
+            });
+          }
+        });
+      }
+
       self.translateService.use(localStorage.getItem("langCode")); 
       self.textDir = localStorage.getItem("dir");
     }, 1000);    

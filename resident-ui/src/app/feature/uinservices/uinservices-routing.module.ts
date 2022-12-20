@@ -12,11 +12,11 @@ import { SharewithpartnerComponent } from './sharewithpartner/sharewithpartner.c
 import { AuthguardService } from '../../core/services/authguard.service';
 
 const routes: Routes = [
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'viewhistory', component: ViewhistoryComponent},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthguardService]},
+  {path: 'viewhistory', component: ViewhistoryComponent, canActivate: [AuthguardService]},
   {path: 'managemyvid', component: RevokevidComponent},
   {path: 'lockunlockauth', component: LockunlockauthComponent},
-  {path: 'updatedemographic', component: UpdatedemographicComponent},
+  {path: 'updatedemographic', component: UpdatedemographicComponent, canActivate: [AuthguardService]},
   {path: 'trackservicerequest', component: TrackservicerequestComponent},
   {path: 'personalisedcard', component: PersonalisedcardComponent},
   {path: 'physicalcard', component: PhysicalcardComponent},

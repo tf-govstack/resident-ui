@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { DateAdapter } from '@angular/material/core';
 import { saveAs } from 'file-saver';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: "app-viewhistory",
@@ -36,7 +37,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   statusFilter:string = "";
   controlTypes = ["searchText", "serviceType", "statusFilter", "fromDateTime", "toDateTime"]
   datas:{};
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>) {
+  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService) {
     this.dateAdapter.setLocale('en-GB'); 
   }
 
@@ -74,8 +75,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     let statusTypeFilter = this.statusTypeFilter;
     this.statusTypeFilter = [];
 
-    serviceTypeFilter.forEach( (element) => {      
-      console.log("serviceTypeFilter>>>"+this.langJSON.viewhistory.serviceTypeFilter[element]);
+    serviceTypeFilter.forEach( (element) => {
       if(this.langJSON.viewhistory.serviceTypeFilter[element]){
         this.serviceTypeFilter.push({"label":this.langJSON.viewhistory.serviceTypeFilter[element], "value": element});
       }
@@ -137,7 +137,10 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
   reportDetails(data:any){
     let URL = this.appConfigService.getConfig()["mosip.resident.grievance.url"];
-    window.open(URL, '_blank');
+    if(URL){
+      URL = URL.replace("{name}", this.headerService.getUsername()).replace("{email}", this.headerService.getEmailId()).replace("{phone}", this.headerService.getPhoneNumber()).replace("{eventId}", data.eventId);
+      window.open(URL, '_blank');
+    }    
   }
 
   search(){    
