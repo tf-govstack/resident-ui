@@ -12,6 +12,7 @@ import { CommonModule } from "@angular/common";
 import { I18nModule } from 'src/app/i18n.module';
 /*import {NgxCaptchaModule} from '@binssoft/ngx-captcha';*/
 import { CoreModule } from './core/core.module';
+import { DndDirective } from './dnd.directive';
 
 const appInitialization = (appConfig: AppConfigService) => {
   return () => {
@@ -21,7 +22,8 @@ const appInitialization = (appConfig: AppConfigService) => {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DndDirective
   ],
   imports: [
     BrowserModule,
