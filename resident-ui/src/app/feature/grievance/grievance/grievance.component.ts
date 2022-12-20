@@ -15,15 +15,17 @@ import Utils from 'src/app/app.utils';
   styleUrls: ['./grievance.component.css']
 })
 export class GrievanceComponent implements OnInit {
+  grievanceData:any;
   name:string;
   eventId:string;
   emailId:string;
   alternateEmailId:string = "";
   phoneNo:string;
   alternatePhoneNo:string = "";
+  reportMsg:string = "";
   message:string;
-  grievanceData:any;
-  
+  popupMessages:any;
+  errorCode:string;
 
   constructor(
     private router: Router,
@@ -32,8 +34,7 @@ export class GrievanceComponent implements OnInit {
     private appConfigService: AppConfigService,
     private dialog: MatDialog
   ) { 
-    this.eventId = this.router.getCurrentNavigation().extras.state.eventId
-    console.log(this.eventId)
+      this.eventId = this.router.getCurrentNavigation().extras.state.eventId
   }
 
 
@@ -42,14 +43,11 @@ export class GrievanceComponent implements OnInit {
     .getProfileInfo()
     .subscribe((response) => {
       if(response["response"]){  
-        console.log(response)
-        this.name = response["response"].fullName;
-        this.emailId = response["response"].email;
-        this.phoneNo = response["response"].phone;
-        this.alternateEmailId = response["response"].alternateEmailId ? response["response"].alternateEmailId : ""
-        this.alternatePhoneNo = response["response"].alternatePhoneNo ?response["response"].alternatePhoneNo:  ""
-        console.log(this.alternatePhoneNo)
-        console.log(this.alternateEmailId)
+        this.name = response["response"].fullName ? response["response"].fullName : null;
+        this.emailId = response["response"].email ? response["response"].email : null;
+        this.phoneNo = response["response"].phone ? response["response"].phone : null;
+        this.alternateEmailId = response["response"].alternateEmailId ? response["response"].alternateEmailId : null;
+        this.alternatePhoneNo = response["response"].alternatePhoneNo ?response["response"].alternatePhoneNo:  null;
       }
     });    
   }
@@ -59,12 +57,71 @@ export class GrievanceComponent implements OnInit {
     this.translateService.getTranslation(localStorage.getItem("langCode"))
     .subscribe(response =>{
        this.grievanceData = response["grievanceRedressal"]
+       this.popupMessages = response
     })
     this.getProfileInfo()
   }
 
   onItemSelected(value:any){
      this.router.navigate([value])
+  }
+
+  getUserData(userFormData:NgForm){
+    this.sendGrievanceRedressal(userFormData)
+  }
+
+  sendGrievanceRedressal(userFormData:any){
+      let request = {
+        "id": "mosip.resident.grievance.ticket.request",
+        "version": "1.0",
+        "requesttime": Utils.getCurrentDate(),
+        "request": userFormData
+      }
+     
+      this.dataStorageService.sendGrievanceRedressal(request).subscribe(response =>{
+        if(response["response"]){
+           this.showMessage(response["response"])
+          this.router.navigate(["dashboard"])
+        }else{
+           this.showErrorPopup(response["errors"])
+        }
+      },
+       error =>{
+        console.log(error)
+       })
+   
+  }
+
+  showMessage(message: string) {
+    this.message = this.popupMessages.genericmessage.grievanceRedressal.successMsg.replace("$ticketId", message["ticketId"])
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        responseData: message,
+        message: this.message,
+        endMsg: this.popupMessages.genericmessage.successRemainMsg,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
+  }
+
+  showErrorPopup(message: string) {
+    this.errorCode = message[0]["errorCode"]
+    this.message = this.popupMessages.serverErrors[this.errorCode]
+    this.dialog
+      .open(DialogComponent, {
+        width: '550px',
+        data: {
+          case: 'MESSAGE',
+          title: this.popupMessages.genericmessage.errorLabel,
+          message: this.message,
+          btnTxt: this.popupMessages.genericmessage.successButton
+        },
+        disableClose: true
+      });
   }
 
 }

@@ -34,7 +34,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   searchText:string = "";
   serviceType:string = "";
   statusFilter:string = "";
-  controlTypes = ["searchText", "serviceType", "statusFilter", "fromDateTime", "toDateTime"]
+  controlTypes = ["searchText", "serviceType", "statusFilter", "fromDate", "toDate"]
   datas:{};
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('en-GB'); 
@@ -59,6 +59,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .getServiceHistory(pageEvent, filters)
     .subscribe((response) => {
+      console.log(response)
       if(response["response"])     
         this.responselist = response["response"]["data"];
         this.totalItems = response["response"]["totalItems"];
@@ -142,7 +143,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   search(){    
     let searchParam = "", self = this;    
     this.controlTypes.forEach(controlType => {
-      console.log(controlType)
       if(self[controlType]){
         if(searchParam){
           searchParam = searchParam+"&"+controlType+"="+self[controlType];
@@ -151,7 +151,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
         }
       }     
     });
-    console.log("searchParam>>>"+JSON.stringify(searchParam));
+    console.log(searchParam);
     this.getServiceHistory("",searchParam);    
   }
 
