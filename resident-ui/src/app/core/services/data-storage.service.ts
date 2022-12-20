@@ -279,4 +279,12 @@ export class DataStorageService {
   getMappingData(){
     return this.httpClient.get(this.BASE_URL + '/auth-proxy/config/identity-mapping')
   }
+
+  getDataForDropDown(apipath:string){
+    return this.httpClient.get(this.BASE_URL+ apipath );
+  }
+
+  getImmediateChildren(locationCode: string, langCode: string) {
+    return this.httpClient.get(this.BASE_URL +'/proxy/masterdata/locations/immediatechildren/' +locationCode +'/' + langCode);
+  }
 }

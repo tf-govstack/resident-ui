@@ -16,7 +16,8 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from 'src/app/app-config.service';
 import * as appConstants from 'src/app/app.constants';
-// import jwt_decode from "jwt-decode";
+import { HeaderService } from './header.service';
+import jwt_decode from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router,
     private dialog: MatDialog,
     private translateService: TranslateService,
-    private appService: AppConfigService
+    private appService: AppConfigService,
+    public headerService: HeaderService
   ) {}
   // function which will be called for all http calls
   intercept(
@@ -48,7 +50,10 @@ export class AuthInterceptor implements HttpInterceptor {
             this.invokedurl = event.url;        
             if (event.url.split('/').includes('validateToken')) {                
                 if (event.body.response) {
-                  // this.decoded = jwt_decode(event.body.response.token);
+                  this.decoded = jwt_decode(event.body.response.token);
+                  this.headerService.setUsername(event.body.response.userId);
+                  this.headerService.setEmailId(this.decoded["email"]);
+                  this.headerService.setPhoneNumber(this.decoded["phoneNumber"]);              
                 }
                 if (
                   event.body.errors !== null &&
