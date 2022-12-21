@@ -129,7 +129,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     .subscribe(data => {
       // var fileName = self.userInfo.fullName+".pdf";
       let contentDisposition = data.headers.get('content-disposition');
-      if(contentDisposition !== null){
+      if(contentDisposition){
         try{
         var fileName = ""
         console.log("contentDisposition"+ contentDisposition)
