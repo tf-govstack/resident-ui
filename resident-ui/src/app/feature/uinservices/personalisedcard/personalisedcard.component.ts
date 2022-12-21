@@ -128,11 +128,11 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     .convertpdf(request)
     .subscribe(data => {
       // var fileName = self.userInfo.fullName+".pdf";
-      if(data.headers.get('content-disposition')){
+      if(data){
         try{
-        var fileName = ""
-        const contentDisposition = data.headers.get('content-disposition');
-        console.log("contentDisposition"+ contentDisposition)
+        var fileName = "";
+        let contentDisposition = data.headers.get('content-disposition');
+        console.log("contentDisposition>>>"+ contentDisposition)
         if (contentDisposition) {
           const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
           const matches = fileNameRegex.exec(contentDisposition);
@@ -141,7 +141,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
             console.log(matches[1].replace(/['"]/g, '')+"filename")
           }
         }
-        console.log("headers"+ JSON.stringify(data.headers))
+        console.log("headers>>>"+ JSON.stringify(data.headers))
         saveAs(data.body, fileName);
         this.showMessage()
       }catch(error){
