@@ -72,7 +72,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .getUserInfo()
     .subscribe((response) => {
-      console.log(response)
       this.userInfo = response["response"];
     });
   }
@@ -128,13 +127,15 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .convertpdf(request)
     .subscribe(data => {
-      var fileName = self.userInfo.fullName+".pdf";
-      const contentDisposition = data.headers.get('Content-Disposition');
+      // var fileName = self.userInfo.fullName+".pdf";
+      var fileName = ""
+      const contentDisposition = data.headers.get('content-disposition');
       if (contentDisposition) {
         const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
         const matches = fileNameRegex.exec(contentDisposition);
         if (matches != null && matches[1]) {
           fileName = matches[1].replace(/['"]/g, '');
+          console.log(matches[1].replace(/['"]/g, ''))
         }
       }
       saveAs(data.body, fileName);

@@ -170,8 +170,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .downloadServiceHistory(searchParam)
     .subscribe(data => {
-      var fileName = "viewhistory.pdf";
-      const contentDisposition = data.headers.get('Content-Disposition');
+      // var fileName = "viewhistory.pdf";
+      var fileName = ""
+      const contentDisposition = data.headers.get('content-disposition');
       if (contentDisposition) {
         const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
         const matches = fileNameRegex.exec(contentDisposition);
