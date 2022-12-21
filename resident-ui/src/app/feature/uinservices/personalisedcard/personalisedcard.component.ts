@@ -135,7 +135,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         const matches = fileNameRegex.exec(contentDisposition);
         if (matches != null && matches[1]) {
           fileName = matches[1].replace(/['"]/g, '');
-          console.log(matches[1].replace(/['"]/g, ''))
+          console.log(matches[1].replace(/['"]/g, '')+"filename")
         }
       }
       saveAs(data.body, fileName);
