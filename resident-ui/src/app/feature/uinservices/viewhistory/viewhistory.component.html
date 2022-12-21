@@ -30,12 +30,12 @@
 					</mat-select>
 				</td>				
 				<td class="input-cards" >
-					<input id="fromPickertext" [(ngModel)]="startdate" [max]="today" matInput [matDatepicker]="fromPicker" class="datepicker-card"  (dateChange)="captureValue($event, 'fromDateTime', 'datepicker')">
+					<input id="fromPickertext" [(ngModel)]="startdate" [max]="today" matInput [matDatepicker]="fromPicker" class="datepicker-card"  (dateChange)="captureValue($event, 'fromDate', 'datepicker')">
 					<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
 					<mat-datepicker #fromPicker></mat-datepicker>
 				</td>
 				<td class="input-cards" >
-					<input id="toPickertext" [(ngModel)]="today" matInput [max]="today" [matDatepicker]="toPicker"class="datepicker-card"  (dateChange)="captureValue($event, 'toDateTime', 'datepicker')">
+					<input id="toPickertext" [(ngModel)]="today" matInput [max]="today" [matDatepicker]="toPicker"class="datepicker-card"  (dateChange)="captureValue($event, 'toDate', 'datepicker')">
 					<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
 					<mat-datepicker #toPicker></mat-datepicker>
 				</td>

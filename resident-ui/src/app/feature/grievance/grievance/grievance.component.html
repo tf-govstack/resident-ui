@@ -2,13 +2,49 @@
   <span class="breadcrumb">
     <a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a
       (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
-    &nbsp;&nbsp;<a (click)="onItemSelected('uinservices/viewhistory')">{{'viewhistory.title' | translate}}</a> &nbsp;&nbsp; > <span
-      class="active">{{"grievanceRedressal.title" | translate}}</span>
+    &nbsp;&nbsp;<a (click)="onItemSelected('uinservices/viewhistory')">{{'viewhistory.title' | translate}}</a>
+    &nbsp;&nbsp; > <span class="active">{{"grievanceRedressal.title" | translate}}</span>
   </span>
   <div class="form-container">
-    <mat-card class="form">
-      <mat-card-title *ngIf="grievanceData.title" class="main-heading">{{grievanceData.title}}</mat-card-title>
+    <mat-card class="form-card">
+      <mat-card-title class="main-heading">{{grievanceData.title | translate}}</mat-card-title>
+      <form #userForm="ngForm" (submit)="getUserData(userForm.value)">
+        <div class="input-container">
+        <div class="label-card">
+          <label>{{grievanceData.namelabel}}</label>
+          <br/>
+          <label>{{grievanceData.emailidlabel}}</label>
+          <br/>
+          <label>{{grievanceData.alternateemailidlabel}}</label>
+          <br/>
+          <label>{{grievanceData.phonenumberlabel}}</label>
+          <br/>
+          <label>{{grievanceData.alternatephonenumberlabel}}</label>
+          <br/>
+          <label>{{grievanceData.eventidlabel}}</label>
+          <br/>
+          <label>{{grievanceData.commentlabel}}<span style="color: red;">*</span></label>
+        </div>
+        <div class="input-card">
+          <input [readonly]="true"   [(ngModel)]="name" required type="text" name="name"/>
+          <br/>
+          <input [readonly]="true" [(ngModel)]="emailId" type="text" name="emailId"/>
+          <br/>
+          <input placeholder={{grievanceData.alternateEmailPlaceholder}} placeholder="" [(ngModel)]="alternateEmailId" type="text" name="alternateEmailId"/>
+          <br/>
+          <input [readonly]="true" [(ngModel)]="phoneNo" type="text" name="phoneNo" ngModel/>
+          <br/>
+          <input placeholder={{grievanceData.alternatePhoneNoPlaceholder}}  [(ngModel)]="alternatePhoneNo" type="text" name="alternatePhoneNo"/>
+          <br/>
+          <input [readonly]="true" [(ngModel)]="eventId" type="text" name="eventId" ngModel/>
+          <br/>
+          <textarea  placeholder={{grievanceData.EnterMsgPlaceholder}} rows="4" cols="55" name="message" [(ngModel)]="reportMsg"></textarea>
+        </div>
+        </div>
+        <div class="bnt-card">
+        <button class="submit-btn" mat-raised-button color="primary" type="submit">{{grievanceData.submitBtn}}</button>
+      </div>
+      </form>
     </mat-card>
-     
   </div>
 </div>
