@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { InteractionService } from "src/app/core/services/interaction.service";
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: "app-personalisedcard",
@@ -126,13 +127,13 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
 
     this.dataStorageService
     .convertpdf(request)
-    .subscribe(data => {
+    .subscribe((data: HttpResponse<Blob>) => {
       // var fileName = self.userInfo.fullName+".pdf";
-      if(data.headers.get('content-disposition')){
+      if(data){
         try{
-        var fileName = ""
-        const contentDisposition = data.headers.get('content-disposition');
-        console.log("contentDisposition"+ contentDisposition)
+        var fileName = "";
+        let contentDisposition = data.headers.get('content-disposition');
+        console.log("contentDisposition>>>"+ contentDisposition)
         if (contentDisposition) {
           const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
           const matches = fileNameRegex.exec(contentDisposition);
@@ -141,7 +142,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
             console.log(matches[1].replace(/['"]/g, '')+"filename")
           }
         }
-        console.log("headers"+ JSON.stringify(data.headers))
+        console.log("headers>>>"+ JSON.stringify(data.headers))
         saveAs(data.body, fileName);
         this.showMessage()
       }catch(error){
@@ -206,5 +207,4 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.router.navigate([item]);
   }
 }
-
 
