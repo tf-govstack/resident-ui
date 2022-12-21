@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { InteractionService } from "src/app/core/services/interaction.service";
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: "app-personalisedcard",
@@ -126,7 +127,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
 
     this.dataStorageService
     .convertpdf(request)
-    .subscribe(data => {
+    .subscribe((data: HttpResponse<Blob>) => {
       // var fileName = self.userInfo.fullName+".pdf";
       if(data){
         try{
@@ -206,5 +207,4 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.router.navigate([item]);
   }
 }
-
 
