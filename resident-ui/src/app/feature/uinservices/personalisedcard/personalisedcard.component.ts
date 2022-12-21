@@ -128,7 +128,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     .convertpdf(request)
     .subscribe(data => {
       // var fileName = self.userInfo.fullName+".pdf";
-      if(data){
+      if(data.headers.get('content-disposition')){
         try{
         var fileName = ""
         const contentDisposition = data.headers.get('content-disposition');
