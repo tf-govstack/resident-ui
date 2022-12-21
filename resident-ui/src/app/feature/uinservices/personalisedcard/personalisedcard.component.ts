@@ -130,6 +130,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       // var fileName = self.userInfo.fullName+".pdf";
       var fileName = ""
       const contentDisposition = data.headers.get('content-disposition');
+      console.log("contentDisposition"+ contentDisposition)
       if (contentDisposition) {
         const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
         const matches = fileNameRegex.exec(contentDisposition);
@@ -138,6 +139,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           console.log(matches[1].replace(/['"]/g, '')+"filename")
         }
       }
+      console.log("headera"+ data.headers)
       saveAs(data.body, fileName);
       this.showMessage()
     },
