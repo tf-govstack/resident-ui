@@ -42,7 +42,8 @@
 				<td class="input-cards" >
 					<mat-select id="statusFilter" multiple placeholder="{{'viewhistory.inputStatus' | translate}}"
 						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
-						<mat-option *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value">
+						<!-- <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">{{'viewhistory.selectAll' | translate}}</mat-option> -->
+						<mat-option *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value" (click)="tosslePerOne(status.value)">
 							{{status.label}}</mat-option>
 					</mat-select>
 				</td>

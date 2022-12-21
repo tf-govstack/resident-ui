@@ -283,5 +283,13 @@ export class DataStorageService {
   sendGrievanceRedressal(request:any){
     return this.httpClient.post(this.BASE_URL + '/grievance/ticket', request)
   }
+  
+  getDataForDropDown(apipath:string){
+    return this.httpClient.get(this.BASE_URL+ apipath );
+  }
+
+  getImmediateChildren(locationCode: string, langCode: string) {
+    return this.httpClient.get(this.BASE_URL +'/proxy/masterdata/locations/immediatechildren/' +locationCode +'/' + langCode);
+  }
 
 }

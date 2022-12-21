@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { DateAdapter } from '@angular/material/core';
 import { saveAs } from 'file-saver';
+import { HeaderService } from 'src/app/core/services/header.service';
 
 @Component({
   selector: "app-viewhistory",
@@ -36,7 +37,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   statusFilter:string = "";
   controlTypes = ["searchText", "serviceType", "statusFilter", "fromDate", "toDate"]
   datas:{};
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>) {
+  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService) {
     this.dateAdapter.setLocale('en-GB'); 
   }
 
@@ -75,8 +76,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     let statusTypeFilter = this.statusTypeFilter;
     this.statusTypeFilter = [];
 
-    serviceTypeFilter.forEach( (element) => {      
-      console.log("serviceTypeFilter>>>"+this.langJSON.viewhistory.serviceTypeFilter[element]);
+    serviceTypeFilter.forEach( (element) => {
       if(this.langJSON.viewhistory.serviceTypeFilter[element]){
         this.serviceTypeFilter.push({"label":this.langJSON.viewhistory.serviceTypeFilter[element], "value": element});
       }
