@@ -134,17 +134,17 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         var fileName = "";
         let contentDisposition = data.headers.get('content-disposition');
         console.log("contentDisposition>>>"+ contentDisposition)
-        if (contentDisposition) {
+        if (contentDisposition !== null) {
+          console.log("inside if>>>")
           const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
           const matches = fileNameRegex.exec(contentDisposition);
           if (matches != null && matches[1]) {
             fileName = matches[1].replace(/['"]/g, '');
-            console.log(matches[1].replace(/['"]/g, '')+"filename")
+            console.log("headers>>>"+ JSON.stringify(data.headers))
+            saveAs(data.body, fileName);
+            this.showMessage()
           }
         }
-        console.log("headers>>>"+ JSON.stringify(data.headers))
-        saveAs(data.body, fileName);
-        this.showMessage()
       }catch(error){
          console.log(error)
       }
