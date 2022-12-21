@@ -128,20 +128,27 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     .convertpdf(request)
     .subscribe(data => {
       // var fileName = self.userInfo.fullName+".pdf";
-      var fileName = ""
-      const contentDisposition = data.headers.get('content-disposition');
-      console.log("contentDisposition"+ contentDisposition)
-      if (contentDisposition) {
-        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-        const matches = fileNameRegex.exec(contentDisposition);
-        if (matches != null && matches[1]) {
-          fileName = matches[1].replace(/['"]/g, '');
-          console.log(matches[1].replace(/['"]/g, '')+"filename")
+      if(data){
+        try{
+        var fileName = ""
+        const contentDisposition = data.headers.get('content-disposition');
+        console.log("contentDisposition"+ contentDisposition)
+        if (contentDisposition) {
+          const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          const matches = fileNameRegex.exec(contentDisposition);
+          if (matches != null && matches[1]) {
+            fileName = matches[1].replace(/['"]/g, '');
+            console.log(matches[1].replace(/['"]/g, '')+"filename")
+          }
         }
+        console.log("headers"+ JSON.stringify(data.headers))
+        saveAs(data.body, fileName);
+        this.showMessage()
+      }catch(error){
+         console.log(error)
       }
-      console.log("headera"+ data.headers)
-      saveAs(data.body, fileName);
-      this.showMessage()
+      }
+      
     },
     err => {
       console.error(err);
