@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { InteractionService } from "src/app/core/services/interaction.service";
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: "app-personalisedcard",
@@ -124,31 +125,34 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     };
 
     this.dataStorageService
-      .convertpdf(request)
-      .subscribe(data => {
-        // var fileName = self.userInfo.fullName+".pdf";
-        let contentDisposition = data.headers.get('content-disposition');
-        try {
-          var fileName = ""
-          if (contentDisposition) {
-            const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-            const matches = fileNameRegex.exec(contentDisposition);
-            if (matches != null && matches[1]) {
-              fileName = matches[1].replace(/['"]/g, '');
-            }
+    .convertpdf(request)
+    .subscribe(data => {
+      // var fileName = self.userInfo.fullName+".pdf";
+      let contentDisposition = data.headers.get('content-disposition');
+      if(contentDisposition){
+        try{
+        var fileName = ""
+        console.log("contentDisposition"+ contentDisposition)
+        if (contentDisposition) {
+          const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          const matches = fileNameRegex.exec(contentDisposition);
+          if (matches != null && matches[1]) {
+            fileName = matches[1].replace(/['"]/g, '');
+            console.log(matches[1].replace(/['"]/g, '')+"filename")
           }
-          console.log("headers" + JSON.stringify(data.headers))
-          saveAs(data.body, fileName);
-          this.showMessage()
-        } catch (error) {
-          console.log(error)
         }
-
-
-      },
-        err => {
-          console.error(err);
-        });
+        console.log("headers"+ JSON.stringify(data.headers))
+        saveAs(data.body, fileName);
+        this.showMessage()
+      }catch(error){
+         console.log(error)
+      }
+      }
+      
+    },
+    err => {
+      console.error(err);
+    });
   }
 
 
@@ -202,5 +206,4 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.router.navigate([item]);
   }
 }
-
 
