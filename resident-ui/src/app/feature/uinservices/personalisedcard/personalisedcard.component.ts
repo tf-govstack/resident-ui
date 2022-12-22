@@ -80,7 +80,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.buildHTML = "";
     let row = "";
     let rowImage = "";
-    console.log(this.dataDisplay)
 
     if (data.attributeName.toString() in this.dataDisplay) {
       delete this.dataDisplay[data.attributeName];

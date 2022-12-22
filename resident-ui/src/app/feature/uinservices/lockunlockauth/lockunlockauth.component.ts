@@ -193,7 +193,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   showMessage(message: string,eventId:any) {   
     this.message =  this.popupMessages.genericmessage.secureMyId.successMsg.replace("$eventId",eventId)
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '850px',
+      width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
@@ -223,7 +223,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   showErrorPopup(message: string) {
     this.dialog
       .open(DialogComponent, {
-        width: '850px',
+        width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
