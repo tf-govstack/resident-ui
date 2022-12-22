@@ -114,7 +114,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }else{    
       fieldName = this.locationFieldNameList[parseInt(index)];
       locationCode = event.value; 
-      this.dynamicFieldValue[this.locationFieldNameList[parseInt(index)]] = event.value;
+      this.dynamicFieldValue[this.locationFieldNameList[parseInt(index)-1]] = event.value;
     }    
     this.dataStorageService.getImmediateChildren(locationCode, this.langCode)
     .subscribe(response => {
@@ -165,6 +165,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   updateDemographicData(){
     console.log("self.proofOfIdentity>>>"+JSON.stringify(this.proofOfIdentity));
     console.log("self.proofOfAddress>>>"+JSON.stringify(this.proofOfAddress));
+    console.log("this.dynamicFieldValue>>>"+JSON.stringify(this.dynamicFieldValue));
     console.log("self.userInfo>>>"+JSON.stringify(this.userInfo));
   }
 
