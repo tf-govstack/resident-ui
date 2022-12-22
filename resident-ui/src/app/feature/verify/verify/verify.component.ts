@@ -28,6 +28,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   showOtpEnterPanel: boolean = true;
   showOtpPanel: boolean = false;
   siteKey: any;
+  resetCaptcha: boolean;
   numBtnColors: string = "#909090";
   emailBtnColors: string = "#909090";
   submitBtnBgColor: string = "#BFBCBC";
@@ -35,6 +36,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   resetBtnDisable: boolean = true;
   submitBtnDisable: boolean = false;
   otpTimeSeconds: any = "00";
+  buttonbgColor: string = "#BFBCBC";
   otpTimeMinutes: number = 2;
   displaySeconds: any = this.otpTimeSeconds
   interval: any;
@@ -84,6 +86,16 @@ export class VerifyComponent implements OnInit, OnDestroy {
       this.submitBtnBgColor = "#03A64A"
     } else {
       this.submitBtnBgColor = "#BFBCBC"
+    }
+  }
+
+  getCaptchaToken(event: Event) {
+    if (event !== undefined && event != null) {
+      console.log("Captcha event " + event);
+      this.buttonbgColor = "#03A64A";
+    } else {
+      console.log("Captcha has expired" + event);
+      this.buttonbgColor = "#BFBCBC";
     }
   }
 

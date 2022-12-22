@@ -425,6 +425,10 @@
         "grievanceRedressal":{
             "successMsg":"Dear resident, your complaint has been successfully sent against the $ticketId.",
             "warningMsg":"Dear resident, your complaint could not be sent. Please try again later."
+        },
+        "secureMyId":{
+            "successMsg":"Dear resident, the changes requested to change the authentication types have been saved successfully against the Event Id: $eventId. In order to track the status of the event, you can ",
+            "confirmationMessage":" Are you sure you want to save the changes made in authentication types?"
         }
 
     },

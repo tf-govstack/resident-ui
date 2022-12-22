@@ -17,135 +17,133 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ["personalisedcard.component.css"],
 })
 export class PersonalisedcardComponent implements OnInit, OnDestroy {
-  langJSON:any;
-  popupMessages:any;
+  langJSON: any;
+  popupMessages: any;
   subscriptions: Subscription[] = [];
-  schema : any;
+  schema: any;
   langCode: string = "";
   userInfo: any;
   buildHTML: any;
-  dataDisplay:any={};
-  clickEventSubscription:Subscription;
-  message:string;
-  formatData:any;
-  nameFormatValues:string[];
-  addressFormatValues:string[];
+  dataDisplay: any = {};
+  clickEventSubscription: Subscription;
+  message: string;
+  formatData: any;
+  nameFormatValues: string[];
+  addressFormatValues: string[];
 
-  constructor(private interactionService:InteractionService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
     //   if(id === "downloadPersonalCard"){
     //     this.convertpdf()
     //   }
-      
+
     // })
   }
 
   async ngOnInit() {
     this.langCode = localStorage.getItem("langCode");
-    
+
     this.translateService.use(localStorage.getItem("langCode"));
 
     this.translateService
-    .getTranslation(localStorage.getItem("langCode"))
-    .subscribe(response => {
-      this.langJSON = response;
-      this.popupMessages = response;
-    }); 
+      .getTranslation(localStorage.getItem("langCode"))
+      .subscribe(response => {
+        this.langJSON = response;
+        this.popupMessages = response;
+      });
 
     this.dataStorageService
-    .getConfigFiles("sharewithpartner")
-    .subscribe((response) => {
-      this.schema = response;
-    });
+      .getConfigFiles("sharewithpartner")
+      .subscribe((response) => {
+        this.schema = response;
+      });
     this.getUserInfo();
     this.getMappingData()
   }
 
-  getMappingData(){
+  getMappingData() {
     this.dataStorageService
-    .getMappingData()
-    .subscribe((response) =>{
-      this.formatData = {"Address Format":response["identity"]["fullAddress"]["value"].split(","),"Name Format":response["identity"]["name"]["value"].split(","),"Date Format":response["identity"]["dob"]["value"].split(",")} 
-    })
+      .getMappingData()
+      .subscribe((response) => {
+        this.formatData = { "Address Format": response["identity"]["fullAddress"]["value"].split(","), "Name Format": response["identity"]["name"]["value"].split(","), "Date Format": response["identity"]["dob"]["value"].split(",") }
+      })
   }
 
-  getUserInfo(){
+  getUserInfo() {
     this.dataStorageService
-    .getUserInfo()
-    .subscribe((response) => {
-      this.userInfo = response["response"];
-    });
+      .getUserInfo()
+      .subscribe((response) => {
+        this.userInfo = response["response"];
+      });
   }
 
-  captureCheckboxValue($event:any, data:any,data2:any){
-    this.buildHTML = ""; 
+  captureCheckboxValue($event: any, data: any, data2: any) {
+    this.buildHTML = "";
     let row = "";
-    let rowImage ="";
-    console.log(this.dataDisplay)
-    
-    if(data.attributeName.toString() in this.dataDisplay){
+    let rowImage = "";
+
+    if (data.attributeName.toString() in this.dataDisplay) {
       delete this.dataDisplay[data.attributeName];
-    }else{
+    } else {
       let value = "";
-      if (typeof this.userInfo[data.attributeName] === "string") {        
+      if (typeof this.userInfo[data.attributeName] === "string") {
         value = this.userInfo[data.attributeName];
-      }else{
+      } else {
         value = this.userInfo[data.attributeName][0].value;
       }
-      if(data.attributeName === "photo"){
-        this.dataDisplay[data.attributeName] = {"label":"", "value": value};
-      }else{
-      this.dataDisplay[data.attributeName] = {"label":data.label[this.langCode], "value": value};
+      if (data.attributeName === "photo") {
+        this.dataDisplay[data.attributeName] = { "label": "", "value": value };
+      } else {
+        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
       }
-    }    
-    
-    for (const key in this.dataDisplay) {
-      if(key === "photo"){
-        rowImage = "<tr><td><img src='data:image/png;base64, "+this.dataDisplay[key].value+"' alt=''/></td></tr>";  
-      }else{
-       row = row+"<tr><td>"+this.dataDisplay[key].label+"</td><td>"+this.dataDisplay[key].value+"</td></tr>";
-      }      
     }
-    this.buildHTML = `<html><head></head><body><table>`+ rowImage + row+`</table></body></html>`;
+
+    for (const key in this.dataDisplay) {
+      if (key === "photo") {
+        rowImage = "<tr><td><img src='data:image/png;base64, " + this.dataDisplay[key].value + "' alt=''/></td></tr>";
+      } else {
+        row = row + "<tr><td>" + this.dataDisplay[key].label + "</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+      }
+    }
+    this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;
     $event.stopPropagation();
   }
 
-  downloadFile(){
+  downloadFile() {
     this.convertpdf()
   }
 
-  convertpdf(){
+  convertpdf() {
     let self = this;
     const request = {
       "id": "mosip.resident.euin",
       "version": this.appConfigService.getConfig()["resident.vid.version"],
       "requesttime": Utils.getCurrentDate(),
-      "request":{
+      "request": {
         "html": btoa(this.buildHTML)
       }
     };
 
     this.dataStorageService
     .convertpdf(request)
-    .subscribe((data: HttpResponse<Blob>) => {
+    .subscribe(data => {
       // var fileName = self.userInfo.fullName+".pdf";
-      if(data){
+      let contentDisposition = data.headers.get('content-disposition');
+      if(contentDisposition){
         try{
-        console.log("eventid>>>"+ data.headers.get("eventid"));
-        var fileName = this.appConfigService.getConfig()["mosip.resident.ack.personalised_card.name.convention"].replace("{eventId}", data.headers.get("eventid")).replace("{timestamp}", Utils.getCurrentDate());
-        let contentDisposition = data.headers.get('content-disposition');
-        console.log("fileName>>>"+ fileName);
+        var fileName = ""
+        console.log("contentDisposition"+ contentDisposition)
         if (contentDisposition) {
-          console.log("inside if>>>")
           const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
           const matches = fileNameRegex.exec(contentDisposition);
           if (matches != null && matches[1]) {
-            //fileName = matches[1].replace(/['"]/g, '');
-            console.log("headers>>>"+ JSON.stringify(data.headers))
-            saveAs(data.body, fileName+".pdf");
-            this.showMessage()
+            fileName = matches[1].replace(/['"]/g, '');
+            console.log(matches[1].replace(/['"]/g, '')+"filename")
           }
         }
+        console.log("headers"+ JSON.stringify(data.headers))
+        saveAs(data.body, fileName);
+        this.showMessage()
       }catch(error){
          console.log(error)
       }
@@ -157,7 +155,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     });
   }
 
-  
+
 
   conditionsForPersonalisedCard() {
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -171,7 +169,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     return dialogRef;
   }
 
-  showMessage() {    
+  showMessage() {
     this.message = this.popupMessages.genericmessage.personalisedcardMessages.downloadedSuccessFully
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '850px',

@@ -7,6 +7,7 @@ import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { InteractionService } from "src/app/core/services/interaction.service";
 
 @Component({
   selector: "app-lockunlockauth",
@@ -27,10 +28,18 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   isPopupSHow:boolean = false;
   infoMsg:string;
   shortInfoMsg:any;
-  isShowMore:boolean = false;
+  submitBtnDisable:boolean = true;
+  message:any;
+  clickEventSubscription: Subscription;
 
-  constructor(private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
+  constructor(private interactionService: InteractionService,private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
     private router: Router) {
+      this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
+        if (id === "confirmBtn") {
+          this.updateAuthlockStatus()
+        }
+  
+      })
     }
 
   async ngOnInit() {
@@ -96,8 +105,13 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
     });
   }
 
+  updateAuthlockStatusBtn(){
+      this.showWarningMessage("")
+  }
+
   setAuthlockStatus(authTypes: any){   
     let authTypeValidate = "";
+    this.submitBtnDisable = false
     if(authTypes.authSubType){
       authTypeValidate = authTypes.authType+"-"+authTypes.authSubType;
     }else{
@@ -148,9 +162,10 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.updateAuthlockStatus(request).subscribe(response => {
-      console.log(response)
         if(!response["errors"]){
-          this.showMessage(JSON.stringify(response["response"]));
+          this.submitBtnDisable = true;
+          let eventId = response.headers.get("eventid")
+          this.showMessage(JSON.stringify(response["response"]),eventId);
         }else{
           this.showErrorPopup(JSON.stringify(response["errors"]));
         }
@@ -169,20 +184,37 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
         case: 'UNLOCKCONFIRMATION',
         title: "",
         message: authInfo,
-        btnTxt: this.popupMessages.genericmessage.successButton
+        btnTxt: this.popupMessages.genericmessage.successButton,
       }
     });
     return dialogRef;
   }
 
-  showMessage(message: string) {    
+  showMessage(message: string,eventId:any) {   
+    this.message =  this.popupMessages.genericmessage.secureMyId.successMsg.replace("$eventId",eventId)
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '850px',
+      width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        message: message,
-        btnTxt: this.popupMessages.genericmessage.successButton
+        message: this.message,
+        eventId,
+        btnTxt: this.popupMessages.genericmessage.successButton,
+        clickHere:this.popupMessages.genericmessage.clickHere,
+      }
+    });
+    return dialogRef;
+  }
+
+  showWarningMessage(vidType: any) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.warningLabel,
+        message: this.popupMessages.genericmessage.secureMyId.confirmationMessage,
+        btnTxt: this.popupMessages.genericmessage.yesButton,
+        btnTxtNo: this.popupMessages.genericmessage.noButton
       }
     });
     return dialogRef;
@@ -191,7 +223,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   showErrorPopup(message: string) {
     this.dialog
       .open(DialogComponent, {
-        width: '850px',
+        width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,

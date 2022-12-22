@@ -167,7 +167,7 @@ export class DataStorageService {
   }
 
   updateAuthlockStatus(request:any){
-    return this.httpClient.post(this.BASE_URL   + '/auth-lock-unlock', request);
+    return this.httpClient.post(this.BASE_URL   + '/auth-lock-unlock', request,{ observe: 'response', responseType: 'blob' as 'json' });
   }
 
   getProfileInfo(){
