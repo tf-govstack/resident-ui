@@ -54,7 +54,7 @@
                   <td width="10%"></td>
                   <td width="45%">
                       <mat-select id="{{field.id}}">
-                        <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id)" [value]="data.code">{{ data.genderName }}</mat-option>
+                        <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id, langCode)" [value]="data.code">{{ data.genderName }}</mat-option>
                       </mat-select>
                     </td>
                 </tr>
@@ -73,12 +73,12 @@
                 <tr>
                   <td width="45%">
                     <mat-select id="{{field.id}}">
-                      <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id)" [value]="data.code">{{ data.name }}</mat-option>
+                      <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id, langCode)" [value]="data.code">{{ data.name }}</mat-option>
                     </mat-select>
                   </td>
                   <td width="10%"></td>
                   <td width="45%">
-                    <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id, language)"/>
+                    <input matInput #{{field.id}} id="{{field.id}}value" (blur)="captureValue($event, field.id, language)"/>
                   </td>
                 </tr>
                 <tr>
@@ -202,7 +202,7 @@
                 <tr>
                   <td width="45%">
                     <mat-select id="{{field.id}}">
-                      <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id)" [value]="data.code">{{ data.name }}</mat-option>
+                      <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id, langCode)" [value]="data.code">{{ data.name }}</mat-option>
                     </mat-select>
                   </td>
                   <td width="10%"></td>
