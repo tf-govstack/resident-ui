@@ -131,17 +131,18 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       // var fileName = self.userInfo.fullName+".pdf";
       if(data){
         try{
-        var fileName = "";
+        console.log("eventid>>>"+ data.headers.get("eventid"));
+        var fileName = this.appConfigService.getConfig()["mosip.resident.ack.personalised_card.name.convention"].replace("{eventId}", data.headers.get("eventid")).replace("{timestamp}", Utils.getCurrentDate());
         let contentDisposition = data.headers.get('content-disposition');
-        console.log("contentDisposition>>>"+ contentDisposition)
-        if (contentDisposition !== null) {
+        console.log("fileName>>>"+ fileName);
+        if (contentDisposition) {
           console.log("inside if>>>")
           const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
           const matches = fileNameRegex.exec(contentDisposition);
           if (matches != null && matches[1]) {
-            fileName = matches[1].replace(/['"]/g, '');
+            //fileName = matches[1].replace(/['"]/g, '');
             console.log("headers>>>"+ JSON.stringify(data.headers))
-            saveAs(data.body, fileName);
+            saveAs(data.body, fileName+".pdf");
             this.showMessage()
           }
         }

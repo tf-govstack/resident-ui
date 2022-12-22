@@ -31,6 +31,27 @@ export class AppConfigService {
         this.appConfig["resident.vid.version.new"] = responseData["resident.vid.version.new"];   
         this.appConfig["mosip.resident.revokevid.id"] = responseData["mosip.resident.revokevid.id"]; 
         this.appConfig["resident.revokevid.version.new"] = responseData["resident.revokevid.version.new"]; 
+
+        this.appConfig["mosip.resident.download.registration.centre.file.name.convention"] = responseData["mosip.resident.download.registration.centre.file.name.convention"];
+        this.appConfig["mosip.resident.download.supporting.document.file.name.convention"] = responseData["mosip.resident.download.supporting.document.file.name.convention"];  
+        this.appConfig["mosip.resident.download.personalized.card.naming.convention"] = responseData["mosip.resident.download.personalized.card.naming.convention"]; 
+        this.appConfig["mosip.resident.ack.manage_my_vid.name.convention"] = responseData["mosip.resident.ack.manage_my_vid.name.convention"]; 
+        this.appConfig["mosip.resident.ack.secure_my_id.name.convention"] = responseData["mosip.resident.ack.secure_my_id.name.convention"]; 
+        this.appConfig["mosip.resident.ack.personalised_card.name.convention"] = responseData["mosip.resident.ack.personalised_card.name.convention"]; 
+        this.appConfig["mosip.resident.ack.update_my_data.name.convention"] = responseData["mosip.resident.ack.update_my_data.name.convention"]; 
+        this.appConfig["mosip.resident.ack.share_credential.name.convention"] = responseData["mosip.resident.ack.share_credential.name.convention"]; 
+        this.appConfig["mosip.resident.ack.order_physical_card.name.convention"] = responseData["mosip.resident.ack.order_physical_card.name.convention"]; 
+        this.appConfig["mosip.resident.ack.name.convention"] = responseData["mosip.resident.ack.name.convention"]; 
+        this.appConfig["mosip.resident.uin.card.name.convention"] = responseData["mosip.resident.uin.card.name.convention"]; 
+        this.appConfig["mosip.resident.vid.card.name.convention"] = responseData["mosip.resident.vid.card.name.convention"]; 
+        this.appConfig["mosip.resident.download.service.history.file.name.convention"] = responseData["mosip.resident.download.service.history.file.name.convention"]; 
+        this.appConfig["mosip.resident.download.nearest.registration.centre.file.name.convention"] = responseData["mosip.resident.download.nearest.registration.centre.file.name.convention"]; 
+
+        this.appConfig["mosip.captcha.sitekey"] = responseData["mosip.captcha.sitekey"];   
+        this.appConfig["mosip.captcha.secretkey"] = responseData["mosip.captcha.secretkey"]; 
+        this.appConfig["mosip.webui.auto.logout.idle"] = responseData["mosip.webui.auto.logout.idle"]; 
+        this.appConfig["mosip.webui.auto.logout.ping"] = responseData["mosip.webui.auto.logout.ping"];   
+        this.appConfig["mosip.webui.auto.logout.timeout"] = responseData["mosip.webui.auto.logout.timeout"];     
       },
       (error) => {
         console.log(error);

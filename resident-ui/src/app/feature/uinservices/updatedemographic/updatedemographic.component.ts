@@ -26,6 +26,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   dynamicDropDown = {};
   files: any[] = [];
   filesPOA: any[] = [];
+  proofOfIdentity:any = {};
+  proofOfAddress:any = {};
 
   constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService) {}
 
@@ -124,11 +126,15 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   captureValue(event: any, formControlName: string, language:string) {
     let self = this;
     if(event.target.value){
-      if (typeof self.userInfo[formControlName] === "string") {  
-        self.userInfo[formControlName] = event.target.value;
+      if((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")){
+        if (typeof self.userInfo[formControlName] === "string") {  
+          self.userInfo[formControlName] = event.target.value;
+        }else{
+          let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
+          self.userInfo[formControlName][index]["value"] = event.target.value;                     
+        }
       }else{
-        let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
-        self.userInfo[formControlName][index]["value"] = event.target.value;                     
+        self[formControlName]["documentreferenceId"] = event.target.value;
       }
     } 
   }
@@ -142,27 +148,23 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }
   }
 
-  captureDropDownValue(event: any, formControlName: string) {
+  captureDropDownValue(event: any, formControlName: string, language:string) {
     let self = this;
     if (event.source.selected) {
-      self.supportedLanguages.map((language) => {
-        let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
-        self.userInfo[formControlName][index]["value"] = event.target.value;   
-      });
-    }
-  }
-
-  captureLocationDropDownValue(event: any, formControlName: string) {    
-    let self = this;
-    if (event.source.selected) {
-      self.supportedLanguages.map((language) => {
-        let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
-        self.userInfo[formControlName][index]["value"] = event.target.value; 
-      });
+      if((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")){
+        self.supportedLanguages.map((maplanguage) => {
+          let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === maplanguage.trim());
+          self.userInfo[formControlName][index]["value"] = event.source.viewValue;   
+        });
+      }else{
+        self[formControlName]["documenttype"] = event.source.viewValue;
+      }
     }
   }
 
   updateDemographicData(){
+    console.log("self.proofOfIdentity>>>"+JSON.stringify(this.proofOfIdentity));
+    console.log("self.proofOfAddress>>>"+JSON.stringify(this.proofOfAddress));
     console.log("self.userInfo>>>"+JSON.stringify(this.userInfo));
   }
 
