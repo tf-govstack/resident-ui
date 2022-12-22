@@ -25,6 +25,7 @@
 				<td class="input-cards" >
 					<mat-select  multiple id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
 						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
+						<!-- <mat-option>{{'viewhistory.selectAll' | translate}}</mat-option> -->
 						<mat-option *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
 							[value]="serviceType.value">{{serviceType.label}}</mat-option>
 					</mat-select>

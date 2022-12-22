@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { DateAdapter } from '@angular/material/core';
 import { saveAs } from 'file-saver';
 import { HeaderService } from 'src/app/core/services/header.service';
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-viewhistory",
@@ -31,6 +32,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
   today: Date;
   startdate: Date = new Date(2022, 0, 1)
+  modeselect = 'ALL'
 
   searchText:string = "";
   serviceType:string = "";
@@ -53,7 +55,8 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
     this.today = new Date()
     
-    this.getServiceHistory("","");    
+    this.getServiceHistory("",""); 
+    this.captureValue("","ALL","")
   }
 
   getServiceHistory(pageEvent:any, filters:any){   

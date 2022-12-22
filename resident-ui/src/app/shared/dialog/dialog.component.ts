@@ -120,7 +120,7 @@ export class DialogComponent implements OnInit {
 
   vidWarning():void{
     this.dialog.closeAll();
-    this.interactionService.sendClickEvent("createVId")
+    this.interactionService.sendClickEvent("confirmBtn")
   }
 
   vidDelete():void{
@@ -135,6 +135,7 @@ export class DialogComponent implements OnInit {
   
   viewDetails(eventId:any){
     this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+ eventId);
+    this.dialog.closeAll();
   }
 }
 

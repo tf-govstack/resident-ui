@@ -129,16 +129,13 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         // var fileName = self.userInfo.fullName+".pdf";
         let contentDisposition = data.headers.get('content-disposition');
-
         try {
           var fileName = ""
-          console.log("contentDisposition" + contentDisposition)
           if (contentDisposition) {
             const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
             const matches = fileNameRegex.exec(contentDisposition);
             if (matches != null && matches[1]) {
               fileName = matches[1].replace(/['"]/g, '');
-              console.log(matches[1].replace(/['"]/g, '') + "filename")
             }
           }
           console.log("headers" + JSON.stringify(data.headers))

@@ -25,10 +25,13 @@
       </div>
       <input id="uidValue" type="text" id="uin" name="uin" (blur)="captureValue($event, 'individualId')" value={{individualId}}
         placeholder="{{'verifyuinvid.uid' | translate}}" />
+        <div class="not-robot-verifing-card">
+          <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha" (captchaEvent)="getCaptchaToken($event)"></app-captcha>
+      </div>
       &nbsp;
       &nbsp;
       &nbsp;
-      <button id="sendOtpBtn" [disabled]="disableSendOtp" mat-raised-button color="primary"
+      <button id="sendOtpBtn" [disabled]="disableSendOtp" mat-raised-button [style.backgroundColor]="buttonbgColor"
         (click)="sendOtpBtn()">{{'verifyuinvid.sendotp' | translate}}</button>
     </div>
   </mat-card>
