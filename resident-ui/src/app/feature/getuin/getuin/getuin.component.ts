@@ -19,7 +19,7 @@ export class GetuinComponent implements OnInit {
   isChecked: boolean = true;
   buttonbgColor: string = "#BFBCBC";
   otpChannel: any = [];
-  siteKey:string = "6LfFWhQiAAAAAIyjCco9njIoJ0wMHz5jQjSFGSQm";
+  siteKey:string = "";
   resetCaptcha: boolean;
   userPreferredLangCode = localStorage.getItem("langCode");
   errorCode:string;
@@ -41,6 +41,8 @@ export class GetuinComponent implements OnInit {
 
   ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
+    this.siteKey = this.appConfigService.getConfig()["mosip.captcha.sitekey"];
+    console.log("this.siteKey>>>"+this.siteKey);
     this.translateService
     .getTranslation(this.userPreferredLangCode)
       .subscribe(response => {
