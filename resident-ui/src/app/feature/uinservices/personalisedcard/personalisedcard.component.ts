@@ -129,6 +129,8 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     .subscribe(data => {
       // var fileName = self.userInfo.fullName+".pdf";
       let contentDisposition = data.headers.get('content-disposition');
+      let eventId = data.headers.get("eventid")
+      console.log(data.headers.get("eventid"))
       if(contentDisposition){
         try{
         var fileName = ""
@@ -172,7 +174,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   showMessage() {
     this.message = this.popupMessages.genericmessage.personalisedcardMessages.downloadedSuccessFully
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '850px',
+      width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,

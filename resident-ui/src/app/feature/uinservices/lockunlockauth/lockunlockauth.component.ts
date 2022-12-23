@@ -30,7 +30,8 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   shortInfoMsg:any;
   submitBtnDisable:boolean = true;
   message:any;
-  clickEventSubscription: Subscription;
+  clickEventSubscription: Subscription; 
+  changedItems:any = {};
 
   constructor(private interactionService: InteractionService,private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
     private router: Router) {
@@ -63,7 +64,8 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .getAuthlockStatus()
     .subscribe((response) => {
-      if(response["response"])        
+      if(response["response"]) 
+        console.log(response["response"])       
         newAuthlist = response["response"]["authTypes"];
         if(response["response"]["authTypes"].length == 0){
           for (var i=0 ; i < authTypes.length ; i++){
@@ -109,9 +111,20 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
       this.showWarningMessage("")
   }
 
-  setAuthlockStatus(authTypes: any){   
+  setAuthlockStatus(authTypes: any){  
     let authTypeValidate = "";
-    this.submitBtnDisable = false
+    this.changedItems[authTypes.authSubType] = !this.changedItems[authTypes.authSubType]
+    for(let item in this.changedItems){
+      if(this.changedItems[item]){
+        this.submitBtnDisable = false
+        break
+      }else{
+        this.submitBtnDisable = true
+      }
+    }
+    console.log(this.changedItems)
+
+    // old code
     if(authTypes.authSubType){
       authTypeValidate = authTypes.authType+"-"+authTypes.authSubType;
     }else{
