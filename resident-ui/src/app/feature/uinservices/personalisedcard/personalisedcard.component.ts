@@ -55,6 +55,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
+        console.log(response)
         this.schema = response;
       });
     this.getUserInfo();

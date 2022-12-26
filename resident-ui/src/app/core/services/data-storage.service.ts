@@ -155,11 +155,11 @@ export class DataStorageService {
   }
 
   generateVID(request: any){
-    return this.httpClient.post(this.BASE_URL   + '/generate-vid', request);
+    return this.httpClient.post(this.BASE_URL   + '/generate-vid', request, { observe: 'response'});
   }
 
   revokeVID(request: any, vid: string){
-    return this.httpClient.patch(this.BASE_URL   + '/revoke-vid/' + vid, request);
+    return this.httpClient.patch(this.BASE_URL   + '/revoke-vid/' + vid, request,{ observe: 'response'});
   }
 
   getAuthlockStatus(){
@@ -216,7 +216,7 @@ export class DataStorageService {
   }
 
   shareInfo(request:any){
-    return this.httpClient.post(this.BASE_URL   + '/share-credential', request);
+    return this.httpClient.post(this.BASE_URL   + '/share-credential', request,{observe: 'response', responseType: 'blob' as 'json' });
   }
 
   downloadAcknowledgement(eventId:string){
@@ -290,6 +290,11 @@ export class DataStorageService {
 
   getImmediateChildren(locationCode: string, langCode: string) {
     return this.httpClient.get(this.BASE_URL +'/proxy/masterdata/locations/immediatechildren/' +locationCode +'/' + langCode);
+  }
+
+
+  downloadVid(vid:any){
+    return this.httpClient.get<Blob>(this.BASE_URL + '/request-card/vid/'+vid, { observe: 'response'})
   }
 
 }

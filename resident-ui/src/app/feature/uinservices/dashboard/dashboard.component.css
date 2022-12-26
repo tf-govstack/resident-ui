@@ -10,6 +10,7 @@ li {
   border-radius: 13px 13px 5px 5px;
   margin-bottom: .5rem;
   padding: .5rem;
+  cursor: pointer;
 }
 
 mat-card>span img {

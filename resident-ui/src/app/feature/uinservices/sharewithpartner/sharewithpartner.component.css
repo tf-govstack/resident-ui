@@ -88,3 +88,21 @@
   letter-spacing: 0px;
   color: #505050;
 }
+
+.attribute-card{
+  height: 260px; 
+  width: 50%; 
+  border: 1px solid #505050; 
+  border-radius: 6px; 
+  padding: 12px;
+}
+
+
+.purpose-input-box{
+  width:450px;
+  height: 100px;
+  border-radius: 5px;
+  resize: none;
+  font-family: Roboto,'Helvetica Neue',sans-serif;
+  padding: 5px
+}
