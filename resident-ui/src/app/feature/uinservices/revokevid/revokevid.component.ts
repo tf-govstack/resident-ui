@@ -36,6 +36,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   showInfoCard:boolean = false;
   iIconVidType:any;
   infoText:any;
+  eventId:any;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -157,20 +158,31 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         "channels": ["PHONE", "EMAIL"]
       }
     };
-    console.log(request)
     this.dataStorageService.generateVID(request).subscribe(response => {
       this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully 
-      console.log(response)
-      if (!response["errors"].length) {
+      this.eventId = response.headers.get("eventId")
+      if (!response.body["errors"].length) {
         setTimeout(() => {
           self.getVID();
-        }, 300);
-        this.showMessage(this.message.replace("$eventId", response["response"].vid),response["response"].vid);
+        }, 400);
+        this.showMessage(this.message.replace("$eventId", this.eventId ),this.eventId);
       } else {
-        this.showErrorPopup(response["errors"][0].errorCode);
+        this.showErrorPopup(response.body["errors"][0].errorCode);
       }
     });
   }
+
+  downloadVIDBtn(vid:any){
+    this.downloadVid(vid)
+  }
+
+  downloadVid(vid:any){
+      this.dataStorageService.downloadVid(vid).subscribe(response =>{
+        console.log(response)
+      })
+  }
+
+  
 
   revokeVIDBtn(vidValue: any,vidType:any){
     this.showDeleteMessage(vidType,vidValue)
@@ -189,15 +201,17 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.revokeVID(request, vidValue).subscribe(response => {
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", vidValue) 
-      if (!response["errors"].length) {
+      console.log(response.headers.get("eventid"))
+      this.eventId = response.headers.get("eventid")
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", this.eventId) 
+      if (!response.body["errors"].length) {
         setTimeout(() => {
           self.getVID();
           // this.showMessage(this.message ,vidValue);
-        }, 300);
-        this.showMessage(this.message ,vidValue);
+        }, 400);
+        this.showMessage(this.message ,this.eventId);
       } else {
-        this.showErrorPopup(response["errors"][0].errorCode);
+        this.showErrorPopup(response.body["errors"][0].errorCode);
       }
     },
       error => {
@@ -206,13 +220,13 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     );
   }
 
-  showMessage(message: string,vidValue:string) {
+  showMessage(message: string,eventId:string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        vidValue:vidValue,
+        eventId:eventId,
         message: message,
         clickHere:this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
@@ -221,15 +235,17 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     return dialogRef;
   }
 
-  showDeleteMessage(vidType: string,vidValue:string) {
-    this.message = this.popupMessages.genericmessage.manageMyVidMessages[vidType].confirmationMessageForDeleteVid.replace("$event",vidValue)
+  showDeleteMessage(vidType: string,eventId:string) {
+    this.message = this.popupMessages.genericmessage.manageMyVidMessages[vidType].confirmationMessageForDeleteVid.replace("$event",eventId)
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.warningLabel,
+        eventId:eventId,
         btnTxtNo: this.popupMessages.genericmessage.noButton,
         message: this.message,
+
         btnTxt: this.popupMessages.genericmessage.deleteButton
       }
     });

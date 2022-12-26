@@ -63,9 +63,6 @@ export class AutoLogoutService {
       (this.ping = Number(
         this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_webui_auto_logout_ping)
       ));
-      console.log(this.idle)
-      console.log(this.ping)
-      console.log(this.timeout)
     this.dataStorageService
       .getI18NLanguageFiles(langCode)
       .subscribe((response) => {
