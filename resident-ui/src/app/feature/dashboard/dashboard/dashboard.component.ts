@@ -37,17 +37,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    console.log(item)
-    if(item !== "UIN Services"){
-      this.router.navigate([item]);
-    }else if(item === "UIN Services"){
+    if(item === "UIN Services"){
       this.router.navigate(['uinservices/dashboard'])
-    }
-    else if(item === "Get Information"){
+    }else if(item === "Get Information"){
       this.router.navigate(["regcenter"])
     }else if(item === "Booking an Appointment"){
       window.open(this.appConfigService.getConfig()["mosip-prereg-ui-url"], "_blank");
-    }  
+    }else{
+     this.router.navigate([item]); 
+   }    
   }
 
   ngOnDestroy(): void {
