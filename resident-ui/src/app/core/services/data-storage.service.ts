@@ -293,8 +293,12 @@ export class DataStorageService {
   }
 
 
-  downloadVid(vid:any){
-    return this.httpClient.get<Blob>(this.BASE_URL + '/request-card/vid/'+vid, { observe: 'response'})
+  vidDownloadStatus(vid:any){
+    return this.httpClient.get(this.BASE_URL + '/request-card/vid/'+vid, { observe: 'response'})
+  }
+
+  downloadVidCardStatus(eventId:any){
+    return this.httpClient.get<Blob>(this.BASE_URL + '/download-card/event/'+eventId,{ observe: 'response', responseType: 'blob' as 'json' })
   }
 
 }

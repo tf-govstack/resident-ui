@@ -55,7 +55,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
-        console.log(response)
         this.schema = response;
       });
     this.getUserInfo();
@@ -90,7 +89,12 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       if (typeof this.userInfo[data.attributeName] === "string") {
         value = this.userInfo[data.attributeName];
       } else {
-        value = this.userInfo[data.attributeName][0].value;
+        if(this.userInfo[data.attributeName] === undefined){
+          value = "Not Avaliable"
+        }else{
+          value = this.userInfo[data.attributeName][0].value;
+        }
+        
       }
       if (data.attributeName === "photo") {
         this.dataDisplay[data.attributeName] = { "label": "", "value": value };
