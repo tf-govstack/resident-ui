@@ -33,6 +33,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   today: Date;
   startdate: Date = new Date(2022, 0, 1)
   modeselect = 'ALL'
+  selectedDate:any;
 
   searchText:string = "";
   serviceType:string = "";
@@ -93,6 +94,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, controlType: string) {
+    this.selectedDate = this.today
     if(controlType === "dropdown"){
       this[formControlName] = event.value.toString().toUpperCase();
     }else if(controlType === "datepicker"){
