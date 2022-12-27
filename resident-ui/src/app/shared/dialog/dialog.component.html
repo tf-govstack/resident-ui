@@ -117,6 +117,10 @@
           id="confirmmessagepopup" (click)="vidDelete()">
           {{ input.btnTxt }}
         </button></span>
+        <span><button *ngIf="input.btnTxt === 'Download'" style="background-color:#03A64A;" mat-button cdkFocusInitial
+          id="confirmmessagepopup" (click)="vidDownload()">
+          {{ input.btnTxt }}
+        </button></span>
       <span><button *ngIf="input.btnTxtNo === 'No' " mat-button cdkFocusInitial id="confirmmessagepopup"
           (click)="dismiss()">
           {{ input.btnTxtNo }}

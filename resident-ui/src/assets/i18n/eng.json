@@ -363,6 +363,7 @@
         "deleteButton": "Delete",
         "errorLabel": "Error",
         "warningLabel": "Warning",
+        "downloadLabel":"Download",
         "warningForChannel":"warningForChannel",
         "createMessage": "Created Successfully",
         "updateMessage": "Updated Successfully",
@@ -393,18 +394,22 @@
             "Perpetual": {
                 "WarningMessageLabel": "Generating a new perpetual VID will revoke the already existing VID. Click on yes if you want to proceed.",
                 "confirmationMessageForCreateVid": "Are you sure you want to create a perpetual VID?",
-                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen perpetual VID?"
+                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen perpetual VID?",
+                "confirmationMessageForDownloadVid": "Are you sure you want to download perpetual VID?"
             },
             "Temporary": {
                 "confirmationMessageForCreateVid": "Are you sure you want to create a temporary VID?",
-                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen temporary VID?"
+                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen temporary VID?",
+                "confirmationMessageForDownloadVid": "Are you sure you want to download temporary VID?"
             },
             "OneTimeUse": {
                 "confirmationMessageForCreateVid": "Are you sure you want to create a one-time VID?",
-                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen one-time VID?"
+                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen one-time VID?",
+                "confirmationMessageForDownloadVid": "Are you sure you want to download one-time VID?"
             },
-            "createdSuccessfully": "Dear resident, your VID has been successfully generated against the the Event Id: $eventId. In order to track the status of the event, you can ",
-            "deletedSuccessfully": "Dear resident, your VID has been successfully deleted against the the Event Id: $eventId. In order to track the status of the event, you can "
+            "createdSuccessfully": "Dear resident, your $vidType VID has been successfully generated against the the Event Id: $eventId. In order to track the status of the event, you can ",
+            "downloadedSuccessFully":"Dear resident, your $vidType VID card was successfully downloaded against the Event Id: $eventId. To know more about the transaction, ",
+            "deletedSuccessfully": "Dear resident, your $vidType VID has been successfully deleted against the the Event Id: $eventId. In order to track the status of the event, you can "
         },
         "personalisedcardMessages": {
             "downloadedSuccessFully": "Dear resident, your personalized card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can "

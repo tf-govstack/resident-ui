@@ -128,6 +128,11 @@ export class DialogComponent implements OnInit {
     this.interactionService.sendClickEvent("deleteVID")
   }
 
+  vidDownload():void{
+    this.dialog.closeAll();
+    this.interactionService.sendClickEvent("downloadVID")
+  }
+
   downloadPersonalCard(){
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("downloadPersonalCard")
