@@ -94,34 +94,35 @@
   <div class="pop-up" *ngIf="input.case === 'MESSAGE'" [style.backgroundColor]="popMsgbgColor"
     [style.color]="popMsgColor" [style.borderColor]="popMsgColor">
     <div class="infro-card">
-      <img style="background-color: transparent;" [src]="icon" height="35px" width="35px" class="success-img" />
+      <img [src]="icon" height="35px" width="35px" class="pop-up-icon" />
       <div class="pop-up-header">
         <div mat-dialog-content>
           <div>
             <p>{{input.message}} <span (click)="viewDetails(input.eventId)"
                 class="navigate-link">{{input.clickHere}}</span></p>
+            <p><span style="font-weight: 600;">{{input.passwordCombinationHeading}}</span>{{input.passwordCombination}}</p>
           </div>
         </div>
       </div>
     </div>
     <div mat-dialog-actions class="pop-up-footer">
-      <span><button style="background-color:#03A64A;" *ngIf="input.btnTxt === 'OK' " mat-button cdkFocusInitial
+      <span><button style="background-color:#03A64A; margin-top: 0px;" *ngIf="input.btnTxt === 'OK' " mat-button cdkFocusInitial
           id="confirmmessagepopup" (click)="dismiss()">
           {{ input.btnTxt }}
         </button></span>
-      <span><button style="background-color:#03A64A;" *ngIf="input.btnTxt === 'Yes' " mat-button cdkFocusInitial
+      <span><button style="background-color:#03A64A; margin-top: 0px;" *ngIf="input.btnTxt === 'Yes' " mat-button cdkFocusInitial
           id="confirmmessagepopup" (click)="vidWarning()">
           {{ input.btnTxt }}
         </button></span>
-      <span><button *ngIf="input.btnTxt === 'Delete'" style="background-color:red;" mat-button cdkFocusInitial
+      <span><button *ngIf="input.btnTxt === 'Delete'" style="background-color:red; margin-top: 0px;" mat-button cdkFocusInitial
           id="confirmmessagepopup" (click)="vidDelete()">
           {{ input.btnTxt }}
         </button></span>
-        <span><button *ngIf="input.btnTxt === 'Download'" style="background-color:#03A64A;" mat-button cdkFocusInitial
+        <span><button *ngIf="input.btnTxt === 'Download'" style="background-color:#03A64A; margin-top: 0px;" mat-button cdkFocusInitial
           id="confirmmessagepopup" (click)="vidDownload()">
           {{ input.btnTxt }}
         </button></span>
-      <span><button *ngIf="input.btnTxtNo === 'No' " mat-button cdkFocusInitial id="confirmmessagepopup"
+      <span><button style="margin-top: 0px;" *ngIf="input.btnTxtNo === 'No' " mat-button cdkFocusInitial id="confirmmessagepopup"
           (click)="dismiss()">
           {{ input.btnTxtNo }}
         </button></span>

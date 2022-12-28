@@ -35,6 +35,7 @@ export class DownloadUinComponent implements OnInit {
   errorCode: string;
   message: string = "";
   pdfSrc = "";
+  eventId: any;
 
   userPreferredLangCode = localStorage.getItem("langCode");
 
@@ -54,10 +55,16 @@ export class DownloadUinComponent implements OnInit {
     private dialog: MatDialog,
     private appConfigService: AppConfigService
   ) {
-    this.data = this.router.getCurrentNavigation().extras.state.data.AID
-    this.transactionID = this.router.getCurrentNavigation().extras.state.response.transactionID
-    this.phoneNumber = this.router.getCurrentNavigation().extras.state.response.response.maskedMobile
-    this.emailId = this.router.getCurrentNavigation().extras.state.response.response.maskedEmail
+    if (this.router.getCurrentNavigation().extras.state) {
+      this.data = this.router.getCurrentNavigation().extras.state.data.AID
+      this.transactionID = this.router.getCurrentNavigation().extras.state.response.transactionID
+      this.phoneNumber = this.router.getCurrentNavigation().extras.state.response.response.maskedMobile
+      this.emailId = this.router.getCurrentNavigation().extras.state.response.response.maskedEmail
+    } else {
+      this.router.navigate(["getuin"])
+      clearInterval(this.interval)
+    }
+
   }
 
   ngOnInit() {
@@ -75,7 +82,7 @@ export class DownloadUinComponent implements OnInit {
 
   setOtpTime() {
     this.interval = setInterval(() => {
-      if (this.otpTimeSeconds < 0 || this.otpTimeSeconds === "00") {
+      if (this.otpTimeSeconds < 0 || this.displaySeconds === "00") {
         this.otpTimeSeconds = 59
         this.otpTimeMinutes -= 1
       }
@@ -84,6 +91,7 @@ export class DownloadUinComponent implements OnInit {
         this.otpTimeMinutes = 0;
         clearInterval(this.interval)
         this.resendOtpBtnBgColor = "#03A64A";
+        this.submitBtnBgColor = "#909090"
         this.displaySeconds = "00";
         this.resetBtnDisable = false;
         this.submitBtnDisable = true;
@@ -157,27 +165,28 @@ export class DownloadUinComponent implements OnInit {
       }
     };
     self.dataStorageService.validateUinCardOtp(request).subscribe(response => {
-        if (response.body.type === "application/json") {
-          self.showErrorPopup(this.popupMessages.genericmessage.getMyUin.invalidOtp);
-          this.resetBtnDisable = false;
-          this.submitBtnDisable = true;
-          this.resendOtpBtnBgColor = "#03A64A";
-          this.submitBtnBgColor = "#909090";
-        } else {
-          var fileName = self.data + ".pdf";
-          const contentDisposition = response.headers.get('Content-Disposition');
-          console.log(contentDisposition)
-          if (contentDisposition) {
-            const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-            const matches = fileNameRegex.exec(contentDisposition);
-            if (matches != null && matches[1]) {
-              fileName = matches[1].replace(/['"]/g, '');
-            }
+      this.eventId = response.headers.get("eventid")
+      if (response.body.type === "application/json") {
+        self.showErrorPopup(this.popupMessages.genericmessage.getMyUin.invalidOtp);
+        this.resetBtnDisable = false;
+        this.submitBtnDisable = true;
+        this.resendOtpBtnBgColor = "#03A64A";
+        this.submitBtnBgColor = "#909090";
+      } else {
+        var fileName = self.data + ".pdf";
+        const contentDisposition = response.headers.get('Content-Disposition');
+        if (contentDisposition) {
+          const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          const matches = fileNameRegex.exec(contentDisposition);
+          if (matches != null && matches[1]) {
+            fileName = matches[1].replace(/['"]/g, '');
           }
-          saveAs(response.body, fileName);
-          this.router.navigate(["dashboard"])
-          this.showMessage(response["response"]);
         }
+        saveAs(response.body, fileName);
+        this.router.navigate(["dashboard"])
+        this.showMessage(response["response"], this.eventId);
+      }
+
     },
       error => {
         console.log(error)
@@ -186,14 +195,17 @@ export class DownloadUinComponent implements OnInit {
     )
   }
 
-  showMessage(message: string) {
-    this.message = this.popupMessages.genericmessage.getMyUin.downloadedSuccessFully;
+  showMessage(message: string, eventId: any) {
+    this.message = this.popupMessages.genericmessage.getMyUin.downloadedSuccessFully.replace("$eventId", eventId)
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '650px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
         message: this.message,
+        passwordCombinationHeading:this.popupMessages.genericmessage.passwordCombinationHeading,
+        passwordCombination: this.popupMessages.genericmessage.passwordCombination,
+        eventId: eventId,
         clickHere: this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
@@ -202,11 +214,9 @@ export class DownloadUinComponent implements OnInit {
   }
 
   showErrorPopup(message: string) {
-    // this.errorCode = message[0]["errorCode"]
-    // this.message = this.popupMessages.serverErrors[this.errorCode]
     this.dialog
       .open(DialogComponent, {
-        width: '850px',
+        width: '650px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,

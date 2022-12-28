@@ -46,6 +46,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   disableSendOtp: boolean = false
   isPopUpShow:boolean = false;
   infoText:string;
+  eventId:any;
 
 
   constructor(
@@ -230,12 +231,12 @@ export class VerifyComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.verifyOTP(request).subscribe(response => {
-      console.log(response)
-      if (!response["errors"]) {
+      self.eventId = response.headers.get("eventid")
+      if (!response.body["errors"]) {
         this.router.navigate(["dashboard"])
-        self.showMessage(response["response"]);
+        self.showMessage(response.body["response"],this.eventId);
       } else {
-        self.showErrorPopup(response["errors"]);
+        self.showErrorPopup(response.body["errors"]);
       }
     },
       error => {
@@ -244,11 +245,11 @@ export class VerifyComponent implements OnInit, OnDestroy {
     );
   }
 
-  showMessage(message: string) {
+  showMessage(message: string,eventId:any) {
     if (this.channelType === "PHONE") {
-      this.message = this.popupMessages.genericmessage.verifyChannel.phoneSuccess.replace("$channel", this.channelType)
+      this.message = this.popupMessages.genericmessage.verifyChannel.phoneSuccess.replace("$channel", this.channelType).replace("$eventId",eventId)
     } else {
-      this.message = this.popupMessages.genericmessage.verifyChannel.emailSuccess.replace("$channel", this.channelType)
+      this.message = this.popupMessages.genericmessage.verifyChannel.emailSuccess.replace("$channel", this.channelType).replace("$eventId",eventId)
     }
 
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -258,6 +259,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
         title: this.popupMessages.genericmessage.successLabel,
         responseData: message,
         message: this.message,
+        eventId:eventId,
         clickHere: this.popupMessages.genericmessage.clickHere,
         endMsg: this.popupMessages.genericmessage.successRemainMsg,
         btnTxt: this.popupMessages.genericmessage.successButton

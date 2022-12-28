@@ -159,7 +159,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.generateVID(request).subscribe(response => {
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully.replace("$vidType",this.newVidType)
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully
       this.eventId = response.headers.get("eventId")
       if (!response.body["errors"].length) {
         setTimeout(() => {
@@ -196,7 +196,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   downloadVidCard(eventId:any){
      this.dataStorageService.downloadVidCardStatus(eventId).subscribe(response =>{
       this.eventId = response.headers.get("eventid")
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully.replace("$eventId", this.eventId).replace("$vidType",this.newVidType)
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully.replace("$eventId", this.eventId)
       let fileName = ""
       const contentDisposition = response.headers.get('Content-Disposition');
       console.log(contentDisposition)
@@ -208,7 +208,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         }
       }
       saveAs(response.body, fileName);
-      this.showMessage(this.message, this.eventId)
+      this.successMsgForDownload(this.message, this.eventId)
      })
   }
 
@@ -234,7 +234,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     this.dataStorageService.revokeVID(request, vidValue).subscribe(response => {
       console.log(response.headers.get("eventid"))
       this.eventId = response.headers.get("eventid")
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", this.eventId).replace("$vidType",this.newVidType)
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", this.eventId)
       if (!response.body["errors"].length) {
         setTimeout(() => {
           self.getVID();
@@ -258,6 +258,23 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
         eventId:eventId,
+        message: message,
+        clickHere:this.popupMessages.genericmessage.clickHere,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
+  }
+
+  successMsgForDownload(message: string,eventId:string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        eventId:eventId,
+        passwordCombinationHeading:this.popupMessages.genericmessage.passwordCombinationHeading,
+        passwordCombination:this.popupMessages.genericmessage.passwordCombination,
         message: message,
         clickHere:this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
