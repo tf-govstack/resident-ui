@@ -29,6 +29,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [5, 10, 15, 20];
   serviceTypeFilter:any;
   statusTypeFilter:any;
+  showFirstLastButtons:boolean = true
 
   today: Date;
   startdate: Date = new Date(2022, 0, 1)

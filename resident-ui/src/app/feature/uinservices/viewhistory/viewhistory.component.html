@@ -9,85 +9,109 @@
 		<h3 style="color: #505050; font-size:20px;">{{'viewhistory.title' | translate}}</h3>
 		<table *ngIf="responselist" style="width: 100%;">
 			<tr>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputsearch' | translate}}</span></td>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputHistory' | translate}}</span></td>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputFrom' | translate}}</span></td>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputTo' | translate}}</span></td>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputStatus' | translate}}</span></td>			
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputsearch' |
+						translate}}</span></td>
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputHistory' |
+						translate}}</span></td>
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputFrom' | translate}}</span>
+				</td>
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputTo' | translate}}</span>
+				</td>
+				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputStatus' |
+						translate}}</span></td>
 				<td style="width: 20%;padding: 10px;"></td>
 			</tr>
 			<tr style="vertical-align: baseline;">
-				<td class="input-cards" >
+				<td class="input-cards">
 					<input type="text" id="appIdValue" name="appIdValue" style="margin-bottom: 1.2rem;"
 						(blur)="captureValue($event, 'searchText', 'textbox')"
 						placeholder="{{'viewhistory.inputAppId' | translate}}" />
 				</td>
-				<td class="input-cards" >
-					<mat-select  multiple id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
+				<td class="input-cards">
+					<mat-select multiple id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
 						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
 						<!-- <mat-option>{{'viewhistory.selectAll' | translate}}</mat-option> -->
 						<mat-option *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
 							[value]="serviceType.value">{{serviceType.label}}</mat-option>
 					</mat-select>
-				</td>				
-				<td class="input-cards" >
-					<input id="fromPickertext" [(ngModel)]="startdate" [max]="today" matInput [matDatepicker]="fromPicker" class="datepicker-card"  (dateChange)="captureValue($event, 'fromDate', 'datepicker')">
+				</td>
+				<td class="input-cards">
+					<input id="fromPickertext" [(ngModel)]="startdate" [max]="today" matInput
+						[matDatepicker]="fromPicker" class="datepicker-card"
+						(dateChange)="captureValue($event, 'fromDate', 'datepicker')">
 					<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
 					<mat-datepicker #fromPicker></mat-datepicker>
 				</td>
-				<td class="input-cards" >
-					<input id="toPickertext" [(ngModel)]="selectedDate" matInput [max]="today" [matDatepicker]="toPicker"class="datepicker-card"  (dateChange)="captureValue($event, 'toDate', 'datepicker')">
+				<td class="input-cards">
+					<input id="toPickertext" [(ngModel)]="selectedDate" matInput [max]="today"
+						[matDatepicker]="toPicker" class="datepicker-card"
+						(dateChange)="captureValue($event, 'toDate', 'datepicker')">
 					<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
 					<mat-datepicker #toPicker></mat-datepicker>
 				</td>
-				<td class="input-cards" >
+				<td class="input-cards">
 					<mat-select id="statusFilter" multiple placeholder="{{'viewhistory.inputStatus' | translate}}"
 						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
 						<!-- <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">{{'viewhistory.selectAll' | translate}}</mat-option> -->
-						<mat-option *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value" (click)="tosslePerOne(status.value)">
+						<mat-option *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
+							(click)="tosslePerOne(status.value)">
 							{{status.label}}</mat-option>
 					</mat-select>
 				</td>
-				<td class="input-cards" ><button id="searchbtn" mat-raised-button color="primary" (click)="search()">{{'viewhistory.searchBtn' |
-						translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="downloadbtn" mat-raised-button color="default" (click)="downloadServiceHistory()"><img class="save-icon" src="./assets/images/save.png"/></button>
+				<td class="input-cards"><button id="searchbtn" mat-raised-button color="primary"
+						(click)="search()">{{'viewhistory.searchBtn' |
+						translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="downloadbtn" mat-raised-button
+						color="default" (click)="downloadServiceHistory()"><img class="save-icon"
+							src="./assets/images/save.png" /></button>
 				</td>
 			</tr>
 		</table>
-		<table *ngIf="responselist" style="width: 100%;border-collapse: separate;border-spacing: 1em;">
+		<table *ngIf="responselist" class="history-data">
 			<tr *ngFor="let data of responselist; let i = index" style="outline: thin solid silver;border-radius: 5px;"
 				multi>
 				<mat-expansion-panel>
 					<mat-expansion-panel-header id="panelHeader{{i}}">
 						<td style="width: 2%;padding: 10px;"><span *ngIf="data.pinnedStatus === 'true'"><img
 									src="assets\pin.png" style="color: green;width: 8px;"></span></td>
-						<td style="width: 33%;padding: 10px;color: #008CED;"><span>{{'viewhistory.inputAppId' | translate}} :
+						<td style="width: 33%;padding: 10px;color: #008CED;"><span>{{'viewhistory.inputAppId' |
+								translate}} :
 							</span>{{data.eventId}}</td>
-						<td style="width: 39%;padding: 10px;"><span>{{'viewhistory.description' | translate}} : </span>{{data.description}}</td>
-						<td style="width: 13%;padding: 10px;"><!-- <span>{{'viewhistory.timestamp' | translate}} : </span> -->{{data.timeStamp | date:'dd/MM/yyyy hh:mm'}}</td>
-						<td style="width: 13%;padding: 10px;"><!-- <span>{{'viewhistory.inputStatus' | translate}} : </span> -->{{data.eventStatus}}</td>
+						<td style="width: 39%;padding: 10px;"><span>{{'viewhistory.description' | translate}} :
+							</span>{{data.description}}</td>
+						<td style="width: 13%;padding: 10px;">
+							<!-- <span>{{'viewhistory.timestamp' | translate}} : </span> -->{{data.timeStamp |
+							date:'dd/MM/yyyy hh:mm'}}</td>
+						<td style="width: 13%;padding: 10px;">
+							<!-- <span>{{'viewhistory.inputStatus' | translate}} : </span> -->{{data.eventStatus}}</td>
 					</mat-expansion-panel-header>
 					<p style="width: 100%;padding: 10px 35px;">
-						<span id="reportDetails{{i}}" style="cursor:pointer;" (click)="reportDetails(data)"><img src="assets\report.png"
-								style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span
-								style="font-size:12px;color:#505050;">{{'viewhistory.reportIssueLabel' | translate}}&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
-						<span id="pinData{{i}}" style="cursor:pointer;" *ngIf="data.pinnedStatus === 'false'" (click)="pinData(data)"><img
-								src="assets\pin.png" style="color: green;width: 8px;">&nbsp;&nbsp;&nbsp;<span
-								style="font-size:12px;color:#505050;">{{'viewhistory.pinToTopLabel' | translate}}&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span id="reportDetails{{i}}" style="cursor:pointer;" (click)="reportDetails(data)"><img
+								src="assets\report.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span
+								style="font-size:12px;color:#505050;">{{'viewhistory.reportIssueLabel' |
+								translate}}&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span id="pinData{{i}}" style="cursor:pointer;" *ngIf="data.pinnedStatus === 'false'"
+							(click)="pinData(data)"><img src="assets\pin.png"
+								style="color: green;width: 8px;">&nbsp;&nbsp;&nbsp;<span
+								style="font-size:12px;color:#505050;">{{'viewhistory.pinToTopLabel' |
+								translate}}&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
 						<span id="unpinData{{i}}" style="cursor:pointer;" *ngIf="data.pinnedStatus === 'true'"
 							(click)="unpinData(data)"><img src="assets\pin.png"
 								style="color: green;width: 8px;">&nbsp;&nbsp;&nbsp;<span
-								style="font-size:12px;color:#505050;">{{'viewhistory.unpinToToplabel' | translate}}&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
-						<span id="viewDetails{{i}}" style="cursor:pointer;" (click)="viewDetails(data)"><img src="assets\view.png"
-								style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span
-								style="font-size:12px;color:#505050;">{{'viewhistory.viewhistoryLabel' | translate}}</span></span>
+								style="font-size:12px;color:#505050;">{{'viewhistory.unpinToToplabel' |
+								translate}}&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span id="viewDetails{{i}}" style="cursor:pointer;" (click)="viewDetails(data)"><img
+								src="assets\view.png" style="color: green;width: 15px;">&nbsp;&nbsp;&nbsp;<span
+								style="font-size:12px;color:#505050;">{{'viewhistory.viewhistoryLabel' |
+								translate}}</span></span>
 					</p>
 				</mat-expansion-panel>
 			</tr>
 		</table>
 		<div dir="ltr">
 			<span id="pageSizeOptions" *ngIf="this.totalItems !== 0">
-				<mat-paginator [length]="this.totalItems" [pageSize]="this.pageSize"
-					[pageSizeOptions]="this.pageSizeOptions" (page)="getServiceHistory(pageEvent = $event)">
+				<mat-paginator #paginator class="demo-paginator" (page)="getServiceHistory(pageEvent = $event)"
+					[length]="this.totalItems" [pageSize]="this.pageSize" [showFirstLastButtons]="showFirstLastButtons"
+					[pageSizeOptions]="this.pageSizeOptions" [pageIndex]="pageIndex" aria-label="Select page">
 				</mat-paginator>
 			</span>
 		</div>
