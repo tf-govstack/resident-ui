@@ -167,7 +167,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   updateAuthlockStatus(){
     const request = {
       "id": "mosip.resident.auth.lock.unlock",
-      "version": this.appConfigService.getConfig()["resident.vid.version"],
+      "version": "1.0",
       "requesttime": Utils.getCurrentDate(),
       "request":{
         "individualId": "",      
