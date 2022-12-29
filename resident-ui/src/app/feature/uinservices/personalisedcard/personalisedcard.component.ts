@@ -30,6 +30,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   formatData: any;
   nameFormatValues: string[];
   addressFormatValues: string[];
+  eventId: any;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -89,12 +90,14 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       if (typeof this.userInfo[data.attributeName] === "string") {
         value = this.userInfo[data.attributeName];
       } else {
-        if(this.userInfo[data.attributeName] === undefined){
-          value = "Not Avaliable"
-        }else{
+        if (data.attributeName === "uin") {
+          value = this.userInfo["UIN"]
+        }else if(data.attributeName === "Perpetual VID"){
+          value = this.userInfo["perpetualVID"]
+        }else {
           value = this.userInfo[data.attributeName][0].value;
         }
-        
+
       }
       if (data.attributeName === "photo") {
         this.dataDisplay[data.attributeName] = { "label": "", "value": value };
@@ -130,36 +133,35 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     };
 
     this.dataStorageService
-    .convertpdf(request)
-    .subscribe(data => {
-      // var fileName = self.userInfo.fullName+".pdf";
-      let contentDisposition = data.headers.get('content-disposition');
-      let eventId = data.headers.get("eventid")
-      console.log(data.headers.get("eventid"))
-      if(contentDisposition){
-        try{
-        var fileName = ""
-        console.log("contentDisposition"+ contentDisposition)
+      .convertpdf(request)
+      .subscribe(data => {
+        // var fileName = self.userInfo.fullName+".pdf";
+        let contentDisposition = data.headers.get('content-disposition');
+        this.eventId = data.headers.get("eventid")
         if (contentDisposition) {
-          const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-          const matches = fileNameRegex.exec(contentDisposition);
-          if (matches != null && matches[1]) {
-            fileName = matches[1].replace(/['"]/g, '');
-            console.log(matches[1].replace(/['"]/g, '')+"filename")
+          try {
+            var fileName = ""
+            console.log("contentDisposition" + contentDisposition)
+            if (contentDisposition) {
+              const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+              const matches = fileNameRegex.exec(contentDisposition);
+              if (matches != null && matches[1]) {
+                fileName = matches[1].replace(/['"]/g, '');
+                console.log(matches[1].replace(/['"]/g, '') + "filename")
+              }
+            }
+            console.log("headers" + JSON.stringify(data.headers))
+            saveAs(data.body, fileName);
+            this.showMessage()
+          } catch (error) {
+            console.log(error)
           }
         }
-        console.log("headers"+ JSON.stringify(data.headers))
-        saveAs(data.body, fileName);
-        this.showMessage()
-      }catch(error){
-         console.log(error)
-      }
-      }
-      
-    },
-    err => {
-      console.error(err);
-    });
+
+      },
+        err => {
+          console.error(err);
+        });
   }
 
 
@@ -177,13 +179,16 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   }
 
   showMessage() {
-    this.message = this.popupMessages.genericmessage.personalisedcardMessages.downloadedSuccessFully
+    this.message = this.popupMessages.genericmessage.personalisedcardMessages.downloadedSuccessFully.replace("$eventId", this.eventId)
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '550px',
+      width: '650px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
         clickHere: this.popupMessages.genericmessage.clickHere,
+        eventId: this.eventId,
+        passwordCombinationHeading: this.popupMessages.genericmessage.passwordCombinationHeading,
+        passwordCombination: this.popupMessages.genericmessage.passwordCombination,
         message: this.message,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
@@ -194,7 +199,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   showErrorPopup(message: string) {
     this.dialog
       .open(DialogComponent, {
-        width: '850px',
+        width: '650px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,

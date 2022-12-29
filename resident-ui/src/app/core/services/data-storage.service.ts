@@ -135,7 +135,7 @@ export class DataStorageService {
   }
 
   verifyOTP(request: any) {
-    return this.httpClient.post(this.BASE_URL   + '/validate-otp', request);
+    return this.httpClient.post(this.BASE_URL   + '/validate-otp', request,{ observe: 'response'});
   }
 
   getSchema() {

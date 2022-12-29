@@ -102,8 +102,10 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       if (typeof this.userInfo[data.attributeName] === "string") {        
         value = this.userInfo[data.attributeName];
       }else{ 
-        if(this.userInfo[data.attributeName] === undefined){
-          value = "Not Avaliable"  
+        if(data.attributeName === "uin"){
+          value = this.userInfo["UIN"]
+        }else if(data.attributeName === "Perpetual VID"){
+          value = this.userInfo["perpetualVID"]
         }else{
           value = this.userInfo[data.attributeName][0].value;
         }
