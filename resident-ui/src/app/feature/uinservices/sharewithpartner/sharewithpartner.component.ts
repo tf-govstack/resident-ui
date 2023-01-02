@@ -16,27 +16,28 @@ import { InteractionService } from "src/app/core/services/interaction.service";
   styleUrls: ["sharewithpartner.component.css"],
 })
 export class SharewithpartnerComponent implements OnInit, OnDestroy {
-  langJSON:any;
-  popupMessages:any;
+  langJSON: any;
+  popupMessages: any;
   subscriptions: Subscription[] = [];
-  schema : any;
+  schema: any;
   langCode: string = "";
-  partnerDetails : any;
-  partnerId:string = "";
-  purpose:string = "";
-  sharableAttributes:any={};
-  showAcknowledgement:boolean = false;
-  aidStatus:any;
-  clickEventSubscription:Subscription;
-  buildHTML:any;
-  userInfo:any;
-  message:any;
-  formatData:any;
-  eventId:any;
+  partnerDetails: any;
+  partnerId: string = "";
+  purpose: string = "";
+  sharableAttributes: any = {};
+  showAcknowledgement: boolean = false;
+  aidStatus: any;
+  clickEventSubscription: Subscription;
+  buildHTML: any;
+  userInfo: any;
+  message: any;
+  formatData: any;
+  eventId: any;
+  shareBthDisabled: boolean = true;
 
-  constructor(private interactionService:InteractionService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
-    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
-      if(id === "shareInfo"){
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
+    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
+      if (id === "shareInfo") {
         this.shareInfo()
       }
     })
@@ -45,21 +46,21 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.showAcknowledgement = false;
     this.langCode = localStorage.getItem("langCode");
-    
+
     this.translateService.use(localStorage.getItem("langCode"));
- 
+
     this.translateService
-    .getTranslation(localStorage.getItem("langCode"))
-    .subscribe(response => {
-      this.langJSON = response;
-      this.popupMessages = response;
-    }); 
+      .getTranslation(localStorage.getItem("langCode"))
+      .subscribe(response => {
+        this.langJSON = response;
+        this.popupMessages = response;
+      });
 
     this.dataStorageService
-    .getConfigFiles("sharewithpartner")
-    .subscribe((response) => {
-      this.schema = response;
-    });
+      .getConfigFiles("sharewithpartner")
+      .subscribe((response) => {
+        this.schema = response;
+      });
 
     this.getPartnerDetails();
     this.getUserInfo()
@@ -74,69 +75,76 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       })
   }
 
-  getUserInfo(){
+  getUserInfo() {
     this.dataStorageService
-    .getUserInfo()
-    .subscribe((response) => {
-      this.userInfo = response["response"];
-    });
+      .getUserInfo()
+      .subscribe((response) => {
+        this.userInfo = response["response"];
+      });
   }
 
-  getPartnerDetails(){
+  getPartnerDetails() {
     this.dataStorageService
-    .getPartnerDetails("Auth_Partner")
-    .subscribe((response) => {
-      this.partnerDetails = response["response"]["partners"];
-    });
+      .getPartnerDetails("Auth_Partner")
+      .subscribe((response) => {
+        this.partnerDetails = response["response"]["partners"];
+      });
   }
 
-  captureCheckboxValue($event:any, data:any, type:string){
+  captureCheckboxValue($event: any, data: any, type: string) {
     this.buildHTML = ""
     // console.log("<<<data.attributeName>>>"+JSON.stringify(data)); 
-    if(type === "datacheck"){
-      if(data.attributeName.toString() in this.sharableAttributes){
+    if (type === "datacheck") {
+      if (data.attributeName.toString() in this.sharableAttributes) {
         delete this.sharableAttributes[data.attributeName];
-      }else{
-        this.sharableAttributes[data.attributeName] = {"attributeName":data.attributeName, "format": "", "isMasked": false};
+      } else {
+        this.sharableAttributes[data.attributeName] = { "attributeName": data.attributeName, "format": "", "isMasked": false };
         let value = "";
-      if (typeof this.userInfo[data.attributeName] === "string") {        
-        value = this.userInfo[data.attributeName];
-      }else{ 
-        if(data.attributeName === "uin"){
-          value = this.userInfo["UIN"]
-        }else if(data.attributeName === "Perpetual VID"){
-          value = this.userInfo["perpetualVID"]
-        }else{
-          value = this.userInfo[data.attributeName][0].value;
+        if (typeof this.userInfo[data.attributeName] === "string") {
+          value = this.userInfo[data.attributeName];
+        } else {
+          if (data.attributeName === "uin") {
+            value = this.userInfo["UIN"]
+          } else if (data.attributeName === "Perpetual VID") {
+            value = this.userInfo["perpetualVID"]
+          } else {
+            value = this.userInfo[data.attributeName][0].value;
+          }
+
         }
-        
+        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "value": value };
       }
-      this.sharableAttributes[data.attributeName] = {"label":data.label[this.langCode], "value": value};
-      }
-      
-    }else if(type === "maskcheck"){
-      if(this.sharableAttributes[data.attributeName]){
+
+    } else if (type === "maskcheck") {
+      if (this.sharableAttributes[data.attributeName]) {
         this.sharableAttributes[data.attributeName]["isMasked"] = $event.checked;
-      }else{
-        this.sharableAttributes[data.attributeName] = {"attributeName":data.attributeName, "format": "", "isMasked": $event.checked};
+      } else {
+        this.sharableAttributes[data.attributeName] = { "attributeName": data.attributeName, "format": "", "isMasked": $event.checked };
       }
     }
-     
+
+    if (Object.keys(this.sharableAttributes).length >= 3) {
+      this.shareBthDisabled = false
+    } else {
+      this.shareBthDisabled = true
+    }
+
     let row = "";
     let rowImage = ""
-    console.log("data.attributeName>>>"+data.attributeName);
+    console.log("data.attributeName>>>" + data.attributeName);
     for (const key in this.sharableAttributes) {
       console.log(this.sharableAttributes[key].value)
-      if(key === "photo"){
-        rowImage = "<tr><td><img src='data:image/png;base64, " + this.sharableAttributes[key].value + "' alt=''/></td></tr>";      }else{
-       row = row+"<tr><td>"+this.sharableAttributes[key].label+"</td><td>"+this.sharableAttributes[key].value+"</td></tr>";
-      }      
+      if (key === "photo") {
+        rowImage = "<tr><td><img src='data:image/png;base64, " + this.sharableAttributes[key].value + "' alt=''/></td></tr>";
+      } else {
+        row = row + "<tr><td>" + this.sharableAttributes[key].label + "</td><td>" + this.sharableAttributes[key].value + "</td></tr>";
+      }
     }
-    this.buildHTML = `<html><head></head><body><table>`+rowImage+row+`</table></body></html>`;
-    
+    this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;
+
   }
 
-  stopPropagation($event:any){
+  stopPropagation($event: any) {
     $event.stopPropagation();
   }
 
@@ -146,29 +154,29 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     }
   }
 
-  shareInfoBtn(){
-    if(!this.partnerId){
+  shareInfoBtn() {
+    if (!this.partnerId) {
       this.message = this.popupMessages.genericmessage.sharewithpartner.needPartner
       this.showErrorPopup(this.message)
-    }else if(!this.purpose){
+    } else if (!this.purpose) {
       this.message = this.popupMessages.genericmessage.sharewithpartner.needPurpose
-       this.showErrorPopup(this.message)
-    }else{
+      this.showErrorPopup(this.message)
+    } else {
       this.termAndConditions()
     }
   }
 
-  shareInfo(){
-    let sharableAttributes = [];    
-    for (const key in this.sharableAttributes) {      
-      sharableAttributes.push(this.sharableAttributes[key]);  
+  shareInfo() {
+    let sharableAttributes = [];
+    for (const key in this.sharableAttributes) {
+      sharableAttributes.push(this.sharableAttributes[key]);
     }
     let self = this;
     const request = {
       "id": "mosip.resident.share.credential",
       "version": "1.0",
       "requesttime": Utils.getCurrentDate(),
-      "request":{
+      "request": {
         "partnerId": this.partnerId,
         "purpose": this.purpose,
         "consent": "Accepted",
@@ -176,22 +184,22 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService
-    .shareInfo(request)
-    .subscribe(data => {
-      this.eventId= data.headers.get("eventid")
-      this.dataStorageService
-      .getEIDStatus(this.eventId)
-      .subscribe((response) => {
-        if(response["response"]) 
-          this.aidStatus = response["response"];
-          console.log(this.aidStatus)
-          this.showAcknowledgement = true;
-      });
-      console.log("data>>>"+data);
-    },
-    err => {
-      console.error(err);
-    });
+      .shareInfo(request)
+      .subscribe(data => {
+        this.eventId = data.headers.get("eventid")
+        this.dataStorageService
+          .getEIDStatus(this.eventId)
+          .subscribe((response) => {
+            if (response["response"])
+              this.aidStatus = response["response"];
+            console.log(this.aidStatus)
+            this.showAcknowledgement = true;
+          });
+        console.log("data>>>" + data);
+      },
+        err => {
+          console.error(err);
+        });
   }
 
   termAndConditions() {
@@ -200,7 +208,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       data: {
         case: 'termsAndConditions',
         title: this.popupMessages.genericmessage.termsAndConditionsLabel,
-        conditions:this.popupMessages.genericmessage.termsAndConditionsDescription,
+        conditions: this.popupMessages.genericmessage.termsAndConditionsDescription,
         agreeLabel: this.popupMessages.genericmessage.agreeLabel,
         btnTxt: this.popupMessages.genericmessage.shareButton
       }
@@ -208,27 +216,27 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     return dialogRef;
   }
 
-  downloadAcknowledgement(eventId:string){
+  downloadAcknowledgement(eventId: string) {
     this.dataStorageService
-    .downloadAcknowledgement(eventId)
-    .subscribe(data => {
-      var fileName = eventId+".pdf";
-      const contentDisposition = data.headers.get('Content-Disposition');
-      if (contentDisposition) {
-         const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-        const matches = fileNameRegex.exec(contentDisposition);
-        if (matches != null && matches[1]) {
-          fileName = matches[1].replace(/['"]/g, '');
+      .downloadAcknowledgement(eventId)
+      .subscribe(data => {
+        var fileName = eventId + ".pdf";
+        const contentDisposition = data.headers.get('Content-Disposition');
+        if (contentDisposition) {
+          const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          const matches = fileNameRegex.exec(contentDisposition);
+          if (matches != null && matches[1]) {
+            fileName = matches[1].replace(/['"]/g, '');
+          }
         }
-      }
-      saveAs(data.body, fileName);
-    },
-    err => {
-      console.error(err);
-    });
-  }   
+        saveAs(data.body, fileName);
+      },
+        err => {
+          console.error(err);
+        });
+  }
 
-  showMessage(message: string) {   
+  showMessage(message: string) {
     this.message = this.popupMessages.genericmessage.sharewithpartner.successMessage.replace("$eventId", this.aidStatus.eventId)
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
@@ -240,7 +248,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       }
     });
     return dialogRef;
-  }  
+  }
 
   showErrorPopup(message: string) {
     this.dialog
@@ -256,11 +264,11 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       });
   }
 
-  viewDetails(eventId:any){
-    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+ eventId);
+  viewDetails(eventId: any) {
+    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=` + eventId);
   }
 
-  viewDetails2(){
+  viewDetails2() {
     this.router.navigateByUrl('uinservices/viewhistory');
   }
 
