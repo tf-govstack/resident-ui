@@ -301,4 +301,7 @@ export class DataStorageService {
     return this.httpClient.get<Blob>(this.BASE_URL + '/download-card/event/'+eventId,{ observe: 'response', responseType: 'blob' as 'json' })
   }
 
+  sendotp(request: any){
+    return this.httpClient.post(this.BASE_URL   + '/contact-details/send-otp', request);
+  }
 }

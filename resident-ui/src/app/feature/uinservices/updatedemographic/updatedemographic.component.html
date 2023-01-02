@@ -298,7 +298,7 @@
                   </td>
                   <td width="5%"></td>
                   <td width="10%">
-                    <button mat-raised-button color="primary" id="sendOTP{{field.id}}">{{field.labelName[langCode][3] |translate}}</button>
+                    <button mat-raised-button color="primary" id="sendOTP{{field.id}}" (click)="sendotp(field.id)">{{field.labelName[langCode][3] |translate}}</button>
                   </td>
                 </tr>
               </table>

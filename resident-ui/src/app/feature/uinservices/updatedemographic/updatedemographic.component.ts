@@ -4,6 +4,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import { AppConfigService } from 'src/app/app-config.service';
+import Utils from 'src/app/app.utils';
 
 @Component({
   selector: "app-demographic",
@@ -160,6 +161,25 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         self[formControlName]["documenttype"] = event.source.viewValue;
       }
     }
+  }
+
+  sendotp(channel:string){
+    let self = this;
+    let userId = self.userInfo[channel];
+    
+    const request = {
+      "id": "mosip.resident.contact.details.send.otp.id",
+      "version": this.appConfigService.getConfig()["resident.vid.version.new"],
+      "requesttime": Utils.getCurrentDate(),
+      "request": {
+        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
+        "userId": userId
+      }
+    };
+    this.dataStorageService.sendotp(request).subscribe(response => {
+      console.log("response>>>"+response);
+    });
+    console.log("channel>>>"+channel);
   }
 
   updateDemographicData(){
