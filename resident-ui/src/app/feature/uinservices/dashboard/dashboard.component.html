@@ -8,10 +8,10 @@
 		<mat-card-subtitle class="services-description">{{'dashboard.uindescription' | translate}}</mat-card-subtitle>
 		<mat-grid-list  (window:resize)="onResize($event)" cols="4" *ngIf="menuItems" [gutterSize]="'10px'" [rowHeight]="rowHeight">
 			<mat-grid-tile *ngFor="let item of menuItems[0].subMenus">
-				<mat-card class="mini-card">
+				<mat-card class="mini-card" (click)="onItemSelected(item.route)">
 				  <span><img mat-card-xs-image [src]=item.icon/></span>
 				  <mat-card-header>				  	
-				    <mat-card-title (click)="onItemSelected(item.route)">{{item.displayName}}</mat-card-title>	    
+				    <mat-card-title >{{item.displayName}}</mat-card-title>	    
 				  </mat-card-header>
 				  <mat-card-subtitle class="services-description">{{item.description}}</mat-card-subtitle>
 				</mat-card>

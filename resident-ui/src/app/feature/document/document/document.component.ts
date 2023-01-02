@@ -47,6 +47,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
+    console.log(item)
     if(item.index === 1){
       this.router.navigate(["document"]);
     }else if(item === "home"){

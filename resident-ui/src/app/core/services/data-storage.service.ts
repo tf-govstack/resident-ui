@@ -135,7 +135,7 @@ export class DataStorageService {
   }
 
   verifyOTP(request: any) {
-    return this.httpClient.post(this.BASE_URL   + '/validate-otp', request);
+    return this.httpClient.post(this.BASE_URL   + '/validate-otp', request,{ observe: 'response'});
   }
 
   getSchema() {
@@ -159,7 +159,7 @@ export class DataStorageService {
   }
 
   revokeVID(request: any, vid: string){
-    return this.httpClient.patch(this.BASE_URL   + '/revoke-vid/' + vid, request);
+    return this.httpClient.patch(this.BASE_URL   + '/revoke-vid/' + vid, request,{ observe: 'response'});
   }
 
   getAuthlockStatus(){
@@ -167,7 +167,7 @@ export class DataStorageService {
   }
 
   updateAuthlockStatus(request:any){
-    return this.httpClient.post(this.BASE_URL   + '/auth-lock-unlock', request);
+    return this.httpClient.post(this.BASE_URL   + '/auth-lock-unlock', request,{ observe: 'response', responseType: 'blob' as 'json' });
   }
 
   getProfileInfo(){
@@ -216,7 +216,7 @@ export class DataStorageService {
   }
 
   shareInfo(request:any){
-    return this.httpClient.post(this.BASE_URL   + '/share-credential', request);
+    return this.httpClient.post(this.BASE_URL   + '/share-credential', request,{observe: 'response', responseType: 'blob' as 'json' });
   }
 
   downloadAcknowledgement(eventId:string){
@@ -290,6 +290,15 @@ export class DataStorageService {
 
   getImmediateChildren(locationCode: string, langCode: string) {
     return this.httpClient.get(this.BASE_URL +'/proxy/masterdata/locations/immediatechildren/' +locationCode +'/' + langCode);
+  }
+
+
+  vidDownloadStatus(vid:any){
+    return this.httpClient.get(this.BASE_URL + '/request-card/vid/'+vid, { observe: 'response'})
+  }
+
+  downloadVidCardStatus(eventId:any){
+    return this.httpClient.get<Blob>(this.BASE_URL + '/download-card/event/'+eventId,{ observe: 'response', responseType: 'blob' as 'json' })
   }
 
 }

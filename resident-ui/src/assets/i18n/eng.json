@@ -346,7 +346,7 @@
         "sharePartnerSuccessMsg": "Your data has been successfully shared with the chosen partner",
         "successIcon": "./assets/sucess_icon.png",
         "introDescription": "This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself.",
-        "messageDescription1": "Dear Resident, Your data has been successfully share with the chosen partneragainst the EID :",
+        "messageDescription1": "Dear Resident, Your data has been successfully share with the chosen partner against the EID : ",
         "messageDescription2": ". In order to track the status of the transaction use the above AID in ",
         "trackMyserviceLink": "Track My Service Request",
         "orin": "or in",
@@ -363,6 +363,7 @@
         "deleteButton": "Delete",
         "errorLabel": "Error",
         "warningLabel": "Warning",
+        "downloadLabel":"Download",
         "warningForChannel":"warningForChannel",
         "createMessage": "Created Successfully",
         "updateMessage": "Updated Successfully",
@@ -370,6 +371,8 @@
         "termsAndConditionsLabel": "Terms and Conditions",
         "clickHere":"click here.",
         "successRemainMsg":"to track service request with pre-filled EID.",
+        "passwordCombinationHeading":"Password combination: ",
+        "passwordCombination":"First four letters of your first name and your year of birth. E.g.: If your name is Johnny Depp born on 09/06/1963, your password will be John1963.",
         "getMyUin":{
             "downloadedSuccessFully":"Dear resident, your UIN card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can",
             "invalidOtp":" Invalid OTP was entered. Please click resend OTP and try again with a valid OTP "
@@ -393,17 +396,21 @@
             "Perpetual": {
                 "WarningMessageLabel": "Generating a new perpetual VID will revoke the already existing VID. Click on yes if you want to proceed.",
                 "confirmationMessageForCreateVid": "Are you sure you want to create a perpetual VID?",
-                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen perpetual VID?"
+                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen perpetual VID?",
+                "confirmationMessageForDownloadVid": "Are you sure you want to download perpetual VID?"
             },
             "Temporary": {
                 "confirmationMessageForCreateVid": "Are you sure you want to create a temporary VID?",
-                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen temporary VID?"
+                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen temporary VID?",
+                "confirmationMessageForDownloadVid": "Are you sure you want to download temporary VID?"
             },
             "OneTimeUse": {
                 "confirmationMessageForCreateVid": "Are you sure you want to create a one-time VID?",
-                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen one-time VID?"
+                "confirmationMessageForDeleteVid": "Are you sure you want to delete the chosen one-time VID?",
+                "confirmationMessageForDownloadVid": "Are you sure you want to download one-time VID?"
             },
             "createdSuccessfully": "Dear resident, your VID has been successfully generated against the the Event Id: $eventId. In order to track the status of the event, you can ",
+            "downloadedSuccessFully":"Dear resident, your request to download the VID card has been successfully processed against the Event Id: $eventId. It will take some time for us to get the card ready. We will send you a link over your registered email Id and/or phone number using which you can download the requested card. You can also download the card from the notification section or track status section once it is ready. In order to track the status of the event, you can ",
             "deletedSuccessfully": "Dear resident, your VID has been successfully deleted against the the Event Id: $eventId. In order to track the status of the event, you can "
         },
         "personalisedcardMessages": {
@@ -425,6 +432,10 @@
         "grievanceRedressal":{
             "successMsg":"Dear resident, your complaint has been successfully sent against the $ticketId.",
             "warningMsg":"Dear resident, your complaint could not be sent. Please try again later."
+        },
+        "secureMyId":{
+            "successMsg":"Dear resident, the changes requested to change the authentication types have been saved successfully against the Event Id: $eventId. In order to track the status of the event, you can ",
+            "confirmationMessage":" Are you sure you want to save the changes made in authentication types?"
         }
 
     },

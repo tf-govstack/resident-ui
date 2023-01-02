@@ -31,6 +31,8 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   buildHTML:any;
   userInfo:any;
   message:any;
+  formatData:any;
+  eventId:any;
 
   constructor(private interactionService:InteractionService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -61,6 +63,15 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
     this.getPartnerDetails();
     this.getUserInfo()
+    this.getMappingData()
+  }
+
+  getMappingData() {
+    this.dataStorageService
+      .getMappingData()
+      .subscribe((response) => {
+        this.formatData = { "Address Format": response["identity"]["fullAddress"]["value"].split(","), "Name Format": response["identity"]["name"]["value"].split(","), "Date Format": response["identity"]["dob"]["value"].split(",") }
+      })
   }
 
   getUserInfo(){
@@ -90,12 +101,19 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         let value = "";
       if (typeof this.userInfo[data.attributeName] === "string") {        
         value = this.userInfo[data.attributeName];
-      }else{
-        value = this.userInfo[data.attributeName][0].value;
+      }else{ 
+        if(data.attributeName === "uin"){
+          value = this.userInfo["UIN"]
+        }else if(data.attributeName === "Perpetual VID"){
+          value = this.userInfo["perpetualVID"]
+        }else{
+          value = this.userInfo[data.attributeName][0].value;
+        }
+        
       }
       this.sharableAttributes[data.attributeName] = {"label":data.label[this.langCode], "value": value};
       }
-
+      
     }else if(type === "maskcheck"){
       if(this.sharableAttributes[data.attributeName]){
         this.sharableAttributes[data.attributeName]["isMasked"] = $event.checked;
@@ -105,15 +123,16 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     }
      
     let row = "";
+    let rowImage = ""
     console.log("data.attributeName>>>"+data.attributeName);
     for (const key in this.sharableAttributes) {
-      if(data.attributeName === "photo"){
-        row = row+"<tr><td>"+this.sharableAttributes[key].label+"</td><td><img src='data:image/png;base64, "+this.sharableAttributes[key].value+"' alt=''/></td></tr>";  
-      }else{
+      console.log(this.sharableAttributes[key].value)
+      if(key === "photo"){
+        rowImage = "<tr><td><img src='data:image/png;base64, " + this.sharableAttributes[key].value + "' alt=''/></td></tr>";      }else{
        row = row+"<tr><td>"+this.sharableAttributes[key].label+"</td><td>"+this.sharableAttributes[key].value+"</td></tr>";
       }      
     }
-    this.buildHTML = `<html><head></head><body><table>`+row+`</table></body></html>`;
+    this.buildHTML = `<html><head></head><body><table>`+rowImage+row+`</table></body></html>`;
     
   }
 
@@ -159,11 +178,13 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .shareInfo(request)
     .subscribe(data => {
+      this.eventId= data.headers.get("eventid")
       this.dataStorageService
-      .getEIDStatus(data["response"].eventId)
+      .getEIDStatus(this.eventId)
       .subscribe((response) => {
         if(response["response"]) 
           this.aidStatus = response["response"];
+          console.log(this.aidStatus)
           this.showAcknowledgement = true;
       });
       console.log("data>>>"+data);
@@ -175,7 +196,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
   termAndConditions() {
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '850px',
+      width: '550px',
       data: {
         case: 'termsAndConditions',
         title: this.popupMessages.genericmessage.termsAndConditionsLabel,
@@ -210,7 +231,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   showMessage(message: string) {   
     this.message = this.popupMessages.genericmessage.sharewithpartner.successMessage.replace("$eventId", this.aidStatus.eventId)
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '850px',
+      width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
@@ -224,7 +245,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   showErrorPopup(message: string) {
     this.dialog
       .open(DialogComponent, {
-        width: '850px',
+        width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
