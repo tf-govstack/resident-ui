@@ -31,6 +31,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   nameFormatValues: string[];
   addressFormatValues: string[];
   eventId: any;
+  givenNameBox:boolean = false;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -82,29 +83,62 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.buildHTML = "";
     let row = "";
     let rowImage = "";
+  
 
-    if (data.attributeName.toString() in this.dataDisplay) {
-      delete this.dataDisplay[data.attributeName];
-    } else {
-      let value = "";
-      if (typeof this.userInfo[data.attributeName] === "string") {
-        value = this.userInfo[data.attributeName];
-      } else {
-        if (data.attributeName === "uin") {
-          value = this.userInfo["UIN"]
-        }else if(data.attributeName === "Perpetual VID"){
-          value = this.userInfo["perpetualVID"]
-        }else {
-          value = this.userInfo[data.attributeName][0].value;
+    if(data2 !== undefined){
+      if(data2 in this.dataDisplay){
+        console.log("Avalible")
+      }else{
+        if (data.attributeName.toString() in this.dataDisplay) {
+          delete this.dataDisplay[data.attributeName];
+        } else {
+          let value = "";
+          if (typeof this.userInfo[data2] === "string") {
+            value = this.userInfo[data2];
+          } else {
+            if (data2 === "uin") {
+              value = this.userInfo["UIN"]
+            }else if(data2 === "Perpetual VID"){
+              value = this.userInfo["perpetualVID"]
+            }else if(this.userInfo[data2] === undefined){
+              value = "Not Available"
+            }
+            else {
+              value = this.userInfo[data2][0].value;
+            }
+          }
+          if (data.attributeName === "photo") {
+            this.dataDisplay[data.attributeName] = { "label": "", "value": value };
+          } else {
+            this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
+          }
         }
-
       }
-      if (data.attributeName === "photo") {
-        this.dataDisplay[data.attributeName] = { "label": "", "value": value };
+    }else{
+      if (data.attributeName.toString() in this.dataDisplay) {
+        delete this.dataDisplay[data.attributeName];
       } else {
-        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
+        let value = "";
+        if (typeof this.userInfo[data.attributeName] === "string") {
+          value = this.userInfo[data.attributeName];
+        } else {
+          if (data.attributeName === "uin") {
+            value = this.userInfo["UIN"]
+          }else if(data.attributeName === "Perpetual VID"){
+            value = this.userInfo["perpetualVID"]
+          }else {
+            value = this.userInfo[data.attributeName][0].value;
+          }
+  
+        }
+        if (data.attributeName === "photo") {
+          this.dataDisplay[data.attributeName] = { "label": "", "value": value };
+        } else {
+          this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
+        }
       }
     }
+    
 
     for (const key in this.dataDisplay) {
       if (key === "photo") {
