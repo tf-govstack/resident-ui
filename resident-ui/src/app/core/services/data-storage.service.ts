@@ -155,7 +155,7 @@ export class DataStorageService {
   }
 
   generateVID(request: any){
-    return this.httpClient.post(this.BASE_URL   + '/generate-vid', request);
+    return this.httpClient.post(this.BASE_URL   + '/generate-vid', request, { observe: 'response'});
   }
 
   revokeVID(request: any, vid: string){

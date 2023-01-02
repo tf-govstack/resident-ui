@@ -159,6 +159,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     };
     console.log(request)
     this.dataStorageService.generateVID(request).subscribe(response => {
+      console.log("request>>>>"+response["headers"].get("eventid"));
       this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully 
       console.log(response)
       if (!response["errors"].length) {
