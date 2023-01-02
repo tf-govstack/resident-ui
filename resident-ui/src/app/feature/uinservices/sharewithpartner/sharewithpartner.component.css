@@ -106,3 +106,8 @@
   font-family: Roboto,'Helvetica Neue',sans-serif;
   padding: 5px
 }
+
+.share-btn{
+  background-color: #03A64A;
+  color: #ffffff;
+}

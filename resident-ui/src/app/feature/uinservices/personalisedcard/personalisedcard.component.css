@@ -11,3 +11,7 @@
     border-radius: 6px; 
     padding: 12px;
 }
+.download-btn{
+    background-color: #03A64A;
+    color: #ffffff;
+}
