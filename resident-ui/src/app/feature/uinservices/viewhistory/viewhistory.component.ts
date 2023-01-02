@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { DateAdapter } from '@angular/material/core';
 import { saveAs } from 'file-saver';
 import { HeaderService } from 'src/app/core/services/header.service';
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-viewhistory",
@@ -28,9 +29,12 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [5, 10, 15, 20];
   serviceTypeFilter:any;
   statusTypeFilter:any;
+  showFirstLastButtons:boolean = true
 
   today: Date;
   startdate: Date = new Date(2022, 0, 1)
+  modeselect = 'ALL'
+  selectedDate:any;
 
   searchText:string = "";
   serviceType:string = "";
@@ -53,7 +57,8 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
     this.today = new Date()
     
-    this.getServiceHistory("","");    
+    this.getServiceHistory("",""); 
+    this.captureValue("","ALL","")
   }
 
   getServiceHistory(pageEvent:any, filters:any){   
@@ -90,6 +95,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, controlType: string) {
+    this.selectedDate = this.today
     if(controlType === "dropdown"){
       this[formControlName] = event.value.toString().toUpperCase();
     }else if(controlType === "datepicker"){

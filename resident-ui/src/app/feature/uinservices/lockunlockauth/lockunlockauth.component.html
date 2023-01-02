@@ -28,7 +28,7 @@
 				</mat-card>
 			</mat-grid-tile>		  
 		</mat-grid-list>
-		<button id="updateAuthlockStatusBtn" mat-raised-button color="primary" (click)="updateAuthlockStatus()">{{'verifyuinvid.submit' | translate}}</button>
+		<button [disabled]="submitBtnDisable" id="updateAuthlockStatusBtn" mat-raised-button color="primary" (click)="updateAuthlockStatusBtn()">{{'verifyuinvid.submit' | translate}}</button>
 	</mat-card>	
 </div>
 

@@ -57,7 +57,7 @@
   background-color: transparent;
   color: #03A64A;
   font-weight: 700;
-  border-bottom-color: #03A64A !important;
+  /* border-bottom-color: #03A64A !important; */
 }
 
 .details-card {

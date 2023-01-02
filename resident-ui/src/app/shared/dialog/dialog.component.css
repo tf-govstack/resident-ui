@@ -252,7 +252,14 @@ td.mat-footer-cell:last-child {
 
 .infro-card {
   display: flex;
-  align-items: center;
+}
+p{
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+.pop-up-icon{
+  background-color: transparent;
+  margin-top: 10px;
 }
 
 .conditions-card {

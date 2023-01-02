@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { ThrowStmt } from "@angular/compiler";
 import { HostListener } from '@angular/core';
+import {saveAs} from 'file-saver'
 
 @Component({
   selector: "app-revokevid",
@@ -36,18 +37,18 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   showInfoCard:boolean = false;
   iIconVidType:any;
   infoText:any;
+  eventId:any;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
-      if (id === "createVId") {
+      if (id === "confirmBtn") {
         this.generateVID(this.newVidType)
       }else if (id === "deleteVID"){
         this.revokeVID(this.newVidValue)
+      }else if(id === "downloadVID"){
+        this.vidDownloadStatus(this.newVidValue)
       }
-
     })
-
-    
   }
 
   async ngOnInit() {
@@ -157,25 +158,66 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         "channels": ["PHONE", "EMAIL"]
       }
     };
-    console.log(request)
     this.dataStorageService.generateVID(request).subscribe(response => {
-      console.log("request>>>>"+response["headers"].get("eventid"));
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully 
-      console.log(response)
-      if (!response["errors"].length) {
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.createdSuccessfully
+      this.eventId = response.headers.get("eventId")
+      if (!response.body["errors"].length) {
         setTimeout(() => {
           self.getVID();
-        }, 300);
-        this.showMessage(this.message.replace("$eventId", response["response"].vid),response["response"].vid);
+        }, 400);
+        this.showMessage(this.message.replace("$eventId", this.eventId ),this.eventId);
       } else {
-        this.showErrorPopup(response["errors"][0].errorCode);
+        this.showErrorPopup(response.body["errors"][0].errorCode);
       }
     });
   }
 
+  downloadVIDBtn(vid:any,vidType:any){
+    this.showDownloadMessage(vidType)
+    this.newVidValue = vid
+    this.newVidType = vidType
+  }
+
+  vidDownloadStatus(vid:any){
+      this.dataStorageService.vidDownloadStatus(vid).subscribe(response =>{
+        if(!response.body['errors'].length){
+          setTimeout(()=>{
+            this.downloadVidCard(response.headers.get("eventid"))
+          },120000)
+        }else{
+          console.log("error>>"+response.body['errors'])
+        }
+      },
+      error =>{
+        console.log(error)
+      })
+  }
+
+  downloadVidCard(eventId:any){
+     this.dataStorageService.downloadVidCardStatus(eventId).subscribe(response =>{
+      this.eventId = response.headers.get("eventid")
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully.replace("$eventId", this.eventId)
+      let fileName = ""
+      const contentDisposition = response.headers.get('Content-Disposition');
+      console.log(contentDisposition)
+      if (contentDisposition) {
+        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = fileNameRegex.exec(contentDisposition);
+        if (matches != null && matches[1]) {
+          fileName = matches[1].replace(/['"]/g, '');
+        }
+      }
+      saveAs(response.body, fileName);
+      this.successMsgForDownload(this.message, this.eventId)
+     })
+  }
+
+  
+
   revokeVIDBtn(vidValue: any,vidType:any){
-    this.showDeleteMessage(vidType,vidValue)
+    this.showDeleteMessage(vidType)
     this.newVidValue = vidValue
+    this.newVidType - vidType
   }
 
   revokeVID(vidValue: any) {
@@ -190,15 +232,17 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.revokeVID(request, vidValue).subscribe(response => {
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", vidValue) 
-      if (!response["errors"].length) {
+      console.log(response.headers.get("eventid"))
+      this.eventId = response.headers.get("eventid")
+      this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", this.eventId)
+      if (!response.body["errors"].length) {
         setTimeout(() => {
           self.getVID();
           // this.showMessage(this.message ,vidValue);
-        }, 300);
-        this.showMessage(this.message ,vidValue);
+        }, 400);
+        this.showMessage(this.message ,this.eventId);
       } else {
-        this.showErrorPopup(response["errors"][0].errorCode);
+        this.showErrorPopup(response.body["errors"][0].errorCode);
       }
     },
       error => {
@@ -207,13 +251,13 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     );
   }
 
-  showMessage(message: string,vidValue:string) {
+  showMessage(message: string,eventId:string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        vidValue:vidValue,
+        eventId:eventId,
         message: message,
         clickHere:this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
@@ -222,8 +266,25 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     return dialogRef;
   }
 
-  showDeleteMessage(vidType: string,vidValue:string) {
-    this.message = this.popupMessages.genericmessage.manageMyVidMessages[vidType].confirmationMessageForDeleteVid.replace("$event",vidValue)
+  successMsgForDownload(message: string,eventId:string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        eventId:eventId,
+        passwordCombinationHeading:this.popupMessages.genericmessage.passwordCombinationHeading,
+        passwordCombination:this.popupMessages.genericmessage.passwordCombination,
+        message: message,
+        clickHere:this.popupMessages.genericmessage.clickHere,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
+  }
+
+  showDeleteMessage(vidType: string) {
+    this.message = this.popupMessages.genericmessage.manageMyVidMessages[vidType].confirmationMessageForDeleteVid
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
@@ -232,6 +293,22 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         btnTxtNo: this.popupMessages.genericmessage.noButton,
         message: this.message,
         btnTxt: this.popupMessages.genericmessage.deleteButton
+      }
+    });
+    return dialogRef;
+  }
+
+  showDownloadMessage(vidType: string) {
+    this.message = this.popupMessages.genericmessage.manageMyVidMessages[vidType].confirmationMessageForDownloadVid 
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.warningLabel,
+        btnTxtNo: this.popupMessages.genericmessage.noButton,
+        message: this.message,
+
+        btnTxt: this.popupMessages.genericmessage.downloadLabel
       }
     });
     return dialogRef;

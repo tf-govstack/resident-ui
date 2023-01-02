@@ -54,15 +54,15 @@ export class AutoLogoutService {
    */
 
   getValues(langCode) {
-    // (this.idle = Number(
-    //   this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_preregistration_auto_logout_idle)
-    // )),
-    //   (this.timeout = Number(
-    //     this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_preregistration_auto_logout_timeout)
-    //   )),
-    //   (this.ping = Number(
-    //     this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_preregistration_auto_logout_ping)
-    //   ));
+    (this.idle = Number(
+      this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_webui_auto_logout_idle)
+    )),
+      (this.timeout = Number(
+        this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_webui_auto_logout_timeout)
+      )),
+      (this.ping = Number(
+        this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_webui_auto_logout_ping)
+      ));
     this.dataStorageService
       .getI18NLanguageFiles(langCode)
       .subscribe((response) => {
@@ -155,19 +155,6 @@ export class AutoLogoutService {
    * @memberof AutoLogoutService
    */
 
-  // showErrorPopup(message: string) {
-  //   this.dialog
-  //     .open(DialogComponent, {
-  //       width: '850px',
-  //       data: {
-  //         case: 'MESSAGE',
-  //         title: this.popupMessages.genericmessage.errorLabel,
-  //         message: message,
-  //         btnTxt: this.popupMessages.genericmessage.successButton
-  //       },
-  //       disableClose: true
-  //     });
-  // }
   openPopUp() {
     this.dialogref = this.dialog.open(DialogComponent, {
       width: '400px',

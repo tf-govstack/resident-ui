@@ -52,7 +52,7 @@
 							    	<span *ngIf="!list.transactionsLeftCount">NA</span>							    	
 							    </td>
 							    <td style="width:50%;float: right;">
-							    	<span style="color: green;font-size: 24px;cursor:pointer;"><img id="download{{i}}" src="assets\download.png"></span>&nbsp;&nbsp;&nbsp;
+							    	<span (click)="downloadVIDBtn(list.vid,policy.vidType)" style="color: green;font-size: 24px;cursor:pointer;"><img id="download{{i}}" src="assets\download.png"></span>&nbsp;&nbsp;&nbsp;
 							    	<mat-icon id="delete{{i}}" style="color: #DB4F4F;font-size: 24px;cursor:pointer;" (click)="revokeVIDBtn(list.vid,policy.vidType)">delete</mat-icon>
 							    </td>
 							  </tr>

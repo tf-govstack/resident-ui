@@ -50,10 +50,10 @@ export class AuthInterceptor implements HttpInterceptor {
             this.invokedurl = event.url;        
             if (event.url.split('/').includes('validateToken')) {                
                 if (event.body.response) {
-                  this.decoded = jwt_decode(event.body.response.token);
-                  this.headerService.setUsername(event.body.response.userId);
-                  this.headerService.setEmailId(this.decoded["email"]);
-                  this.headerService.setPhoneNumber(this.decoded["phoneNumber"]);              
+                  // this.decoded = jwt_decode(event.body.response.token);
+                  // this.headerService.setUsername(event.body.response.userId);
+                  // this.headerService.setEmailId(this.decoded["email"]);
+                  // this.headerService.setPhoneNumber(this.decoded["phoneNumber"]);              
                 }
                 if (
                   event.body.errors !== null &&

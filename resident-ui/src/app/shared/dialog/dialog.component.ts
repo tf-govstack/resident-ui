@@ -120,12 +120,17 @@ export class DialogComponent implements OnInit {
 
   vidWarning():void{
     this.dialog.closeAll();
-    this.interactionService.sendClickEvent("createVId")
+    this.interactionService.sendClickEvent("confirmBtn")
   }
 
   vidDelete():void{
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("deleteVID")
+  }
+
+  vidDownload():void{
+    this.dialog.closeAll();
+    this.interactionService.sendClickEvent("downloadVID")
   }
 
   downloadPersonalCard(){
@@ -135,6 +140,7 @@ export class DialogComponent implements OnInit {
   
   viewDetails(eventId:any){
     this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+ eventId);
+    this.dialog.closeAll();
   }
 }
 
