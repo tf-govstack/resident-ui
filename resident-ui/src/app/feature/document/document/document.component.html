@@ -10,6 +10,6 @@
     <mat-tab label="{{'dashboard.regcenter' | translate}}"></mat-tab>
     <mat-tab label="{{'dashboard.document' | translate}}"></mat-tab>
   </mat-tab-group>
-  <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="100%" width="100%" frameborder="0" scrolling="no" onload="resizeIframe(this)" />
+  <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="100%" width="100%">
+  </div>
 </div>
-</div
