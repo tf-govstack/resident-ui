@@ -32,6 +32,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   addressFormatValues: string[];
   eventId: any;
   givenNameBox:boolean = false;
+  downloadBtnDisabled:boolean = true
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -83,63 +84,35 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.buildHTML = "";
     let row = "";
     let rowImage = "";
-  
 
-    if(data2 !== undefined){
-      if(data2 in this.dataDisplay){
-        console.log("Avalible")
-      }else{
-        if (data.attributeName.toString() in this.dataDisplay) {
-          delete this.dataDisplay[data.attributeName];
-        } else {
-          let value = "";
-          if (typeof this.userInfo[data2] === "string") {
-            value = this.userInfo[data2];
-          } else {
-            if (data2 === "uin") {
-              value = this.userInfo["UIN"]
-            }else if(data2 === "Perpetual VID"){
-              value = this.userInfo["perpetualVID"]
-            }else if(this.userInfo[data2] === undefined){
-              value = "Not Available"
-            }
-            else {
-              value = this.userInfo[data2][0].value;
-            }
-          }
-          if (data.attributeName === "photo") {
-            this.dataDisplay[data.attributeName] = { "label": "", "value": value };
-          } else {
-            this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
-          }
-        }
-      }
-    }else{
-      if (data.attributeName.toString() in this.dataDisplay) {
-        delete this.dataDisplay[data.attributeName];
+    if (data.attributeName.toString() in this.dataDisplay) {
+      delete this.dataDisplay[data.attributeName];
+    } else {
+      let value = "";
+      if (typeof this.userInfo[data.attributeName] === "string") {
+        value = this.userInfo[data.attributeName];
       } else {
-        let value = "";
-        if (typeof this.userInfo[data.attributeName] === "string") {
-          value = this.userInfo[data.attributeName];
-        } else {
-          if (data.attributeName === "uin") {
-            value = this.userInfo["UIN"]
-          }else if(data.attributeName === "Perpetual VID"){
-            value = this.userInfo["perpetualVID"]
-          }else {
-            value = this.userInfo[data.attributeName][0].value;
-          }
-  
+        if (data.attributeName === "uin") {
+          value = this.userInfo["UIN"]
+        }else if(data.attributeName === "Perpetual VID"){
+          value = this.userInfo["perpetualVID"]
+        }else {
+          value = this.userInfo[data.attributeName][0].value;
         }
-        if (data.attributeName === "photo") {
-          this.dataDisplay[data.attributeName] = { "label": "", "value": value };
-        } else {
-          this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
-        }
+
+      }
+      if (data.attributeName === "photo") {
+        this.dataDisplay[data.attributeName] = { "label": "", "value": value };
+      } else {
+        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
       }
     }
-    
 
+    if(Object.keys(this.dataDisplay).length >= 3){
+      this.downloadBtnDisabled = false
+    }else{
+      this.downloadBtnDisabled = true
+    }
     for (const key in this.dataDisplay) {
       if (key === "photo") {
         rowImage = "<tr><td><img src='data:image/png;base64, " + this.dataDisplay[key].value + "' alt=''/></td></tr>";

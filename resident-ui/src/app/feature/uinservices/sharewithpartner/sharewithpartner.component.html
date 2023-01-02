@@ -86,7 +86,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="float:right;width: 100%" colspan="2"><button id="shareBtn" mat-raised-button color="primary"
+				<td style="float:right;width: 100%" colspan="2"><button id="shareBtn" [disabled]="shareBthDisabled" mat-raised-button class="share-btn"
 						(click)="shareInfoBtn()">{{'sharewithpartner.sharebutton' | translate}}</button></td>
 			</tr>
 		</table>
