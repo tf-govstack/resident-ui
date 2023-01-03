@@ -3,32 +3,13 @@
   >&nbsp;&nbsp;{{'dashboard.getinformation' | translate}}&nbsp;&nbsp;>&nbsp;&nbsp;<span
     class="active">{{'dashboard.document' | translate}}</span>
 </span>
-<!-- <mat-tab-group class="mat-tab-group mat-background-primary mat-primary" [selectedIndex]="1"
-  (selectedTabChange)="onItemSelected($event)">
-  <mat-tab label="{{'dashboard.regcenter' | translate}}"></mat-tab>
-  <mat-tab label="{{'dashboard.document' | translate}}"></mat-tab>
-</mat-tab-group> -->
+
 <div class="details-main-card">
   <div class="details-card">
   <mat-tab-group  class="tabs" (selectedTabChange)="onItemSelected($event)" [selectedIndex]="1">
     <mat-tab label="{{'dashboard.regcenter' | translate}}"></mat-tab>
     <mat-tab label="{{'dashboard.document' | translate}}"></mat-tab>
   </mat-tab-group>
-  <app-pdf-viewer #pdfViewer *ngIf="pdfSrc" [pdfSrc]="pdfSrc" [zoom]="5.0"></app-pdf-viewer>
+  <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="100%" width="100%">
+  </div>
 </div>
-</div>
-<!-- <app-pdf-viewer #pdfViewer *ngIf="pdfSrc" [pdfSrc]="pdfSrc" [zoom]="5.0"></app-pdf-viewer> -->
-
-
-
-<!-- <ul *ngFor="let item of documentInfo">
-<li *ngIf="item.isActive">
-	<b>{{item.name}}</b>
-	<ul *ngFor="let documenttype of item.documenttypes">
-		<li *ngIf="documenttype.isActive">
-			{{documenttype.name}}
-		</li>
-	</ul>
-</li>
-</ul>
- -->

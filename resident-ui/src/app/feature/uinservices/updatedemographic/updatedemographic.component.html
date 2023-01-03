@@ -161,7 +161,7 @@
                   <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true" value="{{buildJSONData[field.id][language]}}"></td>
                   <td width="10%"></td>
                   <td width="45%">
-                    <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id)"/>
+                    <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id, language)"/>
                   </td>
                 </tr>
               </table>
