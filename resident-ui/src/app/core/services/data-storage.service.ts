@@ -300,8 +300,12 @@ export class DataStorageService {
   downloadVidCardStatus(eventId:any){
     return this.httpClient.get<Blob>(this.BASE_URL + '/download-card/event/'+eventId,{ observe: 'response', responseType: 'blob' as 'json' })
   }
-
-  sendotp(request: any){
-    return this.httpClient.post(this.BASE_URL   + '/contact-details/send-otp', request);
+  
+  generateOtpForDemographicData(request:any){
+    return this.httpClient.post(this.BASE_URL +'/contact-details/send-otp',request)
+  }
+  
+  verifyUpdateData(request:any){
+  return this.httpClient.post(this.BASE_URL + '/contact-details/update-data',request)
   }
 }

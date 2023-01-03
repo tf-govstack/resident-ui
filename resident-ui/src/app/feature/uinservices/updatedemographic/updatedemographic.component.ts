@@ -4,7 +4,10 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import { AppConfigService } from 'src/app/app-config.service';
-import Utils from 'src/app/app.utils';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
+import Utils from "src/app/app.utils";
+import { InteractionService } from "src/app/core/services/interaction.service";
 
 @Component({
   selector: "app-demographic",
@@ -12,25 +15,37 @@ import Utils from 'src/app/app.utils';
   styleUrls: ["updatedemographic.component.css"],
 })
 export class UpdatedemographicComponent implements OnInit, OnDestroy {
-  userInfo : any;
-  static actualData : any;
-  schema : any =  {"identity":[{"id":"fullName","description":"","labelName":{"eng":["Current Name","New Name"],"ara":["Current Name_ara","New Name_ara"],"fra":["Current Name_fra","New Name_fra"]},"controlType":"textbox","tabgroup":"identity"},{"id":"dateOfBirth","description":"","labelName":{"eng":["Current DOB","New DOB"],"ara":["Current DOB_ara","New DOB_ara"],"fra":["Current DOB_fra","New DOB_fra"]},"controlType":"calendar","tabgroup":"identity"},{"id":"gender","description":"","labelName":{"eng":["Current Gender","New Gender"],"ara":["Current Gender_ara","New Gender_ara"],"fra":["Current Gender_fra","New Gender_fra"]},"controlType":"dropdown","tabgroup":"identity"},{"id":"proofOfIdentity","description":"","labelName":{"eng":["Identity Proof","Document Type","Document Reference ID","Proof Of Document","Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"],"ara":["Identity Proof_ara","Document Type_ara","Document Reference ID_ara","Proof Of Document_ara","Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"],"fra":["Identity Proof_fra","Document Type_fra","Document Reference ID_fra","Proof Of Document_fra","Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"]},"controlType":"fileupload","tabgroup":"identity"},{"id":"addressLine1","description":"","labelName":{"eng":["Current Address Line1","New Address Line1"],"ara":["Current Address Line1_ara","New Address Line1_ara"],"fra":["Current Address Line1_fra","New Address Line1_fra"]},"controlType":"textbox","tabgroup":"address"},{"id":"region","name":"Region","description":"","labelName":{"eng":["Current Region","New Region"],"ara":["Current Region_ara","New Region_ara"],"fra":["Current Region_fra","New Region_fra"]},"controlType":"dropdown","tabgroup":"address","locationHierarchyLevel":1},{"id":"province","name":"Province","description":"","labelName":{"eng":["Current Province","New Province"],"ara":["Current Province_ara","New Province_ara"],"fra":["Current Province_fra","New Province_fra"]},"controlType":"dropdown","tabgroup":"address","locationHierarchyLevel":2},{"id":"city","name":"City","description":"","labelName":{"eng":["Current City","New City"],"ara":["Current City_ara","New City_ara"],"fra":["Current City_fra","New City_fra"]},"controlType":"dropdown","tabgroup":"address","locationHierarchyLevel":3},{"id":"zone","name":"Zone","description":"","labelName":{"eng":["Current Zone","New Zone"],"ara":["Current Zone_ara","New Zone_ara"],"fra":["Current Zone_fra","New Zone_fra"]},"controlType":"dropdown","tabgroup":"address","locationHierarchyLevel":4},{"id":"postalCode","name":"Postal Code","description":"","labelName":{"eng":["Current Postal Code","New Postal Code"],"ara":["Current Postal Code_ara","New Postal Code_ara"],"fra":["Current Postal Code_fra","New Postal Code_fra"]},"controlType":"dropdown","tabgroup":"address","locationHierarchyLevel":5},{"id":"proofOfAddress","description":"","labelName":{"eng":["Address Proof","Document Type","Document Reference ID","Proof Of Document","Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"],"ara":["Address Proof_ara","Document Type_ara","Document Reference ID_ara","Proof Of Document_ara","Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"],"fra":["Address Proof_fra","Document Type_fra","Document Reference ID_fra","Proof Of Document_fra","Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"]},"controlType":"fileupload","tabgroup":"address"},{"id":"email","description":"","labelName":{"eng":["Current email ID","New email ID","Confirm New email ID","Send OTP"],"ara":["Current email ID_ara","New email ID_ara","Confirm New email ID_ara","Send OTP_ara"],"fra":["Current email ID_fra","New email ID_fra","Confirm New email ID_fra","Send OTP_fra"]},"controlType":"textbox","tabgroup":"contact"},{"id":"phone","description":"","labelName":{"eng":["Current Phone Number","New Phone Number","Confirm New Phone Number","Send OTP"],"ara":["Current Phone Number_ara","New Phone Number_ara","Confirm New Phone Number_ara","Send OTP_ara"],"fra":["Current Phone Number_fra","New Phone Number_fra","Confirm New Phone Number_fra","Send OTP_fra"]},"controlType":"textbox","tabgroup":"contact"},{"id":"notificationLanguage","description":"","labelName":{"eng":["Current Notification Language","New Notification Language"],"ara":["Current Notification Language_ara","New Notification Language_ara"],"fra":["Current Notification Language_fra","New Notification Language_fra"]},"controlType":"dropdown","tabgroup":"notificationLanguage"}]};
+  userInfo: any;
+  static actualData: any;
+  schema: any = { "identity": [{ "id": "fullName", "description": "", "labelName": { "eng": ["Current Name", "New Name"], "ara": ["Current Name_ara", "New Name_ara"], "fra": ["Current Name_fra", "New Name_fra"] }, "controlType": "textbox", "tabgroup": "identity" }, { "id": "dateOfBirth", "description": "", "labelName": { "eng": ["Current DOB", "New DOB"], "ara": ["Current DOB_ara", "New DOB_ara"], "fra": ["Current DOB_fra", "New DOB_fra"] }, "controlType": "calendar", "tabgroup": "identity" }, { "id": "gender", "description": "", "labelName": { "eng": ["Current Gender", "New Gender"], "ara": ["Current Gender_ara", "New Gender_ara"], "fra": ["Current Gender_fra", "New Gender_fra"] }, "controlType": "dropdown", "tabgroup": "identity" }, { "id": "proofOfIdentity", "description": "", "labelName": { "eng": ["Identity Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Identity Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Identity Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "identity" }, { "id": "addressLine1", "description": "", "labelName": { "eng": ["Current Address Line1", "New Address Line1"], "ara": ["Current Address Line1_ara", "New Address Line1_ara"], "fra": ["Current Address Line1_fra", "New Address Line1_fra"] }, "controlType": "textbox", "tabgroup": "address" }, { "id": "region", "name": "Region", "description": "", "labelName": { "eng": ["Current Region", "New Region"], "ara": ["Current Region_ara", "New Region_ara"], "fra": ["Current Region_fra", "New Region_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 1 }, { "id": "province", "name": "Province", "description": "", "labelName": { "eng": ["Current Province", "New Province"], "ara": ["Current Province_ara", "New Province_ara"], "fra": ["Current Province_fra", "New Province_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 2 }, { "id": "city", "name": "City", "description": "", "labelName": { "eng": ["Current City", "New City"], "ara": ["Current City_ara", "New City_ara"], "fra": ["Current City_fra", "New City_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 3 }, { "id": "zone", "name": "Zone", "description": "", "labelName": { "eng": ["Current Zone", "New Zone"], "ara": ["Current Zone_ara", "New Zone_ara"], "fra": ["Current Zone_fra", "New Zone_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 4 }, { "id": "postalCode", "name": "Postal Code", "description": "", "labelName": { "eng": ["Current Postal Code", "New Postal Code"], "ara": ["Current Postal Code_ara", "New Postal Code_ara"], "fra": ["Current Postal Code_fra", "New Postal Code_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 5 }, { "id": "proofOfAddress", "description": "", "labelName": { "eng": ["Address Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Address Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Address Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "address" }, { "id": "email", "description": "", "labelName": { "eng": ["Current email ID", "New email ID", "Confirm New email ID", "Send OTP"], "ara": ["Current email ID_ara", "New email ID_ara", "Confirm New email ID_ara", "Send OTP_ara"], "fra": ["Current email ID_fra", "New email ID_fra", "Confirm New email ID_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact" }, { "id": "phone", "description": "", "labelName": { "eng": ["Current Phone Number", "New Phone Number", "Confirm New Phone Number", "Send OTP"], "ara": ["Current Phone Number_ara", "New Phone Number_ara", "Confirm New Phone Number_ara", "Send OTP_ara"], "fra": ["Current Phone Number_fra", "New Phone Number_fra", "Confirm New Phone Number_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact" }, { "id": "notificationLanguage", "description": "", "labelName": { "eng": ["Current Notification Language", "New Notification Language"], "ara": ["Current Notification Language_ara", "New Notification Language_ara"], "fra": ["Current Notification Language_fra", "New Notification Language_fra"] }, "controlType": "dropdown", "tabgroup": "notificationLanguage" }] };
   subscriptions: Subscription[] = [];
-  buildJSONData:any = {};
-  langCode:string = localStorage.getItem("langCode");
-  dropDownValues:any = {};
+  buildJSONData: any = {};
+  langCode: string = localStorage.getItem("langCode");
+  dropDownValues: any = {};
   supportedLanguages: Array<string>;
   locationFieldNameList: string[] = [];
   locCode = 0;
-  initialLocationCode:any = "";
+  initialLocationCode: any = "";
   dynamicFieldValue = {};
   dynamicDropDown = {};
   files: any[] = [];
   filesPOA: any[] = [];
-  proofOfIdentity:any = {};
-  proofOfAddress:any = {};
+  proofOfIdentity: any = {};
+  proofOfAddress: any = {};
+  transactionID: any;
+  userId: any;
+  clickEventSubscription: Subscription;
+  popupMessages:any;
 
-  constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService) {}
+  constructor(private interactionService:InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService) { 
+    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
+      if(id !== "resend"){
+        this.verifyupdatedData(id)
+      }else{
+        this.reGenerateOtp()
+      }
+    })
+  }
 
   async ngOnInit() {
     this.initialLocationCode = "MOR";
@@ -41,48 +56,53 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         this.schema = response["identity"];        
     });*/
     this.supportedLanguages = ["eng", "ara"];
+    this.translateService
+    .getTranslation(localStorage.getItem("langCode"))
+    .subscribe(response => {
+      this.popupMessages = response;
+    });
     this.getUserInfo();
   }
 
-  getUserInfo(){
+  getUserInfo() {
     this.dataStorageService
-    .getUserInfo()
-    .subscribe((response) => {
-      if(response["response"])
-        this.userInfo = response["response"];
+      .getUserInfo()
+      .subscribe((response) => {
+        if (response["response"])
+          this.userInfo = response["response"];
         UpdatedemographicComponent.actualData = response["response"];
         this.buildData();
-    });
+      });
   }
 
-  buildData(){
+  buildData() {
     let self = this;
     for (var schema of self.schema['identity']) {
-      if(self.userInfo[schema.id]){
-        if (typeof self.userInfo[schema.id] === "string") {  
+      if (self.userInfo[schema.id]) {
+        if (typeof self.userInfo[schema.id] === "string") {
           self.buildJSONData[schema.id] = self.userInfo[schema.id];
-        }else{
+        } else {
           self.buildJSONData[schema.id] = {};
           self.supportedLanguages.map((language) => {
-            let value = self.userInfo[schema.id].filter(function(data){if(data.language.trim() === language.trim()){return data.value.trim()}}); 
+            let value = self.userInfo[schema.id].filter(function (data) { if (data.language.trim() === language.trim()) { return data.value.trim() } });
             self.buildJSONData[schema.id][language] = value[0].value;
-          });                    
+          });
         }
-      }   
+      }
     }
     this.getGender();
     this.getLocationHierarchyLevel();
-    this.getDocumentType("POI", "proofOfIdentity");this.getDocumentType("POA", "proofOfAddress");
+    this.getDocumentType("POI", "proofOfIdentity"); this.getDocumentType("POA", "proofOfAddress");
   }
 
-  getDocumentType(type:string, id:string){
-    this.dataStorageService.getDataForDropDown("/proxy/masterdata/documenttypes/"+type+"/"+localStorage.getItem("langCode")).subscribe(response => {
+  getDocumentType(type: string, id: string) {
+    this.dataStorageService.getDataForDropDown("/proxy/masterdata/documenttypes/" + type + "/" + localStorage.getItem("langCode")).subscribe(response => {
       this.dropDownValues[id] = response["response"]["documents"];
     });
   }
 
-  getGender(){
-    this.dataStorageService.getDataForDropDown("/auth-proxy/masterdata/gendertypes/"+localStorage.getItem("langCode")).subscribe(response => {
+  getGender() {
+    this.dataStorageService.getDataForDropDown("/auth-proxy/masterdata/gendertypes/" + localStorage.getItem("langCode")).subscribe(response => {
       this.dropDownValues["gender"] = response["response"]["genderType"];
     });
   }
@@ -93,94 +113,177 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     self.locationFieldNameList = [];
     self.dataStorageService.getLocationHierarchyLevel(self.langCode).subscribe(response => {
       response["response"]["locationHierarchyLevels"].forEach(function (value) {
-        if(value.hierarchyLevel != 0)
-          if(value.hierarchyLevel <= self.locCode)
-            self.locationFieldNameList.push(value.hierarchyLevelName);          
-      });  
-      for(let value of self.locationFieldNameList) {
-        self.dynamicDropDown[value] = []; 
+        if (value.hierarchyLevel != 0)
+          if (value.hierarchyLevel <= self.locCode)
+            self.locationFieldNameList.push(value.hierarchyLevelName);
+      });
+      for (let value of self.locationFieldNameList) {
+        self.dynamicDropDown[value] = [];
         self.dynamicFieldValue[value] = "";
       }
       self.loadLocationDataDynamically("", 0);
-    }); 
+    });
   }
 
-  loadLocationDataDynamically(event:any, index: any){
-    let locationCode = ""; 
-    let fieldName = "";   
-    let self = this;  
-    if(event === ""){
+  loadLocationDataDynamically(event: any, index: any) {
+    let locationCode = "";
+    let fieldName = "";
+    let self = this;
+    if (event === "") {
       fieldName = this.locationFieldNameList[parseInt(index)];
       locationCode = this.initialLocationCode;
-    }else{    
+    } else {
       fieldName = this.locationFieldNameList[parseInt(index)];
       locationCode = event.value; 
       this.dynamicFieldValue[this.locationFieldNameList[parseInt(index)-1]] = event.value;
-    }    
+    }   
     this.dataStorageService.getImmediateChildren(locationCode, this.langCode)
-    .subscribe(response => {
-      if(response['response'])
-        self.dynamicDropDown[fieldName] = response['response']['locations'];
-    });    
+      .subscribe(response => {
+        if (response['response'])
+          self.dynamicDropDown[fieldName] = response['response']['locations'];
+      });
   }
 
-  captureValue(event: any, formControlName: string, language:string) {
+  captureValue(event: any, formControlName: string, language: string) {
+    this.userId = event.target.value
     let self = this;
-    if(event.target.value){
-      if((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")){
-        if (typeof self.userInfo[formControlName] === "string") {  
+    if (event.target.value) {
+      if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
+        if (typeof self.userInfo[formControlName] === "string") {
           self.userInfo[formControlName] = event.target.value;
-        }else{
+        } else {
           let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
-          self.userInfo[formControlName][index]["value"] = event.target.value;                     
+          self.userInfo[formControlName][index]["value"] = event.target.value;
         }
-      }else{
+      } else {
         self[formControlName]["documentreferenceId"] = event.target.value;
       }
-    } 
+    }
+  }
+
+  sendOTPBtn() {
+    this.generateOtp()
+  }
+
+  generateOtp() {
+    this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    if (this.transactionID.length < 10) {
+      let diffrence = 10 - this.transactionID.length;
+      this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
+    }else{
+      this.transactionID = this.transactionID
+    }
+   
+    const request = {
+      "id": "mosip.resident.contact.details.send.otp.id",
+      "version": this.appConfigService.getConfig()['resident.vid.version'],
+      "requesttime": Utils.getCurrentDate(),
+      "request": {
+        "userId": this.userId,
+        "transactionID": this.transactionID
+      }
+    }
+    this.dataStorageService.generateOtpForDemographicData(request).subscribe(response => {
+      if (response["response"]) {
+        this.showOTPPopup()
+      } else {
+        console.log("No")
+      }
+    },error =>{
+      console.log(error)
+    })
+  }
+
+  reGenerateOtp() {
+    this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    if (this.transactionID.length < 10) {
+      let diffrence = 10 - this.transactionID.length;
+      this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
+    }else{
+      this.transactionID = this.transactionID
+    }
+   
+    const request = {
+      "id": "mosip.resident.contact.details.send.otp.id",
+      "version": this.appConfigService.getConfig()['resident.vid.version'],
+      "requesttime": Utils.getCurrentDate(),
+      "request": {
+        "userId": this.userId,
+        "transactionID": this.transactionID
+      }
+    }
+    this.dataStorageService.generateOtpForDemographicData(request).subscribe(response => {
+      if (response["response"]) {
+        
+      } else {
+        console.log("No")
+      }
+    },error =>{
+      console.log(error)
+    })
+  }
+
+  verifyupdatedData(otp:any){
+    const request = {
+      "id": "mosip.resident.contact.details.update.id",
+      "version": this.appConfigService.getConfig()['resident.vid.version'],
+      "requesttime": Utils.getCurrentDate(),
+      "request": {
+        "userId": this.userId,
+        "transactionID": this.transactionID,
+        "otp":otp
+      }
+    }
+    this.dataStorageService.verifyUpdateData(request).subscribe(response =>{
+      if(response['response']){
+        this.dialog.closeAll()
+      }else{
+        console.log(response)
+      }
+    },error =>{
+      console.log(error)
+    })
+  }
+
+
+
+  showOTPPopup() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'OTP',
+        message: "One Time Password (OTP) has been sent to your new channel ",
+        newContact: this.userId,
+        submitBtnTxt: this.popupMessages.genericmessage.submitButton,
+        resentBtnTxt:this.popupMessages.genericmessage.resentBtn
+      }
+    });
+    return dialogRef;
   }
 
   captureDatePickerValue(event: any, formControlName: string) {
     let self = this;
     let dateFormat = new Date(event.target.value);
-    let formattedDate = dateFormat.getFullYear() + "/" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);
-    if(event.target.value){
+    let formattedDate = dateFormat.getFullYear() + "/" + ("0" + (dateFormat.getMonth() + 1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);
+    if (event.target.value) {
       self.userInfo[formControlName] = formattedDate;
     }
   }
 
-  captureDropDownValue(event: any, formControlName: string, language:string) {
+  captureDropDownValue(event: any, formControlName: string, language: string) {
     let self = this;
     if (event.source.selected) {
-      if((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")){
+      if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
         self.supportedLanguages.map((maplanguage) => {
           let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === maplanguage.trim());
-          self.userInfo[formControlName][index]["value"] = event.source.viewValue;   
+          self.userInfo[formControlName][index]["value"] = event.source.viewValue;
         });
-      }else{
+      } else {
         self[formControlName]["documenttype"] = event.source.viewValue;
       }
     }
   }
 
-  sendotp(channel:string){
-    let self = this;
-    let userId = self.userInfo[channel];
-    
-    const request = {
-      "id": "mosip.resident.contact.details.send.otp.id",
-      "version": this.appConfigService.getConfig()["resident.vid.version.new"],
-      "requesttime": Utils.getCurrentDate(),
-      "request": {
-        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
-        "userId": userId
-      }
-    };
-    this.dataStorageService.sendotp(request).subscribe(response => {
-      console.log("response>>>"+response);
-    });
-    console.log("channel>>>"+channel);
-  }
 
   updateDemographicData(){
     console.log("self.proofOfIdentity>>>"+JSON.stringify(this.proofOfIdentity));
@@ -207,10 +310,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    * Delete file from files list
    * @param index (File index)
    */
-  deleteFile(index: number, type:string) {
-    if(type === "POI"){
+  deleteFile(index: number, type: string) {
+    if (type === "POI") {
       this.files.splice(index, 1);
-    }else{
+    } else {
       this.filesPOA.splice(index, 1);
     }
   }
@@ -218,9 +321,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   /**
    * Simulate the upload process
    */
-  uploadFilesSimulator(index: number, type:string) {
+  uploadFilesSimulator(index: number, type: string) {
     setTimeout(() => {
-      if(type === "POI"){
+      if (type === "POI") {
         if (index === this.files.length) {
           return;
         } else {
@@ -233,7 +336,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
             }
           }, 200);
         }
-      }else{
+      } else {
         if (index === this.filesPOA.length) {
           return;
         } else {
@@ -254,21 +357,21 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    * Convert Files list to normal array list
    * @param files (Files List)
    */
-  prepareFilesList(files: Array<any>, type:string) {
-    if(type === "POI"){
+  prepareFilesList(files: Array<any>, type: string) {
+    if (type === "POI") {
       for (const item of files) {
         item.progress = 0;
         this.files.push(item);
       }
-      this.uploadFilesSimulator(0, type);      
-    }else{
+      this.uploadFilesSimulator(0, type);
+    } else {
       for (const item of files) {
         item.progress = 0;
         this.filesPOA.push(item);
       }
       this.uploadFilesSimulator(0, type);
     }
-    
+
   }
 
   /**
@@ -288,7 +391,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   onItemSelected(item: any) {

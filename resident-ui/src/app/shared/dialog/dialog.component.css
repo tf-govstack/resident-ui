@@ -317,3 +317,57 @@ p{
   width: 15px !important;
   cursor: pointer;
 }
+
+.otp-time-heading {
+  color: #000000;
+  font-weight: 600;
+  font-size: .9rem;
+  margin-bottom: 0px !important;
+}
+
+.otp-expire-time {
+  color: #03A64A;
+}
+
+.otp-popup{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.enter-opt-input {
+  width: 230px;
+  height: 36px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #909090;
+  border-radius: 5px;
+  opacity: 1;
+  margin-bottom: 1rem;
+  padding: 12px;
+}
+.label-text {
+  font-size:12px !important;
+  color: #000000;
+  opacity: 1;
+}
+
+.otp-infromation-text {
+  text-align: center;
+  letter-spacing: NaNpx;
+  color: #000000;
+  opacity: 1;
+  font-size: 14px;
+  padding: 12px;
+}
+
+.otp-infromation-card {
+  width: 305px;
+  height: 96px;
+  background: #E8FDF2 0% 0% no-repeat padding-box;
+  border-radius: 10px;
+}
+
+.mobile-number {
+  font-weight: 700;
+}
