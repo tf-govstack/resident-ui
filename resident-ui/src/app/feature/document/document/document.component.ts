@@ -30,18 +30,31 @@ export class DocumentComponent implements OnInit, OnDestroy {
     .getSupportingDocument()
     .subscribe((response:Blob) => {
       console.log("response>>>");
-      let reader = new FileReader();
+
+      let blob = new Blob([response], { type: 'application/pdf' })
+      let fileURL = URL.createObjectURL(blob);
+
+      //if you have any error then try this
+      //this.tryDoctype = this.sanitizer.bypassSecurityTrustResourceUrl(fileURL);
+
+      this.pdfSrc = fileURL;
+
+     /* let reader = new FileReader();
 
       reader.onload = (e: any) => {
         this.pdfSrc = e.target.result;
       };
 
-      reader.readAsArrayBuffer(response);
+      reader.readAsArrayBuffer(response);*/
     });
 
     
   }
 
+  resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+  }
+  
   ngOnDestroy(): void {
      this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
