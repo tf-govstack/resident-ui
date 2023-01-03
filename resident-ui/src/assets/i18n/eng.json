@@ -327,7 +327,7 @@
     },
     "personalisedcard": {
         "title": "Download Your Personalised Card",
-        "mainlabel": "Choose the data you want to include the credential",
+        "mainlabel": "Choose the data you want to include the credential. Kindly choose at least 3 attributes to be able to download the card.",
         "downloadbutton": "Download",
         "introDescription": "This service can be used by the resident to choose the data that he wants to be added to the card, preview the card, and download it."
     },
@@ -356,6 +356,7 @@
         "successLabel": "Success",
         "successButton": "OK",
         "submitButton": "Submit",
+        "resentBtn":"Resend OTP",
         "yesButton":"Yes",
         "noButton":"No",
         "shareButton": "Share",

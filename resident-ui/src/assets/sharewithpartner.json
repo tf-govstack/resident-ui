@@ -123,19 +123,6 @@
 			"displaykeyinpersonalisedcard":true
 		},
 		{
-			"attributeName": "QR Code",
-			"maskRequired": false,
-			"formatRequired": false,
-			"label": {
-				"eng": "QR Code"
-			},
-			"maskRequiredLabel": {
-				"eng": "Mask It"
-			},
-			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":false
-		},
-		{
 			"attributeName": "photo",
 			"maskRequired": false,
 			"formatRequired": false,

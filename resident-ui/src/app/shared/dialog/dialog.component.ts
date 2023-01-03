@@ -33,7 +33,7 @@ import { InteractionService } from 'src/app/core/services/interaction.service';
   encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent implements OnInit {
-  input;
+  input:any;
   confirm = true;
   FilterData = [];
   missingData = [];
@@ -58,8 +58,12 @@ export class DialogComponent implements OnInit {
   filterOptions: any = {};
   holidayForm: FormGroup;
   sitealignment = 'ltr';
-  icon:string = "./assets/sucess_icon.png"
-  isChecked:boolean = true
+  icon:string = "./assets/sucess_icon.png";
+  isChecked:boolean = true;
+  otpTimeMinutes: number = 2;
+  otpTimeSeconds: any = "00";
+  displaySeconds: any = this.otpTimeSeconds
+  interval: any;
 
   constructor(
     public dialog: MatDialog,
@@ -93,11 +97,39 @@ export class DialogComponent implements OnInit {
       this.popMsgColor = "#F2CC0C"
       this.icon = "./assets/AdobeStock_547798501-modified.png"
     }
+
+    if(this.data.case === "OTP"){
+      this.setOtpTime()
+      // setInterval(this.interval)
+    }
   }
 
   async ngOnInit() {
     this.input = this.data;
    
+  }
+
+  setOtpTime() {
+    this.interval = setInterval(() => {
+      if (this.otpTimeSeconds < 0 || this.displaySeconds === "00") {
+        this.otpTimeSeconds = 59
+        this.otpTimeMinutes -= 1
+      }
+      if (this.otpTimeMinutes < 0 && this.displaySeconds === "00") {
+        this.otpTimeSeconds = 0;
+        this.otpTimeMinutes = 0;
+        clearInterval(this.interval) 
+        this.displaySeconds = "00";
+      }
+      if (this.otpTimeSeconds < 10) {
+        this.displaySeconds = "0" + this.otpTimeSeconds.toString()
+      } else {
+        this.displaySeconds = this.otpTimeSeconds
+      }
+        this.otpTimeSeconds -= 1
+      
+      
+    }, 1000);
   }
 
   onNoClick(): void {
@@ -141,6 +173,9 @@ export class DialogComponent implements OnInit {
   viewDetails(eventId:any){
     this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+ eventId);
     this.dialog.closeAll();
+  }
+  sendResponse(value:any){
+    this.interactionService.sendClickEvent(value)
   }
 }
 
