@@ -298,7 +298,7 @@
                   </td>
                   <td width="5%"></td>
                   <td width="10%">
-                    <button mat-raised-button color="primary" id="sendOTP{{field.id}}">{{field.labelName[langCode][3] |translate}}</button>
+                    <button (click)="sendOTPBtn()" mat-raised-button color="primary" id="sendOTP{{field.id}}">{{field.labelName[langCode][3] |translate}}</button>
                   </td>
                 </tr>
               </table>
@@ -322,4 +322,3 @@
   	<button mat-raised-button color="primary" id="submit" (click)="updateDemographicData()">Submit</button>
   </mat-tab>
 </mat-tab-group>
-

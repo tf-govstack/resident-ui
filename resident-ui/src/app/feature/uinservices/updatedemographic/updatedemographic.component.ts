@@ -4,10 +4,10 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import { AppConfigService } from 'src/app/app-config.service';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
+import Utils from "src/app/app.utils";
 import { InteractionService } from "src/app/core/services/interaction.service";
-import { MatDialog } from "@angular/material";
-import Utils from 'src/app/app.utils';
-import { DialogComponent } from "src/app/shared/dialog/dialog.component";
 
 @Component({
   selector: "app-demographic",
@@ -135,8 +135,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     } else {
       fieldName = this.locationFieldNameList[parseInt(index)];
       locationCode = event.value; 
-      this.dynamicFieldValue[this.locationFieldNameList[parseInt(index)]] = event.value;
-    }    
+      this.dynamicFieldValue[this.locationFieldNameList[parseInt(index)-1]] = event.value;
+    }   
     this.dataStorageService.getImmediateChildren(locationCode, this.langCode)
       .subscribe(response => {
         if (response['response'])
@@ -284,28 +284,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }
   }
 
-  sendotp(channel:string){
-    let self = this;
-    let userId = self.userInfo[channel];
-    
-    const request = {
-      "id": "mosip.resident.contact.details.send.otp.id",
-      "version": this.appConfigService.getConfig()["resident.vid.version.new"],
-      "requesttime": Utils.getCurrentDate(),
-      "request": {
-        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
-        "userId": userId
-      }
-    };
-    this.dataStorageService.verifyUpdateData(request).subscribe(response => {
-      console.log("response>>>"+response);
-    });
-    console.log("channel>>>"+channel);
-  }
 
   updateDemographicData(){
     console.log("self.proofOfIdentity>>>"+JSON.stringify(this.proofOfIdentity));
     console.log("self.proofOfAddress>>>"+JSON.stringify(this.proofOfAddress));
+    console.log("this.dynamicFieldValue>>>"+JSON.stringify(this.dynamicFieldValue));
     console.log("self.userInfo>>>"+JSON.stringify(this.userInfo));
   }
 
