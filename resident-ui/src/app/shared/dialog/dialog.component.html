@@ -238,15 +238,15 @@
       <br/>
       <label class="label-text" for="otp-input">{{'verifyuinvid.inputLabel' | translate}}</label>
       <br />
-      <input  #box placeholder="Enter OTP here" id="otp-input"
+      <input  #box (keyup)="getInputValues(box.value)" placeholder="Enter OTP here" id="otp-input"
         class="enter-opt-input" type="text" />
         <div class="otp-infromation-card"> <p  class="otp-infromation-text">{{input.message}}<span class="mobile-number">
           {{input.newContact}}</span>.</p></div>
     <div mat-dialog-actions class="pop-up-footer">
-      <button  mat-button (click)="sendResponse('resend')" >
+      <button  [style.backgroundColor]="resendBtnBgColor" class="button" [disabled]="resendBtnDisabled"  mat-button (click)="sendResponse('resend')" >
           {{input.resentBtnTxt}}
         </button>
-        <button  style="background-color: #03A64A;" mat-button (click)="sendResponse(box.value)">
+        <button  [style.backgroundColor]="submitBtnBgColor" class="button" [disabled]="submitBtnDisabled" mat-button (click)="sendResponse(box.value)">
           {{input.submitBtnTxt}}
         </button>
     </div>
