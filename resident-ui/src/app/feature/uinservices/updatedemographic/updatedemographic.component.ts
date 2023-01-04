@@ -237,8 +237,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.dataStorageService.verifyUpdateData(request).subscribe(response =>{
       if(response['response']){
         this.dialog.closeAll()
+        this.showMessage(JSON.stringify(response["response"].message))
       }else{
-        console.log(response)
+        this.dialog.closeAll()
+        this.showErrorPopup(JSON.stringify(response["errors"]))
       }
     },error =>{
       console.log(error)
@@ -260,6 +262,34 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     });
     return dialogRef;
   }
+  
+  showMessage(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        message: message,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
+  }
+
+  showErrorPopup(message: string) {
+    this.dialog
+      .open(DialogComponent, {
+        width: '550px',
+        data: {
+          case: 'MESSAGE',
+          title: this.popupMessages.genericmessage.errorLabel,
+          message: message,
+          btnTxt: this.popupMessages.genericmessage.successButton
+        },
+        disableClose: true
+      });
+  }
+
 
   captureDatePickerValue(event: any, formControlName: string) {
     let self = this;
