@@ -180,9 +180,12 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   vidDownloadStatus(vid:any){
       this.dataStorageService.vidDownloadStatus(vid).subscribe(response =>{
+        this.eventId = response.headers.get("eventid")
+        this.message = this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully.replace("$eventId", this.eventId)
         if(!response.body['errors'].length){
+          this.successMsgForDownload(this.message, this.eventId)
           setTimeout(()=>{
-            this.downloadVidCard(response.headers.get("eventid"))
+            this.downloadVidCard(this.eventId)
           },120000)
         }else{
           console.log("error>>"+response.body['errors'])
@@ -195,8 +198,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   downloadVidCard(eventId:any){
      this.dataStorageService.downloadVidCardStatus(eventId).subscribe(response =>{
-      this.eventId = response.headers.get("eventid")
-      this.message = this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully.replace("$eventId", this.eventId)
       let fileName = ""
       const contentDisposition = response.headers.get('Content-Disposition');
       console.log(contentDisposition)
@@ -208,7 +209,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         }
       }
       saveAs(response.body, fileName);
-      this.successMsgForDownload(this.message, this.eventId)
      })
   }
 
