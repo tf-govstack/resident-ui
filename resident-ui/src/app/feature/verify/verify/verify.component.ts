@@ -62,6 +62,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let self = this;
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
@@ -69,7 +70,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
         this.infoText = response.InfomationContent.verifyChannel
       });
     setTimeout(() => {
-      this.siteKey = this.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
+      console.log("osip.resident.api.version.auth>>>"+self.appConfigService.getConfig()["mosip.resident.api.version.auth"]);
+      self.siteKey = self.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
     }, 1700);  
     /*this.captchaService.captchStatus.subscribe((status)=>{
       this.captchaStatus = status;
