@@ -36,6 +36,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   userId: any;
   clickEventSubscription: Subscription;
   popupMessages:any;
+  pdfSrc = "";
 
   constructor(private interactionService:InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService) { 
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -334,6 +335,24 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    */
   fileBrowseHandler(files, type) {
     this.prepareFilesList(files, type);
+  }
+
+  /**
+   * Preview file from files list
+   * @param index (File index)
+   */
+  previewFile(index: number, type:string) {
+    if(type === "POI"){
+      console.log("index>>>"+index);
+      console.log(this.files[index]);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.pdfSrc = e.target.result;
+      };
+      reader.readAsDataURL(this.files[index]);
+    }else{
+      this.filesPOA[index];
+    }
   }
 
   /**
