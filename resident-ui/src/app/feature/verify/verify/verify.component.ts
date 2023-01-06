@@ -72,7 +72,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       console.log("osip.resident.api.version.auth>>>"+self.appConfigService.getConfig()["mosip.resident.api.version.auth"]);
       self.siteKey = self.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
-    }, 1700);  
+    }, 1000);  
     /*this.captchaService.captchStatus.subscribe((status)=>{
       this.captchaStatus = status;
       if (status == false) {

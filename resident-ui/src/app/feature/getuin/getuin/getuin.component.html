@@ -18,7 +18,7 @@
         <input id="aidValue" class="input-text" type="text" ngModel name="AID" />
         <br />
         <label class="label-text" *ngIf="getUinData.description">{{getUinData.description | translate}}</label>
-        <div class="not-robot-verifing-card">
+        <div class="not-robot-verifing-card" *ngIf="siteKey">
             <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha" (captchaEvent)="getCaptchaToken($event)"></app-captcha>
         </div>
         <br />

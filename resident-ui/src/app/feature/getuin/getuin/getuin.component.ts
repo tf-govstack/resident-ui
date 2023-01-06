@@ -44,7 +44,7 @@ export class GetuinComponent implements OnInit {
     setTimeout(() => {
       self.siteKey = self.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
       console.log("osip.resident.captcha.sitekey>>>"+self.appConfigService.getConfig()["mosip.resident.captcha.sitekey"]);
-    }, 1700);  
+    }, 1000);  
     this.translateService.use(localStorage.getItem("langCode"));    
     this.translateService
     .getTranslation(this.userPreferredLangCode)
