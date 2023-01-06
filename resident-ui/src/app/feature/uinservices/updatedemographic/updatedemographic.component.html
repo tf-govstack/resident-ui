@@ -4,148 +4,160 @@
 
 <mat-tab-group animationDuration="0ms" *ngIf="userInfo">
   <mat-tab label="{{'updatedemographic.identity' | translate}}">
+     <table width="100%">
+          <tr><td>
   	<div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
   		<div layout = "row" *ngIf="field.tabgroup === 'identity'">
-        <table width="700px">
-          <tr *ngIf="field.controlType === 'calendar'">
-            <td width="100%">
-              <table width="100%">
-                <tr>
-                  <td width="45%"><label>{{field.labelName[langCode][0]}}</label></td><td width="10%"></td><td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true" value="{{buildJSONData[field.id]}}"></td>
-                  <td width="10%"></td>
-                  <td width="45%">
-                    <mat-form-field>
-                      <input matInput [matDatepicker]="picker" id="{{field.id}}" (dateChange)="captureDatePickerValue($event, field.id)"/>
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr *ngIf="field.controlType === 'textbox'">
-            <td width="100%">
-              <table width="100%" *ngFor="let language of supportedLanguages;">
-                <tr>
-                  <td width="45%"><label>{{field.labelName[language][0]}}</label></td><td width="10%"></td><td width="45%"><label>{{field.labelName[language][1]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true" value="{{buildJSONData[field.id][language]}}"></td>
-                  <td width="10%"></td>
-                  <td width="45%">
-                    <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id, language)"/>
-                  </td>
-                </tr>
-              </table>
-            </td>            
-          </tr>
-          <tr *ngIf="field.controlType === 'dropdown'">
-            <td width="100%">
-              <table width="100%">
-                <tr>
-                  <td width="45%"><label>{{field.labelName[langCode][0]}}</label></td><td width="10%"></td><td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true" value="{{buildJSONData[field.id][langCode]}}"></td>
-                  <td width="10%"></td>
-                  <td width="45%">
+          <table width="700px">
+            <tr *ngIf="field.controlType === 'calendar'">
+              <td width="100%">
+                <table width="100%">
+                  <tr>
+                    <td width="45%"><label>{{field.labelName[langCode][0]}}</label></td><td width="10%"></td><td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
+                  </tr>
+                  <tr>
+                    <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true" value="{{buildJSONData[field.id]}}"></td>
+                    <td width="10%"></td>
+                    <td width="45%">
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="picker" id="{{field.id}}" (dateChange)="captureDatePickerValue($event, field.id)"/>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr *ngIf="field.controlType === 'textbox'">
+              <td width="100%">
+                <table width="100%" *ngFor="let language of supportedLanguages;">
+                  <tr>
+                    <td width="45%"><label>{{field.labelName[language][0]}}</label></td><td width="10%"></td><td width="45%"><label>{{field.labelName[language][1]}}</label></td>
+                  </tr>
+                  <tr>
+                    <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true" value="{{buildJSONData[field.id][language]}}"></td>
+                    <td width="10%"></td>
+                    <td width="45%">
+                      <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id, language)"/>
+                    </td>
+                  </tr>
+                </table>
+              </td>            
+            </tr>
+            <tr *ngIf="field.controlType === 'dropdown'">
+              <td width="100%">
+                <table width="100%">
+                  <tr>
+                    <td width="45%"><label>{{field.labelName[langCode][0]}}</label></td><td width="10%"></td><td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
+                  </tr>
+                  <tr>
+                    <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true" value="{{buildJSONData[field.id][langCode]}}"></td>
+                    <td width="10%"></td>
+                    <td width="45%">
+                        <mat-select id="{{field.id}}">
+                          <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id, langCode)" [value]="data.code">{{ data.genderName }}</mat-option>
+                        </mat-select>
+                      </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr *ngIf="field.controlType === 'fileupload'">
+              <td width="100%">
+                <table width="100%">
+                  <tr>
+                    <td width="100%" colspan="3"><label>{{field.labelName[langCode][0]}}</label></td>
+                  </tr>
+                  <tr>
+                    <td width="45%"><label>{{field.labelName[langCode][1]}}</label></td><td width="10%"></td><td width="45%"><label>{{field.labelName[langCode][2]}}</label></td>
+                  </tr>
+                  <tr>
+                    <td width="45%">
                       <mat-select id="{{field.id}}">
-                        <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id, langCode)" [value]="data.code">{{ data.genderName }}</mat-option>
+                        <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id, langCode)" [value]="data.code">{{ data.name }}</mat-option>
                       </mat-select>
                     </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr *ngIf="field.controlType === 'fileupload'">
-            <td width="100%">
-              <table width="100%">
-                <tr>
-                  <td width="100%" colspan="3"><label>{{field.labelName[langCode][0]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="45%"><label>{{field.labelName[langCode][1]}}</label></td><td width="10%"></td><td width="45%"><label>{{field.labelName[langCode][2]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="45%">
-                    <mat-select id="{{field.id}}">
-                      <mat-option *ngFor="let data of dropDownValues[field.id]" (onSelectionChange)="captureDropDownValue($event, field.id, langCode)" [value]="data.code">{{ data.name }}</mat-option>
-                    </mat-select>
-                  </td>
-                  <td width="10%"></td>
-                  <td width="45%">
-                    <input matInput #{{field.id}} id="{{field.id}}value" (blur)="captureValue($event, field.id, language)"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="100%" colspan="3">
-                    <div class="container" appDnd (fileDropped)="onFileDropped($event, 'POI')">
-                      <input type="file" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($event.target.files, 'POI')" accept=".pdf, .jpg, .jpeg, .png"/>                     
-                      <label for="fileDropRef">Upload Image</label>
-                      <h3>or</h3>
-                      <h3>Drop Image</h3>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="100%" colspan="3"><label>{{field.labelName[langCode][4]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="100%" colspan="3">
-                    <div class="files-list">
-                        <div class="single-file" *ngFor="let file of files; let i = index">
-                          <div class="file-icon" style="width: 50px">
-                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                              x="0px" y="0px" viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;" xml:space="preserve">
-                              <polygon style="fill:#EDEADA;" points="51.5,14 37.5,0 6.5,0 6.5,58 51.5,58 " />
-                              <g>
-                                <path style="fill:#CEC9AE;"
-                                  d="M16.5,23h25c0.552,0,1-0.447,1-1s-0.448-1-1-1h-25c-0.552,0-1,0.447-1,1S15.948,23,16.5,23z" />
-                                <path style="fill:#CEC9AE;"
-                                  d="M16.5,15h10c0.552,0,1-0.447,1-1s-0.448-1-1-1h-10c-0.552,0-1,0.447-1,1S15.948,15,16.5,15z" />
-                                <path style="fill:#CEC9AE;"
-                                  d="M41.5,29h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,29,41.5,29z" />
-                                <path style="fill:#CEC9AE;"
-                                  d="M41.5,37h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,37,41.5,37z" />
-                                <path style="fill:#CEC9AE;"
-                                  d="M41.5,45h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,45,41.5,45z" />
-                              </g>
-                              <polygon style="fill:#CEC9AE;" points="37.5,0 37.5,14 51.5,14 " />
-                            </svg>
-                          </div>
-                          <div class="info">
-                            <h4 class="name">
-                              {{ file?.name }}
-                            </h4>
-                            <p class="size">
-                              {{ formatBytes(file?.size) }}
-                            </p>
-                            <app-progress [progress]="file?.progress"></app-progress>
-                          </div>
-
-                          <div class="delete" (click)="deleteFile(i, 'POI')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18">
-                              <path fill="#B1B1B1" fill-rule="nonzero"
-                                d="M1 16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v10zm3.17-7.83a.996.996 0 0 1 1.41 0L7 9.59l1.42-1.42a.996.996 0 1 1 1.41 1.41L8.41 11l1.42 1.42a.996.996 0 1 1-1.41 1.41L7 12.41l-1.42 1.42a.996.996 0 1 1-1.41-1.41L5.59 11 4.17 9.58a.996.996 0 0 1 0-1.41zM10.5 1L9.79.29C9.61.11 9.35 0 9.09 0H4.91c-.26 0-.52.11-.7.29L3.5 1H1c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" />
-                            </svg>
-                          </div>
-                        </div>
+                    <td width="10%"></td>
+                    <td width="45%">
+                      <input matInput #{{field.id}} id="{{field.id}}value" (blur)="captureValue($event, field.id, language)"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}</label></td>
+                  </tr>
+                  <tr>
+                    <td width="100%" colspan="3">
+                      <div class="container" appDnd (fileDropped)="onFileDropped($event, 'POI')">
+                        <input type="file" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($event.target.files, 'POI')" accept=".pdf, .jpg, .jpeg, .png"/>                     
+                        <label for="fileDropRef">Upload Image</label>
+                        <h3>or</h3>
+                        <h3>Drop Image</h3>
                       </div>
                     </td>
                   </tr>
-              </table>
-            </td>            
-          </tr>
-        </table>
+                  <tr>
+                    <td width="100%" colspan="3"><label>{{field.labelName[langCode][4]}}</label></td>
+                  </tr>
+                  <tr>
+                    <td width="100%" colspan="3">
+                      <div class="files-list">
+                          <div class="single-file" *ngFor="let file of files; let i = index">
+                            <div class="file-icon" style="width: 50px">
+                              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                x="0px" y="0px" viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;" xml:space="preserve">
+                                <polygon style="fill:#EDEADA;" points="51.5,14 37.5,0 6.5,0 6.5,58 51.5,58 " />
+                                <g>
+                                  <path style="fill:#CEC9AE;"
+                                    d="M16.5,23h25c0.552,0,1-0.447,1-1s-0.448-1-1-1h-25c-0.552,0-1,0.447-1,1S15.948,23,16.5,23z" />
+                                  <path style="fill:#CEC9AE;"
+                                    d="M16.5,15h10c0.552,0,1-0.447,1-1s-0.448-1-1-1h-10c-0.552,0-1,0.447-1,1S15.948,15,16.5,15z" />
+                                  <path style="fill:#CEC9AE;"
+                                    d="M41.5,29h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,29,41.5,29z" />
+                                  <path style="fill:#CEC9AE;"
+                                    d="M41.5,37h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,37,41.5,37z" />
+                                  <path style="fill:#CEC9AE;"
+                                    d="M41.5,45h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,45,41.5,45z" />
+                                </g>
+                                <polygon style="fill:#CEC9AE;" points="37.5,0 37.5,14 51.5,14 " />
+                              </svg>
+                            </div>
+                            <div class="info">
+                              <h4 class="name">
+                                {{ file?.name }}
+                              </h4>
+                              <p class="size">
+                                {{ formatBytes(file?.size) }}
+                              </p>
+                              <app-progress [progress]="file?.progress"></app-progress>
+                            </div>
+
+                            <div class="preview" (click)="previewFile(i, 'POI')">
+                              <img mat-card-xs-image src='../assets/view.png' />
+                            </div>
+
+                            <div class="delete" (click)="deleteFile(i, 'POI')">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18">
+                                <path fill="#B1B1B1" fill-rule="nonzero"
+                                  d="M1 16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v10zm3.17-7.83a.996.996 0 0 1 1.41 0L7 9.59l1.42-1.42a.996.996 0 1 1 1.41 1.41L8.41 11l1.42 1.42a.996.996 0 1 1-1.41 1.41L7 12.41l-1.42 1.42a.996.996 0 1 1-1.41-1.41L5.59 11 4.17 9.58a.996.996 0 0 1 0-1.41zM10.5 1L9.79.29C9.61.11 9.35 0 9.09 0H4.91c-.26 0-.52.11-.7.29L3.5 1H1c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                </table>
+              </td>            
+            </tr>
+          </table>        
   		</div>
   	</div>
+    </td>
+        <td>
+          <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="100%" width="100%">
+        </td>
+        </tr>
+      </table>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.address' | translate}}">
     <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">

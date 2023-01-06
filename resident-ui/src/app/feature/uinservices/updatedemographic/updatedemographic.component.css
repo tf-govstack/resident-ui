@@ -88,6 +88,12 @@ label{
    display: flex;
    flex-grow: 1;
 }
+.files-list .single-file .preview {
+   display: flex;
+   margin-left: 0.5rem;
+   cursor: pointer;
+   align-self: flex-end;
+}
  .files-list .single-file .delete {
    display: flex;
    margin-left: 0.5rem;

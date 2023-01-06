@@ -29,6 +29,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   filesPOA: any[] = [];
   proofOfIdentity:any = {};
   proofOfAddress:any = {};
+  pdfSrc = "";
 
   constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService) {}
 
@@ -201,6 +202,24 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    */
   fileBrowseHandler(files, type) {
     this.prepareFilesList(files, type);
+  }
+
+  /**
+   * Preview file from files list
+   * @param index (File index)
+   */
+  previewFile(index: number, type:string) {
+    if(type === "POI"){
+      console.log("index>>>"+index);
+      console.log(this.files[index]);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.pdfSrc = e.target.result;
+      };
+      reader.readAsDataURL(this.files[index]);
+    }else{
+      this.filesPOA[index];
+    }
   }
 
   /**
