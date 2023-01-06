@@ -229,4 +229,28 @@
     </div>
   </div>
 
+  <!-- OTP Message-->
+  <div class="pop-up" *ngIf="input.case === 'OTP'">
+    <div class="pop-up-header otp-popup">
+      <p class="otp-time-heading">{{'verifyuinvid.subTitle' | translate}}<span class="otp-expire-time">
+        0{{otpTimeMinutes}}:{{displaySeconds}}</span>
+      </p>
+      <br/>
+      <label class="label-text" for="otp-input">{{'verifyuinvid.inputLabel' | translate}}</label>
+      <br />
+      <input  #box (keyup)="getInputValues(box.value)" placeholder="Enter OTP here" id="otp-input"
+        class="enter-opt-input" type="text" />
+        <div class="otp-infromation-card"> <p  class="otp-infromation-text">{{input.message}}<span class="mobile-number">
+          {{input.newContact}}</span>.</p></div>
+    <div mat-dialog-actions class="pop-up-footer">
+      <button  [style.backgroundColor]="resendBtnBgColor" class="button" [disabled]="resendBtnDisabled"  mat-button (click)="sendResponse('resend')" >
+          {{input.resentBtnTxt}}
+        </button>
+        <button  [style.backgroundColor]="submitBtnBgColor" class="button" [disabled]="submitBtnDisabled" mat-button (click)="sendResponse(box.value)">
+          {{input.submitBtnTxt}}
+        </button>
+    </div>
+  </div>
+  </div>
+
 </div>

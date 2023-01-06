@@ -33,7 +33,7 @@ import { InteractionService } from 'src/app/core/services/interaction.service';
   encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent implements OnInit {
-  input;
+  input: any;
   confirm = true;
   FilterData = [];
   missingData = [];
@@ -42,24 +42,32 @@ export class DialogComponent implements OnInit {
   routeParts: string;
   filters = [];
   existingFilters: any;
- /* filtersRequest: FilterRequest;
-  filterModel: FilterValuesModel;*/
+  /* filtersRequest: FilterRequest;
+   filterModel: FilterValuesModel;*/
   requestModel: RequestModel;
   options = [];
-  createUpdateSteps: any  = {};
+  createUpdateSteps: any = {};
   momentDate: any;
-  primaryLangCode: string=localStorage.getItem("langCode");
+  primaryLangCode: string = localStorage.getItem("langCode");
   requiredError = false;
   rangeError = false;
   fieldName = '';
-  popMsgbgColor:string = "#E8FDF2"
-  popMsgColor:string = "#03A64A"
+  popMsgbgColor: string = "#E8FDF2"
+  popMsgColor: string = "#03A64A"
   cancelApplied = false;
   filterOptions: any = {};
   holidayForm: FormGroup;
   sitealignment = 'ltr';
-  icon:string = "./assets/sucess_icon.png"
-  isChecked:boolean = true
+  icon: string = "./assets/sucess_icon.png";
+  isChecked: boolean = true;
+  otpTimeMinutes: number = 2;
+  otpTimeSeconds: any = "00";
+  displaySeconds: any = this.otpTimeSeconds
+  interval: any;
+  submitBtnDisabled: boolean = true;
+  resendBtnDisabled: boolean = true;
+  submitBtnBgColor: string = "#BCBCBC";
+  resendBtnBgColor: string = "#BCBCBC";
 
   constructor(
     public dialog: MatDialog,
@@ -73,31 +81,63 @@ export class DialogComponent implements OnInit {
     private translate: TranslateService,
     /*private headerService: HeaderService,*/
     private logoutService: LogoutService,
-    private interactionService:InteractionService
+    private interactionService: InteractionService
   ) {
     this.translate.use(this.primaryLangCode);
-    if(this.primaryLangCode === "ara"){
+    if (this.primaryLangCode === "ara") {
       this.sitealignment = 'rtl';
     }
-    if(this.data.title === "Error"){
+    if (this.data.title === "Error") {
       this.popMsgbgColor = "#FFD9D8"
       this.popMsgColor = "#C90500"
       this.icon = "./assets/cancel_icon.png"
-    }else if(this.data.warningForChannel === "warningForChannel"){
+    } else if (this.data.warningForChannel === "warningForChannel") {
       this.popMsgbgColor = "#FFF9DB"
       this.popMsgColor = "#F2CC0C"
       this.icon = "./assets/sucess_icon.png"
     }
-    else if (this.data.title === "Warning"){
+    else if (this.data.title === "Warning") {
       this.popMsgbgColor = "#FFF9DB"
       this.popMsgColor = "#F2CC0C"
       this.icon = "./assets/AdobeStock_547798501-modified.png"
+    }
+
+    if (this.data.case === "OTP") {
+      this.setOtpTime()
+      // setInterval(this.interval)
     }
   }
 
   async ngOnInit() {
     this.input = this.data;
-   
+
+  }
+
+  setOtpTime() {
+    this.interval = setInterval(() => {
+      if (this.otpTimeSeconds < 0 || this.displaySeconds === "00") {
+        this.otpTimeSeconds = 59
+        this.otpTimeMinutes -= 1
+      }
+      if (this.otpTimeMinutes < 0 && this.displaySeconds === "00") {
+        this.otpTimeSeconds = 0;
+        this.otpTimeMinutes = 0;
+        clearInterval(this.interval)
+        this.displaySeconds = "00";
+        this.submitBtnDisabled = true;
+        this.resendBtnDisabled = false;
+        this.submitBtnBgColor = "#BCBCBC";
+        this.resendBtnBgColor = "#03A64A";
+      }
+      if (this.otpTimeSeconds < 10) {
+        this.displaySeconds = "0" + this.otpTimeSeconds.toString()
+      } else {
+        this.displaySeconds = this.otpTimeSeconds
+      }
+      this.otpTimeSeconds -= 1
+
+
+    }, 1000);
   }
 
   onNoClick(): void {
@@ -109,38 +149,66 @@ export class DialogComponent implements OnInit {
     this.dialog.closeAll();
   }
 
-  agreeConditions(){
+  agreeConditions() {
     this.isChecked = !this.isChecked
   }
 
-  shareInfoBtn():void{
+  shareInfoBtn(): void {
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("shareInfo")
   }
 
-  vidWarning():void{
+  vidWarning(): void {
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("confirmBtn")
   }
 
-  vidDelete():void{
+  vidDelete(): void {
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("deleteVID")
   }
 
-  vidDownload():void{
+  vidDownload(): void {
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("downloadVID")
   }
 
-  downloadPersonalCard(){
+  downloadPersonalCard() {
     this.dialog.closeAll();
     this.interactionService.sendClickEvent("downloadPersonalCard")
   }
-  
-  viewDetails(eventId:any){
-    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+ eventId);
+
+  getInputValues(value: any) {
+    if (value.length > 0) {
+      this.submitBtnDisabled = false
+      this.submitBtnBgColor = "#03A64A"
+    } else {
+      this.submitBtnDisabled = true
+      this.submitBtnBgColor = "#BCBCBC"
+    }
+
+  }
+
+  viewDetails(eventId: any) {
+    this.router.navigateByUrl(`uinservices/trackservicerequest?eid=` + eventId);
     this.dialog.closeAll();
+  }
+  sendResponse(value: any) {
+    if (value.length > 0) {
+      this.submitBtnDisabled = true
+    }
+    this.interactionService.sendClickEvent(value)
+    if (value !== "resend") {
+      clearInterval(this.interval)
+    } else {
+      clearInterval(this.interval)
+      this.otpTimeMinutes = 2;
+      this.displaySeconds = "00";
+      this.setOtpTime()
+      this.resendBtnDisabled = true;
+      this.submitBtnBgColor = "#BCBCBC";
+      this.resendBtnBgColor = "#BCBCBC";
+    }
   }
 }
 
