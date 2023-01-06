@@ -58,6 +58,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private renderer: Renderer2
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
+    this.appConfigService.getConfig();
   }
 
   ngOnInit() {
@@ -69,7 +70,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
       });
     setTimeout(() => {
       this.siteKey = this.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
-    }, 700);  
+    }, 1700);  
     /*this.captchaService.captchStatus.subscribe((status)=>{
       this.captchaStatus = status;
       if (status == false) {
