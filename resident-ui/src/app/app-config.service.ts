@@ -47,11 +47,11 @@ export class AppConfigService {
         this.appConfig["mosip.resident.download.service.history.file.name.convention"] = responseData["mosip.resident.download.service.history.file.name.convention"]; 
         this.appConfig["mosip.resident.download.nearest.registration.centre.file.name.convention"] = responseData["mosip.resident.download.nearest.registration.centre.file.name.convention"]; 
 
-        this.appConfig["mosip.captcha.sitekey"] = responseData["mosip.captcha.sitekey"];   
-        this.appConfig["mosip.captcha.secretkey"] = responseData["mosip.captcha.secretkey"]; 
+        this.appConfig["mosip.resident.captcha.sitekey"] = responseData["mosip.resident.captcha.sitekey"];   
+        this.appConfig["mosip.resident.captcha.secretkey"] = responseData["mosip.resident.captcha.secretkey"]; 
         this.appConfig["mosip.webui.auto.logout.idle"] = responseData["mosip.webui.auto.logout.idle"]; 
         this.appConfig["mosip.webui.auto.logout.ping"] = responseData["mosip.webui.auto.logout.ping"];   
-        this.appConfig["mosip.webui.auto.logout.timeout"] = responseData["mosip.webui.auto.logout.timeout"];     
+        this.appConfig["mosip.webui.auto.logout.timeout"] = responseData["mosip.webui.auto.logout.timeout"];   
       },
       (error) => {
         console.log(error);

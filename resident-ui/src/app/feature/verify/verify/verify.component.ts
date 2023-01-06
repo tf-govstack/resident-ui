@@ -67,7 +67,9 @@ export class VerifyComponent implements OnInit, OnDestroy {
         this.popupMessages = response;
         this.infoText = response.InfomationContent.verifyChannel
       });
-    this.loadRecaptchaSiteKey();
+    setTimeout(() => {
+      this.siteKey = this.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
+    }, 700);  
     /*this.captchaService.captchStatus.subscribe((status)=>{
       this.captchaStatus = status;
       if (status == false) {
@@ -100,9 +102,9 @@ export class VerifyComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadRecaptchaSiteKey() {
+  /*loadRecaptchaSiteKey() {
     this.siteKey = "6LcM7OAeAAAAAChEa_jqFzlipTC7nf6hHG5eAGki";
-  }
+  }*/
 
   radioChange(event: any) {
     this.otpChannel = [];

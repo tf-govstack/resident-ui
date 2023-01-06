@@ -13,9 +13,10 @@ export class CaptchaComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe((param) => {
+    this.langCode = localStorage.getItem("langCode");
+    /*this.activatedRoute.paramMap.subscribe((param) => {
       this.langCode = param.get("lang").substr(0, 2);
-    });
+    });*/
   }
 
   ngOnChanges(): void {

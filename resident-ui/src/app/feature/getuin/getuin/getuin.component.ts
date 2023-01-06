@@ -40,9 +40,10 @@ export class GetuinComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.translateService.use(localStorage.getItem("langCode"));
-    this.siteKey = this.appConfigService.getConfig()["mosip.captcha.sitekey"];
-    console.log("this.siteKey>>>"+this.siteKey);
+    setTimeout(() => {
+      this.siteKey = this.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
+    }, 700);  
+    this.translateService.use(localStorage.getItem("langCode"));    
     this.translateService
     .getTranslation(this.userPreferredLangCode)
       .subscribe(response => {
