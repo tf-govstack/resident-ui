@@ -41,13 +41,16 @@ export class GetuinComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
-    
+    this.appConfigService.getConfig();
   }
 
   ngOnInit() {
-    this.translateService.use(localStorage.getItem("langCode"));
-    this.siteKey = this.appConfigService.getConfig()["mosip.captcha.sitekey"];
-    console.log("this.siteKey>>>"+this.siteKey);
+    let self = this;
+    setTimeout(() => {
+      self.siteKey = self.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
+      console.log("osip.resident.captcha.sitekey>>>"+self.appConfigService.getConfig()["mosip.resident.captcha.sitekey"]);
+    }, 1000);  
+    this.translateService.use(localStorage.getItem("langCode"));    
     this.translateService
     .getTranslation(this.userPreferredLangCode)
       .subscribe(response => {

@@ -58,16 +58,21 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private renderer: Renderer2
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
+    this.appConfigService.getConfig();
   }
 
   ngOnInit() {
+    let self = this;
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
         this.popupMessages = response;
         this.infoText = response.InfomationContent.verifyChannel
       });
-    this.loadRecaptchaSiteKey();
+    setTimeout(() => {
+      console.log("osip.resident.api.version.auth>>>"+self.appConfigService.getConfig()["mosip.resident.api.version.auth"]);
+      self.siteKey = self.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
+    }, 1000);  
     /*this.captchaService.captchStatus.subscribe((status)=>{
       this.captchaStatus = status;
       if (status == false) {
@@ -100,9 +105,9 @@ export class VerifyComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadRecaptchaSiteKey() {
+  /*loadRecaptchaSiteKey() {
     this.siteKey = "6LcM7OAeAAAAAChEa_jqFzlipTC7nf6hHG5eAGki";
-  }
+  }*/
 
   radioChange(event: any) {
     this.otpChannel = [];
