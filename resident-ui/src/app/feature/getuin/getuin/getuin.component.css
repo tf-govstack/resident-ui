@@ -59,12 +59,14 @@
     padding: 5px;
     outline: none;
 }
-.uin-login-title-card{
+
+.uin-login-title-card {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.info-icon{
+
+.info-icon {
     margin-bottom: 14px;
     margin-left: 12px;
     cursor: pointer;
@@ -111,13 +113,13 @@
     color: #ffffff;
 }
 
-.info-box{
+.info-box {
     margin-top: 35px;
     min-height: 90px;
     width: 200px;
     border-radius: 8px;
     padding: 8px 12px 8px 12px;
-    position: absolute ;
+    position: absolute;
     background-color: #ffffff;
     left: 51%;
     z-index: 2;
@@ -125,9 +127,9 @@
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
     font-size: 10px;
     text-align: start !important;
-  }
-  
-  .info-box:before{
+}
+
+.info-box:before {
     content: "";
     width: 20px;
     height: 20px;
@@ -140,4 +142,119 @@
     left: calc(50% - 10px);
     text-align: start !important;
     /* box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.5); */
-  }
+}
+
+.status-title-card {
+    height: 105px;
+    background: #FFF2E3;
+    border: 1px solid #FFB45C;
+    margin-top: 10px;
+    border-radius: 12px;
+    margin: 12px;
+    padding: 1.5rem 1rem 1.5rem 1rem;
+}
+
+.status-details-card {
+    min-height: 450px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 5px #00000014;
+    border-radius: 10px;
+    margin: 12px;
+}
+
+.status-title-text {
+    font-size: 17px;
+    color: #E69537;
+}
+
+.req-msg-text {
+    font-size: 13px;
+    color: #505050;
+}
+
+.uin-title {
+    font-size:18px;
+    font-weight: 600;
+    color: #505050;
+}
+
+.status-time{
+    font-size:12px;
+    color: #505050;
+    margin: 12px 0 12px 0 !important;
+}
+
+.icon{
+    color: #FAF8F8;
+    font-size: 43px;
+    margin-bottom: 2rem !important;
+ }
+
+.active-position-icon {
+   color: #03A64A;
+}
+
+.progress-card{
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid #C0C0C0;
+    margin: 1rem;
+    border-radius: 12px;
+    padding: 0 2rem 0 2rem;
+}
+
+.progressbar li {
+    list-style-type: none;
+    float: left;
+    width: 20%;
+    position: relative;
+}
+
+.active-position-text {
+    color: #505050;
+    font-weight: 600;
+}
+.inactive-position-text{
+    color: #D3D3D3;
+}
+.stages-card{
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+}
+
+ul li{
+   position: relative;
+}
+
+.completed-stage-bar{
+    height: 20px; 
+    width: 100%; 
+    background-color: #03A64A; 
+    position: absolute; 
+    left: 0; 
+    top: 9px; 
+    border: none;
+    
+}
+.incompleted-stage-bar{
+    height: 20px; 
+    width: 100%; 
+    background-color: #FAF8F8; 
+    position: absolute;
+    left: 0; 
+    top: 9px; 
+    border: none;
+
+}
+
+
+ul li:first-child hr{
+    width: 42%;
+    left: 60.5%;
+}
+ul li:last-child hr{
+    width: 48%;
+}

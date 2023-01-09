@@ -238,7 +238,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.dataStorageService.verifyUpdateData(request).subscribe(response =>{
       if(response['response']){
         this.dialog.closeAll()
-        this.showMessage(JSON.stringify(response["response"].message))
+        this.showMessage(JSON.stringify(response["response"]))
       }else{
         this.dialog.closeAll()
         this.showErrorPopup(JSON.stringify(response["errors"]))

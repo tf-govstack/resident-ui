@@ -27,6 +27,11 @@ export class GetuinComponent implements OnInit {
   popupMessages:any;
   infoPopUpShow:boolean = false;
   infoText:string;
+  isUinNotReady:boolean = false;
+  getStatusData:any;
+  aid:string;
+  orderStatus:any;
+  orderStatusIndex:any;
 
   constructor(
     private router: Router,
@@ -52,12 +57,15 @@ export class GetuinComponent implements OnInit {
         this.getUinData = response.uinservices
         this.popupMessages = response
         this.infoText = response.InfomationContent.getUin
+        this.getStatusData = response.uinStatus
       });
   }
 
   onItemSelected(item: any) {
     if (item === "home") {
       this.router.navigate(["dashboard"]);
+    }else{
+      this.isUinNotReady = false
     }
   }
 
@@ -85,9 +93,22 @@ export class GetuinComponent implements OnInit {
   // }
 
   submitUserID(data: NgForm) {
-    if ( data["AID"] !== "") {
-      this.generateOTP(data)
+    if ( data["AID"] !== undefined) {
+      this.aid = data["AID"]
+      this.getStatus(data)
     }
+  }
+
+  getStatus(data:any){
+    this.dataStorageService.getStatus(data["AID"]).subscribe(response =>{
+      if(response["response"].aidStatus === "SUCCESS"){
+        this.generateOTP(data)
+      }else{
+        this.isUinNotReady = true
+        this.orderStatus = response["response"].transactionStage
+        this.orderStatusIndex =  this.getStatusData.statusStages.indexOf(this.orderStatus)
+      }
+    })
   }
 
   generateOTP(data:any) {

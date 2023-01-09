@@ -308,4 +308,8 @@ export class DataStorageService {
   verifyUpdateData(request:any){
   return this.httpClient.post(this.BASE_URL + '/contact-details/update-data',request)
   }
+
+  getStatus(individualId:any){
+        return this.httpClient.get(this.BASE_URL + '/status/individualId/'+individualId)
+  }
 }

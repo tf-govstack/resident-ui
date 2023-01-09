@@ -110,6 +110,13 @@ span.label {
   }
 }
 
+::ng-deep .mat-expansion-panel-header
+{
+    height: auto !important;
+}
+
+
+
 .back-button{
   width: 100px;
   height: 36px;

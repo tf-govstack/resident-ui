@@ -25,8 +25,8 @@
 
       <mat-list-item *ngIf="fullName">
         <button mat-menu-item [matMenuTriggerFor]="notificationMenu" (click)="loadNotificationData()"  >
-          <mat-icon style="margin-right: 0px;color: white;" matBadge="{{notificationCount}}" matBadgeColor="warn" matBadgeSize="small"  *ngIf="notificationCount">notifications</mat-icon>
-          <mat-icon style="margin-right: 0px;color: white;" *ngIf="!notificationCount">notifications</mat-icon>
+          <mat-icon style="margin-right: 0px;color: white; margin-top: 8px;" matBadge="{{notificationCount}}" matBadgeColor="warn" matBadgeSize="small"  *ngIf="notificationCount">notifications</mat-icon>
+          <mat-icon style="margin-right: 0px;color: white; margin-top: 8px;" *ngIf="!notificationCount">notifications</mat-icon>
         </button>
       </mat-list-item>&nbsp;&nbsp;&nbsp;
       <mat-menu #notificationMenu="matMenu" [overlapTrigger]="false" id="notificationMenu">
