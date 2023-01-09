@@ -112,8 +112,10 @@ span.label {
 
 ::ng-deep .mat-expansion-panel-header
 {
-    min-height: 60px !important;
+    height: auto !important;
 }
+
+
 
 .back-button{
   width: 100px;

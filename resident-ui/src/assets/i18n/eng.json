@@ -352,6 +352,15 @@
         "orin": "or in",
         "viewHistoryLink": "view history"
     },
+    "uinStatus":{
+        "status":"Status",
+        "uinTitleDescription":"Your UIN against the AID: $AID is still in progress.",
+        "requestMsg":"Please try again after a few days.",
+        "UINCardStatus":"UIN Card Status",
+        "statusTime":"Completion Expected Date : $date",
+        "statusStages":["Request received","Validation stage","Verification stage","UIN generation stage","Card ready to download"],
+        "trackDetailsHeading":"Tracking Details"
+    },
     "genericmessage": {
         "successLabel": "Success",
         "successButton": "OK",
