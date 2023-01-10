@@ -115,7 +115,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     }
     for (const key in this.dataDisplay) {
       if (key === "photo") {
-        rowImage = "<tr><td><img src='data:image/png;base64, " + this.dataDisplay[key].value + "' alt=''/></td></tr>";
+        rowImage = "<tr><td><img src=' " + this.dataDisplay[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
       } else {
         row = row + "<tr><td>" + this.dataDisplay[key].label + "</td><td>" + this.dataDisplay[key].value + "</td></tr>";
       }

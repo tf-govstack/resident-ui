@@ -115,7 +115,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.fullName = response["response"].fullName;
         this.lastLogin = response["response"].lastLogin;
         if(response["response"].photo.data){
-          this.userImage = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${response["response"].photo.data}`);
+          this.userImage = this.sanitizer.bypassSecurityTrustResourceUrl(response["response"].photo.data);
         }else{
           this.userImage = "../assets/profile.png";
         }
