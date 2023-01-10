@@ -135,7 +135,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     for (const key in this.sharableAttributes) {
       console.log(this.sharableAttributes[key].value)
       if (key === "photo") {
-        rowImage = "<tr><td><img src='data:image/png;base64, " + this.sharableAttributes[key].value + "' alt=''/></td></tr>";
+        rowImage = "<tr><td><img src=' " + this.sharableAttributes[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
       } else {
         row = row + "<tr><td>" + this.sharableAttributes[key].label + "</td><td>" + this.sharableAttributes[key].value + "</td></tr>";
       }
