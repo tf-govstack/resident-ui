@@ -84,11 +84,35 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.buildHTML = "";
     let row = "";
     let rowImage = "";
-
+    
+  if(data2 === undefined || data2 === data.attributeName){
     if (data.attributeName.toString() in this.dataDisplay) {
       delete this.dataDisplay[data.attributeName];
     } else {
       let value = "";
+      if (typeof this.userInfo[data.attributeName] === "string") {
+        value = this.userInfo[data.attributeName];
+      } else {
+        if (data.attributeName === "uin") {
+          value = this.userInfo["UIN"];
+        }else if(data.attributeName === "Perpetual VID"){
+          value = this.userInfo["perpetualVID"];
+        }else {
+          value = this.userInfo[data.attributeName][0].value;
+        }
+
+      }
+      if (data.attributeName === "photo") {
+        this.dataDisplay[data.attributeName] = { "label": "", "value": value };
+      } else {
+        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
+      }
+    }
+  }else{
+    if(data2 === data.maskAttributeName){
+      if (data.maskAttributeName.toString() in this.dataDisplay) {
+        delete this.dataDisplay[data.maskAttributeName];
+        let value = "";
       if (typeof this.userInfo[data.attributeName] === "string") {
         value = this.userInfo[data.attributeName];
       } else {
@@ -106,7 +130,31 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       } else {
         this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
       }
+      } else {
+        if (data.attributeName.toString() in this.dataDisplay) {
+          delete this.dataDisplay[data.attributeName];
+        }
+        let value = "";
+        if (typeof this.userInfo[data.attributeName] === "string") {
+          value = this.userInfo[data.maskAttributeName];
+        } else {
+          if (data.attributeName === "uin") {
+            value = this.userInfo[data.maskAttributeName]
+          }else if(data.attributeName === "Perpetual VID"){
+            value = this.userInfo[data.maskAttributeName]
+          }else {
+            value = this.userInfo[data.attributeName][0].value;
+          }
+  
+        }
+        if (data.attributeName === "photo") {
+          this.dataDisplay[data.attributeName] = { "label": "", "value": value };
+        } else {
+          this.dataDisplay[data.maskAttributeName] = { "label": data.label[this.langCode], "value": value };
+        }
+      }
     }
+  }
 
     if(Object.keys(this.dataDisplay).length >= 3){
       this.downloadBtnDisabled = false

@@ -40,6 +40,7 @@
 		},
 		{
 			"attributeName": "uin",
+			"maskAttributeName":"masked_UIN",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
@@ -53,6 +54,7 @@
 		},
 		{
 			"attributeName": "Perpetual VID",
+			"maskAttributeName":"masked_perpetualVID",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
@@ -66,6 +68,7 @@
 		},
 		{
 			"attributeName": "phone",
+			"maskAttributeName":"masked_phone",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
@@ -79,6 +82,7 @@
 		},
 		{
 			"attributeName": "email",
+			"maskAttributeName":"masked_email",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
