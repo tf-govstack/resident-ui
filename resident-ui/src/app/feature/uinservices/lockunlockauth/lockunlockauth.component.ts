@@ -227,6 +227,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
         title: this.popupMessages.genericmessage.warningLabel,
         message: this.popupMessages.genericmessage.secureMyId.confirmationMessage,
         btnTxt: this.popupMessages.genericmessage.yesButton,
+        yesBtnFor:"lockunlockauth",
         btnTxtNo: this.popupMessages.genericmessage.noButton
       }
     });

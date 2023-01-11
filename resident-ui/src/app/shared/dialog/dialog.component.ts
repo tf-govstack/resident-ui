@@ -160,7 +160,7 @@ export class DialogComponent implements OnInit {
 
   vidWarning(): void {
     this.dialog.closeAll();
-    this.interactionService.sendClickEvent("confirmBtn")
+    this.interactionService.sendClickEvent("confirmBtnForVid")
   }
 
   vidDelete(): void {
@@ -189,10 +189,16 @@ export class DialogComponent implements OnInit {
 
   }
 
+  lockunlockauthWarning(){
+    this.interactionService.sendClickEvent("confirmBtn")
+    this.dialog.closeAll();
+  }
+
   viewDetails(eventId: any) {
     this.router.navigateByUrl(`uinservices/trackservicerequest?eid=` + eventId);
     this.dialog.closeAll();
   }
+
   sendResponse(value: any) {
     if (value.length > 0) {
       this.submitBtnDisabled = true

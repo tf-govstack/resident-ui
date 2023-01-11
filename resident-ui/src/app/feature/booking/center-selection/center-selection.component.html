@@ -83,11 +83,15 @@
                 (click)="showResults()"
               >
                 <img src="assets\search_grey.png" />
-              </button>
-              <button mat-icon-button class="search-cancel-btn" type="button" (click)="setSearchClick(true);resetPagination();">
+              </button> -->
+              <!-- <button mat-icon-button class="search-cancel-btn" type="button" (click)="setSearchClick(true);resetPagination();">
                 <img src="assets\close.png" />
               </button> -->
             </mat-card>
+            <button (click)="showResults()" style="display: inline;" class="search-btn">
+              <mat-icon>search</mat-icon>
+            </button>
+            
           </form>
         </div>
         <span class="search-text" *ngIf="searchTextFlag">{{ displayMessage }}</span>
