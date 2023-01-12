@@ -41,7 +41,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
-      if (id === "confirmBtn") {
+      if (id === "confirmBtnForVid") {
         this.generateVID(this.newVidType)
       }else if (id === "deleteVID"){
         this.revokeVID(this.newVidValue)
@@ -333,6 +333,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.warningLabel,
         message: this.message,
+        yesBtnFor:"Vid",
         btnTxt: this.popupMessages.genericmessage.yesButton,
         btnTxtNo: this.popupMessages.genericmessage.noButton
       }

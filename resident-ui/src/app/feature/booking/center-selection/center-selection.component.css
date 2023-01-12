@@ -225,20 +225,17 @@ input[type="radio"] {
   font-size: 10px;
 }
 
-.search-btn img {
-  height: 1rem;
-  transform: translateY(-0.01rem);
+.search-btn mat-icon {
+   color: #ffffff;
 }
 
 .search-btn {
   width: 35px;
   height: 35px;
-  background-color: #f4f4f4;
-  border: 1px solid #fd518c;
-  border-radius: 0;
-  opacity: 100%;
-  line-height: 30px;
-  text-transform: uppercase;
+  background-color: #03A64A;
+  border: none;
+  border-radius: 5px;
+  margin: 1.3rem 0 0 12px;
 }
 
 .center_selection-form-container {
@@ -330,9 +327,10 @@ input[type="radio"] {
 
 .search-form {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   padding-bottom: 20px;
   align-items: center;
+  justify-content: center;
 }
 
 .pagination{

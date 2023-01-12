@@ -137,6 +137,11 @@ input {
   color: #03A64A;
 }
 
+.send-otp-btn{
+  background-color: #03A64A;
+  color: #fff;
+}
+
 .book-appointment-back-btn {
   width: 100px;
   height: 36px;

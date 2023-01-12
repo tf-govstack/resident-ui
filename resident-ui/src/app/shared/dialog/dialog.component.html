@@ -110,8 +110,12 @@
           id="confirmmessagepopup" (click)="dismiss()">
           {{ input.btnTxt }}
         </button></span>
-      <span><button style="background-color:#03A64A; margin-top: 0px;" *ngIf="input.btnTxt === 'Yes' " mat-button cdkFocusInitial
+      <span><button style="background-color:#03A64A; margin-top: 0px;" *ngIf="input.btnTxt === 'Yes' && input.yesBtnFor === 'Vid' " mat-button cdkFocusInitial
           id="confirmmessagepopup" (click)="vidWarning()">
+          {{ input.btnTxt }}
+        </button></span>
+        <span><button style="background-color:#03A64A; margin-top: 0px;" *ngIf="input.btnTxt === 'Yes' && input.yesBtnFor === 'lockunlockauth' " mat-button cdkFocusInitial
+          id="confirmmessagepopup" (click)="lockunlockauthWarning()">
           {{ input.btnTxt }}
         </button></span>
       <span><button *ngIf="input.btnTxt === 'Delete'" style="background-color:red; margin-top: 0px;" mat-button cdkFocusInitial

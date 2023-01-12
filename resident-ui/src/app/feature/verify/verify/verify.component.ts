@@ -20,6 +20,7 @@ import { runInThisContext } from "vm";
 })
 
 export class VerifyComponent implements OnInit, OnDestroy {
+  verifyChannelData:any;
   transactionID: any;
   individualId: string = "";
   otp: string = "";
@@ -43,10 +44,14 @@ export class VerifyComponent implements OnInit, OnDestroy {
   message: string;
   errorCode: any;
   channelType: string;
-  disableSendOtp: boolean = false
+  disableSendOtp: boolean = true;
   isPopUpShow:boolean = false;
   infoText:string;
   eventId:any;
+  channelSelected:any = false;
+  phoneIcon:boolean = false;
+  mailIcon:boolean = false;
+
 
 
   constructor(
@@ -66,6 +71,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
+        this.verifyChannelData = response.verifyuinvid
         this.popupMessages = response;
         this.infoText = response.InfomationContent.verifyChannel
       });
@@ -96,12 +102,14 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   getCaptchaToken(event: Event) {
-    if (event !== undefined && event != null) {
+    console.log(event)
+    console.log(this.channelSelected)
+    if (event !== undefined && event != null &&  this.channelSelected) {
       console.log("Captcha event " + event);
-      this.buttonbgColor = "#03A64A";
+      this.disableSendOtp = false
     } else {
       console.log("Captcha has expired" + event);
-      this.buttonbgColor = "#BFBCBC";
+      this.disableSendOtp = true
     }
   }
 
@@ -110,14 +118,19 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }*/
 
   radioChange(event: any) {
+    this.channelSelected = true
     this.otpChannel = [];
     this.otpChannel.push(event);
     if (event === "PHONE") {
       this.numBtnColors = "#03A64A";
-      this.emailBtnColors = "#909090"
+      this.emailBtnColors = "#909090";
+      this.phoneIcon = true
+      this.mailIcon = false
     } else {
       this.emailBtnColors = "#03A64A"
       this.numBtnColors = "#909090"
+      this.mailIcon = true
+      this.phoneIcon = false
     }
   }
 
