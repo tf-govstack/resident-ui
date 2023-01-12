@@ -31,7 +31,7 @@ export class AppConfigService {
         this.appConfig["resident.vid.version.new"] = responseData["resident.vid.version.new"];   
         this.appConfig["mosip.resident.revokevid.id"] = responseData["mosip.resident.revokevid.id"]; 
         this.appConfig["resident.revokevid.version.new"] = responseData["resident.revokevid.version.new"]; 
-
+        this.appConfig["mosip.resident.download.personalized.card.id"] = responseData["mosip.resident.download.personalized.card.id"]
         this.appConfig["mosip.resident.download.registration.centre.file.name.convention"] = responseData["mosip.resident.download.registration.centre.file.name.convention"];
         this.appConfig["mosip.resident.download.supporting.document.file.name.convention"] = responseData["mosip.resident.download.supporting.document.file.name.convention"];  
         this.appConfig["mosip.resident.download.personalized.card.naming.convention"] = responseData["mosip.resident.download.personalized.card.naming.convention"]; 

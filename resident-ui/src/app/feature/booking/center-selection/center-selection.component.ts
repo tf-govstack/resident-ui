@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation  } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { DataStorageService } from "src/app/core/services/data-storage.service";
 import { RegistrationCentre } from "./registration-center-details.model";
@@ -8,7 +8,7 @@ import { BookingService } from "../booking.service";
 import { TranslateService } from "@ngx-translate/core";
 import * as appConstants from "./../../../app.constants";
 import { Subscription } from "rxjs";
-import {saveAs} from 'file-saver';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: "app-center-selection",
@@ -53,7 +53,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   pageSize = this.defaultPageSize;
   pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 15, 20];
-  centerSelection:any;
+  centerSelection: any;
   constructor(
     public dialog: MatDialog,
     private service: BookingService,
@@ -90,7 +90,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         //get all location types from db
         this.allLocationTypes = response[appConstants.RESPONSE]["locationHierarchyLevels"];
-        console.log(this.allLocationTypes);        
+        console.log(this.allLocationTypes);
         //get the recommended loc hierachy code to which booking centers are mapped        
         //now filter out only those hierachies which are higher than the recommended loc hierachy code
         //ex: if locHierachy is ["Country","Region","Province","City","PostalCode"] and the
@@ -108,7 +108,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
         this.getRecommendedCenters();
       });
     this.subscriptions.push(subs);
-    
+
   }
 
   /*getUserInfo(preRegId) {
@@ -143,26 +143,26 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
       this.apiErrorCodes = response[appConstants.API_ERROR_CODES];
     });
   }
-/**
-   * @description This method will get the Identity Schema Json
-   */
- /*async getIdentityJsonFormat() {
-  return new Promise((resolve, reject) => {
-    this.dataService.getIdentityJson().subscribe(
-      async (response) => {
-        //response = identityStubJson;
-        //console.log(identityStubJson);
-        let identityJsonSpec =
-          response[appConstants.RESPONSE]["jsonSpec"]["identity"];
-        this.identityData = identityJsonSpec["identity"];
-        resolve(true);
-      },
-      (error) => {
-        this.showErrorMessage(error);
-      }
-    );
-  });
-}*/
+  /**
+     * @description This method will get the Identity Schema Json
+     */
+  /*async getIdentityJsonFormat() {
+   return new Promise((resolve, reject) => {
+     this.dataService.getIdentityJson().subscribe(
+       async (response) => {
+         //response = identityStubJson;
+         //console.log(identityStubJson);
+         let identityJsonSpec =
+           response[appConstants.RESPONSE]["jsonSpec"]["identity"];
+         this.identityData = identityJsonSpec["identity"];
+         resolve(true);
+       },
+       (error) => {
+         this.showErrorMessage(error);
+       }
+     );
+   });
+ }*/
 
   async getRecommendedCenters() {
     //console.log("getRecommendedCenters");
@@ -180,45 +180,45 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
         }
       }
     });
-   /* if (!uiFieldName) {
-      //this.showErrorMessage(null, this.errorlabels.error);
-    } else {*/
-      console.log(`uiFieldName: ${uiFieldName}`);
-      /*this.users.forEach((user) => {
-        //console.log(typeof user.request.demographicDetails.identity[uiFieldName]);
-        if (
-          typeof user.request.demographicDetails.identity[uiFieldName] ===
-          "object"
-        ) {
-          //console.log(user.request.demographicDetails.identity[uiFieldName][0].value);
-          this.locationCodes.push(
-            user.request.demographicDetails.identity[uiFieldName][0].value
-          );
-        } else if (
-          typeof user.request.demographicDetails.identity[uiFieldName] ===
-          "string"
-        ) {
-          //console.log(user.request.demographicDetails.identity[uiFieldName]);
-          this.locationCodes.push(
-            user.request.demographicDetails.identity[uiFieldName]
-          );
-        }
-      });*/
-      //console.log(this.locationCodes);
-      //this.getRecommendedCentersApiCall();
-      this.showTable = true;
-      this.isWorkingDaysAvailable = true;   
-      await this.getLocationNamesByCodes();   
-      
+    /* if (!uiFieldName) {
+       //this.showErrorMessage(null, this.errorlabels.error);
+     } else {*/
+    console.log(`uiFieldName: ${uiFieldName}`);
+    /*this.users.forEach((user) => {
+      //console.log(typeof user.request.demographicDetails.identity[uiFieldName]);
+      if (
+        typeof user.request.demographicDetails.identity[uiFieldName] ===
+        "object"
+      ) {
+        //console.log(user.request.demographicDetails.identity[uiFieldName][0].value);
+        this.locationCodes.push(
+          user.request.demographicDetails.identity[uiFieldName][0].value
+        );
+      } else if (
+        typeof user.request.demographicDetails.identity[uiFieldName] ===
+        "string"
+      ) {
+        //console.log(user.request.demographicDetails.identity[uiFieldName]);
+        this.locationCodes.push(
+          user.request.demographicDetails.identity[uiFieldName]
+        );
+      }
+    });*/
+    //console.log(this.locationCodes);
+    //this.getRecommendedCentersApiCall();
+    this.showTable = true;
+    this.isWorkingDaysAvailable = true;
+    await this.getLocationNamesByCodes();
+
     /*}*/
   }
 
   getLocationNamesByCodes() {
     return new Promise((resolve) => {
-      this.locationCodes.forEach(async (pins,index) => {
+      this.locationCodes.forEach(async (pins, index) => {
         //console.log(pins);
         await this.getLocationNames(pins);
-        if(index===this.locationCodes.length-1){
+        if (index === this.locationCodes.length - 1) {
           resolve(true);
         }
       });
@@ -236,11 +236,11 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         if (response[appConstants.RESPONSE]) {
           this.displayResults(response["response"]);
-        } 
+        }
       },
-      (error) => {
-        this.showErrorMessage(error, this.errorlabels.regCenterNotavailabe);
-      });
+        (error) => {
+          this.showErrorMessage(error, this.errorlabels.regCenterNotavailabe);
+        });
     this.subscriptions.push(subs);
   }
 
@@ -255,9 +255,9 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
             resolve(true);
           }
         },
-        (error) => {
-          this.showErrorMessage(error, this.errorlabels.regCenterNotavailabe);
-        });
+          (error) => {
+            this.showErrorMessage(error, this.errorlabels.regCenterNotavailabe);
+          });
     });
   }
 
@@ -452,19 +452,19 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     this.router.navigate([`${this.langCode}/dashboard`]);
   }
 
- /* routeBack() {
-    if (
-      this.router.url.includes("multiappointment") ||
-      localStorage.getItem("modifyMultipleAppointment") === "true"
-    ) {
-      this.routeDashboard();
-    } else {
-      let url = "";
-      url = Utils.getURL(this.router.url, "summary", 3);
-      this.canDeactivateFlag = false;
-      this.router.navigateByUrl(url + `/${this.preRegId[0]}/preview`);
-    }
-  }*/
+  /* routeBack() {
+     if (
+       this.router.url.includes("multiappointment") ||
+       localStorage.getItem("modifyMultipleAppointment") === "true"
+     ) {
+       this.routeDashboard();
+     } else {
+       let url = "";
+       url = Utils.getURL(this.router.url, "summary", 3);
+       this.canDeactivateFlag = false;
+       this.router.navigateByUrl(url + `/${this.preRegId[0]}/preview`);
+     }
+   }*/
 
   async displayResults(response: any) {
     if (response["registrationCenters"]) {
@@ -490,18 +490,18 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
             center.workingDays = "";
             if (response[appConstants.RESPONSE] && response[appConstants.RESPONSE]["workingdays"]) {
               response[appConstants.RESPONSE]["workingdays"].forEach((day) => {
-                    if (center.workingDays != "") {
-                      center.workingDays += ", ";
-                    }
-                    center.workingDays = center.workingDays + day.name;
+                if (center.workingDays != "") {
+                  center.workingDays += ", ";
+                }
+                center.workingDays = center.workingDays + day.name;
               });
             }
             this.isWorkingDaysAvailable = true;
             resolve(true);
           },
-          (error) => {
-            this.showErrorMessage(error);
-          });
+            (error) => {
+              this.showErrorMessage(error);
+            });
       });
     });
   }
@@ -512,7 +512,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
    * @private
    * @memberof CenterSelectionComponent
    */
-   private showErrorMessage(error: any, customErrMsg?: string) {
+  private showErrorMessage(error: any, customErrMsg?: string) {
     const titleOnError = this.errorlabels.errorLabel;
     let message = "";
     if (customErrMsg) {
@@ -526,23 +526,23 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
       message: message,
       yesButtonText: this.errorlabels.button_ok,
     };
-   /* const dialogRef = this.openDialog(body, "400px");
-    dialogRef.afterClosed().subscribe(() => {
-      if (body.message === this.errorlabels.regCenterNotavailabe) {
-        this.canDeactivateFlag = false;
-        if (
-          this.router.url.includes("multiappointment") ||
-          localStorage.getItem("modifyMultipleAppointment") === "true"
-        ) {
-          this.routeDashboard();
-        } else {
-          localStorage.setItem(appConstants.MODIFY_USER, "true");
-          this.router.navigate([
-            `${this.langCode}/pre-registration/demographic/${this.preRegId[0]}`,
-          ]);
-        }
-      }
-    });*/
+    /* const dialogRef = this.openDialog(body, "400px");
+     dialogRef.afterClosed().subscribe(() => {
+       if (body.message === this.errorlabels.regCenterNotavailabe) {
+         this.canDeactivateFlag = false;
+         if (
+           this.router.url.includes("multiappointment") ||
+           localStorage.getItem("modifyMultipleAppointment") === "true"
+         ) {
+           this.routeDashboard();
+         } else {
+           localStorage.setItem(appConstants.MODIFY_USER, "true");
+           this.router.navigate([
+             `${this.langCode}/pre-registration/demographic/${this.preRegId[0]}`,
+           ]);
+         }
+       }
+     });*/
   }
 
   openDialog() {
@@ -561,32 +561,48 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  downloadCentersPdf(){
-     this.dataService.registrationCentersList(this.langCode, this.pageSize, this.searchText)
-     .subscribe(response =>{
-      var fileName = "";
-      const contentDisposition = response.headers.get('Content-Disposition');
-      if (contentDisposition) {
-        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-        const matches = fileNameRegex.exec(contentDisposition);
-        if (matches != null && matches[1]) {
-          fileName = matches[1].replace(/['"]/g, '');
+  downloadCentersPdf() {
+    this.dataService.registrationCentersList(this.langCode, this.pageSize, this.searchText)
+      .subscribe(response => {
+        if (response.headers.get('Content-Type') === 'application/pdf') {
+          var fileName = "";
+          const contentDisposition = response.headers.get('Content-Disposition');
+          if (contentDisposition) {
+            const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            const matches = fileNameRegex.exec(contentDisposition);
+            if (matches != null && matches[1]) {
+              fileName = matches[1].replace(/['"]/g, '');
+            }
+          }
+          saveAs(response.body, fileName);
+        }else{
+          console.log("")
         }
-      }
-      saveAs(response.body, fileName);
-      
-     },error =>{
+      }, error => {
         console.log(error)
-     })
-    
+      })
   }
 
+  // showErrorPopup(message: string) {
+  //   this.dialog
+  //     .open(DialogComponent, {
+  //       width: '550px',
+  //       data: {
+  //         case: 'MESSAGE',
+  //         title: this.popupMessages.genericmessage.errorLabel,
+  //         message: message,
+  //         btnTxt: this.popupMessages.genericmessage.successButton
+  //       },
+  //       disableClose: true
+  //     });
+  // }
+
   onItemSelected(item: any) {
-    if(item.index === 1){
+    if (item.index === 1) {
       this.router.navigate(["document"]);
-    }else if(item === "home"){
+    } else if (item === "home") {
       this.router.navigate(["dashboard"]);
-    }else{
+    } else {
       this.router.navigate(["regcenter"]);
     }
   }
