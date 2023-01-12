@@ -8,6 +8,7 @@ import { BookingService } from "../booking.service";
 import { TranslateService } from "@ngx-translate/core";
 import * as appConstants from "./../../../app.constants";
 import { Subscription } from "rxjs";
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: "app-center-selection",
@@ -558,6 +559,26 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  downloadCentersPdf(){
+     this.dataService.registrationCentersList(this.langCode, this.pageSize, this.searchText)
+     .subscribe(response =>{
+      var fileName = "";
+      const contentDisposition = response.headers.get('Content-Disposition');
+      if (contentDisposition) {
+        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = fileNameRegex.exec(contentDisposition);
+        if (matches != null && matches[1]) {
+          fileName = matches[1].replace(/['"]/g, '');
+        }
+      }
+      saveAs(response.body, fileName);
+      
+     },error =>{
+        console.log(error)
+     })
+    
   }
 
   onItemSelected(item: any) {

@@ -4,8 +4,8 @@ import { AppConfigService } from 'src/app/app-config.service';
 import * as appConstants from "../../app.constants";
 import { ConfigService } from "./config.service";
 
-let headers : any = new Headers();
-headers.append('Content-Type','application/json');
+let headers: any = new Headers();
+headers.append('Content-Type', 'application/json');
 @Injectable({
   providedIn: 'root'
 })
@@ -15,21 +15,21 @@ export class DataStorageService {
 
   public BASE_URL = this.appService.getConfig().baseUrl;
   public version = this.appService.getConfig().version;
-  
+
   getI18NLanguageFiles(langCode: string) {
-    return this.httpClient.get(`./assets/i18n/`+langCode+`.json`);
+    return this.httpClient.get(`./assets/i18n/` + langCode + `.json`);
   }
 
   getConfigFiles(fileName: string) {
-    return this.httpClient.get(`./assets/`+fileName+`.json`);
+    return this.httpClient.get(`./assets/` + fileName + `.json`);
   }
 
-  getDocuments(langCode: string){
-    return this.httpClient.get(this.BASE_URL   + '/proxy/masterdata/validdocuments/'+langCode);
+  getDocuments(langCode: string) {
+    return this.httpClient.get(this.BASE_URL + '/proxy/masterdata/validdocuments/' + langCode);
   }
 
-  getLocationHierarchyLevel(langCode: string){
-    return this.httpClient.get(this.BASE_URL   + '/proxy/masterdata/locationHierarchyLevels/'+langCode);
+  getLocationHierarchyLevel(langCode: string) {
+    return this.httpClient.get(this.BASE_URL + '/proxy/masterdata/locationHierarchyLevels/' + langCode);
   }
 
   recommendedCenters(
@@ -103,18 +103,18 @@ export class DataStorageService {
   getNearbyRegistrationCenters(coords: any) {
     return this.httpClient.get(
       this.BASE_URL +
-        "/proxy" +
-        appConstants.APPEND_URL.master_data +
-        appConstants.APPEND_URL.nearby_registration_centers +
-        localStorage.getItem("langCode") +
-        "/" +
-        coords.longitude +
-        "/" +
-        coords.latitude +
-        "/" +
-        this.configService.getConfigByKey(
-          appConstants.CONFIG_KEYS.preregistration_nearby_centers
-        )
+      "/proxy" +
+      appConstants.APPEND_URL.master_data +
+      appConstants.APPEND_URL.nearby_registration_centers +
+      localStorage.getItem("langCode") +
+      "/" +
+      coords.longitude +
+      "/" +
+      coords.latitude +
+      "/" +
+      this.configService.getConfigByKey(
+        appConstants.CONFIG_KEYS.preregistration_nearby_centers
+      )
     );
   }
 
@@ -131,96 +131,96 @@ export class DataStorageService {
   }
 
   generateOTP(request: any) {
-    return this.httpClient.post(this.BASE_URL   + '/req/otp', request);
+    return this.httpClient.post(this.BASE_URL + '/req/otp', request);
   }
 
   verifyOTP(request: any) {
-    return this.httpClient.post(this.BASE_URL   + '/validate-otp', request,{ observe: 'response'});
+    return this.httpClient.post(this.BASE_URL + '/validate-otp', request, { observe: 'response' });
   }
 
   getSchema() {
-    return this.httpClient.get(this.BASE_URL   + '/proxy/config/ui-schema');
+    return this.httpClient.get(this.BASE_URL + '/proxy/config/ui-schema');
   }
 
   getDemographicdetail() {
-    return this.httpClient.get(this.BASE_URL   + '/identity/input-attributes/values');
+    return this.httpClient.get(this.BASE_URL + '/identity/input-attributes/values');
   }
 
   getPolicy() {
-    return this.httpClient.get(this.BASE_URL   + '/vid/policy');
+    return this.httpClient.get(this.BASE_URL + '/vid/policy');
   }
 
   getVIDs() {
-    return this.httpClient.get(this.BASE_URL   + '/vids');
+    return this.httpClient.get(this.BASE_URL + '/vids');
   }
 
-  generateVID(request: any){
-    return this.httpClient.post(this.BASE_URL   + '/generate-vid', request, { observe: 'response'});
+  generateVID(request: any) {
+    return this.httpClient.post(this.BASE_URL + '/generate-vid', request, { observe: 'response' });
   }
 
-  revokeVID(request: any, vid: string){
-    return this.httpClient.patch(this.BASE_URL   + '/revoke-vid/' + vid, request,{ observe: 'response'});
+  revokeVID(request: any, vid: string) {
+    return this.httpClient.patch(this.BASE_URL + '/revoke-vid/' + vid, request, { observe: 'response' });
   }
 
-  getAuthlockStatus(){
-    return this.httpClient.get(this.BASE_URL   + '/auth-lock-status');
+  getAuthlockStatus() {
+    return this.httpClient.get(this.BASE_URL + '/auth-lock-status');
   }
 
-  updateAuthlockStatus(request:any){
-    return this.httpClient.post(this.BASE_URL   + '/auth-lock-unlock', request,{ observe: 'response', responseType: 'blob' as 'json' });
+  updateAuthlockStatus(request: any) {
+    return this.httpClient.post(this.BASE_URL + '/auth-lock-unlock', request, { observe: 'response', responseType: 'blob' as 'json' });
   }
 
-  getProfileInfo(){
-    return this.httpClient.get(this.BASE_URL   + '/profile');
+  getProfileInfo() {
+    return this.httpClient.get(this.BASE_URL + '/profile');
   }
 
-  getServiceHistory(request:any, filters:any){
+  getServiceHistory(request: any, filters: any) {
     let buildURL = "";
     if (request) {
       let pageSize = request.pageSize;
       let pageIndex = parseInt(request.pageIndex);
-      buildURL = "?pageStart="+pageIndex+"&pageFetch="+pageSize;     
-      if(request){
-        buildURL = buildURL+"&"+filters;
+      buildURL = "?pageStart=" + pageIndex + "&pageFetch=" + pageSize;
+      if (request) {
+        buildURL = buildURL + "&" + filters;
       }
     }
-    if(!request && filters){
-      buildURL = "?"+filters;
+    if (!request && filters) {
+      buildURL = "?" + filters;
     }
-    console.log("buildURL>>>"+buildURL);
-    return this.httpClient.get(this.BASE_URL   + '/service-history'+"/"+localStorage.getItem("langCode")+buildURL);
+    console.log("buildURL>>>" + buildURL);
+    return this.httpClient.get(this.BASE_URL + '/service-history' + "/" + localStorage.getItem("langCode") + buildURL);
   }
 
-  pinData(eventId:string){
-    return this.httpClient.post(this.BASE_URL   + '/pinned/'+eventId, "");
+  pinData(eventId: string) {
+    return this.httpClient.post(this.BASE_URL + '/pinned/' + eventId, "");
   }
 
-  unpinData(eventId:string){
-    return this.httpClient.post(this.BASE_URL   + '/unpinned/'+eventId, "");
+  unpinData(eventId: string) {
+    return this.httpClient.post(this.BASE_URL + '/unpinned/' + eventId, "");
   }
 
-  getEIDStatus(eid:string){
-    return this.httpClient.get(this.BASE_URL   + '/events'+"/"+eid+"?langCode="+localStorage.getItem("langCode"));
+  getEIDStatus(eid: string) {
+    return this.httpClient.get(this.BASE_URL + '/events' + "/" + eid + "?langCode=" + localStorage.getItem("langCode"));
   }
 
-  getPartnerDetails(partnerType: string){
-    return this.httpClient.get(this.BASE_URL   + '/auth-proxy/partners?partnerType='+partnerType);
+  getPartnerDetails(partnerType: string) {
+    return this.httpClient.get(this.BASE_URL + '/auth-proxy/partners?partnerType=' + partnerType);
   }
 
-  getUserInfo(){
-    return this.httpClient.get(this.BASE_URL   + '/identity/info/type/personalized-card');
-  } 
-
-  convertpdf(request:any){
-    return this.httpClient.post<Blob>(this.BASE_URL   + '/download/personalized-card', request, { observe: 'response', responseType: 'blob' as 'json' });
+  getUserInfo() {
+    return this.httpClient.get(this.BASE_URL + '/identity/info/type/personalized-card');
   }
 
-  shareInfo(request:any){
-    return this.httpClient.post(this.BASE_URL   + '/share-credential', request,{observe: 'response', responseType: 'blob' as 'json' });
+  convertpdf(request: any) {
+    return this.httpClient.post<Blob>(this.BASE_URL + '/download/personalized-card', request, { observe: 'response', responseType: 'blob' as 'json' });
   }
 
-  downloadAcknowledgement(eventId:string){
-    return this.httpClient.get<Blob>(this.BASE_URL   + '/ack/download/pdf/event/'+eventId+'/language/'+localStorage.getItem("langCode"), { observe: 'response', responseType: 'blob' as 'json' });   
+  shareInfo(request: any) {
+    return this.httpClient.post(this.BASE_URL + '/share-credential', request, { observe: 'response', responseType: 'blob' as 'json' });
+  }
+
+  downloadAcknowledgement(eventId: string) {
+    return this.httpClient.get<Blob>(this.BASE_URL + '/ack/download/pdf/event/' + eventId + '/language/' + localStorage.getItem("langCode"), { observe: 'response', responseType: 'blob' as 'json' });
   }
 
   onLogout() {
@@ -231,85 +231,89 @@ export class DataStorageService {
       appConstants.APPEND_URL.logout;
     return this.httpClient.post(url, "");
   }
-  
-  generateOTPForUid(reqData:any){
-    return this.httpClient.post(this.BASE_URL + '/req/individualId/otp',reqData)
+
+  generateOTPForUid(reqData: any) {
+    return this.httpClient.post(this.BASE_URL + '/req/individualId/otp', reqData)
   }
-  
-  isVerified(reqChannel:any,reqIndividualId:any){
+
+  isVerified(reqChannel: any, reqIndividualId: any) {
     return this.httpClient.get(`${this.BASE_URL}/channel/verification-status/?channel=${reqChannel}&individualId=${reqIndividualId}`)
   }
 
-  validateUinCardOtp(reqData:any){
-    return this.httpClient.post<Blob>(this.BASE_URL   + '/download-card', reqData , { observe: 'response', responseType: 'blob' as 'json' });
+  validateUinCardOtp(reqData: any) {
+    return this.httpClient.post<Blob>(this.BASE_URL + '/download-card', reqData, { observe: 'response', responseType: 'blob' as 'json' });
   }
 
-  downloadpdf(request:any){
-    return this.httpClient.get<Blob>(this.BASE_URL   + '/download/personalized-card', { observe: 'response', responseType: 'blob' as 'json' });
+  downloadpdf(request: any) {
+    return this.httpClient.get<Blob>(this.BASE_URL + '/download/personalized-card', { observe: 'response', responseType: 'blob' as 'json' });
   }
 
-  downloadServiceHistory(filters:any){
+  downloadServiceHistory(filters: any) {
     let buildURL = "";
-    if(filters){
-      buildURL = "?"+filters+"&languageCode="+localStorage.getItem("langCode");
+    if (filters) {
+      buildURL = "?" + filters + "&languageCode=" + localStorage.getItem("langCode");
     }
-    if(!filters){
-      buildURL = "?languageCode="+localStorage.getItem("langCode");
+    if (!filters) {
+      buildURL = "?languageCode=" + localStorage.getItem("langCode");
     }
-    console.log("buildURL>>>"+buildURL);
-    return this.httpClient.get<Blob>(this.BASE_URL   + '/download/service-history'+buildURL, { observe: 'response', responseType: 'blob' as 'json' });
+    console.log("buildURL>>>" + buildURL);
+    return this.httpClient.get<Blob>(this.BASE_URL + '/download/service-history' + buildURL, { observe: 'response', responseType: 'blob' as 'json' });
   }
 
-  getNotificationCount(){
-    return this.httpClient.get(this.BASE_URL   + '/unread/notification-count');
+  getNotificationCount() {
+    return this.httpClient.get(this.BASE_URL + '/unread/notification-count');
   }
 
-  updateNotificationTime(){
-    return this.httpClient.put(this.BASE_URL   + '/bell/updatedttime', "");
+  updateNotificationTime() {
+    return this.httpClient.put(this.BASE_URL + '/bell/updatedttime', "");
   }
 
-  getNotificationData(){
-    return this.httpClient.get(this.BASE_URL   + '/unread/service-list');
+  getNotificationData() {
+    return this.httpClient.get(this.BASE_URL + '/unread/service-list');
   }
 
-  getSupportingDocument(){
-    return this.httpClient.get<Blob>(this.BASE_URL   + '/download/supporting-documents?langcode='+localStorage.getItem("langCode"), { responseType: 'blob' as 'json' });
+  getSupportingDocument() {
+    return this.httpClient.get<Blob>(this.BASE_URL + '/download/supporting-documents?langcode=' + localStorage.getItem("langCode"), { responseType: 'blob' as 'json' });
   }
 
-  getMappingData(){
+  getMappingData() {
     return this.httpClient.get(this.BASE_URL + '/auth-proxy/config/identity-mapping')
   }
-  
-  sendGrievanceRedressal(request:any){
+
+  sendGrievanceRedressal(request: any) {
     return this.httpClient.post(this.BASE_URL + '/grievance/ticket', request)
   }
-  
-  getDataForDropDown(apipath:string){
-    return this.httpClient.get(this.BASE_URL+ apipath );
+
+  getDataForDropDown(apipath: string) {
+    return this.httpClient.get(this.BASE_URL + apipath);
   }
 
   getImmediateChildren(locationCode: string, langCode: string) {
-    return this.httpClient.get(this.BASE_URL +'/proxy/masterdata/locations/immediatechildren/' +locationCode +'/' + langCode);
+    return this.httpClient.get(this.BASE_URL + '/proxy/masterdata/locations/immediatechildren/' + locationCode + '/' + langCode);
   }
 
 
-  vidDownloadStatus(vid:any){
-    return this.httpClient.get(this.BASE_URL + '/request-card/vid/'+vid, { observe: 'response'})
+  vidDownloadStatus(vid: any) {
+    return this.httpClient.get(this.BASE_URL + '/request-card/vid/' + vid, { observe: 'response' })
   }
 
-  downloadVidCardStatus(eventId:any){
-    return this.httpClient.get<Blob>(this.BASE_URL + '/download-card/event/'+eventId,{ observe: 'response', responseType: 'blob' as 'json' })
+  downloadVidCardStatus(eventId: any) {
+    return this.httpClient.get<Blob>(this.BASE_URL + '/download-card/event/' + eventId, { observe: 'response', responseType: 'blob' as 'json' })
+  }
+
+  generateOtpForDemographicData(request: any) {
+    return this.httpClient.post(this.BASE_URL + '/contact-details/send-otp', request)
+  }
+
+  verifyUpdateData(request: any) {
+    return this.httpClient.post(this.BASE_URL + '/contact-details/update-data', request)
+  }
+
+  getStatus(individualId: any) {
+    return this.httpClient.get(this.BASE_URL + '/status/individualId/' + individualId)
   }
   
-  generateOtpForDemographicData(request:any){
-    return this.httpClient.post(this.BASE_URL +'/contact-details/send-otp',request)
-  }
-  
-  verifyUpdateData(request:any){
-  return this.httpClient.post(this.BASE_URL + '/contact-details/update-data',request)
-  }
-
-  getStatus(individualId:any){
-        return this.httpClient.get(this.BASE_URL + '/status/individualId/'+individualId)
+  registrationCentersList(langcode: any,hierarchylevel:any,name:any) {
+    return this.httpClient.get<Blob>(this.BASE_URL + `/download/registration-centers-list?langcode=${langcode}&hierarchylevel=${hierarchylevel}&name=${name}`, { observe: 'response', responseType: 'blob' as 'json' })
   }
 }
