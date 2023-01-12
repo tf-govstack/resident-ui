@@ -88,8 +88,12 @@
                 <img src="assets\close.png" />
               </button> -->
             </mat-card>
-            <button (click)="showResults()" style="display: inline;" class="search-btn">
+            <button (click)="showResults()" class="search-btn">
               <mat-icon>search</mat-icon>
+            </button>
+            <button mat-raised-button (click)="downloadCentersPdf()" class="download-btn">
+              <img class="save-icon"
+							src="./assets/icons/iconfont/download-1.svg" />
             </button>
             
           </form>

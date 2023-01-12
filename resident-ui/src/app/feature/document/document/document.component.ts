@@ -33,7 +33,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
       let blob = new Blob([response], { type: 'application/pdf' })
       let fileURL = URL.createObjectURL(blob);
-
       //if you have any error then try this
       //this.tryDoctype = this.sanitizer.bypassSecurityTrustResourceUrl(fileURL);
 

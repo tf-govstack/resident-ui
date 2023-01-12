@@ -230,12 +230,16 @@ input[type="radio"] {
 }
 
 .search-btn {
-  width: 35px;
-  height: 35px;
+  width: 36px;
+  height: 36px;
   background-color: #03A64A;
   border: none;
   border-radius: 5px;
   margin: 1.3rem 0 0 12px;
+}
+
+.download-btn{
+  margin: 1.3rem 0 0 0;
 }
 
 .center_selection-form-container {
