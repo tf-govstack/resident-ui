@@ -3,6 +3,7 @@ import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: "app-document",
@@ -33,10 +34,11 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
       let blob = new Blob([response], { type: 'application/pdf' })
       let fileURL = URL.createObjectURL(blob);
+
       //if you have any error then try this
       //this.tryDoctype = this.sanitizer.bypassSecurityTrustResourceUrl(fileURL);
 
-      this.pdfSrc = fileURL;
+      this.pdfSrc = fileURL+"#toolbar=0&navpanes=0&scrollbar=0";
 
      /* let reader = new FileReader();
 
@@ -50,8 +52,24 @@ export class DocumentComponent implements OnInit, OnDestroy {
     
   }
 
-  resizeIframe(obj) {
-    obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+  downloadSupportingDocument(){
+    this.dataStorageService
+    .downloadSupportingDocument()
+    .subscribe(data => {
+      var fileName = "";
+      const contentDisposition = data.headers.get('content-disposition');
+      if (contentDisposition) {
+        const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = fileNameRegex.exec(contentDisposition);
+        if (matches != null && matches[1]) {
+          fileName = matches[1].replace(/['"]/g, '');
+        }
+      }
+      saveAs(data.body, fileName);
+    },
+    err => {
+      console.error(err);
+    });
   }
   
   ngOnDestroy(): void {

@@ -3,13 +3,18 @@
   >&nbsp;&nbsp;{{'dashboard.getinformation' | translate}}&nbsp;&nbsp;>&nbsp;&nbsp;<span
     class="active">{{'dashboard.document' | translate}}</span>
 </span>
-
-<div class="details-main-card">
+<div class="spinner" *ngIf="!pdfSrc">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="details-main-card" *ngIf="pdfSrc">
   <div class="details-card">
   <mat-tab-group  class="tabs" (selectedTabChange)="onItemSelected($event)" [selectedIndex]="1">
     <mat-tab label="{{'dashboard.regcenter' | translate}}"></mat-tab>
     <mat-tab label="{{'dashboard.document' | translate}}"></mat-tab>
   </mat-tab-group>
-  <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="100%" width="100%">
+  <div style="text-align: right;">
+    <button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn" (click)="downloadSupportingDocument()"><img class="save-icon" src="./assets/images/save.png"/>{{'downloadDocument.downloadbutton' | translate}}</button>
+  </div>
+  <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="90%" width="100%">
   </div>
 </div>

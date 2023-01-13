@@ -276,6 +276,10 @@ export class DataStorageService {
     return this.httpClient.get<Blob>(this.BASE_URL + '/download/supporting-documents?langcode=' + localStorage.getItem("langCode"), { responseType: 'blob' as 'json' });
   }
 
+  downloadSupportingDocument() {
+    return this.httpClient.get<Blob>(this.BASE_URL + '/download/supporting-documents?langcode=' + localStorage.getItem("langCode"), { observe: 'response', responseType: 'blob' as 'json' });
+  }
+
   getMappingData() {
     return this.httpClient.get(this.BASE_URL + '/auth-proxy/config/identity-mapping')
   }
