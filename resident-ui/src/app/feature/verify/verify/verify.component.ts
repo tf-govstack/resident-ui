@@ -51,6 +51,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   channelSelected:any = false;
   phoneIcon:boolean = false;
   mailIcon:boolean = false;
+  captchaChecked:boolean = false;
 
 
 
@@ -72,6 +73,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
         this.verifyChannelData = response.verifyuinvid
+        console.log(this.verifyChannelData)
         this.popupMessages = response;
         this.infoText = response.InfomationContent.verifyChannel
       });
@@ -101,18 +103,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCaptchaToken(event: Event) {
-    console.log(event)
-    console.log(this.channelSelected)
-    if (event !== undefined && event != null &&  this.channelSelected) {
-      console.log("Captcha event " + event);
-      this.disableSendOtp = false
-    } else {
-      console.log("Captcha has expired" + event);
-      this.disableSendOtp = true
-    }
-  }
-
   /*loadRecaptchaSiteKey() {
     this.siteKey = "6LcM7OAeAAAAAChEa_jqFzlipTC7nf6hHG5eAGki";
   }*/
@@ -131,6 +121,29 @@ export class VerifyComponent implements OnInit, OnDestroy {
       this.numBtnColors = "#909090"
       this.mailIcon = true
       this.phoneIcon = false
+    }
+    if (this.captchaChecked &&  this.channelSelected && this.individualId) {
+      this.disableSendOtp = false
+    } else {
+      this.disableSendOtp = true
+    }
+  }
+
+  getCaptchaToken(event: Event) {
+    this.captchaChecked = true
+    if (this.captchaChecked &&  this.channelSelected && this.individualId) {
+      this.disableSendOtp = false
+    } else {
+      this.disableSendOtp = true
+    }
+  }
+  
+  captureValue(event: any, formControlName: string) {
+    this[formControlName] = event.target.value;
+    if (this.captchaChecked &&  this.channelSelected && this.individualId) {
+      this.disableSendOtp = false
+    } else {
+      this.disableSendOtp = true
     }
   }
 
@@ -156,10 +169,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
       }
       this.otpTimeSeconds -= 1
     }, 1000);
-  }
-
-  captureValue(event: any, formControlName: string) {
-    this[formControlName] = event.target.value;
   }
 
   sendOtpBtn() {

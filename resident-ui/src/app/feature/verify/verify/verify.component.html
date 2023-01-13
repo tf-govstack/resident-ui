@@ -8,13 +8,13 @@
       <div class="btn-card">
         <mat-button-toggle id="phoneChannelBtn" (click)="radioChange('PHONE')" class="button" [style.color]="numBtnColors"
           [style.borderColor]="numBtnColors"><img *ngIf="!phoneIcon"
-            src="./assets/images/phone_iphone_black_24dp.png" /><img *ngIf="phoneIcon" src="./assets/icons/iconfont/phone_iphone_black.svg"/>&nbsp;{{verifyChannelData.mobileno | translate }}
+            src="./assets/images/phone_iphone_black_24dp.png" /><img *ngIf="phoneIcon" src="./assets/icons/iconfont/phone_iphone_black.svg"/>&nbsp;{{verifyChannelData.mobileno | translate}}
         </mat-button-toggle>
         &nbsp;
         &nbsp;
         <mat-button-toggle id="emailChannelBtn" [style.color]="emailBtnColors" [style.borderColor]="emailBtnColors"
           (click)="radioChange('EMAIL')" class="button"><img
-            src="./assets/images/email_black_24dp (1).png" *ngIf="!mailIcon" /> <img *ngIf="mailIcon" src="./assets/icons/iconfont/email_black.svg"/>&nbsp;{{verifyChannelData.email | translate }}
+            src="./assets/images/email_black_24dp (1).png" *ngIf="!mailIcon" /> <img *ngIf="mailIcon" src="./assets/icons/iconfont/email_black.svg"/>&nbsp;{{verifyChannelData.email | translate}}
         </mat-button-toggle>
       </div>
       <label for="uin">{{verifyChannelData.uid | translate }}
@@ -23,7 +23,7 @@
       <div *ngIf="isPopUpShow" class="info-box">
         <p>{{infoText}}</p>
       </div>
-      <input id="uidValue" type="text" id="uin" name="uin" (blur)="captureValue($event, 'individualId')" value={{individualId}}
+      <input id="uidValue" type="text" id="uin" name="uin" (input)="captureValue($event, 'individualId')" value={{individualId}}
         placeholder="{{verifyChannelData.uid | translate}}" />
         <div class="not-robot-verifing-card" *ngIf="siteKey">
           <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha" (captchaEvent)="getCaptchaToken($event)"></app-captcha>
