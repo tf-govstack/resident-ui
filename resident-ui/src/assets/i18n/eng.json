@@ -178,6 +178,9 @@
         "noResult_found": "No results Found",
         "lunch_hours": "Lunch"
     },
+    "downloadDocument": {
+        "downloadbutton": "Download"
+    },
     "grievanceRedressal":{
         "title":"Grievance Redressal Form",
         "namelabel":"Name",
