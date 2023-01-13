@@ -179,8 +179,8 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   convertpdf() {
     let self = this;
     const request = {
-      "id": "mosip.resident.euin",
-      "version": this.appConfigService.getConfig()["resident.vid.version"],
+      "id": this.appConfigService.getConfig()["mosip.resident.download.personalized.card.id"],
+      "version": this.appConfigService.getConfig()["resident.vid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
         "html": btoa(this.buildHTML)
