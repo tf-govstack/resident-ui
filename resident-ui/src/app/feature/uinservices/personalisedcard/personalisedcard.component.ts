@@ -32,7 +32,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   addressFormatValues: string[];
   eventId: any;
   givenNameBox:boolean = false;
-  downloadBtnDisabled:boolean = true
+  downloadBtnDisabled:boolean = true;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -58,7 +58,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
-        this.schema = response;
+        this.schema = response["schema"];
       });
     this.getUserInfo();
     this.getMappingData()
@@ -108,6 +108,17 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
       }
     }
+
+    this.schema = this.schema.map(item =>{
+      if (item.attributeName === data.attributeName){
+        let newItem = {...item,checked: !item.checked}
+        console.log(newItem)
+        return newItem
+      }else{
+        return item
+      }
+  })
+
   }else{
     if(data2 === data.maskAttributeName){
       if (data.maskAttributeName.toString() in this.dataDisplay) {
@@ -165,7 +176,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       if (key === "photo") {
         rowImage = "<tr><td><img src=' " + this.dataDisplay[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
       } else {
-        row = row + "<tr><td>" + this.dataDisplay[key].label + "</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+        row = row + "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
       }
     }
     this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;

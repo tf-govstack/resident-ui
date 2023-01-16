@@ -17,7 +17,8 @@
 				"eng": [{"label":"First Name", "value":"firstName"}, {"label":"Middle Name", "value":"middleName"}, {"label":"Last Name", "value":"lastName"}, {"label":"Full Name", "value":"fullName"}]
 			},
 			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":true
+			"displaykeyinpersonalisedcard":true,
+			"checked":false
 		},
 		{
 			"attributeName": "dateOfBirth",
@@ -36,7 +37,8 @@
 				"eng": [{"label":"DD/MM", "value":"DD/MM"}, {"label":"DD/MM/YYYY", "value":"DD/MM/YYYY"}]
 			},
 			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":true
+			"displaykeyinpersonalisedcard":true,
+			"checked":false
 		},
 		{
 			"attributeName": "uin",
@@ -50,7 +52,8 @@
 				"eng": "Mask It"
 			},
 			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":false
+			"displaykeyinpersonalisedcard":false,
+			"checked":false
 		},
 		{
 			"attributeName": "Perpetual VID",
@@ -64,7 +67,8 @@
 				"eng": "Mask It"
 			},
 			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":false
+			"displaykeyinpersonalisedcard":false,
+			"checked":false
 		},
 		{
 			"attributeName": "phone",
@@ -78,7 +82,8 @@
 				"eng": "Mask It"
 			},
 			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":true
+			"displaykeyinpersonalisedcard":true,
+			"checked":false
 		},
 		{
 			"attributeName": "email",
@@ -92,7 +97,8 @@
 				"eng": "Mask It"
 			},
 			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":true
+			"displaykeyinpersonalisedcard":true,
+			"checked":false
 		},
 		{
 			"attributeName": "addressLine1",
@@ -111,7 +117,8 @@
 				"eng": [{"label":"Region", "value":"region"}, {"label":"Province", "value":"province"}, {"label":"City", "value":"city"}, {"label":"Full Address", "value":"fullAddress"}]
 			},
 			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":true
+			"displaykeyinpersonalisedcard":true,
+			"checked":false
 		},
 		{
 			"attributeName": "gender",
@@ -124,7 +131,8 @@
 				"eng": "Mask It"
 			},
 			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":true
+			"displaykeyinpersonalisedcard":true,
+			"checked":false
 		},
 		{
 			"attributeName": "photo",
@@ -137,7 +145,8 @@
 				"eng": "Mask It"
 			},
 			"displaykeyinsharewithpartner":true,
-			"displaykeyinpersonalisedcard":true
+			"displaykeyinpersonalisedcard":true,
+			"checked":false
 		}
 	]
 }

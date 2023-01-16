@@ -6,32 +6,38 @@
   <mat-card class="verify-phnumb-email-card" *ngIf="showOtpEnterPanel">
     <div class="send-otp-container">
       <div class="btn-card">
-        <mat-button-toggle id="phoneChannelBtn" (click)="radioChange('PHONE')" class="button" [style.color]="numBtnColors"
+        <mat-button-toggle id="phoneChannelBtn" (click)="radioChange('PHONE')" class="button"
           [style.borderColor]="numBtnColors"><img *ngIf="!phoneIcon"
-            src="./assets/images/phone_iphone_black_24dp.png" /><img *ngIf="phoneIcon" src="./assets/icons/iconfont/phone_iphone_black.svg"/>&nbsp;{{verifyChannelData.mobileno | translate}}
+            src="./assets/images/phone_iphone_black_24dp.png" /><img *ngIf="phoneIcon"
+            src="./assets/icons/iconfont/phone_iphone_black.svg" />&nbsp;<span
+            [style.color]="numBtnColors">{{verifyChannelData.mobileno |
+            translate}}</span>
         </mat-button-toggle>
         &nbsp;
         &nbsp;
-        <mat-button-toggle id="emailChannelBtn" [style.color]="emailBtnColors" [style.borderColor]="emailBtnColors"
-          (click)="radioChange('EMAIL')" class="button"><img
-            src="./assets/images/email_black_24dp (1).png" *ngIf="!mailIcon" /> <img *ngIf="mailIcon" src="./assets/icons/iconfont/email_black.svg"/>&nbsp;{{verifyChannelData.email | translate}}
+        <mat-button-toggle id="emailChannelBtn" [style.borderColor]="emailBtnColors"
+          (click)="radioChange('EMAIL')" class="button"><img src="./assets/images/email_black_24dp (1).png"
+            *ngIf="!mailIcon" /> <img *ngIf="mailIcon" src="./assets/icons/iconfont/email_black.svg" />&nbsp;<span
+            [style.color]="emailBtnColors">{{verifyChannelData.email | translate}}</span>
         </mat-button-toggle>
       </div>
       <label for="uin">{{verifyChannelData.uid | translate }}
-        <mat-icon class="info-icon" (mouseover)="openPopUp();" (mouseout)="openPopUp()" style="color: green;font-size: 18px; cursor: pointer;">info</mat-icon>
+        <mat-icon class="info-icon" (mouseover)="openPopUp();" (mouseout)="openPopUp()"
+          style="color: green;font-size: 18px; cursor: pointer;">info</mat-icon>
       </label>
       <div *ngIf="isPopUpShow" class="info-box">
         <p>{{infoText}}</p>
       </div>
-      <input id="uidValue" type="text" id="uin" name="uin" (input)="captureValue($event, 'individualId')" value={{individualId}}
-        placeholder="{{verifyChannelData.uid | translate}}" />
-        <div class="not-robot-verifing-card" *ngIf="siteKey">
-          <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha" (captchaEvent)="getCaptchaToken($event)"></app-captcha>
-        </div>
+      <input id="uidValue" type="text" id="uin" name="uin" (input)="captureValue($event, 'individualId')"
+        value={{individualId}} placeholder="{{verifyChannelData.uid | translate}}" />
+      <div class="not-robot-verifing-card" *ngIf="siteKey">
+        <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha"
+          (captchaEvent)="getCaptchaToken($event)"></app-captcha>
+      </div>
       &nbsp;
       &nbsp;
       &nbsp;
-      <button id="sendOtpBtn" class="send-otp-btn" [disabled]="disableSendOtp" mat-raised-button 
+      <button id="sendOtpBtn" class="send-otp-btn" [disabled]="disableSendOtp" mat-raised-button
         (click)="sendOtpBtn()">{{verifyChannelData.sendotp | translate}}</button>
     </div>
   </mat-card>
@@ -45,7 +51,8 @@
         src="./assets/images/arrow_back_black_24dp.png" alt="" />Back</button>
     <hr class="line" />
     <div class="send-otp-container">
-      <mat-card-subtitle class="otp-time-heading">{{verifyChannelData.subTitle | translate}}<span class="otp-expire-time">
+      <mat-card-subtitle class="otp-time-heading">{{verifyChannelData.subTitle | translate}}<span
+          class="otp-expire-time">
           0{{otpTimeMinutes}}:{{displaySeconds}}</span>
       </mat-card-subtitle>
       <label for="otp-input">{{verifyChannelData.inputLabel | translate}}</label>
@@ -53,9 +60,11 @@
       <input id="otpValue" #box (keyup)="captureOtpValue(box.value)" placeholder="Enter OTP here" id="otp-input"
         class="enter-opt-input" type="text" />
       <div class="otp-infromation-card">
-        <p *ngIf="otpChannel[0] === 'PHONE'" class="otp-infromation-text">{{verifyChannelData.otpDescriptionPhone | translate}} <span class="mobile-number">
+        <p *ngIf="otpChannel[0] === 'PHONE'" class="otp-infromation-text">{{verifyChannelData.otpDescriptionPhone |
+          translate}} <span class="mobile-number">
             {{channelType}}</span>.</p>
-        <p *ngIf="otpChannel[0] === 'EMAIL'" class="otp-infromation-text">{{verifyChannelData.otpDescriptionEmail | translate}} <span class="mobile-number">
+        <p *ngIf="otpChannel[0] === 'EMAIL'" class="otp-infromation-text">{{verifyChannelData.otpDescriptionEmail |
+          translate}} <span class="mobile-number">
             {{channelType}}</span>.</p>
       </div>
       <div class="get-uin-btn-card">
