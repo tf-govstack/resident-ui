@@ -31,8 +31,8 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   nameFormatValues: string[];
   addressFormatValues: string[];
   eventId: any;
-  givenNameBox:boolean = false;
-  downloadBtnDisabled:boolean = true;
+  givenNameBox: boolean = false;
+  downloadBtnDisabled: boolean = true;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -84,102 +84,132 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.buildHTML = "";
     let row = "";
     let rowImage = "";
-    
-  if(data2 === undefined || data2 === data.attributeName){
-    if (data.attributeName.toString() in this.dataDisplay) {
-      delete this.dataDisplay[data.attributeName];
-    } else {
-      let value = "";
-      if (typeof this.userInfo[data.attributeName] === "string") {
-        value = this.userInfo[data.attributeName];
-      } else {
-        if (data.attributeName === "uin") {
-          value = this.userInfo["UIN"];
-        }else if(data.attributeName === "Perpetual VID"){
-          value = this.userInfo["perpetualVID"];
-        }else {
-          value = this.userInfo[data.attributeName][0].value;
-        }
+    let rowName = "";
+    let rowDOB = "";
+    let rowUIN = "";
+    let rowVID = "";
+    let rowPhone = "";
+    let rowEmail = "";
+    let rowAddress = "";
+    let rowGender = "";
+    console.log(data)
+    console.log(data2)
 
+    if (data2 === undefined || data2 === data.attributeName) {
+      if (data.attributeName.toString() in this.dataDisplay) {
+        delete this.dataDisplay[data.attributeName];
       }
-      if (data.attributeName === "photo") {
-        this.dataDisplay[data.attributeName] = { "label": "", "value": value };
-      } else {
-        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
-      }
-    }
-
-    this.schema = this.schema.map(item =>{
-      if (item.attributeName === data.attributeName){
-        let newItem = {...item,checked: !item.checked}
-        console.log(newItem)
-        return newItem
-      }else{
-        return item
-      }
-  })
-
-  }else{
-    if(data2 === data.maskAttributeName){
-      if (data.maskAttributeName.toString() in this.dataDisplay) {
+      else if(data.maskAttributeName in this.dataDisplay){
         delete this.dataDisplay[data.maskAttributeName];
-        let value = "";
-      if (typeof this.userInfo[data.attributeName] === "string") {
-        value = this.userInfo[data.attributeName];
-      } else {
-        if (data.attributeName === "uin") {
-          value = this.userInfo["UIN"]
-        }else if(data.attributeName === "Perpetual VID"){
-          value = this.userInfo["perpetualVID"]
-        }else {
-          value = this.userInfo[data.attributeName][0].value;
-        }
-
-      }
-      if (data.attributeName === "photo") {
-        this.dataDisplay[data.attributeName] = { "label": "", "value": value };
-      } else {
-        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
-      }
-      } else {
-        if (data.attributeName.toString() in this.dataDisplay) {
-          delete this.dataDisplay[data.attributeName];
-        }
+      } 
+      else {
         let value = "";
         if (typeof this.userInfo[data.attributeName] === "string") {
-          value = this.userInfo[data.maskAttributeName];
+          value = this.userInfo[data.attributeName];
         } else {
           if (data.attributeName === "uin") {
-            value = this.userInfo[data.maskAttributeName]
-          }else if(data.attributeName === "Perpetual VID"){
-            value = this.userInfo[data.maskAttributeName]
-          }else {
+            value = this.userInfo["UIN"];
+          } else if (data.attributeName === "Perpetual VID") {
+            value = this.userInfo["perpetualVID"];
+          } else {
             value = this.userInfo[data.attributeName][0].value;
           }
-  
         }
         if (data.attributeName === "photo") {
           this.dataDisplay[data.attributeName] = { "label": "", "value": value };
         } else {
-          this.dataDisplay[data.maskAttributeName] = { "label": data.label[this.langCode], "value": value };
+          this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
+        }
+      }
+
+      this.schema = this.schema.map(item => {
+        if (item.attributeName === data.attributeName) {
+          let newItem = { ...item, checked: !item.checked }
+          return newItem
+        } else {
+          return item
+        }
+      })
+
+    } else {
+      if (data2 === data.maskAttributeName) {
+        if (data.maskAttributeName.toString() in this.dataDisplay) {
+          delete this.dataDisplay[data.maskAttributeName];
+          let value = "";
+          if (typeof this.userInfo[data.attributeName] === "string") {
+            value = this.userInfo[data.attributeName];
+          } else {
+            if (data.attributeName === "uin") {
+              value = this.userInfo["UIN"]
+            } else if (data.attributeName === "Perpetual VID") {
+              value = this.userInfo["perpetualVID"]
+            } else {
+              value = this.userInfo[data.attributeName][0].value;
+            }
+
+          }
+          if (data.attributeName === "photo") {
+            this.dataDisplay[data.attributeName] = { "label": "", "value": value };
+          } else {
+            this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
+          }
+        } else {
+          if (data.attributeName.toString() in this.dataDisplay) {
+            delete this.dataDisplay[data.attributeName];
+          }
+          let value = "";
+          if (typeof this.userInfo[data.attributeName] === "string") {
+            value = this.userInfo[data.maskAttributeName];
+          } else {
+            if (data.attributeName === "uin") {
+              value = this.userInfo[data.maskAttributeName]
+            } else if (data.attributeName === "Perpetual VID") {
+              value = this.userInfo[data.maskAttributeName]
+            } else {
+              value = this.userInfo[data.attributeName][0].value;
+            }
+
+          }
+          if (data.attributeName === "photo") {
+            this.dataDisplay[data.attributeName] = { "label": "", "value": value };
+          } else {
+            this.dataDisplay[data.maskAttributeName] = { "label": data.label[this.langCode], "value": value };
+          }
         }
       }
     }
-  }
 
-    if(Object.keys(this.dataDisplay).length >= 3){
-      this.downloadBtnDisabled = false
-    }else{
-      this.downloadBtnDisabled = true
+    if (Object.keys(this.dataDisplay).length >= 3) {
+      this.downloadBtnDisabled = false;
+    } else {
+      this.downloadBtnDisabled = true;
     }
+
     for (const key in this.dataDisplay) {
       if (key === "photo") {
         rowImage = "<tr><td><img src=' " + this.dataDisplay[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
+      } else if (key === "fullName") {
+        rowName = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+      } else if (key === "dateOfBirth") {
+        rowDOB = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+      } else if (key === "uin" || key === "masked_UIN") {
+        rowUIN = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+      } else if (key === "Perpetual VID" || key === "masked_perpetualVID") {
+        rowVID = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+      } else if (key === "phone" || key === "masked_phone") {
+        rowPhone = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+      } else if (key === "email" || key === "masked_email") {
+        rowEmail = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+      } else if (key === "addressLine1") {
+        rowAddress = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+      } else if (key === "gender") {
+        rowGender = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
       } else {
         row = row + "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
       }
     }
-    this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;
+    console.log(this.dataDisplay)
+    this.buildHTML = `<html><head></head><body><table>` + rowImage + rowName + rowDOB + rowUIN + rowVID + rowPhone + rowEmail + rowAddress + rowGender + row + `</table></body></html>`;
     $event.stopPropagation();
   }
 
