@@ -84,25 +84,13 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.buildHTML = "";
     let row = "";
     let rowImage = "";
-    let rowName = "";
-    let rowDOB = "";
-    let rowUIN = "";
-    let rowVID = "";
-    let rowPhone = "";
-    let rowEmail = "";
-    let rowAddress = "";
-    let rowGender = "";
-    console.log(data)
-    console.log(data2)
 
     if (data2 === undefined || data2 === data.attributeName) {
       if (data.attributeName.toString() in this.dataDisplay) {
         delete this.dataDisplay[data.attributeName];
-      }
-      else if(data.maskAttributeName in this.dataDisplay){
+      }else if(data.maskAttributeName in this.dataDisplay){
         delete this.dataDisplay[data.maskAttributeName];
-      } 
-      else {
+      } else {
         let value = "";
         if (typeof this.userInfo[data.attributeName] === "string") {
           value = this.userInfo[data.attributeName];
@@ -114,6 +102,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           } else {
             value = this.userInfo[data.attributeName][0].value;
           }
+
         }
         if (data.attributeName === "photo") {
           this.dataDisplay[data.attributeName] = { "label": "", "value": value };
@@ -121,10 +110,10 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
         }
       }
-
       this.schema = this.schema.map(item => {
         if (item.attributeName === data.attributeName) {
           let newItem = { ...item, checked: !item.checked }
+          console.log(newItem)
           return newItem
         } else {
           return item
@@ -146,6 +135,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
             } else {
               value = this.userInfo[data.attributeName][0].value;
             }
+
 
           }
           if (data.attributeName === "photo") {
@@ -180,36 +170,18 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     }
 
     if (Object.keys(this.dataDisplay).length >= 3) {
-      this.downloadBtnDisabled = false;
+      this.downloadBtnDisabled = false
     } else {
-      this.downloadBtnDisabled = true;
+      this.downloadBtnDisabled = true
     }
-
     for (const key in this.dataDisplay) {
       if (key === "photo") {
         rowImage = "<tr><td><img src=' " + this.dataDisplay[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
-      } else if (key === "fullName") {
-        rowName = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
-      } else if (key === "dateOfBirth") {
-        rowDOB = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
-      } else if (key === "uin" || key === "masked_UIN") {
-        rowUIN = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
-      } else if (key === "Perpetual VID" || key === "masked_perpetualVID") {
-        rowVID = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
-      } else if (key === "phone" || key === "masked_phone") {
-        rowPhone = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
-      } else if (key === "email" || key === "masked_email") {
-        rowEmail = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
-      } else if (key === "addressLine1") {
-        rowAddress = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
-      } else if (key === "gender") {
-        rowGender = "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
       } else {
         row = row + "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
       }
     }
-    console.log(this.dataDisplay)
-    this.buildHTML = `<html><head></head><body><table>` + rowImage + rowName + rowDOB + rowUIN + rowVID + rowPhone + rowEmail + rowAddress + rowGender + row + `</table></body></html>`;
+    this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;
     $event.stopPropagation();
   }
 
