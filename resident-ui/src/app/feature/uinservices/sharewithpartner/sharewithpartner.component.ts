@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, KeyValueDiffers } from "@angular/core";
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
@@ -59,7 +59,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
-        this.schema = response;
+        this.schema = response["schema"];
       });
 
     this.getPartnerDetails();
@@ -93,12 +93,12 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
   captureCheckboxValue($event: any, data: any, type: string) {
     this.buildHTML = ""
+    
     // console.log("<<<data.attributeName>>>"+JSON.stringify(data)); 
     if (type === "datacheck") {
       if (data.attributeName.toString() in this.sharableAttributes) {
         delete this.sharableAttributes[data.attributeName];
       } else {
-        this.sharableAttributes[data.attributeName] = { "attributeName": data.attributeName, "format": "", "isMasked": false };
         let value = "";
         if (typeof this.userInfo[data.attributeName] === "string") {
           value = this.userInfo[data.attributeName];
@@ -114,13 +114,30 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         }
         this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "value": value };
       }
-
-    } else if (type === "maskcheck") {
-      if (this.sharableAttributes[data.attributeName]) {
-        this.sharableAttributes[data.attributeName]["isMasked"] = $event.checked;
-      } else {
-        this.sharableAttributes[data.attributeName] = { "attributeName": data.attributeName, "format": "", "isMasked": $event.checked };
+      this.schema = this.schema.map(item => {
+        if (item.attributeName === data.attributeName) {
+          let newItem = { ...item, checked: !item.checked }
+          return newItem
+        } else {
+          return item
+        }
+      })
+    console.log(this.sharableAttributes)
+    } else {
+      let value;
+      if(this.sharableAttributes[data.attributeName].value === this.userInfo[type]){
+        if (data.attributeName === "uin") {
+          value = this.userInfo["UIN"]
+        } else if (data.attributeName === "Perpetual VID") {
+          value = this.userInfo["perpetualVID"]
+        } else {
+          value = this.userInfo[data.attributeName];
+        }
+      }else{
+        value = this.userInfo[type]
       }
+      this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "value": value }
+      
     }
 
     if (Object.keys(this.sharableAttributes).length >= 3) {
@@ -131,13 +148,12 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
     let row = "";
     let rowImage = ""
-    console.log("data.attributeName>>>" + data.attributeName);
+    
     for (const key in this.sharableAttributes) {
-      console.log(this.sharableAttributes[key].value)
       if (key === "photo") {
         rowImage = "<tr><td><img src=' " + this.sharableAttributes[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
       } else {
-        row = row + "<tr><td>" + this.sharableAttributes[key].label + "</td><td>" + this.sharableAttributes[key].value + "</td></tr>";
+        row = row + "<tr><td style='font-weight:600;'>" + this.sharableAttributes[key].label + ":</td><td>" + this.sharableAttributes[key].value + "</td></tr>";
       }
     }
     this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;
@@ -153,7 +169,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       this.partnerId = event.source.value;
     }
   }
-
+  
   shareInfoBtn() {
     if (!this.partnerId) {
       this.message = this.popupMessages.genericmessage.sharewithpartner.needPartner

@@ -57,7 +57,7 @@ export class DownloadUinComponent implements OnInit {
   ) {
     if (this.router.getCurrentNavigation().extras.state) {
       this.data = this.router.getCurrentNavigation().extras.state.data.AID
-      this.transactionID = this.router.getCurrentNavigation().extras.state.response.transactionID
+      this.transactionID = this.router.getCurrentNavigation().extras.state.response.transactionId
       this.phoneNumber = this.router.getCurrentNavigation().extras.state.response.response.maskedMobile
       this.emailId = this.router.getCurrentNavigation().extras.state.response.response.maskedEmail
     } else {
@@ -132,15 +132,15 @@ export class DownloadUinComponent implements OnInit {
     let self = this;
     const request = {
       "id": "mosip.identity.otp.internal",
-      "aid": this.data,
+      "individualId": this.data,
       "metadata": {},
       "otpChannel": [
         "PHONE",
         "EMAIL"
       ],
-      "transactionID": self.transactionID,
+      "transactionId": self.transactionID,
       "requestTime": Utils.getCurrentDate(),
-      "version": "1.0"
+      "version": this.appConfigService.getConfig()["resident.vid.version.new"]
     };
     this.dataStorageService.generateOTPForUid(request)
       .subscribe((response) => {
@@ -156,7 +156,7 @@ export class DownloadUinComponent implements OnInit {
     let self = this;
     const request = {
       "id": "mosip.resident.download.uin.card",
-      "version": "1.0",
+      "version": this.appConfigService.getConfig()["resident.vid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
         "transactionId": self.transactionID,
@@ -164,6 +164,7 @@ export class DownloadUinComponent implements OnInit {
         "otp": self.otp
       }
     };
+    
     self.dataStorageService.validateUinCardOtp(request).subscribe(response => {
       this.eventId = response.headers.get("eventid")
       if (response.body.type === "application/json") {

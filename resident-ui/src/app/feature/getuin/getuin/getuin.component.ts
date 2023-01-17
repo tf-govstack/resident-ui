@@ -120,15 +120,15 @@ export class GetuinComponent implements OnInit {
     let self = this;
     const request = {
       "id": "mosip.identity.otp.internal",
-      "aid": data["AID"],
+      "individualId": data["AID"],
       "metadata": {},
       "otpChannel": [
             "PHONE",
             "EMAIL"
           ],
-      "transactionID": self.transactionID,
+      "transactionId": self.transactionID,
       "requestTime": Utils.getCurrentDate(),
-      "version": "1.0"
+      "version": this.appConfigService.getConfig()["resident.vid.version.new"]
     };
     this.dataStorageService.generateOTPForUid(request)
     .subscribe((response) =>{
