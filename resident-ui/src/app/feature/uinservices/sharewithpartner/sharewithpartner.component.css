@@ -90,8 +90,8 @@
 }
 
 .attribute-card{
-  height: 260px; 
-  width: 50%; 
+  height: 275px; 
+  min-width: 400px; 
   border: 1px solid #505050; 
   border-radius: 6px; 
   padding: 12px;
@@ -104,7 +104,8 @@
   border-radius: 5px;
   resize: none;
   font-family: Roboto,'Helvetica Neue',sans-serif;
-  padding: 5px
+  padding: 5px;
+  border: 1px solid #505050;
 }
 
 .share-btn{
