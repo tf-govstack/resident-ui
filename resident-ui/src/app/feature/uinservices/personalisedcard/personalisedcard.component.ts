@@ -80,93 +80,54 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       });
   }
 
-  captureCheckboxValue($event: any, data: any, data2: any) {
+  captureCheckboxValue($event: any, data: any, type: any) {
     this.buildHTML = "";
     let row = "";
     let rowImage = "";
 
-    if (data2 === undefined || data2 === data.attributeName) {
+    if (type === "datacheck") {
       if (data.attributeName.toString() in this.dataDisplay) {
         delete this.dataDisplay[data.attributeName];
-      }else if(data.maskAttributeName in this.dataDisplay){
-        delete this.dataDisplay[data.maskAttributeName];
       } else {
         let value = "";
         if (typeof this.userInfo[data.attributeName] === "string") {
           value = this.userInfo[data.attributeName];
         } else {
           if (data.attributeName === "uin") {
-            value = this.userInfo["UIN"];
+            value = this.userInfo["UIN"]
           } else if (data.attributeName === "Perpetual VID") {
-            value = this.userInfo["perpetualVID"];
+            value = this.userInfo["perpetualVID"]
           } else {
             value = this.userInfo[data.attributeName][0].value;
           }
 
         }
-        if (data.attributeName === "photo") {
-          this.dataDisplay[data.attributeName] = { "label": "", "value": value };
-        } else {
-          this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
-        }
+        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
       }
       this.schema = this.schema.map(item => {
         if (item.attributeName === data.attributeName) {
           let newItem = { ...item, checked: !item.checked }
-          console.log(newItem)
           return newItem
         } else {
           return item
         }
       })
-
+    
     } else {
-      if (data2 === data.maskAttributeName) {
-        if (data.maskAttributeName.toString() in this.dataDisplay) {
-          delete this.dataDisplay[data.maskAttributeName];
-          let value = "";
-          if (typeof this.userInfo[data.attributeName] === "string") {
-            value = this.userInfo[data.attributeName];
-          } else {
-            if (data.attributeName === "uin") {
-              value = this.userInfo["UIN"]
-            } else if (data.attributeName === "Perpetual VID") {
-              value = this.userInfo["perpetualVID"]
-            } else {
-              value = this.userInfo[data.attributeName][0].value;
-            }
-
-
-          }
-          if (data.attributeName === "photo") {
-            this.dataDisplay[data.attributeName] = { "label": "", "value": value };
-          } else {
-            this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
-          }
+      let value;
+      if(this.dataDisplay[data.attributeName].value === this.userInfo[type]){
+        if (data.attributeName === "uin") {
+          value = this.userInfo["UIN"]
+        } else if (data.attributeName === "Perpetual VID") {
+          value = this.userInfo["perpetualVID"]
         } else {
-          if (data.attributeName.toString() in this.dataDisplay) {
-            delete this.dataDisplay[data.attributeName];
-          }
-          let value = "";
-          if (typeof this.userInfo[data.attributeName] === "string") {
-            value = this.userInfo[data.maskAttributeName];
-          } else {
-            if (data.attributeName === "uin") {
-              value = this.userInfo[data.maskAttributeName]
-            } else if (data.attributeName === "Perpetual VID") {
-              value = this.userInfo[data.maskAttributeName]
-            } else {
-              value = this.userInfo[data.attributeName][0].value;
-            }
-
-          }
-          if (data.attributeName === "photo") {
-            this.dataDisplay[data.attributeName] = { "label": "", "value": value };
-          } else {
-            this.dataDisplay[data.maskAttributeName] = { "label": data.label[this.langCode], "value": value };
-          }
+          value = this.userInfo[data.attributeName];
         }
+      }else{
+        value = this.userInfo[type]
       }
+      this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value }
+      
     }
 
     if (Object.keys(this.dataDisplay).length >= 3) {
@@ -174,6 +135,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     } else {
       this.downloadBtnDisabled = true
     }
+
     for (const key in this.dataDisplay) {
       if (key === "photo") {
         rowImage = "<tr><td><img src=' " + this.dataDisplay[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";

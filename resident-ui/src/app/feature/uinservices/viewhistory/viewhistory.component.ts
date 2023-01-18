@@ -35,7 +35,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   startdate: Date = new Date(2022, 0, 1)
   modeselect = 'ALL'
   selectedDate:any;
-
+  toDateStartDate:any = this.startdate;
   searchText:string = "";
   serviceType:string = "";
   statusFilter:string = "";
@@ -71,6 +71,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
         this.totalItems = response["response"]["totalItems"];
         this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
         this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
+        console.log(this.statusTypeFilter)
         this.parsedrodowndata();
     });
   }
@@ -88,7 +89,10 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
 
     statusTypeFilter.forEach( (element) => {
+      console.log(element)
+      console.log(this.langJSON.viewhistory.statusTypeFilter)
       if(this.langJSON.viewhistory.statusTypeFilter[element]){
+        console.log(element)
         this.statusTypeFilter.push({"label":this.langJSON.viewhistory.statusTypeFilter[element], "value": element});
       }
     });
@@ -100,6 +104,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       this[formControlName] = event.value.toString().toUpperCase();
     }else if(controlType === "datepicker"){
       let dateFormat = new Date(event.target.value);
+      formControlName === "fromDate" ? this.toDateStartDate = dateFormat : "";
       let formattedDate = dateFormat.getFullYear() + "-" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "-" + ("0" + dateFormat.getDate()).slice(-2);
       this[formControlName] = formattedDate;
     }else{

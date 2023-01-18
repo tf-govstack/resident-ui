@@ -150,32 +150,36 @@ export class DialogComponent implements OnInit {
   }
 
   agreeConditions() {
-    this.isChecked = !this.isChecked
+    this.isChecked = !this.isChecked;
   }
 
-  shareInfoBtn(): void {
+  shareInfoBtn(id:any): void {
     this.dialog.closeAll();
-    this.interactionService.sendClickEvent("shareInfo")
+    this.interactionService.sendClickEvent(id);
   }
-
+  
+  shareInfoForUpdateMyData(id:any){
+    this.dialog.closeAll();
+    this.interactionService.sendClickEvent(id);
+  }
   vidWarning(): void {
     this.dialog.closeAll();
-    this.interactionService.sendClickEvent("confirmBtnForVid")
+    this.interactionService.sendClickEvent("confirmBtnForVid");
   }
 
   vidDelete(): void {
     this.dialog.closeAll();
-    this.interactionService.sendClickEvent("deleteVID")
+    this.interactionService.sendClickEvent("deleteVID");
   }
 
   vidDownload(): void {
     this.dialog.closeAll();
-    this.interactionService.sendClickEvent("downloadVID")
+    this.interactionService.sendClickEvent("downloadVID");
   }
 
   downloadPersonalCard() {
     this.dialog.closeAll();
-    this.interactionService.sendClickEvent("downloadPersonalCard")
+    this.interactionService.sendClickEvent("downloadPersonalCard");
   }
 
   getInputValues(value: any) {
