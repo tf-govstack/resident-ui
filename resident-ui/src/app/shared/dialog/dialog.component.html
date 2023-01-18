@@ -189,7 +189,26 @@
         &nbsp;
         <p class="agree-text">{{input.agreeLabel}}</p>
       </div>
-      <button [disabled]="isChecked" mat-button (click)="shareInfoBtn()" class="share-btn">{{ input.btnTxt }}</button>
+      <button [disabled]="isChecked" [style.color]="'#ffffff'" [style.background]=" isChecked ? '#909090':'#03A64A' " mat-button (click)="shareInfoBtn(input.id)" class="share-btn">{{ input.btnTxt }}</button>
+    </div>
+  </div>
+
+  <!-- termsAndConditionsForUpdateMyData -->
+  <div style="padding: 1rem;" *ngIf="input.case === 'termsAndConditionsForUpdateMyData'">
+    <h4>{{ input.title }}</h4>
+    <ol class="conditions-card">
+      <ng-container *ngFor="let condition of input.conditions">
+        <li>{{condition}}</li>
+      </ng-container>
+    </ol>
+    <div class="agree-card">
+      <div class="agree-test-card">
+        <!-- <img src="./assets/images/checkbox_sel.png" /> -->
+        <input (change)="agreeConditions()" name="isChecked" class="conditions-checkbox" type="checkbox" />
+        &nbsp;
+        <p class="agree-text">{{input.agreeLabel}}</p>
+      </div>
+      <button [disabled]="isChecked" mat-button [style.background]=" isChecked ? '#909090':'#03A64A' " [style.color]="'#ffffff'"  (click)="shareInfoForUpdateMyData(input.id)" class="share-btn">{{ input.btnTxt }}</button>
     </div>
   </div>
 

@@ -233,9 +233,10 @@
             "DATA_SHARE_REQUEST": "Data Share Request"
         },
         "statusTypeFilter": {
-            "success": "Success",
-            "in-progress": "InProgress",
-            "failed": "Failed"
+            "all":"All",
+            "Success": "Success",
+            "In Progress": "In Progress",
+            "Failed": "Failed"
         },
         "reportIssueLabel": "Report an issue",
         "pinToTopLabel": "Pin to top",
@@ -395,6 +396,12 @@
             "You are responsible for any and all costs and fees associated with agreements entered into with the third-party provider.",
             "Under no circumstances will we be liable for loss or misuse of data whatsoever, arising from the usage of data shared with the partner.",
             "if a third-party provider ceases to make its service available or requires MOSIP to suspend or terminate the provision of all or any part of its services to you that part of data or services will be terminated immediately without notice or further obligation to you."
+        ],
+        "conditionsForupdateDemographicData":[
+            "The data chosen by you will be updated after the proof of address or Proof of identity is duly verified.",
+            "You are responsible for any and all costs and fees associated with an agreement to update your data.",
+            "You are responsible for any changes made to your already existing personal data or uploaded document to support the same."
+
         ],
         "agreeLabel": "I agree to the terms and conditions to share my credentials with the chosen partner",
         "personalisedcardConditions": {

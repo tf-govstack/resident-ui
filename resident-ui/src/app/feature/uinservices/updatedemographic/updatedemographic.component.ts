@@ -40,10 +40,13 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   constructor(private interactionService:InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService) { 
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
-      if(id !== "resend"){
-        this.verifyupdatedData(id)
-      }else{
+      console.log(id)
+      if(id === "updateMyData"){
+         this.updateDemographicData()
+      }else if(id === "resend"){
         this.reGenerateOtp()
+      }else{
+        this.verifyupdatedData(id)
       }
     })
   }
@@ -314,13 +317,31 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       }
     }
   }
-
+ 
+  submitBtn(){
+    this.conditionsForupdateDemographicData()
+  }
 
   updateDemographicData(){
     console.log("self.proofOfIdentity>>>"+JSON.stringify(this.proofOfIdentity));
     console.log("self.proofOfAddress>>>"+JSON.stringify(this.proofOfAddress));
     console.log("this.dynamicFieldValue>>>"+JSON.stringify(this.dynamicFieldValue));
     console.log("self.userInfo>>>"+JSON.stringify(this.userInfo));
+  }
+
+  conditionsForupdateDemographicData() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '650px',
+      data: {
+        id:"updateMyData",
+        case: 'termsAndConditionsForUpdateMyData',
+        title: this.popupMessages.genericmessage.termsAndConditionsLabel,
+        conditions: this.popupMessages.genericmessage.conditionsForupdateDemographicData,
+        agreeLabel: this.popupMessages.genericmessage.agreeLabel ,
+        btnTxt: this.popupMessages.genericmessage.shareButton
+      }
+    });
+    return dialogRef;
   }
 
   /**

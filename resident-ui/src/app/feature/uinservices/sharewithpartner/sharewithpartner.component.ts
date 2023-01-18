@@ -37,7 +37,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
-      if (id === "shareInfo") {
+      if (id === "shareWithPartner") {
         this.shareInfo()
       }
     })
@@ -222,6 +222,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
+        id:"shareWithPartner",
         case: 'termsAndConditions',
         title: this.popupMessages.genericmessage.termsAndConditionsLabel,
         conditions: this.popupMessages.genericmessage.termsAndConditionsDescription,
