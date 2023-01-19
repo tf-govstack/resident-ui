@@ -19,7 +19,8 @@ export class AppConfigService {
         this.appConfig["mosip.resident.api.id.otp.request"] = responseData["mosip.resident.api.id.otp.request"];
         this.appConfig["mosip.resident.api.version.otp.request"] = responseData["mosip.resident.api.version.otp.request"];
         this.appConfig["resident.vid.id"] = responseData["resident.vid.id"];      
-        this.appConfig["resident.vid.version"] = responseData["resident.vid.version"];      
+        this.appConfig["resident.vid.version"] = responseData["resident.vid.version"]; 
+        this.appConfig["mosip.resident.request.response.version"] = responseData["mosip.resident.request.response.version"];    
         this.appConfig["resident.revokevid.id"] = responseData["resident.revokevid.id"]; 
         this.appConfig["mosip-prereg-host"] = responseData["mosip-prereg-host"];   
         this.appConfig["mosip-prereg-ui-url"] = responseData["mosip-prereg-ui-url"];     
@@ -27,7 +28,7 @@ export class AppConfigService {
         this.appConfig["resident.view.history.serviceType.filters"] = responseData["resident.view.history.serviceType.filters"];   
         this.appConfig["resident.view.history.status.filters"] = responseData["resident.view.history.status.filters"];  
         this.appConfig["mosip.resident.grievance.url"] = responseData["mosip.resident.grievance.url"]; 
-        this.appConfig["resident.vid.id.generate"] = responseData["resident.vid.id.generate"]; 
+        this.appConfig["resident.vid.id.generate"] = responseData["resident.vid.id.generate"];
         this.appConfig["resident.vid.version.new"] = responseData["resident.vid.version.new"];   
         this.appConfig["mosip.resident.revokevid.id"] = responseData["mosip.resident.revokevid.id"]; 
         this.appConfig["resident.revokevid.version.new"] = responseData["resident.revokevid.version.new"]; 
@@ -46,7 +47,7 @@ export class AppConfigService {
         this.appConfig["mosip.resident.vid.card.name.convention"] = responseData["mosip.resident.vid.card.name.convention"]; 
         this.appConfig["mosip.resident.download.service.history.file.name.convention"] = responseData["mosip.resident.download.service.history.file.name.convention"]; 
         this.appConfig["mosip.resident.download.nearest.registration.centre.file.name.convention"] = responseData["mosip.resident.download.nearest.registration.centre.file.name.convention"]; 
-
+        this.appConfig["resident.nearby.centers.distance.meters"] = responseData["resident.nearby.centers.distance.meters"];
         this.appConfig["mosip.resident.captcha.sitekey"] = responseData["mosip.resident.captcha.sitekey"];   
         this.appConfig["mosip.resident.captcha.secretkey"] = responseData["mosip.resident.captcha.secretkey"]; 
         this.appConfig["mosip.webui.auto.logout.idle"] = responseData["mosip.webui.auto.logout.idle"]; 

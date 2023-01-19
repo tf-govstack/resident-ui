@@ -226,6 +226,7 @@
         "timestamp": "Timestamp",
         "selectAll" : "All",
         "serviceTypeFilter": {
+            "ALL":"All",
             "AUTHENTICATION_REQUEST": "Authentication Request",
             "SERVICE_REQUEST": "Service Request",
             "DATA_UPDATE_REQUEST": "Data Update Request",

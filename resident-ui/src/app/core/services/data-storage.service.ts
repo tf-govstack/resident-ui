@@ -11,7 +11,7 @@ headers.append('Content-Type', 'application/json');
 })
 export class DataStorageService {
 
-  constructor(private httpClient: HttpClient, public appService: AppConfigService, private configService: ConfigService) { }
+  constructor(private httpClient: HttpClient, public appService: AppConfigService, private configService: ConfigService,private appConfigService: AppConfigService) { }
 
   public BASE_URL = this.appService.getConfig().baseUrl;
   public version = this.appService.getConfig().version;
@@ -111,10 +111,11 @@ export class DataStorageService {
       coords.longitude +
       "/" +
       coords.latitude +
-      "/" +
-      this.configService.getConfigByKey(
-        appConstants.CONFIG_KEYS.preregistration_nearby_centers
-      )
+      "/" + 
+      this.appConfigService.getConfig()["resident.nearby.centers.distance.meters"]
+      // this.configService.getConfigByKey(
+      //   "resident.nearby.centers.distance.meters"
+      // )
     );
   }
 
