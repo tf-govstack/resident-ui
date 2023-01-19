@@ -25,7 +25,8 @@ import jwt_decode from "jwt-decode";
 export class AuthInterceptor implements HttpInterceptor {
   errorMessages: any;
   decoded: any;
-  invokedurl:any;
+  invokedurl: any;
+  localTimeZoneOffset: any = new Date().getTimezoneOffset();
   constructor(
     private redirectService: LoginRedirectService,
     private router: Router,
@@ -33,36 +34,37 @@ export class AuthInterceptor implements HttpInterceptor {
     private translateService: TranslateService,
     private appService: AppConfigService,
     public headerService: HeaderService
-  ) {}
+  ) { }
   // function which will be called for all http calls
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    request = request.clone({withCredentials: true});
-   /* request = request.clone({
-      setHeaders: { 'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN') }
-    });*/
+    request = request.clone({ withCredentials: true });
+    request = request.clone({
+      // setHeaders: { 'X-XSRF-TOKEN': this.cookieService.get('XSRF-TOKEN') }
+      setHeaders: { 'time-zone-offset': this.localTimeZoneOffset }
+    });
     return next.handle(request).pipe(
       tap(
         event => {
-          if (event instanceof HttpResponse) {    
-            this.invokedurl = event.url;        
-            if (event.url.split('/').includes('validateToken')) {                
-                if (event.body.response) {
-                  // this.decoded = jwt_decode(event.body.response.token);
-                  // this.headerService.setUsername(event.body.response.userId);
-                  // this.headerService.setEmailId(this.decoded["email"]);
-                  // this.headerService.setPhoneNumber(this.decoded["phoneNumber"]);              
-                }
-                if (
-                  event.body.errors !== null &&
-                  (event.body.errors[0]['errorCode'] ===
-                    appConstants.AUTH_ERROR_CODE[0] || event.body.errors[0]['errorCode'] === appConstants.AUTH_ERROR_CODE[1])
-                ) {
-                  this.redirectService.redirect(window.location.href);
-                }
-              }/*else{
+          if (event instanceof HttpResponse) {
+            this.invokedurl = event.url;
+            if (event.url.split('/').includes('validateToken')) {
+              if (event.body.response) {
+                // this.decoded = jwt_decode(event.body.response.token);
+                // this.headerService.setUsername(event.body.response.userId);
+                // this.headerService.setEmailId(this.decoded["email"]);
+                // this.headerService.setPhoneNumber(this.decoded["phoneNumber"]);              
+              }
+              if (
+                event.body.errors !== null &&
+                (event.body.errors[0]['errorCode'] ===
+                  appConstants.AUTH_ERROR_CODE[0] || event.body.errors[0]['errorCode'] === appConstants.AUTH_ERROR_CODE[1])
+              ) {
+                this.redirectService.redirect(window.location.href);
+              }
+            }/*else{
                 if(event.body){
                   if(!event.body["errors"]){
                     //alert(JSON.stringify(event.body["response"]));
@@ -76,12 +78,12 @@ export class AuthInterceptor implements HttpInterceptor {
         err => {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401) {
-              if(err.url.includes("profile") && window.location.href.includes("dashboard")){
+              if (err.url.includes("profile") && window.location.href.includes("dashboard")) {
                 this.router.navigateByUrl(`dashboard`);
-              }else{
+              } else {
                 this.redirectService.redirect(window.location.href);
               }
-            }else if (err.status === 403) {
+            } else if (err.status === 403) {
               this.translateService
                 .getTranslation(localStorage.getItem("langCode"))
                 .subscribe(response => {
@@ -98,7 +100,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     disableClose: true
                   });
                 });
-            }else if (err.status === 413) {
+            } else if (err.status === 413) {
               this.translateService
                 .getTranslation(localStorage.getItem("langCode"))
                 .subscribe(response => {
@@ -115,7 +117,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     disableClose: true
                   });
                 });
-            }else if (err.status === 503) {
+            } else if (err.status === 503) {
               this.translateService
                 .getTranslation(localStorage.getItem("langCode"))
                 .subscribe(response => {
@@ -136,40 +138,40 @@ export class AuthInterceptor implements HttpInterceptor {
               if (err.url.includes('validateToken')) {
 
                 this.translateService
-                .getTranslation(localStorage.getItem("langCode"))
-                .subscribe(response => {
-                  this.errorMessages = response.errorPopup;
-                  this.dialog.open(DialogComponent, {
-                    width: '868px',
-                    height: '190px',
-                    data: {
-                      case: 'MESSAGE',
-                      title: this.errorMessages.unknown.title,
-                      message: this.errorMessages.unknown.message,
-                      btnTxt: this.errorMessages.unknown.btnTxt
-                    },
-                    disableClose: true
+                  .getTranslation(localStorage.getItem("langCode"))
+                  .subscribe(response => {
+                    this.errorMessages = response.errorPopup;
+                    this.dialog.open(DialogComponent, {
+                      width: '868px',
+                      height: '190px',
+                      data: {
+                        case: 'MESSAGE',
+                        title: this.errorMessages.unknown.title,
+                        message: this.errorMessages.unknown.message,
+                        btnTxt: this.errorMessages.unknown.btnTxt
+                      },
+                      disableClose: true
+                    });
                   });
-                });
 
-              }else{
+              } else {
                 this.translateService
-                .getTranslation(localStorage.getItem("langCode"))
-                .subscribe(response => {
-                  this.errorMessages = response.errorPopup;
-                  this.dialog.open(DialogComponent, {
-                    width: '868px',
-                    height: '190px',
-                    data: {
-                      case: 'MESSAGE',
-                      title: this.errorMessages.technicalError.title,
-                      message: this.errorMessages.technicalError.message,
-                      btnTxt: this.errorMessages.technicalError.btnTxt
-                    },
-                    disableClose: true
+                  .getTranslation(localStorage.getItem("langCode"))
+                  .subscribe(response => {
+                    this.errorMessages = response.errorPopup;
+                    this.dialog.open(DialogComponent, {
+                      width: '868px',
+                      height: '190px',
+                      data: {
+                        case: 'MESSAGE',
+                        title: this.errorMessages.technicalError.title,
+                        message: this.errorMessages.technicalError.message,
+                        btnTxt: this.errorMessages.technicalError.btnTxt
+                      },
+                      disableClose: true
+                    });
                   });
-                });
-              }              
+              }
             }
           }
         }

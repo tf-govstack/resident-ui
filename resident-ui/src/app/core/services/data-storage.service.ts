@@ -111,10 +111,10 @@ export class DataStorageService {
       coords.longitude +
       "/" +
       coords.latitude +
-      "/" +
-      this.configService.getConfigByKey(
-        appConstants.CONFIG_KEYS.preregistration_nearby_centers
-      )
+      "/" + 2000
+      // this.configService.getConfigByKey(
+      //   "appConstants.CONFIG_KEYS.preregistration_nearby_centers"
+      // )
     );
   }
 

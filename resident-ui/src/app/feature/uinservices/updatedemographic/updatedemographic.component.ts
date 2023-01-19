@@ -180,11 +180,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
-      "version": this.appConfigService.getConfig()['resident.vid.version'],
+      "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
       "requesttime": Utils.getCurrentDate(),
       "request": {
         "userId": this.userId,
-        "transactionID": this.transactionID
+        "transactionId": this.transactionID
       }
     }
     this.dataStorageService.generateOtpForDemographicData(request).subscribe(response => {
@@ -209,11 +209,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
-      "version": this.appConfigService.getConfig()['resident.vid.version'],
+      "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
       "requesttime": Utils.getCurrentDate(),
       "request": {
         "userId": this.userId,
-        "transactionID": this.transactionID
+        "transactionId": this.transactionID
       }
     }
     this.dataStorageService.generateOtpForDemographicData(request).subscribe(response => {
@@ -230,11 +230,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   verifyupdatedData(otp:any){
     const request = {
       "id": "mosip.resident.contact.details.update.id",
-      "version": this.appConfigService.getConfig()['resident.vid.version'],
+      "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
       "requesttime": Utils.getCurrentDate(),
       "request": {
         "userId": this.userId,
-        "transactionID": this.transactionID,
+        "transactionId": this.transactionID,
         "otp":otp
       }
     }
