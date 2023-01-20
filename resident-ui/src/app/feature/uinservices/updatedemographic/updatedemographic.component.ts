@@ -337,8 +337,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         case: 'termsAndConditionsForUpdateMyData',
         title: this.popupMessages.genericmessage.termsAndConditionsLabel,
         conditions: this.popupMessages.genericmessage.conditionsForupdateDemographicData,
-        agreeLabel: this.popupMessages.genericmessage.agreeLabel ,
-        btnTxt: this.popupMessages.genericmessage.shareButton
+        agreeLabel: this.popupMessages.genericmessage.agreeLabelForUpdateData,
+        btnTxt: this.popupMessages.genericmessage.submitButton
       }
     });
     return dialogRef;

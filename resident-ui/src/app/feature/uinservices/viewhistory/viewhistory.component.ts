@@ -33,13 +33,13 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
   today: Date;
   startdate: Date = new Date(2022, 0, 1)
-  modeselect = 'ALL'
+  selected = 'All'
   selectedDate:any;
   toDateStartDate:any = this.startdate;
   searchText:string = "";
   serviceType:string = "";
   statusFilter:string = "";
-  controlTypes = ["searchText", "serviceType", "statusFilter", "fromDate", "toDate"]
+  controlTypes = ["searchText", "serviceType", "statusFilter", "fromDate", "toDate"];
   datas:{};
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService) {
     this.dateAdapter.setLocale('en-GB'); 
@@ -99,6 +99,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, controlType: string) {
+    console.log(event)
     this.selectedDate = this.today
     if(controlType === "dropdown"){
       this[formControlName] = event.value.toString().toUpperCase();
