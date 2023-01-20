@@ -405,6 +405,7 @@
 
         ],
         "agreeLabel": "I agree to the terms and conditions to share my credentials with the chosen partner",
+        "agreeLabelForUpdateData":"I agree to the terms and conditions to update demograohic data",
         "personalisedcardConditions": {
             "title": "Download Your Personalised Card",
             "wishes": "Dear Resident,",
