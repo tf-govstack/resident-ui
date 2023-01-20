@@ -352,7 +352,7 @@
         "successIcon": "./assets/sucess_icon.png",
         "introDescription": "This service can be used to share specific data with a registered partner. The data that is being shared will be chosen by the user himself.",
         "messageDescription1": "Dear Resident, Your data has been successfully share with the chosen partner against the EID : ",
-        "messageDescription2": ". In order to track the status of the transaction use the above AID in ",
+        "messageDescription2": ". In order to track the status of the transaction use the above EID in ",
         "trackMyserviceLink": "Track My Service Request",
         "orin": "or in",
         "viewHistoryLink": "view history"

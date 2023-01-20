@@ -89,7 +89,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
 
     statusTypeFilter.forEach( (element) => {
-      console.log(element)
       console.log(this.langJSON.viewhistory.statusTypeFilter)
       if(this.langJSON.viewhistory.statusTypeFilter[element]){
         console.log(element)
@@ -99,7 +98,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, controlType: string) {
-    console.log(event)
     this.selectedDate = this.today
     if(controlType === "dropdown"){
       this[formControlName] = event.value.toString().toUpperCase();
