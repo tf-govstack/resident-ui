@@ -501,6 +501,7 @@
         "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in.",
         "RES-SER-449":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
         "RES-SER-414":"please enter message for report",
-        "RES-SER-471":"This VID cannot be revoked since you have logged in using same VID"
+        "RES-SER-471":"This VID cannot be revoked since you have logged in using same VID",
+        "RES-SER-513":"Failed to create VID, as the existing VID cannot be revoked since this VID was used to log into the current session."
     }
 }

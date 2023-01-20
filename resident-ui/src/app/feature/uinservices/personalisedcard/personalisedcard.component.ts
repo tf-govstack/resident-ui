@@ -158,10 +158,10 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "html": btoa(this.buildHTML)
+        "html": btoa(this.buildHTML),
+        "attributes": Object.keys(this.dataDisplay)
       }
     };
-
     this.dataStorageService
       .convertpdf(request)
       .subscribe(data => {
