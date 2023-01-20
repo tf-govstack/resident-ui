@@ -32,6 +32,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   message:any;
   clickEventSubscription: Subscription; 
   changedItems:any = {};
+  showSpinner:boolean = true;
 
   constructor(private interactionService: InteractionService,private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
     private router: Router) {
@@ -104,6 +105,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
             this.authlist.push(authTypesJSON);
           }
         }
+        this.showSpinner = false;
     });
   }
 
@@ -165,6 +167,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   }
 
   updateAuthlockStatus(){
+    this.showSpinner = true;
     const request = {
       "id": "mosip.resident.auth.lock.unlock",
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
@@ -175,6 +178,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.updateAuthlockStatus(request).subscribe(response => {
+        this.getAuthlockStatus();  
         if(!response["errors"]){
           this.submitBtnDisable = true;
           let eventId = response.headers.get("eventid")
