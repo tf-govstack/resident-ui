@@ -78,7 +78,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
   getUserInfo() {
     this.dataStorageService
-      .getUserInfo()
+      .getUserInfo('personalized-card')
       .subscribe((response) => {
         this.userInfo = response["response"];
       });
