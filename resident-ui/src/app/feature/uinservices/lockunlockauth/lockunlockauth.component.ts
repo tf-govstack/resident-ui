@@ -183,6 +183,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
           this.submitBtnDisable = true;
           let eventId = response.headers.get("eventid")
           this.showMessage(JSON.stringify(response["response"]),eventId);
+          this.changedItems = {}
         }else{
           this.showErrorPopup(JSON.stringify(response["errors"]));
         }
