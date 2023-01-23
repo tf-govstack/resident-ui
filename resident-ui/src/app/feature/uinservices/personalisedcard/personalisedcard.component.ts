@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { HttpResponse } from '@angular/common/http';
+import { AuditService } from "src/app/core/services/audit.service";
 
 @Component({
   selector: "app-personalisedcard",
@@ -34,7 +35,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   givenNameBox: boolean = false;
   downloadBtnDisabled: boolean = true;
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
     //   if(id === "downloadPersonalCard"){
     //     this.convertpdf()
@@ -148,6 +149,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   }
 
   downloadFile() {
+    this.auditService.audit('RP-032', 'Download personalised card', 'RP-Download personalised card', 'Download personalised card', 'User clicks on "download" button on download personalised card page');
     this.convertpdf()
   }
 

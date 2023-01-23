@@ -9,6 +9,7 @@ import { TranslateService } from "@ngx-translate/core";
 import * as appConstants from "./../../../app.constants";
 import { Subscription } from "rxjs";
 import { saveAs } from 'file-saver';
+import { AuditService } from "src/app/core/services/audit.service";
 
 @Component({
   selector: "app-center-selection",
@@ -61,7 +62,8 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private translate: TranslateService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private auditService: AuditService
   ) {
     this.translate.use(this.langCode);
   }
@@ -294,6 +296,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   }
 
   showResults(pageEvent) {
+    this.auditService.audit('RP-040', 'Locate registration center', 'RP-Locate registration center', 'Locate registration center', 'User clicks on "search" button on locate registration center page');
     this.REGISTRATION_CENTRES = [];
     if (this.locationType !== null && this.searchText !== null) {
       this.showMap = false;
@@ -562,6 +565,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   }
 
   downloadCentersPdf() {
+    this.auditService.audit('RP-041', 'Locate registration center', 'RP-Locate registration center', 'Locate registration center', 'User clicks on "download" button on locate registration center page');
     this.dataService.registrationCentersList(this.langCode, this.pageSize, this.searchText)
       .subscribe(response => {
         if (response.headers.get('Content-Type') === 'application/pdf') {

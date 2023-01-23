@@ -11,6 +11,7 @@ import { DateAdapter } from '@angular/material/core';
 import { saveAs } from 'file-saver';
 import { HeaderService } from 'src/app/core/services/header.service';
 import { FormControl } from "@angular/forms";
+import { AuditService } from "src/app/core/services/audit.service";
 
 @Component({
   selector: "app-viewhistory",
@@ -41,7 +42,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   statusFilter:string = "";
   controlTypes = ["searchText", "serviceType", "statusFilter", "fromDate", "toDate"];
   datas:{};
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService) {
+  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService) {
     this.dateAdapter.setLocale('en-GB'); 
   }
 
@@ -61,17 +62,15 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.captureValue("","ALL","")
   }
 
-  getServiceHistory(pageEvent:any, filters:any){   
+  getServiceHistory(pageEvent:any, filters:any){  
     this.dataStorageService
     .getServiceHistory(pageEvent, filters)
     .subscribe((response) => {
-      console.log(response)
       if(response["response"])     
         this.responselist = response["response"]["data"];
         this.totalItems = response["response"]["totalItems"];
         this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
         this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
-        console.log(this.statusTypeFilter)
         this.parsedrodowndata();
     });
   }
@@ -89,9 +88,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
 
     statusTypeFilter.forEach( (element) => {
-      console.log(this.langJSON.viewhistory.statusTypeFilter)
       if(this.langJSON.viewhistory.statusTypeFilter[element]){
-        console.log(element)
         this.statusTypeFilter.push({"label":this.langJSON.viewhistory.statusTypeFilter[element], "value": element});
       }
     });
@@ -109,6 +106,11 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     }else{
       this[formControlName] = event.target.value;
     }
+    if(formControlName === "serviceType"){
+      this.auditService.audit('RP-009', 'View history', 'RP-View history', 'View history', 'User chooses the "history filter" from the drop-down');
+    }else if(formControlName === "statusFilter"){
+      this.auditService.audit('RP-010', 'View history', 'RP-View history', 'View history', 'User chooses the "status filter" from the drop-down');
+    }
   }
 
   showMessage(message: string) {    
@@ -125,6 +127,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   pinData(data:any){
+    this.auditService.audit('RP-006', 'View history', 'RP-View history', 'View history', 'User clicks on "Pin to top"');
     this.dataStorageService
     .pinData(data.eventId)
     .subscribe((response) => {
@@ -143,10 +146,12 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   viewDetails(data:any){
+    this.auditService.audit('RP-008', 'View history', 'RP-View history', 'View history', 'User clicks on "View Details"');
     this.router.navigateByUrl(`uinservices/trackservicerequest?eid=`+data.eventId);
   }
 
   reportDetails(data:any){
+    this.auditService.audit('RP-007', 'View history', 'RP-View history', 'View history', 'User clicks on "Report an issue"');
     this.router.navigate(["grievanceRedressal"],{state:{eventId:data.eventId}})
   }
 
@@ -162,10 +167,12 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       }     
     });
     console.log(searchParam);
-    this.getServiceHistory("",searchParam);    
+    this.getServiceHistory("",searchParam);  
+    this.auditService.audit('RP-004', 'View history', 'RP-View history', 'View history', 'User clicks on "Go" button for applying "the chosen filter"');  
   }
 
   downloadServiceHistory(){
+    this.auditService.audit('RP-005', 'View history', 'RP-View history', 'View history', 'User clicks on "download" button');
     let searchParam = "", self = this;    
     this.controlTypes.forEach(controlType => {
       console.log(controlType)

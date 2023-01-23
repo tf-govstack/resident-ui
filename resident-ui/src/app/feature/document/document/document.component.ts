@@ -4,6 +4,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import { saveAs } from 'file-saver';
+import { AuditService } from "src/app/core/services/audit.service";
 
 @Component({
   selector: "app-document",
@@ -15,7 +16,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   pdfSrc = "";
 
-  constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {}
+  constructor(private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService) {}
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
@@ -53,6 +54,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   downloadSupportingDocument(){
+    this.auditService.audit('RP-042', 'Supporting document', 'RP-Supporting document', 'Supporting document', 'User clicks on "download" button on supporting document page');
     this.dataStorageService
     .downloadSupportingDocument()
     .subscribe(data => {

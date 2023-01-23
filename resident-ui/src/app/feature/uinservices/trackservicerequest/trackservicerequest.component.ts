@@ -8,6 +8,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
+import { AuditService } from "src/app/core/services/audit.service";
 
 @Component({
   selector: "app-trackservicerequest",
@@ -26,7 +27,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   iconBtnClicked:boolean = false;
   infoText:string;
 
-  constructor(private renderer:Renderer2 ,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute) {
+  constructor(private renderer:Renderer2 ,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute,private auditService: AuditService) {
     this.renderer.listen('window','click',(e:Event) =>{
        if(!this.iconBtnClicked){
           this.isPopUpShow = false
@@ -59,6 +60,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   }
 
   getEIDStatus(){
+    this.auditService.audit('RP-026', 'Track Service Request', 'RP-Track Service Request', 'Track Service Request', 'User clicks on "search" button');
     if(this.eidVal){
     this.dataStorageService
     .getEIDStatus(this.eidVal)

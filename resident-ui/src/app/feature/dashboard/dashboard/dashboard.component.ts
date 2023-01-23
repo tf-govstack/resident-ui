@@ -6,6 +6,7 @@ import { DataStorageService } from "src/app/core/services/data-storage.service";
 import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
 import { Subscription } from "rxjs";
+import { AuditService } from "src/app/core/services/audit.service";
 
 @Component({
   selector: "app-dashboard",
@@ -23,6 +24,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private dataStorageService: DataStorageService,
     private translateService: TranslateService,
     private appConfigService: AppConfigService,
+    private auditService: AuditService
   ) {
   
   }
@@ -42,6 +44,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }else if(item === "Get Information"){
       this.router.navigate(["regcenter"])
     }else if(item === "Booking an Appointment"){
+      this.auditService.audit('RP-043', 'Book an appointment', 'RP-Book an appointment', 'Book an appointment', 'User clicks on "book an appointment" card');
       window.open(this.appConfigService.getConfig()["mosip-prereg-ui-url"], "_blank");
     }else{
      this.router.navigate([item]); 

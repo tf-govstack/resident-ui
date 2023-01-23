@@ -8,6 +8,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { AppConfigService } from 'src/app/app-config.service';
 import { saveAs } from 'file-saver';
+import { AuditService } from 'src/app/core/services/audit.service';
 
 @Component({
   selector: 'app-bookappointment',
@@ -53,7 +54,8 @@ export class DownloadUinComponent implements OnInit {
     private dataStorageService: DataStorageService,
     private translateService: TranslateService,
     private dialog: MatDialog,
-    private appConfigService: AppConfigService
+    private appConfigService: AppConfigService,
+    private auditService: AuditService
   ) {
     if (this.router.getCurrentNavigation().extras.state) {
       this.data = this.router.getCurrentNavigation().extras.state.data.AID
@@ -112,9 +114,11 @@ export class DownloadUinComponent implements OnInit {
       this.router.navigate(["getuin"])
       clearInterval(this.interval)
     } else if (item === "submit") {
+      this.auditService.audit('RP-035', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on the "submit button" on Get my UIN page');
       this.validateUinCardOtp()
       clearInterval(this.interval)
     } else if (item === "resendOtp") {
+      this.auditService.audit('RP-036', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on "resend OTP" button on Get my UIN page');
       clearInterval(this.interval)
       this.otpTimeMinutes = 2;
       this.displaySeconds = "00";

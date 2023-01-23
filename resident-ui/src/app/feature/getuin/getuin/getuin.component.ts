@@ -7,6 +7,7 @@ import { DataStorageService } from "src/app/core/services/data-storage.service";
 import Utils from 'src/app/app.utils';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { AuditService } from 'src/app/core/services/audit.service';
 
 @Component({
   selector: 'app-getuin',
@@ -38,7 +39,8 @@ export class GetuinComponent implements OnInit {
     private translateService: TranslateService,
     private dataStorageService: DataStorageService,
     private appConfigService: AppConfigService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private auditService: AuditService
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
     this.appConfigService.getConfig();
@@ -93,6 +95,7 @@ export class GetuinComponent implements OnInit {
   // }
 
   submitUserID(data: NgForm) {
+    this.auditService.audit('RP-034', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on "send OTP" button on Get my UIN page');
     if ( data["AID"] !== undefined) {
       this.aid = data["AID"]
       this.getStatus(data)
