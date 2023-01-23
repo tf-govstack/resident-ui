@@ -8,6 +8,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import Utils from "src/app/app.utils";
 import { InteractionService } from "src/app/core/services/interaction.service";
+import { AuditService } from "src/app/core/services/audit.service";
 
 @Component({
   selector: "app-demographic",
@@ -38,7 +39,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   popupMessages:any;
   pdfSrc = "";
 
-  constructor(private interactionService:InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService) { 
+  constructor(private interactionService:InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService,private auditService: AuditService) { 
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
       console.log(id)
       if(id === "updateMyData"){
@@ -165,7 +166,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }
   }
 
-  sendOTPBtn() {
+  sendOTPBtn(id) {
+    if(id === "email"){
+      this.auditService.audit('RP-029', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "Send OTP" button in update email Id');
+    }else if (id === "phone"){
+      this.auditService.audit('RP-030', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "Send OTP" button in update phone number');
+    }
     this.generateOtp()
   }
 
@@ -318,11 +324,16 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }
   }
 
-  previewBtn(){
-
+  previewBtn(issue:any){
+    this.auditService.audit('RP-027', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my data');
   }
  
-  submitBtn(){
+  submitBtn(issue:any){
+    if(issue === "address"){
+      this.auditService.audit('RP-028', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my address');
+    }else if(issue === "languagePreference"){
+      this.auditService.audit('RP-031', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update notification language');
+    }
     this.conditionsForupdateDemographicData()
   }
 

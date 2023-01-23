@@ -183,7 +183,7 @@
       </tr>
     </table>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button (click)="previewBtn()" mat-raised-button color="primary" id="submit">Preview</button>
+      <button (click)="previewBtn('identity')" mat-raised-button color="primary" id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.address' | translate}}">
@@ -329,7 +329,7 @@
       </div>
     </div>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button mat-raised-button (click)="submitBtn()" color="primary" id="submit">Submit</button>
+      <button mat-raised-button (click)="submitBtn('address')" color="primary" id="submit">Submit</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.contact' | translate}}">
@@ -362,7 +362,7 @@
                   </td>
                   <td width="5%"></td>
                   <td width="10%">
-                    <button (click)="sendOTPBtn()" mat-raised-button color="primary"
+                    <button (click)="sendOTPBtn(field.id)" mat-raised-button color="primary"
                       id="sendOTP{{field.id}}">{{field.labelName[langCode][3] |translate}}</button>
                   </td>
                 </tr>
@@ -384,6 +384,6 @@
         </div>
       </div>
     </div>
-    <button mat-raised-button color="primary" id="submit" (click)="submitBtn()">Submit</button>
+    <button mat-raised-button color="primary" id="submit" (click)="submitBtn('languagePreference')">Submit</button>
   </mat-tab>
 </mat-tab-group>
