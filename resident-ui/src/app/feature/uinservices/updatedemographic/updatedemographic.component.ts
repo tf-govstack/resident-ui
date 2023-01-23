@@ -70,7 +70,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   getUserInfo() {
     this.dataStorageService
-      .getUserInfo()
+      .getUserInfo('update-demographic')
       .subscribe((response) => {
         if (response["response"])
           this.userInfo = response["response"];
@@ -317,6 +317,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  previewBtn(){
+
+  }
  
   submitBtn(){
     this.conditionsForupdateDemographicData()
@@ -327,6 +331,25 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     console.log("self.proofOfAddress>>>"+JSON.stringify(this.proofOfAddress));
     console.log("this.dynamicFieldValue>>>"+JSON.stringify(this.dynamicFieldValue));
     console.log("self.userInfo>>>"+JSON.stringify(this.userInfo));
+    const request = {
+      "id": this.appConfigService.getConfig()["resident.updateuin.id"],
+      "version": this.appConfigService.getConfig()["resident.vid.version.new"],
+      "requesttime": Utils.getCurrentDate(),
+      "request": {
+        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
+        "consent": "string",
+        "identity": this.userInfo
+      }
+    };
+    this.dataStorageService.updateuin(request).subscribe(response => {
+      if (response["response"]) {
+        
+      } else {
+        console.log("No")
+      }
+    },error =>{
+      console.log(error)
+    })
   }
 
   conditionsForupdateDemographicData() {
