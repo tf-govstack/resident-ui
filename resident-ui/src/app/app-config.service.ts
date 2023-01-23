@@ -52,7 +52,8 @@ export class AppConfigService {
         this.appConfig["mosip.resident.captcha.secretkey"] = responseData["mosip.resident.captcha.secretkey"]; 
         this.appConfig["mosip.webui.auto.logout.idle"] = responseData["mosip.webui.auto.logout.idle"]; 
         this.appConfig["mosip.webui.auto.logout.ping"] = responseData["mosip.webui.auto.logout.ping"];   
-        this.appConfig["mosip.webui.auto.logout.timeout"] = responseData["mosip.webui.auto.logout.timeout"];   
+        this.appConfig["mosip.webui.auto.logout.timeout"] = responseData["mosip.webui.auto.logout.timeout"];
+        this.appConfig["resident.updateuin.id"] = responseData["resident.updateuin.id"];        
       },
       (error) => {
         console.log(error);

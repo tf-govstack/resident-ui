@@ -208,8 +208,8 @@ export class DataStorageService {
     return this.httpClient.get(this.BASE_URL + '/auth-proxy/partners?partnerType=' + partnerType);
   }
 
-  getUserInfo() {
-    return this.httpClient.get(this.BASE_URL + '/identity/info/type/personalized-card');
+  getUserInfo(type:string) {
+    return this.httpClient.get(this.BASE_URL + '/identity/info/type/'+type);
   }
 
   convertpdf(request: any) {
@@ -320,5 +320,9 @@ export class DataStorageService {
   
   registrationCentersList(langcode: any,hierarchylevel:any,name:any) {
     return this.httpClient.get<Blob>(this.BASE_URL + `/download/registration-centers-list?langcode=${langcode}&hierarchylevel=${hierarchylevel}&name=${name}`, { observe: 'response', responseType: 'blob' as 'json' })
+  }
+
+  updateuin(request: any){
+    return this.httpClient.patch(this.BASE_URL + '/update-uin', request);
   }
 }
