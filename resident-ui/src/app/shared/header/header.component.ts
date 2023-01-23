@@ -7,6 +7,8 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LogoutService } from './../../core/services/logout.service';
+import { HeaderService } from 'src/app/core/services/header.service';
+import { AuditService } from 'src/app/core/services/audit.service';
 
 @Component({
   selector: "app-header",
@@ -35,7 +37,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private translateService: TranslateService, 
     private dataStorageService: DataStorageService,
     private sanitizer: DomSanitizer,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private headerService: HeaderService,
+    private auditService: AuditService
   ) {}
 
   ngOnInit() {
@@ -100,6 +104,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.notificationList = response["response"];
     });
 
+    this.auditService.audit('RP-001', 'Notification section', 'RP-Notification', 'Notification section', 'User clicks on "notification" icon after logging in to UIN services');
     this.getNotificationInfo();
   }
 
@@ -119,6 +124,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }else{
           this.userImage = "../assets/profile.png";
         }
+        this.headerService.setUsername(this.fullName);
         this.getNotificationInfo();
     });    
   }
@@ -166,6 +172,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   doLogout() {
+    this.auditService.audit('RP-002', 'Logout', 'RP-Logout', 'Logout', 'User clicks on "logout" button after logging in to UIN services');
     this.logoutService.logout();
   }
 
