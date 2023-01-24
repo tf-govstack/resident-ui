@@ -74,7 +74,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   getUserInfo() {
     this.dataStorageService
-      .getUserInfo('update-demographic')
+      .getUserInfo('update-demographics')
       .subscribe((response) => {
         if (response["response"])
           this.userInfo = response["response"];
