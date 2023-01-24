@@ -38,6 +38,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   clickEventSubscription: Subscription;
   popupMessages:any;
   pdfSrc = "";
+  confirmContact:any;
+  sendOtpDisable:boolean = true;
+  updatedingId:any;
 
   constructor(private interactionService:InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService,private auditService: AuditService) { 
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -166,12 +169,19 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }
   }
 
-  sendOTPBtn(id) {
+  captureConfirmValue(event:any,id:any){
+    this.sendOtpDisable = this.userId === event.target.value ? false : true;
+    this.updatedingId = id
+    this.confirmContact = event.target.value
+  }
+
+  sendOTPBtn(id:any) {
     if(id === "email"){
       this.auditService.audit('RP-029', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "Send OTP" button in update email Id');
     }else if (id === "phone"){
       this.auditService.audit('RP-030', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "Send OTP" button in update phone number');
     }
+
     this.generateOtp()
   }
 
@@ -256,7 +266,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       console.log(error)
     })
   }
-
 
 
   showOTPPopup() {
