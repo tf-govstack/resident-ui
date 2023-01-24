@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { InteractionService } from "src/app/core/services/interaction.service";
+import { AuditService } from "src/app/core/services/audit.service";
 
 @Component({
   selector: "app-sharewithpartner",
@@ -35,7 +36,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   eventId: any;
   shareBthDisabled: boolean = true;
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) {
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "shareWithPartner") {
         this.shareInfo()
@@ -171,6 +172,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   }
   
   shareInfoBtn() {
+    this.auditService.audit('RP-033', 'Share credential with partner', 'RP-Share credential with partner', 'Share credential with partner', 'User clicks on "share" button on share credential page');
     if (!this.partnerId) {
       this.message = this.popupMessages.genericmessage.sharewithpartner.needPartner
       this.showErrorPopup(this.message)

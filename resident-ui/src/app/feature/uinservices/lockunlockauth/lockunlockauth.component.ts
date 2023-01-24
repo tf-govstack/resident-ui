@@ -8,6 +8,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { InteractionService } from "src/app/core/services/interaction.service";
+import { AuditService } from "src/app/core/services/audit.service";
 
 @Component({
   selector: "app-lockunlockauth",
@@ -35,7 +36,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   showSpinner:boolean = true;
 
   constructor(private interactionService: InteractionService,private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
-    private router: Router) {
+    private router: Router,private auditService: AuditService) {
       this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
         if (id === "confirmBtn") {
           this.updateAuthlockStatus()
@@ -110,7 +111,8 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   }
 
   updateAuthlockStatusBtn(){
-      this.showWarningMessage("")
+    this.auditService.audit('RP-025', 'Lock/unlock authentication type', 'RP-Lock/unlock authentication type', 'Lock/unlock authentication type', 'User clicks on "submit" button');
+    this.showWarningMessage("")
   }
 
   setAuthlockStatus(authTypes: any){  

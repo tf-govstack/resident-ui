@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { resolve } from "url";
 import { runInThisContext } from "vm";
+import { AuditService } from "src/app/core/services/audit.service";
 
 
 
@@ -61,7 +62,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private appConfigService: AppConfigService,
     private dialog: MatDialog,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private auditService: AuditService
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
     this.appConfigService.getConfig();
@@ -172,10 +174,12 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   sendOtpBtn() {
+    this.auditService.audit('RP-037', 'Verify phone number/email ID', 'RP-Verify phone number/email ID', 'Verify phone number/email ID', 'User clicks on "send OTP" button on verify phone number/email Id page');
     this.isVerifiedPhoneNumEmailId()
   }
 
   resendOtp() {
+    this.auditService.audit('RP-039', 'Verify phone number/email ID', 'RP-Verify phone number/email ID', 'Verify phone number/email ID', 'User clicks on "resend OTP" button on verify phone number/email Id page');
     this.resendBtnBgColor = "#909090";
     clearInterval(this.interval)
     this.otpTimeSeconds = "00"
@@ -187,6 +191,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   submitOtp() {
+    this.auditService.audit('RP-038', 'Verify phone number/email ID', 'RP-Verify phone number/email ID', 'Verify phone number/email ID', 'User clicks on the "submit button" on verify phone number/email Id page');
     this.verifyOTP()
     clearInterval(this.interval)
   }
