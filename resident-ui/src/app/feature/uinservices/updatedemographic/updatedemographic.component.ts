@@ -152,23 +152,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       });
   }
 
-  captureValue(event: any, formControlName: string, language: string) {
-    this.userId = event.target.value
-    let self = this;
-    if (event.target.value) {
-      if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
-        if (typeof self.userInfo[formControlName] === "string") {
-          self.userInfo[formControlName] = event.target.value;
-        } else {
-          let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
-          self.userInfo[formControlName][index]["value"] = event.target.value;
-        }
-      } else {
-        self[formControlName]["documentreferenceId"] = event.target.value;
-      }
-    }
-  }
-
   captureConfirmValue(event:any,id:any){
     this.sendOtpDisable = this.userId === event.target.value ? false : true;
     this.updatedingId = id
@@ -309,6 +292,22 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       });
   }
 
+  captureValue(event: any, formControlName: string, language: string) {
+    this.userId = event.target.value
+    let self = this;
+    if (event.target.value) {
+      if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
+        if (typeof self.userInfo[formControlName] === "string") {
+          self.userInfo[formControlName] = event.target.value;
+        } else {
+          let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
+          self.userInfo[formControlName][index]["value"] = event.target.value;
+        }
+      } else {
+        self[formControlName]["documentreferenceId"] = event.target.value;
+      }
+    }
+  }
 
   captureDatePickerValue(event: any, formControlName: string) {
     let self = this;
@@ -357,7 +356,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       "requesttime": Utils.getCurrentDate(),
       "request": {
         "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
-        "consent": "string",
+        "consent": "Accepted",
         "identity": this.userInfo
       }
     };
