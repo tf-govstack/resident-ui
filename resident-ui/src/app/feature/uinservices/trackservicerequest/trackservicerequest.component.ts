@@ -26,6 +26,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   isPopUpShow:boolean = false;
   iconBtnClicked:boolean = false;
   infoText:string;
+  disableTrackBtn:boolean = true;
 
   constructor(private renderer:Renderer2 ,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute,private auditService: AuditService) {
     this.renderer.listen('window','click',(e:Event) =>{
@@ -57,6 +58,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
 
   captureValue(event: any, formControlName: string) {
     this[formControlName] = event.target.value;
+    this.disableTrackBtn = event.target.value.length === 16 ? false : true;
   }
 
   getEIDStatus(){

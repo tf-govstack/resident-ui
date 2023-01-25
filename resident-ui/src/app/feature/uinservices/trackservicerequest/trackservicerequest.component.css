@@ -16,6 +16,14 @@ input {
   opacity: 1;
 }
 
+.track-btn{
+  width:100px;
+  height: 36px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #03A64A;
+}
+
 td>label {
   font-size: 12px;
 }
