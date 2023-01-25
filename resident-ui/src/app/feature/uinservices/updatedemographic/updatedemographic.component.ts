@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material';
 import Utils from "src/app/app.utils";
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { AuditService } from "src/app/core/services/audit.service";
+import { isNgTemplate } from "@angular/compiler";
 
 @Component({
   selector: "app-demographic",
@@ -36,20 +37,24 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   transactionID: any;
   userId: any;
   clickEventSubscription: Subscription;
-  popupMessages:any;
+  popupMessages: any;
   pdfSrc = "";
-  confirmContact:any;
-  sendOtpDisable:boolean = true;
-  updatedingId:any;
+  confirmContact: any;
+  sendOtpDisable: boolean = true;
+  updatedingId: any;
+  showPreviewPage: boolean = false;
+  userInfoClone: any = {};
+  buildCloneJsonData: any = {};
+  uploadedFiles:any[] = [];
+  previewDisabled = true
 
-  constructor(private interactionService:InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService,private auditService: AuditService) { 
-    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
-      console.log(id)
-      if(id === "updateMyData"){
-         this.updateDemographicData()
-      }else if(id === "resend"){
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService) {
+    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
+      if (id === "updateMyData") {
+        this.updateDemographicData()
+      } else if (id === "resend") {
         this.reGenerateOtp()
-      }else{
+      } else {
         this.verifyupdatedData(id)
       }
     })
@@ -65,10 +70,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     });*/
     this.supportedLanguages = ["eng", "ara"];
     this.translateService
-    .getTranslation(localStorage.getItem("langCode"))
-    .subscribe(response => {
-      this.popupMessages = response;
-    });
+      .getTranslation(localStorage.getItem("langCode"))
+      .subscribe(response => {
+        this.popupMessages = response;
+      });
     this.getUserInfo();
   }
 
@@ -78,6 +83,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         if (response["response"])
           this.userInfo = response["response"];
+        console.log(this.userInfo)
         UpdatedemographicComponent.actualData = response["response"];
         this.buildData();
       });
@@ -92,15 +98,50 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         } else {
           self.buildJSONData[schema.id] = {};
           self.supportedLanguages.map((language) => {
-            let value = self.userInfo[schema.id].filter(function (data) { if (data.language.trim() === language.trim()) { return data.value.trim() } });
+            let value = self.userInfo[schema.id].filter(function (data) {
+              if (data.language.trim() === language.trim()) {
+                return data.value.trim()
+              }
+            });
             self.buildJSONData[schema.id][language] = value[0].value;
           });
         }
       }
     }
+    console.log(this.buildJSONData)
     this.getGender();
     this.getLocationHierarchyLevel();
     this.getDocumentType("POI", "proofOfIdentity"); this.getDocumentType("POA", "proofOfAddress");
+  }
+
+  changedBuildData() {
+    let self = this;
+    for (var schema of self.schema['identity']) {
+      if (self.userInfoClone[schema.id]) {
+        if (typeof self.userInfoClone[schema.id] === "string") {
+          self.buildCloneJsonData[schema.id] = self.userInfoClone[schema.id];
+        } else {
+          console.log(this.userInfoClone[schema.id])
+          self.buildCloneJsonData[schema.id] = {};
+          self.supportedLanguages.map((language) => {
+            let value = self.userInfoClone[schema.id].filter(
+              function (data) {
+                if (data.language) {
+                  if (data.language.trim() === language.trim()) {
+                    return data.value.trim()
+                  }
+                  console.log(data)
+                }
+              });
+            if (value.length >0) {
+              self.buildCloneJsonData[schema.id][language] = value[0].value;
+            }
+            
+          });
+        }
+      }
+    }
+    console.log(this.buildCloneJsonData)
   }
 
   getDocumentType(type: string, id: string) {
@@ -142,9 +183,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       locationCode = this.initialLocationCode;
     } else {
       fieldName = this.locationFieldNameList[parseInt(index)];
-      locationCode = event.value; 
-      this.dynamicFieldValue[this.locationFieldNameList[parseInt(index)-1]] = event.value;
-    }   
+      locationCode = event.value;
+      this.dynamicFieldValue[this.locationFieldNameList[parseInt(index) - 1]] = event.value;
+    }
     this.dataStorageService.getImmediateChildren(locationCode, this.langCode)
       .subscribe(response => {
         if (response['response'])
@@ -152,16 +193,16 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       });
   }
 
-  captureConfirmValue(event:any,id:any){
+  captureConfirmValue(event: any, id: any) {
     this.sendOtpDisable = this.userId === event.target.value ? false : true;
     this.updatedingId = id
     this.confirmContact = event.target.value
   }
 
-  sendOTPBtn(id:any) {
-    if(id === "email"){
+  sendOTPBtn(id: any) {
+    if (id === "email") {
       this.auditService.audit('RP-029', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "Send OTP" button in update email Id');
-    }else if (id === "phone"){
+    } else if (id === "phone") {
       this.auditService.audit('RP-030', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "Send OTP" button in update phone number');
     }
 
@@ -173,10 +214,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
       this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
-    }else{
+    } else {
       this.transactionID = this.transactionID
     }
-   
+
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
@@ -192,7 +233,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       } else {
         console.log("No")
       }
-    },error =>{
+    }, error => {
       console.log(error)
     })
   }
@@ -202,10 +243,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
       this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
-    }else{
+    } else {
       this.transactionID = this.transactionID
     }
-   
+
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
@@ -217,16 +258,16 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }
     this.dataStorageService.generateOtpForDemographicData(request).subscribe(response => {
       if (response["response"]) {
-        
+
       } else {
         console.log("No")
       }
-    },error =>{
+    }, error => {
       console.log(error)
     })
   }
 
-  verifyupdatedData(otp:any){
+  verifyupdatedData(otp: any) {
     const request = {
       "id": "mosip.resident.contact.details.update.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
@@ -234,18 +275,18 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       "request": {
         "userId": this.userId,
         "transactionId": this.transactionID,
-        "otp":otp
+        "otp": otp
       }
     }
-    this.dataStorageService.verifyUpdateData(request).subscribe(response =>{
-      if(response['response']){
+    this.dataStorageService.verifyUpdateData(request).subscribe(response => {
+      if (response['response']) {
         this.dialog.closeAll()
         this.showMessage(JSON.stringify(response["response"]))
-      }else{
+      } else {
         this.dialog.closeAll()
         this.showErrorPopup(JSON.stringify(response["errors"]))
       }
-    },error =>{
+    }, error => {
       console.log(error)
     })
   }
@@ -259,12 +300,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         message: "One Time Password (OTP) has been sent to your new channel ",
         newContact: this.userId,
         submitBtnTxt: this.popupMessages.genericmessage.submitButton,
-        resentBtnTxt:this.popupMessages.genericmessage.resentBtn
+        resentBtnTxt: this.popupMessages.genericmessage.resentBtn
       }
     });
     return dialogRef;
   }
-  
+
   showMessage(message: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
@@ -293,7 +334,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, language: string) {
-    this.userId = event.target.value
+    console.log(formControlName)
+    this.userId = event.target.value;
     let self = this;
     if (event.target.value) {
       if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
@@ -301,7 +343,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           self.userInfo[formControlName] = event.target.value;
         } else {
           let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
-          self.userInfo[formControlName][index]["value"] = event.target.value;
+          // self.userInfoClone[formControlName][index]["value"] = event.target.value;
+          let newData = { "language": language, "value": event.target.value };
+          if (this.userInfoClone[formControlName]) {
+            this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData)
+          } else {
+            this.userInfoClone[formControlName] = [].concat(newData)
+          }
+          console.log(this.userInfoClone)
         }
       } else {
         self[formControlName]["documentreferenceId"] = event.target.value;
@@ -310,11 +359,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   captureDatePickerValue(event: any, formControlName: string) {
+    console.log(formControlName)
     let self = this;
     let dateFormat = new Date(event.target.value);
     let formattedDate = dateFormat.getFullYear() + "/" + ("0" + (dateFormat.getMonth() + 1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);
     if (event.target.value) {
-      self.userInfo[formControlName] = formattedDate;
+      self.userInfoClone[formControlName] = formattedDate;
     }
   }
 
@@ -324,32 +374,46 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
         self.supportedLanguages.map((maplanguage) => {
           let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === maplanguage.trim());
-          self.userInfo[formControlName][index]["value"] = event.source.viewValue;
+          // self.userInfo[formControlName][index]["value"] = event.source.viewValue;
+          // self.userInfo["dataModified"] = true;
         });
+        let newData = { "language": language, "value": event.source.viewValue }
+        if (this.userInfoClone[formControlName]) {
+          this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData)
+        } else {
+          this.userInfoClone[formControlName] = [].concat(newData)
+        }
       } else {
         self[formControlName]["documenttype"] = event.source.viewValue;
       }
     }
   }
 
-  previewBtn(issue:any){
+  previewBtn(issue: any,files:any) {
+    this.showPreviewPage = true
     this.auditService.audit('RP-027', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my data');
+    this.changedBuildData()
+    this.uploadedFiles = files
+    for(let file of this.uploadedFiles){
+      console.log(file.name)
+    }
+
   }
- 
-  submitBtn(issue:any){
-    if(issue === "address"){
+
+  submitBtn(issue: any) {
+    if (issue === "address") {
       this.auditService.audit('RP-028', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my address');
-    }else if(issue === "languagePreference"){
+    } else if (issue === "languagePreference") {
       this.auditService.audit('RP-031', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update notification language');
     }
     this.conditionsForupdateDemographicData()
   }
 
-  updateDemographicData(){
-    console.log("self.proofOfIdentity>>>"+JSON.stringify(this.proofOfIdentity));
-    console.log("self.proofOfAddress>>>"+JSON.stringify(this.proofOfAddress));
-    console.log("this.dynamicFieldValue>>>"+JSON.stringify(this.dynamicFieldValue));
-    console.log("self.userInfo>>>"+JSON.stringify(this.userInfo));
+  updateDemographicData() {
+    console.log("self.proofOfIdentity>>>" + JSON.stringify(this.proofOfIdentity));
+    console.log("self.proofOfAddress>>>" + JSON.stringify(this.proofOfAddress));
+    console.log("this.dynamicFieldValue>>>" + JSON.stringify(this.dynamicFieldValue));
+    console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
     const request = {
       "id": this.appConfigService.getConfig()["resident.updateuin.id"],
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
@@ -362,11 +426,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     };
     this.dataStorageService.updateuin(request).subscribe(response => {
       if (response["response"]) {
-        
+
       } else {
         console.log("No")
       }
-    },error =>{
+    }, error => {
       console.log(error)
     })
   }
@@ -375,7 +439,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '650px',
       data: {
-        id:"updateMyData",
+        id: "updateMyData",
         case: 'termsAndConditionsForUpdateMyData',
         title: this.popupMessages.genericmessage.termsAndConditionsLabel,
         conditions: this.popupMessages.genericmessage.conditionsForupdateDemographicData,
@@ -404,16 +468,16 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    * Preview file from files list
    * @param index (File index)
    */
-  previewFile(index: number, type:string) {
-    if(type === "POI"){
-      console.log("index>>>"+index);
+  previewFile(index: number, type: string) {
+    if (type === "POI") {
+      console.log("index>>>" + index);
       console.log(this.files[index]);
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.pdfSrc = e.target.result;
       };
       reader.readAsDataURL(this.files[index]);
-    }else{
+    } else {
       this.filesPOA[index];
     }
   }
@@ -428,6 +492,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     } else {
       this.filesPOA.splice(index, 1);
     }
+    if(this.files.length <1){
+      this.previewDisabled = true
+    }
+    
   }
 
   /**
@@ -483,6 +551,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       }
       this.uploadFilesSimulator(0, type);
     }
+    this.previewDisabled = false
 
   }
 
@@ -508,5 +577,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   onItemSelected(item: any) {
     this.router.navigate([item]);
+  }
+  backBtn(){
+    this.showPreviewPage = false
   }
 }
