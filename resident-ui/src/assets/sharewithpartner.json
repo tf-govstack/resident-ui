@@ -1,7 +1,7 @@
 {
-	"schema": [
+	"identity": [
 		{
-			"attributeName": "fullName",
+			"id": "fullName",
 			"maskRequired": false,			
 			"formatRequired": true,
 			"label": {
@@ -21,7 +21,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "dateOfBirth",
+			"id": "dateOfBirth",
 			"maskRequired": false,
 			"formatRequired": true,
 			"label": {
@@ -41,8 +41,8 @@
 			"checked":false
 		},
 		{
-			"attributeName": "uin",
-			"maskAttributeName":"masked_UIN",
+			"id": "uin",
+			"maskid":"masked_UIN",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
@@ -56,8 +56,8 @@
 			"checked":false
 		},
 		{
-			"attributeName": "Perpetual VID",
-			"maskAttributeName":"masked_perpetualVID",
+			"id": "Perpetual VID",
+			"maskid":"masked_perpetualVID",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
@@ -71,8 +71,8 @@
 			"checked":false
 		},
 		{
-			"attributeName": "phone",
-			"maskAttributeName":"masked_phone",
+			"id": "phone",
+			"maskid":"masked_phone",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
@@ -86,8 +86,8 @@
 			"checked":false
 		},
 		{
-			"attributeName": "email",
-			"maskAttributeName":"masked_email",
+			"id": "email",
+			"maskid":"masked_email",
 			"maskRequired": true,
 			"formatRequired": false,
 			"label": {
@@ -101,7 +101,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "addressLine1",
+			"id": "addressLine1",
 			"maskRequired": false,
 			"formatRequired": true,
 			"label": {
@@ -121,7 +121,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "gender",
+			"id": "gender",
 			"maskRequired": false,
 			"formatRequired": false,
 			"label": {
@@ -135,7 +135,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "photo",
+			"id": "photo",
 			"maskRequired": false,
 			"formatRequired": false,
 			"label": {
