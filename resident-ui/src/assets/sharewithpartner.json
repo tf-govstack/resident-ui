@@ -41,7 +41,7 @@
 			"checked":false
 		},
 		{
-			"id": "uin",
+			"id": "UIN",
 			"maskAttributeName":"masked_UIN",
 			"maskRequired": true,
 			"formatRequired": false,
@@ -56,7 +56,7 @@
 			"checked":false
 		},
 		{
-			"id": "Perpetual VID",
+			"id": "perpetualVID",
 			"maskAttributeName":"masked_perpetualVID",
 			"maskRequired": true,
 			"formatRequired": false,

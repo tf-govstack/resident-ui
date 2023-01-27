@@ -104,14 +104,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         if (typeof this.userInfo[data.id] === "string") {
           value = this.userInfo[data.id];
         } else {
-          if (data.id === "uin") {
-            value = this.userInfo["UIN"]
-          } else if (data.id === "Perpetual VID") {
-            value = this.userInfo["perpetualVID"]
-          } else {
-            value = this.userInfo[data.id][0].value;
-          }
-
+          value = this.userInfo[data.id][0].value;
         }
         this.sharableAttributes[data.id] = { "label": data.label[this.langCode], "value": value };
       }
@@ -127,13 +120,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     } else {
       let value;
       if(this.sharableAttributes[data.id].value === this.userInfo[type]){
-        if (data.id === "uin") {
-          value = this.userInfo["UIN"]
-        } else if (data.id === "Perpetual VID") {
-          value = this.userInfo["perpetualVID"]
-        } else {
-          value = this.userInfo[data.id];
-        }
+        value = this.userInfo[data.id];
       }else{
         value = this.userInfo[type]
       }
