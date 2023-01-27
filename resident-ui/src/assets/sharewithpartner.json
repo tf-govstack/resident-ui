@@ -1,7 +1,7 @@
 {
-	"schema": [
+	"identity": [
 		{
-			"attributeName": "fullName",
+			"id": "fullName",
 			"maskRequired": false,			
 			"formatRequired": true,
 			"label": {
@@ -21,7 +21,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "dateOfBirth",
+			"id": "dateOfBirth",
 			"maskRequired": false,
 			"formatRequired": true,
 			"label": {
@@ -41,7 +41,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "uin",
+			"id": "uin",
 			"maskAttributeName":"masked_UIN",
 			"maskRequired": true,
 			"formatRequired": false,
@@ -56,7 +56,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "Perpetual VID",
+			"id": "Perpetual VID",
 			"maskAttributeName":"masked_perpetualVID",
 			"maskRequired": true,
 			"formatRequired": false,
@@ -71,7 +71,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "phone",
+			"id": "phone",
 			"maskAttributeName":"masked_phone",
 			"maskRequired": true,
 			"formatRequired": false,
@@ -86,7 +86,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "email",
+			"id": "email",
 			"maskAttributeName":"masked_email",
 			"maskRequired": true,
 			"formatRequired": false,
@@ -101,7 +101,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "addressLine1",
+			"id": "addressLine1",
 			"maskRequired": false,
 			"formatRequired": true,
 			"label": {
@@ -121,7 +121,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "gender",
+			"id": "gender",
 			"maskRequired": false,
 			"formatRequired": false,
 			"label": {
@@ -135,7 +135,7 @@
 			"checked":false
 		},
 		{
-			"attributeName": "photo",
+			"id": "photo",
 			"maskRequired": false,
 			"formatRequired": false,
 			"label": {

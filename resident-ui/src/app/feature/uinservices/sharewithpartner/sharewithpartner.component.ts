@@ -60,7 +60,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
-        this.schema = response["schema"];
+        this.schema = response["identity"];
       });
 
     this.getPartnerDetails();
@@ -95,28 +95,28 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   captureCheckboxValue($event: any, data: any, type: string) {
     this.buildHTML = ""
     
-    // console.log("<<<data.attributeName>>>"+JSON.stringify(data)); 
+    // console.log("<<<data.id>>>"+JSON.stringify(data)); 
     if (type === "datacheck") {
-      if (data.attributeName.toString() in this.sharableAttributes) {
-        delete this.sharableAttributes[data.attributeName];
+      if (data.id.toString() in this.sharableAttributes) {
+        delete this.sharableAttributes[data.id];
       } else {
         let value = "";
-        if (typeof this.userInfo[data.attributeName] === "string") {
-          value = this.userInfo[data.attributeName];
+        if (typeof this.userInfo[data.id] === "string") {
+          value = this.userInfo[data.id];
         } else {
-          if (data.attributeName === "uin") {
+          if (data.id === "uin") {
             value = this.userInfo["UIN"]
-          } else if (data.attributeName === "Perpetual VID") {
+          } else if (data.id === "Perpetual VID") {
             value = this.userInfo["perpetualVID"]
           } else {
-            value = this.userInfo[data.attributeName][0].value;
+            value = this.userInfo[data.id][0].value;
           }
 
         }
-        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "value": value };
+        this.sharableAttributes[data.id] = { "label": data.label[this.langCode], "value": value };
       }
       this.schema = this.schema.map(item => {
-        if (item.attributeName === data.attributeName) {
+        if (item.id === data.id) {
           let newItem = { ...item, checked: !item.checked }
           return newItem
         } else {
@@ -126,18 +126,18 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     console.log(this.sharableAttributes)
     } else {
       let value;
-      if(this.sharableAttributes[data.attributeName].value === this.userInfo[type]){
-        if (data.attributeName === "uin") {
+      if(this.sharableAttributes[data.id].value === this.userInfo[type]){
+        if (data.id === "uin") {
           value = this.userInfo["UIN"]
-        } else if (data.attributeName === "Perpetual VID") {
+        } else if (data.id === "Perpetual VID") {
           value = this.userInfo["perpetualVID"]
         } else {
-          value = this.userInfo[data.attributeName];
+          value = this.userInfo[data.id];
         }
       }else{
         value = this.userInfo[type]
       }
-      this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "value": value }
+      this.sharableAttributes[data.id] = { "label": data.label[this.langCode], "value": value }
       
     }
 
