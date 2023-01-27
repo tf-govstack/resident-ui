@@ -430,7 +430,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       this.uploadFiles(this.filesPOA[0], transactionID, 'POA', this.proofOfAddress['documenttype'], this.proofOfAddress['documentreferenceId']);
       console.log(this.filesPOA[0]);
     }
-    
+
     const request = {
       "id": this.appConfigService.getConfig()["resident.updateuin.id"],
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
@@ -485,31 +485,19 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    * Preview file from files list
    * @param index (File index)
    */
-<<<<<<< HEAD
   previewFile(index: number, type:string) {
     if(type === "POI"){
-=======
-  previewFile(index: number, type: string) {
-    if (type === "POI") {
-      console.log("index>>>" + index);
-      console.log(this.files[index]);
->>>>>>> 9e2d4a1d9cfc1dc85549342ad4440120a74ccc59
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.pdfSrc = e.target.result;
       };
       reader.readAsDataURL(this.files[index]);
-<<<<<<< HEAD
     }else{
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.pdfSrc = e.target.result;
       };
       reader.readAsDataURL(this.filesPOA[index]);
-=======
-    } else {
-      this.filesPOA[index];
->>>>>>> 9e2d4a1d9cfc1dc85549342ad4440120a74ccc59
     }
   }
 
