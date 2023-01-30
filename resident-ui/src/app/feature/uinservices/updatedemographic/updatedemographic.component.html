@@ -330,7 +330,7 @@
       </div>
     </div>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button mat-raised-button (click)="submitBtn('address')" color="primary" id="submit">Submit</button>
+      <button mat-raised-button (click)="previewBtn('address')" color="primary" id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.contact' | translate}}">
@@ -396,24 +396,27 @@
 
 <mat-card style="margin:1rem 4rem 0 4rem; padding: 16px;" *ngIf="showPreviewPage">
   <mat-card-subtitle style="font-size: 20px;" class="preview-heading">Preview</mat-card-subtitle>
-  <mat-card-subtitle style="color: #000000; font-size: 14px;">Identity</mat-card-subtitle>
+  <div class="identity-card">
+    <mat-card-subtitle style="color: #000000; font-size: 14px;">Identity</mat-card-subtitle>
+    <button (click)="backBtn()" mat-button-toggle class="edit-btn">
+    <img alt="" src="./assets/icons/iconfont/edit_black_24dp (2).svg"/>
+  </button>
+  </div>
   <div *ngFor="let field of schema['identity']">
     <table width="700px">
       <tr *ngIf="field.controlType === 'calendar' && buildCloneJsonData[field.id]">
         <td>
-          <table width="55%">
+          <table width="45%">
             <tr>
               <td width="45%">
                 {{field.labelName[langCode][1]}}
               </td>
-              <td width="10%"></td>
             </tr>
             <tr>
               <td width="45%">
                 <input type="text" class="readonly" readonly="true" disabled="true"
                   value="{{buildCloneJsonData[field.id]}}">
               </td>
-              <td width="10%"></td>
             </tr>
           </table>
         </td>
@@ -422,11 +425,11 @@
         <td>
           <table width="45%" *ngFor="let language of supportedLanguages;">
             <tr>
-              <td *ngIf="buildCloneJsonData[field.id][language]" width="45%">
+              <td *ngIf="buildCloneJsonData[field.id]" width="45%">
                 <label>{{field.labelName[language][1]}}</label>
               </td>
             </tr>
-            <td *ngIf="buildCloneJsonData[field.id][language]" width="45%">
+            <td *ngIf="buildCloneJsonData[field.id]" width="45%">
               <input type="text" class="readonly" readonly="true" disabled="true"
                 value="{{buildCloneJsonData[field.id][language]}}">
             </td>
@@ -437,11 +440,11 @@
         <td>
           <table width="45%" *ngFor="let language of supportedLanguages;">
             <tr>
-              <td *ngIf="buildCloneJsonData[field.id][language]" width="45%">
+              <td *ngIf="buildCloneJsonData[field.id]" width="45%">
                 <label>{{field.labelName[language][1]}}</label>
               </td>
             </tr>
-            <td *ngIf="buildCloneJsonData[field.id][language]" width="45%">
+            <td *ngIf="buildCloneJsonData[field.id]" width="45%">
               <input type="text" class="readonly" readonly="true" disabled="true"
                 value="{{buildCloneJsonData[field.id][language]}}">
             </td>
@@ -450,7 +453,7 @@
       </tr>
     </table>
   </div>
-  <div>
+  <div style="margin-left: 13px; margin-top: 0px;">
     <mat-card-title style="font-size: 16px; color: #000000;">Document Uploaded</mat-card-title>
     <mat-card-subtitle style="font-size: 14px; color: #000000;">Identity Proof</mat-card-subtitle>
     <div class="files-list" style="width: 40%;">
@@ -499,9 +502,7 @@
   </div>
   <div class="preview-agree-card">
     <div>
-      <button (click)="backBtn()" style="color: #fff; background-color: #909090; width: 80px;height: 36px; border: none; border-radius: 4px;">Back</button>
-      &nbsp;
-      <button mat-raised-button color="primary">Update</button>
+      <button (click)="updateBtn()" mat-raised-button color="primary">Update</button>
     </div>
   </div>
 </mat-card>

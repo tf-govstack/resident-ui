@@ -90,28 +90,35 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   buildData() {
-    let self = this;
-    for (var schema of self.schema['identity']) {
-      if (self.userInfo[schema.id]) {
-        if (typeof self.userInfo[schema.id] === "string") {
-          self.buildJSONData[schema.id] = self.userInfo[schema.id];
-        } else {
-          self.buildJSONData[schema.id] = {};
-          self.supportedLanguages.map((language) => {
-            let value = self.userInfo[schema.id].filter(function (data) {
-              if (data.language.trim() === language.trim()) {
-                return data.value.trim()
-              }
-            });
-            self.buildJSONData[schema.id][language] = value[0].value;
-          });
+    try{
+      let self = this;
+      for (var schema of self.schema['identity']) {
+        if (self.userInfo[schema.id]) {
+          if ((schema.id !== "proofOfIdentity") && (schema.id !== "proofOfAddress")) {
+            if (typeof self.userInfo[schema.id] === "string") {
+              self.buildJSONData[schema.id] = self.userInfo[schema.id];
+            } else {
+              self.buildJSONData[schema.id] = {};
+              self.supportedLanguages.map((language) => {
+                let value = self.userInfo[schema.id].filter(function (data) {
+                  if (data.language.trim() === language.trim()) {
+                    return data.value.trim()
+                  }
+                });
+                console.log("schema.id>>>"+JSON.stringify(schema.id));
+                self.buildJSONData[schema.id][language] = value[0].value;
+              });
+            }
+          }
         }
       }
+      console.log("this.buildJSONData>>>"+JSON.stringify(this.buildJSONData));
+      this.getGender();
+      this.getLocationHierarchyLevel();
+      this.getDocumentType("POI", "proofOfIdentity"); this.getDocumentType("POA", "proofOfAddress");
+    }catch(ex){
+      console.log("Exception>>>"+ex.message);
     }
-    console.log(this.buildJSONData)
-    this.getGender();
-    this.getLocationHierarchyLevel();
-    this.getDocumentType("POI", "proofOfIdentity"); this.getDocumentType("POA", "proofOfAddress");
   }
 
   changedBuildData() {
@@ -334,10 +341,17 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, language: string) {
-    console.log(formControlName)
     this.userId = event.target.value;
     let self = this;
-    if (event.target.value) {
+    if (event.target.value === "" && this.userInfoClone[formControlName]) {
+      this.userInfoClone[formControlName].forEach(item =>{
+        if(item.language === language){
+          console.log(this.userInfoClone[formControlName])
+          let index =  this.userInfoClone[formControlName].findIndex(data => data === item)
+          this.userInfoClone[formControlName].splice(index,1)
+        }
+      })
+    }else{
       if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
         if (typeof self.userInfo[formControlName] === "string") {
           self.userInfo[formControlName] = event.target.value;
@@ -345,84 +359,89 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
           // self.userInfoClone[formControlName][index]["value"] = event.target.value;
           let newData = { "language": language, "value": event.target.value };
-          if (Object.keys(this.userInfoClone).length > 0) {
-            Object.keys(this.userInfoClone).forEach(item => {
-              if (typeof this.userInfoClone[item] !== "string") {
-                this.userInfoClone[item].filter(eachItem => {
-                  if (eachItem['language'] === language) {
-                    eachItem['value'] = event.target.value;
+          if (formControlName in this.userInfoClone) {
+            this.userInfoClone[formControlName].forEach(item => {
+              if (item['language'] === language) {
+                item['value'] = event.target.value;
+              } else {
+                if (item['language']) {
+                  if (this.userInfoClone[formControlName]) {
+                    this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
                   } else {
-                    if (eachItem['language']) {
-                      if (this.userInfoClone[formControlName]) {
-                        this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
-                      } else {
-                        this.userInfoClone[formControlName] = [].concat(newData);
-                      }
-                    }
+                    this.userInfoClone[formControlName] = [].concat(newData);
                   }
-                })
+                }
               }
             })
           } else {
             this.userInfoClone[formControlName] = [].concat(newData);
           }
-          console.log(this.userInfoClone)
         }
       } else {
         self[formControlName]["documentreferenceId"] = event.target.value;
       }
+      console.log(this.userInfoClone)
     }
   }
 
   captureDatePickerValue(event: any, formControlName: string) {
     console.log(formControlName)
+    console.log(event.target.value)
     let self = this;
     let dateFormat = new Date(event.target.value);
     let formattedDate = dateFormat.getFullYear() + "/" + ("0" + (dateFormat.getMonth() + 1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);
-    if (event.target.value) {
-      self.userInfoClone[formControlName] = formattedDate;
+    if(event.target.value === null && this.userInfoClone["dateOfBirth"]){
+      delete this.userInfoClone["dateOfBirth"]
+    }else{
+        self.userInfoClone[formControlName] = formattedDate;
     }
+    console.log(this.userInfoClone)
   }
 
   captureDropDownValue(event: any, formControlName: string, language: string) {
     let self = this;
     if (event.source.selected) {
       if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
-        self.supportedLanguages.map((maplanguage) => {
-          let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === maplanguage.trim());
-          // self.userInfo[formControlName][index]["value"] = event.source.viewValue;
-          // self.userInfo["dataModified"] = true;
-        });
         let newData = { "language": language, "value": event.source.viewValue }
-        if (this.userInfoClone[formControlName]) {
-          this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData)
+        if (formControlName in this.userInfoClone) {
+          this.userInfoClone[formControlName].forEach(item => {
+            if (item['language'] === language) {
+              item['value'] = event.source.viewValue;
+            } else {
+              if (item['language']) {
+                if (this.userInfoClone[formControlName]) {
+                  this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
+                } else {
+                  this.userInfoClone[formControlName] = [].concat(newData);
+                }
+              }
+            }
+          })
         } else {
-          this.userInfoClone[formControlName] = [].concat(newData)
+          this.userInfoClone[formControlName] = [].concat(newData);
         }
       } else {
-        self[formControlName]["documenttype"] = event.source.viewValue;
+        self[formControlName]["documenttype"] = event.source.selected;
       }
     }
+    console.log(this.userInfoClone)
   }
 
   previewBtn(issue: any,files:any) {
     this.showPreviewPage = true
-    this.auditService.audit('RP-027', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my data');
-    this.changedBuildData()
-    this.uploadedFiles = files
-    for(let file of this.uploadedFiles){
-      console.log(file.name)
-    }
-
-  }
-
-  submitBtn(issue: any) {
     if (issue === "address") {
       this.auditService.audit('RP-028', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my address');
     } else if (issue === "languagePreference") {
       this.auditService.audit('RP-031', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update notification language');
+    }else if(issue === "identity"){
+      this.auditService.audit('RP-027', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my data');
     }
-    this.conditionsForupdateDemographicData()
+    this.changedBuildData()
+    this.uploadedFiles = files
+  }
+
+  updateBtn() {
+    this.conditionsForupdateDemographicData();
   }
 
   uploadFiles(files, transactionID, docCatCode, docTypCode, referenceId){
