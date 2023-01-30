@@ -325,4 +325,8 @@ export class DataStorageService {
   updateuin(request: any){
     return this.httpClient.patch(this.BASE_URL + '/update-uin', request);
   }
+
+  uploadfile(request, transactionID, docCatCode, docTypCode, referenceId){
+    return this.httpClient.post(this.BASE_URL + '/documents/'+transactionID+'?docCatCode='+docCatCode+'&docTypCode='+docTypCode+'&langCode='+localStorage.getItem("langCode")+'&referenceId='+referenceId, request);
+  }
 }
