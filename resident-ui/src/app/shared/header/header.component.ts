@@ -64,10 +64,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.selectLanguagesArr = [];
         supportedLanguages.map((language) => {
           if (defaultJson.languages && defaultJson.languages[language.trim()]) {
-            this.selectLanguagesArr.push({
-              code: language.trim(),
-              value: defaultJson.languages[language.trim()].name,
-            });
+            if(language === "eng"){
+              this.selectLanguagesArr.push({
+                code: language.trim(),
+                value: defaultJson.languages[language.trim()].name,
+              });
+            }
           }
         });
       }

@@ -87,7 +87,7 @@
 
 ::ng-deep .mat-menu-content {
   width: 250px !important;
-  height: 213px !important;
+  height: auto !important;
 }
 
 .mat-menu-item {

@@ -345,10 +345,26 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
           // self.userInfoClone[formControlName][index]["value"] = event.target.value;
           let newData = { "language": language, "value": event.target.value };
-          if (this.userInfoClone[formControlName]) {
-            this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData)
+          if (Object.keys(this.userInfoClone).length > 0) {
+            Object.keys(this.userInfoClone).forEach(item => {
+              if (typeof this.userInfoClone[item] !== "string") {
+                this.userInfoClone[item].filter(eachItem => {
+                  if (eachItem['language'] === language) {
+                    eachItem['value'] = event.target.value;
+                  } else {
+                    if (eachItem['language']) {
+                      if (this.userInfoClone[formControlName]) {
+                        this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
+                      } else {
+                        this.userInfoClone[formControlName] = [].concat(newData);
+                      }
+                    }
+                  }
+                })
+              }
+            })
           } else {
-            this.userInfoClone[formControlName] = [].concat(newData)
+            this.userInfoClone[formControlName] = [].concat(newData);
           }
           console.log(this.userInfoClone)
         }
