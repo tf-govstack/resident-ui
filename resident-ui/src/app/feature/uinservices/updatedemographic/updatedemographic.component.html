@@ -402,6 +402,8 @@
     <img alt="" src="./assets/icons/iconfont/edit_black_24dp (2).svg"/>
   </button>
   </div>
+<div class="input-values-main-card">
+  <div>
   <div *ngFor="let field of schema['identity']">
     <table width="700px">
       <tr *ngIf="field.controlType === 'calendar' && buildCloneJsonData[field.id]">
@@ -453,6 +455,11 @@
       </tr>
     </table>
   </div>
+</div>
+<div style="width: 500px;">
+  <embed *ngIf="pdfSrcInPreviewPage" [src]="pdfSrcInPreviewPage | sanitizepdf" height="100%" width="100%">
+</div>
+</div>
   <div style="margin-left: 13px; margin-top: 0px;">
     <mat-card-title style="font-size: 16px; color: #000000;">Document Uploaded</mat-card-title>
     <mat-card-subtitle style="font-size: 14px; color: #000000;">Identity Proof</mat-card-subtitle>
@@ -487,7 +494,7 @@
           <app-progress [progress]="file?.progress"></app-progress>
         </div>
 
-        <div class="preview" (click)="previewFile(i, 'POI')">
+        <div class="preview" (click)="previewFileInPreviewPage(i)">
           <img mat-card-xs-image src='../assets/view.png' />
         </div>
 

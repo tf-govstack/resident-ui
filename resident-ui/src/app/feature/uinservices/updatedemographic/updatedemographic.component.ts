@@ -47,6 +47,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   buildCloneJsonData: any = {};
   uploadedFiles:any[] = [];
   previewDisabled = true
+  pdfSrcInPreviewPage = ""
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -534,6 +535,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       };
       reader.readAsDataURL(this.filesPOA[index]);
     }
+  }
+
+  previewFileInPreviewPage(index:number){
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.pdfSrcInPreviewPage = e.target.result;
+    };
+    reader.readAsDataURL(this.uploadedFiles[index]);
   }
 
   /**

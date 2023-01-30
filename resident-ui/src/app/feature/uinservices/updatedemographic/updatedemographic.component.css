@@ -178,3 +178,7 @@ label{
   margin-bottom: 5px;
 }
 
+.input-values-main-card{
+   display: flex;
+   align-items: center;
+}
