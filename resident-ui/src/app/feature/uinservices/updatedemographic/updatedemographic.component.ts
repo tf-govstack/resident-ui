@@ -438,10 +438,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           this.userInfoClone[formControlName] = [].concat(newData);
         }
       } else {
-        self[formControlName]["documenttype"] = event.source.selected;
+        self[formControlName]["documenttype"] = event.source.value;
+        console.log(event.source.value)
       }
     }
-    console.log(this.userInfoClone)
+   
   }
 
   previewBtn(issue: any,files:any,filesPOA:any) {
