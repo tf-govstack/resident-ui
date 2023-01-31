@@ -40,7 +40,7 @@
                 <tr *ngIf="field.controlType === 'textbox'">
                   <td width="100%">
                     <table width="100%" *ngFor="let language of supportedLanguages;">
-                      <tr>
+                      <tr >
                         <td width="45%"><label>{{field.labelName[language][0]}}</label></td>
                         <td width="10%"></td>
                         <td width="45%"><label>{{field.labelName[language][1]}}</label></td>
@@ -184,7 +184,7 @@
       </tr>
     </table>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button [disabled]="previewDisabled" (click)="previewBtn('identity',files)" mat-raised-button color="primary" id="submit">Preview</button>
+      <button [disabled]="previewDisabled" (click)="previewBtn('identity',files,filesPOA)" mat-raised-button color="primary" id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.address' | translate}}">
@@ -330,7 +330,7 @@
       </div>
     </div>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button mat-raised-button (click)="previewBtn('address')" color="primary" id="submit">Preview</button>
+      <button [disabled]="previewDisabledInAddress" mat-raised-button (click)="previewBtn('address',files,filesPOA)" color="primary" id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.contact' | translate}}">
@@ -402,17 +402,19 @@
     <img alt="" src="./assets/icons/iconfont/edit_black_24dp (2).svg"/>
   </button>
   </div>
+<div class="input-values-main-card">
+  <div>
   <div *ngFor="let field of schema['identity']">
     <table width="700px">
       <tr *ngIf="field.controlType === 'calendar' && buildCloneJsonData[field.id]">
         <td>
           <table width="45%">
-            <tr>
+            <tr *ngIf="field.labelName[langCode][1]">
               <td width="45%">
                 {{field.labelName[langCode][1]}}
               </td>
             </tr>
-            <tr>
+            <tr *ngIf="buildCloneJsonData[field.id]">
               <td width="45%">
                 <input type="text" class="readonly" readonly="true" disabled="true"
                   value="{{buildCloneJsonData[field.id]}}">
@@ -424,7 +426,7 @@
       <tr *ngIf="field.controlType === 'textbox'">
         <td>
           <table width="45%" *ngFor="let language of supportedLanguages;">
-            <tr>
+            <tr *ngIf="field.labelName[language][1]">
               <td *ngIf="buildCloneJsonData[field.id]" width="45%">
                 <label>{{field.labelName[language][1]}}</label>
               </td>
@@ -439,7 +441,7 @@
       <tr *ngIf="field.controlType === 'dropdown'">
         <td>
           <table width="45%" *ngFor="let language of supportedLanguages;">
-            <tr>
+            <tr *ngIf="field.labelName[language][1]">
               <td *ngIf="buildCloneJsonData[field.id]" width="45%">
                 <label>{{field.labelName[language][1]}}</label>
               </td>
@@ -451,8 +453,30 @@
           </table>
         </td>
       </tr>
+      <tr>
+        <td>
+          <table width="45%">
+            <tr *ngIf="buildCloneJsonData[field.name]">
+              <td>
+                 <label >{{field.name}}</label>
+              </td>
+            </tr>
+            <tr *ngIf="buildCloneJsonData[field.name]">
+              <td>
+                <input  type="text" class="readonly" readonly="true" disabled="true"
+                value="{{buildCloneJsonData[field.name]}}">
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
     </table>
   </div>
+</div>
+<div style="width: 500px;">
+  <embed *ngIf="pdfSrcInPreviewPage" [src]="pdfSrcInPreviewPage | sanitizepdf" height="100%" width="100%">
+</div>
+</div>
   <div style="margin-left: 13px; margin-top: 0px;">
     <mat-card-title style="font-size: 16px; color: #000000;">Document Uploaded</mat-card-title>
     <mat-card-subtitle style="font-size: 14px; color: #000000;">Identity Proof</mat-card-subtitle>
@@ -487,7 +511,7 @@
           <app-progress [progress]="file?.progress"></app-progress>
         </div>
 
-        <div class="preview" (click)="previewFile(i, 'POI')">
+        <div class="preview" (click)="previewFileInPreviewPage(i)">
           <img mat-card-xs-image src='../assets/view.png' />
         </div>
 
