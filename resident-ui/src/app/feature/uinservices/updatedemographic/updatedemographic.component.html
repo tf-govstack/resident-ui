@@ -1,7 +1,7 @@
 <span class="breadcrumb">
   <a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a
     (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
-  &nbsp;&nbsp;<span [ngClass]="!showPreviewPage ? 'active' : ''">{{'updatedemographic.title' | translate}}</span>
+  &nbsp;&nbsp;<span [ngClass]="!showPreviewPage ? 'active' : 'demographic' " (click)="onItemSelected('demographic')">{{'updatedemographic.title' | translate}}</span>
   &nbsp;&nbsp;<span *ngIf="showPreviewPage" class="active"> > &nbsp; {{'preview.title' | translate}}</span>
 </span>
 
@@ -23,12 +23,20 @@
                       </tr>
                       <tr>
                         <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
-                            value="{{buildJSONData[field.id]}}"></td>
+                            value="{{buildJSONData[field.attributeName]}}"></td>
                         <td width="10%"></td>
-                        <td width="45%">
+                        <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
                           <mat-form-field>
-                            <input matInput [matDatepicker]="picker" id="{{field.id}}"
-                              (dateChange)="captureDatePickerValue($event, field.id)" />
+                            <input matInput [matDatepicker]="picker" id="{{field.attributeName}}"
+                              (dateChange)="captureDatePickerValue($event, field.attributeName)" [(ngModel)]="selectedDate"/>
+                            <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </td>
+                        <td width="45%" *ngIf="!buildCloneJsonData[field.attributeName]">
+                          <mat-form-field>
+                            <input matInput [matDatepicker]="picker" id="{{field.attributeName}}"
+                              (dateChange)="captureDatePickerValue($event, field.attributeName)" />
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>
@@ -47,11 +55,14 @@
                       </tr>
                       <tr>
                         <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
-                            value="{{buildJSONData[field.id][language]}}"></td>
+                            value="{{buildJSONData[field.attributeName][language]}}"></td>
                         <td width="10%"></td>
-                        <td width="45%">
-                          <input matInput #{{field.id}} id="{{field.id}}"
-                            (blur)="captureValue($event, field.id, language)" />
+                        <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
+                            <input matInput #{{field.attributeName}} id="{{field.attributeName}}"
+                            (blur)="captureValue($event, field.attributeName, language)" [value]="buildCloneJsonData[field.attributeName][language]"/>
+                        </td>
+                        <td width="45%" *ngIf="!buildCloneJsonData[field.attributeName]">
+                          <input matInput #{{field.attributeName}} id="{{field.attributeName}}" (blur)="captureValue($event, field.attributeName, language)"/>
                         </td>
                       </tr>
                     </table>
@@ -67,12 +78,12 @@
                       </tr>
                       <tr>
                         <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
-                            value="{{buildJSONData[field.id][langCode]}}"></td>
+                            value="{{buildJSONData[field.attributeName][langCode]}}"></td>
                         <td width="10%"></td>
                         <td width="45%">
-                          <mat-select id="{{field.id}}">
-                            <mat-option *ngFor="let data of dropDownValues[field.id]"
-                              (onSelectionChange)="captureDropDownValue($event, field.id, langCode)"
+                          <mat-select id="{{field.attributeName}}">
+                            <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
+                              (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
                               [value]="data.code">{{ data.genderName }}</mat-option>
                           </mat-select>
                         </td>
@@ -93,16 +104,16 @@
                       </tr>
                       <tr>
                         <td width="45%">
-                          <mat-select id="{{field.id}}">
-                            <mat-option *ngFor="let data of dropDownValues[field.id]"
-                              (onSelectionChange)="captureDropDownValue($event, field.id, langCode)"
+                          <mat-select id="{{field.attributeName}}">
+                            <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
+                              (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
                               [value]="data.code">{{ data.name }}</mat-option>
                           </mat-select>
                         </td>
                         <td width="10%"></td>
                         <td width="45%">
-                          <input matInput #{{field.id}} id="{{field.id}}value"
-                            (blur)="captureValue($event, field.id, language)" />
+                          <input matInput #{{field.attributeName}} id="{{field.attributeName}}value"
+                            (blur)="captureValue($event, field.attributeName, language)" />
                         </td>
                       </tr>
                       <tr>
@@ -184,10 +195,12 @@
       </tr>
     </table>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button [disabled]="previewDisabled" (click)="previewBtn('identity',files,filesPOA)" mat-raised-button color="primary" id="submit">Preview</button>
+      <button [disabled]="previewDisabled" (click)="previewBtn('identity')" mat-raised-button color="primary" id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.address' | translate}}">
+    <div class="address-page">
+      <div>
     <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
       <div layout="row" *ngIf="field.tabgroup === 'address'">
         <table width="700px">
@@ -201,10 +214,13 @@
                 </tr>
                 <tr>
                   <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
-                      value="{{buildJSONData[field.id][language]}}"></td>
+                      value="{{buildJSONData[field.attributeName][language]}}"></td>
                   <td width="10%"></td>
-                  <td width="45%">
-                    <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id, language)" />
+                  <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
+                    <input matInput #{{field.attributeName}} id="{{field.attributeName}}" (blur)="captureValue($event, field.attributeName, language)" [value]="buildCloneJsonData[field.attributeName][language]"/>
+                  </td>
+                  <td width="45%" *ngIf="!buildCloneJsonData[field.attributeName]">
+                    <input matInput #{{field.attributeName}} id="{{field.attributeName}}" (blur)="captureValue($event, field.attributeName, language)" />
                   </td>
                 </tr>
               </table>
@@ -220,10 +236,10 @@
                 </tr>
                 <tr>
                   <td width="45%">
-                    <input *ngIf="field.id === 'postalCode'" type="text" class="readonly" readonly="true"
-                      disabled="true" value="{{buildJSONData[field.id]}}">
-                    <input *ngIf="field.id !== 'postalCode'" type="text" class="readonly" readonly="true"
-                      disabled="true" value="{{buildJSONData[field.id][langCode]}}">
+                    <input *ngIf="field.attributeName === 'postalCode'" type="text" class="readonly" readonly="true"
+                      disabled="true" value="{{buildJSONData[field.attributeName]}}">
+                    <input *ngIf="field.attributeName !== 'postalCode'" type="text" class="readonly" readonly="true"
+                      disabled="true" value="{{buildJSONData[field.attributeName][langCode]}}">
                   </td>
                   <td width="10%"></td>
                   <td width="45%">
@@ -251,15 +267,15 @@
                 </tr>
                 <tr>
                   <td width="45%">
-                    <mat-select id="{{field.id}}">
-                      <mat-option *ngFor="let data of dropDownValues[field.id]"
-                        (onSelectionChange)="captureDropDownValue($event, field.id, langCode)" [value]="data.code">{{
+                    <mat-select id="{{field.attributeName}}">
+                      <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
+                        (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)" [value]="data.code">{{
                         data.name }}</mat-option>
                     </mat-select>
                   </td>
                   <td width="10%"></td>
                   <td width="45%">
-                    <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id, language)" />
+                    <input matInput #{{field.attributeName}} id="{{field.attributeName}}" (blur)="captureValue($event, field.attributeName, language)" />
                   </td>
                 </tr>
                 <tr>
@@ -312,7 +328,9 @@
                           </p>
                           <app-progress [progress]="file?.progress"></app-progress>
                         </div>
-
+                        <div class="preview" (click)="previewFile(i, 'POA')">
+                          <img mat-card-xs-image src='../assets/view.png' />
+                        </div>
                         <div class="delete" (click)="deleteFile(i, 'POA')">
                           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18">
                             <path fill="#B1B1B1" fill-rule="nonzero"
@@ -329,8 +347,11 @@
         </table>
       </div>
     </div>
+  </div>
+    <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="400px" width="400px">
+    </div>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button [disabled]="previewDisabledInAddress" mat-raised-button (click)="previewBtn('address',files,filesPOA)" color="primary" id="submit">Preview</button>
+      <button [disabled]="previewDisabledInAddress" mat-raised-button (click)="previewBtn('address')" color="primary" id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.contact' | translate}}">
@@ -351,21 +372,21 @@
                 </tr>
                 <tr>
                   <td width="25%"><input type="text" class="readonly" readonly="true" disabled="true"
-                      value="{{buildJSONData[field.id]}}"></td>
+                      value="{{buildJSONData[field.attributeName]}}"></td>
                   <td width="5%"></td>
                   <td width="25%">
-                    <input matInput type="password" #{{field.id}} id="{{field.id}}"
-                      (blur)="captureValue($event, field.id)" />
+                    <input matInput type="password" #{{field.attributeName}} id="{{field.attributeName}}"
+                      (blur)="captureValue($event, field.attributeName)" />
                   </td>
                   <td width="5%"></td>
                   <td width="25%">
-                    <input (input)="captureConfirmValue($event,field.id)" matInput #confirm{{field.id}}
-                      id="confirm{{field.id}}" />
+                    <input (input)="captureConfirmValue($event,field.attributeName)" matInput #confirm{{field.attributeName}}
+                      id="confirm{{field.attributeName}}" />
                   </td>
                   <td width="5%"></td>
                   <td width="10%">
-                    <button [disabled]="sendOtpDisable || !(field.id === updatedingId)" (click)="sendOTPBtn(field.id)"
-                      mat-raised-button color="primary" id="sendOTP{{field.id}}">{{field.labelName[langCode][3]
+                    <button [disabled]="sendOtpDisable || !(field.attributeName === updatedingId)" (click)="sendOTPBtn(field.attributeName)"
+                      mat-raised-button color="primary" id="sendOTP{{field.attributeName}}">{{field.labelName[langCode][3]
                       |translate}}</button>
                   </td>
                 </tr>
@@ -406,7 +427,7 @@
   <div>
   <div *ngFor="let field of schema['identity']">
     <table width="700px">
-      <tr *ngIf="field.controlType === 'calendar' && buildCloneJsonData[field.id]">
+      <tr *ngIf="field.controlType === 'calendar' && buildCloneJsonData[field.attributeName]">
         <td>
           <table width="45%">
             <tr *ngIf="field.labelName[langCode][1]">
@@ -414,10 +435,10 @@
                 {{field.labelName[langCode][1]}}
               </td>
             </tr>
-            <tr *ngIf="buildCloneJsonData[field.id]">
+            <tr *ngIf="buildCloneJsonData[field.attributeName]">
               <td width="45%">
                 <input type="text" class="readonly" readonly="true" disabled="true"
-                  value="{{buildCloneJsonData[field.id]}}">
+                  value="{{buildCloneJsonData[field.attributeName]}}">
               </td>
             </tr>
           </table>
@@ -427,13 +448,13 @@
         <td>
           <table width="45%" *ngFor="let language of supportedLanguages;">
             <tr *ngIf="field.labelName[language][1]">
-              <td *ngIf="buildCloneJsonData[field.id]" width="45%">
+              <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
                 <label>{{field.labelName[language][1]}}</label>
               </td>
             </tr>
-            <td *ngIf="buildCloneJsonData[field.id]" width="45%">
+            <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
               <input type="text" class="readonly" readonly="true" disabled="true"
-                value="{{buildCloneJsonData[field.id][language]}}">
+                value="{{buildCloneJsonData[field.attributeName][language]}}">
             </td>
           </table>
         </td>
@@ -442,13 +463,13 @@
         <td>
           <table width="45%" *ngFor="let language of supportedLanguages;">
             <tr *ngIf="field.labelName[language][1]">
-              <td *ngIf="buildCloneJsonData[field.id]" width="45%">
+              <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
                 <label>{{field.labelName[language][1]}}</label>
               </td>
             </tr>
-            <td *ngIf="buildCloneJsonData[field.id]" width="45%">
+            <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
               <input type="text" class="readonly" readonly="true" disabled="true"
-                value="{{buildCloneJsonData[field.id][language]}}">
+                value="{{buildCloneJsonData[field.attributeName][language]}}">
             </td>
           </table>
         </td>
