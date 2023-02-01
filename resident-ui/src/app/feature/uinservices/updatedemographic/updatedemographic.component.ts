@@ -165,7 +165,28 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       }
     }
     this.buildCloneJsonData = {...this.buildCloneJsonData,...this.dynamicFieldValue}
-    console.log(this.buildCloneJsonData)
+    this.addingAddessData()
+  }
+
+  addingAddessData(){
+      Object.keys(this.userInfo).forEach(data =>{
+        Object.keys(this.dynamicFieldValue).filter(item =>{
+         let changedItem = item === "Postal Code" ? "postalCode" : item.split(" ").join("").toLowerCase();
+         if(this.dynamicFieldValue[item] !== ""){
+          if(typeof this.userInfo[data] !== "string"){
+            if(changedItem === data.trim()){
+            let newData =  this.userInfo[changedItem].map(newItem =>{
+               newItem["value"] = this.dynamicFieldValue[item]
+               return newItem
+            })
+            this.userInfoClone[changedItem] = newData
+          }
+          }else{
+            this.userInfoClone[changedItem] = this.dynamicFieldValue[item]
+          }
+        }
+        })
+      })
   }
 
   getDocumentType(type: string, id: string) {
@@ -207,7 +228,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       locationCode = this.initialLocationCode;
     } else {
       fieldName = this.locationFieldNameList[parseInt(index)];
-      // this.dynamicFieldValue[this.locationFieldNameList[parseInt(index) - 1]] = event.value;
       locationCode = event.value;
       this.dynamicFieldValue[this.locationFieldNameList[parseInt(index) - 1]] =  event.value;
     }
@@ -663,8 +683,13 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    this.router.navigate([item]);
+    if(item === 'demographic'){
+        this.showPreviewPage = false
+    }else{
+      this.router.navigate([item]);
+    }
   }
+
   backBtn(){
     this.showPreviewPage = false
   }

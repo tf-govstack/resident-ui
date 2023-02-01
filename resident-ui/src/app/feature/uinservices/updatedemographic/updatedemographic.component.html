@@ -1,7 +1,7 @@
 <span class="breadcrumb">
   <a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a
     (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
-  &nbsp;&nbsp;<span [ngClass]="!showPreviewPage ? 'active' : ''">{{'updatedemographic.title' | translate}}</span>
+  &nbsp;&nbsp;<span [ngClass]="!showPreviewPage ? 'active' : 'demographic' " (click)="onItemSelected('demographic')">{{'updatedemographic.title' | translate}}</span>
   &nbsp;&nbsp;<span *ngIf="showPreviewPage" class="active"> > &nbsp; {{'preview.title' | translate}}</span>
 </span>
 
