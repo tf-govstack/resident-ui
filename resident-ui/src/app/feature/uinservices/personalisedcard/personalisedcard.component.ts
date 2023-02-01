@@ -11,6 +11,7 @@ import { saveAs } from 'file-saver';
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { HttpResponse } from '@angular/common/http';
 import { AuditService } from "src/app/core/services/audit.service";
+import moment from 'moment';
 
 @Component({
   selector: "app-personalisedcard",
@@ -85,21 +86,20 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.buildHTML = "";
     let row = "";
     let rowImage = "";
-
     if (type === "datacheck") {
-      if (data.id.toString() in this.dataDisplay) {
-        delete this.dataDisplay[data.id];
+      if (data.attributeName.toString() in this.dataDisplay) {
+        delete this.dataDisplay[data.attributeName];
       } else {
         let value = "";
-        if (typeof this.userInfo[data.id] === "string") {
-          value = this.userInfo[data.id];
+        if (typeof this.userInfo[data.attributeName] === "string") {
+          value = this.userInfo[data.attributeName];
         } else {
-          value = this.userInfo[data.id][0].value;
+          value = this.userInfo[data.attributeName][0].value;
         }
-        this.dataDisplay[data.id] = { "label": data.label[this.langCode], "value": value };
+        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
       }
       this.schema = this.schema.map(item => {
-        if (item.id === data.id) {
+        if (item.attributeName === data.attributeName) {
           let newItem = { ...item, checked: !item.checked }
           return newItem
         } else {
@@ -108,14 +108,23 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       })
     
     } else {
-      let value;
-      if(this.dataDisplay[data.id].value === this.userInfo[type]){
-        value = this.userInfo[data.id];
+      if(!data.formatRequired){
+        let value;
+        if(this.dataDisplay[data.attributeName].value === this.userInfo[type]){
+          value = this.userInfo[data.attributeName];
+        }else{
+          value = this.userInfo[type]
+        }
+        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value }
       }else{
-        value = this.userInfo[type]
-      }
-      this.dataDisplay[data.id] = { "label": data.label[this.langCode], "value": value }
-      
+        let value = "";
+        if (typeof this.userInfo[data.attributeName] === "string") {
+          value = moment(this.userInfo[data.attributeName]).format(type.value);
+        } else {
+          value = this.userInfo[data.attributeName][0].value;
+        }
+        this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value }
+      }      
     }
 
     if (Object.keys(this.dataDisplay).length >= 3) {
