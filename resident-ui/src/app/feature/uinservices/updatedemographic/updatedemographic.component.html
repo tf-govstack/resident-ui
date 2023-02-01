@@ -25,7 +25,15 @@
                         <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
                             value="{{buildJSONData[field.id]}}"></td>
                         <td width="10%"></td>
-                        <td width="45%">
+                        <td width="45%" *ngIf="buildCloneJsonData[field.id]">
+                          <mat-form-field>
+                            <input matInput [matDatepicker]="picker" id="{{field.id}}"
+                              (dateChange)="captureDatePickerValue($event, field.id)" [(ngModel)]="selectedDate"/>
+                            <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </td>
+                        <td width="45%" *ngIf="!buildCloneJsonData[field.id]">
                           <mat-form-field>
                             <input matInput [matDatepicker]="picker" id="{{field.id}}"
                               (dateChange)="captureDatePickerValue($event, field.id)" />
@@ -49,9 +57,12 @@
                         <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
                             value="{{buildJSONData[field.id][language]}}"></td>
                         <td width="10%"></td>
-                        <td width="45%">
-                          <input matInput #{{field.id}} id="{{field.id}}"
-                            (blur)="captureValue($event, field.id, language)" />
+                        <td width="45%" *ngIf="buildCloneJsonData[field.id]">
+                            <input matInput #{{field.id}} id="{{field.id}}"
+                            (blur)="captureValue($event, field.id, language)" [value]="buildCloneJsonData[field.id][language]"/>
+                        </td>
+                        <td width="45%" *ngIf="!buildCloneJsonData[field.id]">
+                          <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id, language)"/>
                         </td>
                       </tr>
                     </table>
@@ -203,7 +214,10 @@
                   <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
                       value="{{buildJSONData[field.id][language]}}"></td>
                   <td width="10%"></td>
-                  <td width="45%">
+                  <td width="45%" *ngIf="buildCloneJsonData[field.id]">
+                    <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id, language)" [value]="buildCloneJsonData[field.id][language]"/>
+                  </td>
+                  <td width="45%" *ngIf="!buildCloneJsonData[field.id]">
                     <input matInput #{{field.id}} id="{{field.id}}" (blur)="captureValue($event, field.id, language)" />
                   </td>
                 </tr>

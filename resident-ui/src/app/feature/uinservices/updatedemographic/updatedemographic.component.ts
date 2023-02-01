@@ -63,6 +63,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   previewDisabled:boolean = true;
   pdfSrcInPreviewPage = "";
   previewDisabledInAddress:boolean = true;
+  selectedDate:any;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -358,6 +359,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, language: string) {
+    console.log(event.target.value)
+    console.log(formControlName)
     this.userId = event.target.value;
     let self = this;
     if (event.target.value === "" && this.userInfoClone[formControlName]) {
@@ -397,13 +400,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       } else {
         self[formControlName]["documentreferenceId"] = event.target.value;
       }
-      console.log(this.userInfoClone)
+      console.log(this.proofOfIdentity)
     }
   }
 
   captureDatePickerValue(event: any, formControlName: string) {
-    console.log(formControlName)
-    console.log(event.target.value)
+    this.selectedDate= event.target.value
     let self = this;
     let dateFormat = new Date(event.target.value);
     let formattedDate = dateFormat.getFullYear() + "/" + ("0" + (dateFormat.getMonth() + 1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);
@@ -416,6 +418,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   captureDropDownValue(event: any, formControlName: string, language: string) {
+    console.log(event)
     let self = this;
     if (event.source.selected) {
       if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
@@ -439,7 +442,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         }
       } else {
         self[formControlName]["documenttype"] = event.source.value;
-        console.log(event.source.value)
       }
     }
    
@@ -491,7 +493,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       "request": {
         "transactionID": transactionID,
         "consent": "Accepted",
-        "identity": this.userInfo
+        "identity": this.userInfoClone
       }
     };
     this.dataStorageService.updateuin(request).subscribe(response => {
