@@ -165,7 +165,28 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       }
     }
     this.buildCloneJsonData = {...this.buildCloneJsonData,...this.dynamicFieldValue}
-    console.log(this.buildCloneJsonData)
+    this.addingAddessData()
+  }
+
+  addingAddessData(){
+      Object.keys(this.userInfo).forEach(data =>{
+        Object.keys(this.dynamicFieldValue).filter(item =>{
+         let changedItem = item === "Postal Code" ? "postalCode" : item.split(" ").join("").toLowerCase();
+         if(this.dynamicFieldValue[item] !== ""){
+          if(typeof this.userInfo[data] !== "string"){
+            if(changedItem === data.trim()){
+            let newData =  this.userInfo[changedItem].map(newItem =>{
+               newItem["value"] = this.dynamicFieldValue[item]
+               return newItem
+            })
+            this.userInfoClone[changedItem] = newData
+          }
+          }else{
+            this.userInfoClone[changedItem] = this.dynamicFieldValue[item]
+          }
+        }
+        })
+      })
   }
 
   getDocumentType(type: string, id: string) {
@@ -207,7 +228,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       locationCode = this.initialLocationCode;
     } else {
       fieldName = this.locationFieldNameList[parseInt(index)];
-      // this.dynamicFieldValue[this.locationFieldNameList[parseInt(index) - 1]] = event.value;
       locationCode = event.value;
       this.dynamicFieldValue[this.locationFieldNameList[parseInt(index) - 1]] =  event.value;
     }
@@ -447,7 +467,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    
   }
 
-  previewBtn(issue: any,files:any,filesPOA:any) {
+  previewBtn(issue: any) {
     this.showPreviewPage = true
     if (issue === "address") {
       this.auditService.audit('RP-028', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my address');
@@ -457,7 +477,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       this.auditService.audit('RP-027', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my data');
     }
     this.changedBuildData()
-    this.uploadedFiles = this.uploadedFiles.concat(files).concat(filesPOA)
+    this.uploadedFiles = this.files.concat(this.filesPOA)
   }
 
   updateBtn() {
@@ -580,7 +600,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     if(this.filesPOA.length <1){
       this.previewDisabledInAddress = true;
     }
-    
+    this.uploadedFiles = this.files.concat(this.filesPOA)
   }
 
   /**
@@ -663,8 +683,13 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    this.router.navigate([item]);
+    if(item === 'demographic'){
+        this.showPreviewPage = false;
+    }else{
+      this.router.navigate([item]);
+    }
   }
+
   backBtn(){
     this.showPreviewPage = false
   }
