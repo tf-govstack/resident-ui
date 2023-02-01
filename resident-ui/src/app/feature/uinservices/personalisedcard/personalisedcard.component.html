@@ -20,9 +20,9 @@
 								<button mat-button [matMenuTriggerFor]="basic">{{data.formatOptionLabel[langCode]}}<mat-icon>keyboard_arrow_down</mat-icon></button>
 								<mat-menu #basic="matMenu">
 									<!-- <ng-container *ngFor="let data1 of data.formatOption[langCode];"> -->
-									<ng-container *ngFor="let data1 of formatData[data.formatOptionLabel[langCode]];">
+									<ng-container *ngFor="let data1 of data.formatOption[langCode];">
 										<!-- (click)="captureCheckboxValue($event, data.label[langCode],data1)" -->
-								  		<button id="{{data1}}Btn" mat-menu-item (click)="captureCheckboxValue($event, data,data1)"><mat-checkbox id="{{data1}}">{{data1}}</mat-checkbox></button>
+								  		<button id="{{data1.value}}Btn" mat-menu-item (click)="captureCheckboxValue($event, data,data1)"><mat-checkbox id="{{data1.value}}">{{data1.label}}</mat-checkbox></button>
 								  	</ng-container>
 								</mat-menu>
 							</td>

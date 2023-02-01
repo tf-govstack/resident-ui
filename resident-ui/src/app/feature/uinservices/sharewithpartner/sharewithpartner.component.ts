@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { AuditService } from "src/app/core/services/audit.service";
+import moment from 'moment';
 
 @Component({
   selector: "app-sharewithpartner",
@@ -94,22 +95,20 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
   captureCheckboxValue($event: any, data: any, type: string) {
     this.buildHTML = ""
-    
-    // console.log("<<<data.id>>>"+JSON.stringify(data)); 
     if (type === "datacheck") {
-      if (data.id.toString() in this.sharableAttributes) {
+      if (data.attributeName.toString() in this.sharableAttributes) {
         delete this.sharableAttributes[data.id];
       } else {
         let value = "";
-        if (typeof this.userInfo[data.id] === "string") {
-          value = this.userInfo[data.id];
+        if (typeof this.userInfo[data.attributeName] === "string") {
+          value = this.userInfo[data.attributeName];
         } else {
-          value = this.userInfo[data.id][0].value;
+          value = this.userInfo[data.attributeName][0].value;
         }
-        this.sharableAttributes[data.id] = { "label": data.label[this.langCode], "value": value };
+        this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": false, "format": "", "value": value };
       }
       this.schema = this.schema.map(item => {
-        if (item.id === data.id) {
+        if (item.attributeName === data.attributeName) {
           let newItem = { ...item, checked: !item.checked }
           return newItem
         } else {
@@ -118,14 +117,24 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       })
     console.log(this.sharableAttributes)
     } else {
-      let value;
-      if(this.sharableAttributes[data.id].value === this.userInfo[type]){
-        value = this.userInfo[data.id];
+      if(!data.formatRequired){
+        let value;
+        if(this.sharableAttributes[data.attributeName].value === this.userInfo[type]){
+          value = this.userInfo[data.attributeName];
+        }else{
+          value = this.userInfo[type]
+        }
+        this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": $event.checked, "format": "", "value": value };    
       }else{
-        value = this.userInfo[type]
+        let value = "";
+        if (typeof this.userInfo[data.attributeName] === "string") {
+          value = moment(this.userInfo[data.attributeName]).format(type["value"]);
+        } else {
+          value = this.userInfo[data.attributeName][0].value;
+        }
+        this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": false, "format": type["value"], "value": value };    
       }
-      this.sharableAttributes[data.id] = { "label": data.label[this.langCode], "value": value }
-      
+        
     }
 
     if (Object.keys(this.sharableAttributes).length >= 3) {
@@ -141,7 +150,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       if (key === "photo") {
         rowImage = "<tr><td><img src=' " + this.sharableAttributes[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
       } else {
-        row = row + "<tr><td style='font-weight:600;'>" + this.sharableAttributes[key].label + ":</td><td>" + this.sharableAttributes[key].value + "</td></tr>";
+        row = row + "<tr><td style='font-weight:600;'>" + this.sharableAttributes[key].attributeName + ":</td><td>" + this.sharableAttributes[key].value + "</td></tr>";
       }
     }
     this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Subscription, timer } from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
 import defaultJson from "src/assets/i18n/default.json";
 import { AppConfigService } from 'src/app/app-config.service';
@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { LogoutService } from './../../core/services/logout.service';
 import { HeaderService } from 'src/app/core/services/header.service';
 import { AuditService } from 'src/app/core/services/audit.service';
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: "app-header",
@@ -76,6 +77,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
       self.translateService.use(localStorage.getItem("langCode")); 
       self.textDir = localStorage.getItem("dir");
+
+      let autonotificationcall = this.appConfigService.getConfig()['resident.ui.notification.update.interval.seconds'];
+      let timeperiod = autonotificationcall*1000;
+
+      /*this.subscription = timer(0, timeperiod).pipe( map(() => { 
+          this.getNotificationInfo();
+        }) 
+      ).subscribe(); */
+
     }, 1000);    
     this.getProfileInfo();
   }
@@ -220,6 +230,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }
