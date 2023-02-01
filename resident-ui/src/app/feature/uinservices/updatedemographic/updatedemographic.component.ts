@@ -467,7 +467,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    
   }
 
-  previewBtn(issue: any,files:any,filesPOA:any) {
+  previewBtn(issue: any) {
     this.showPreviewPage = true
     if (issue === "address") {
       this.auditService.audit('RP-028', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my address');
@@ -477,7 +477,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       this.auditService.audit('RP-027', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my data');
     }
     this.changedBuildData()
-    this.uploadedFiles = this.uploadedFiles.concat(files).concat(filesPOA)
+    this.uploadedFiles = this.files.concat(this.filesPOA)
   }
 
   updateBtn() {
@@ -600,7 +600,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     if(this.filesPOA.length <1){
       this.previewDisabledInAddress = true;
     }
-    
+    this.uploadedFiles = this.files.concat(this.filesPOA)
   }
 
   /**
@@ -684,7 +684,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   onItemSelected(item: any) {
     if(item === 'demographic'){
-        this.showPreviewPage = false
+        this.showPreviewPage = false;
     }else{
       this.router.navigate([item]);
     }

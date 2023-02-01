@@ -195,7 +195,7 @@
       </tr>
     </table>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button [disabled]="previewDisabled" (click)="previewBtn('identity',files,filesPOA)" mat-raised-button color="primary" id="submit">Preview</button>
+      <button [disabled]="previewDisabled" (click)="previewBtn('identity')" mat-raised-button color="primary" id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.address' | translate}}">
@@ -344,7 +344,7 @@
       </div>
     </div>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button [disabled]="previewDisabledInAddress" mat-raised-button (click)="previewBtn('address',files,filesPOA)" color="primary" id="submit">Preview</button>
+      <button [disabled]="previewDisabledInAddress" mat-raised-button (click)="previewBtn('address')" color="primary" id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.contact' | translate}}">
