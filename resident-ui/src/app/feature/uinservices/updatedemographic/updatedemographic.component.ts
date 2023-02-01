@@ -19,21 +19,23 @@ import { isNgTemplate } from "@angular/compiler";
 export class UpdatedemographicComponent implements OnInit, OnDestroy {
   userInfo: any;
   static actualData: any;
-  schema: any = { "identity": [
-    { "id": "fullName", "description": "", "labelName": { "eng": ["Current Name", "New Name"], "ara": ["Current Name_ara", "New Name_ara"], "fra": ["Current Name_fra", "New Name_fra"] }, "controlType": "textbox", "tabgroup": "identity" }, 
-    { "id": "dateOfBirth", "description": "", "labelName": { "eng": ["Current DOB", "New DOB"], "ara": ["Current DOB_ara", "New DOB_ara"], "fra": ["Current DOB_fra", "New DOB_fra"] }, "controlType": "calendar", "tabgroup": "identity" }, 
-    { "id": "gender", "description": "", "labelName": { "eng": ["Current Gender", "New Gender"], "ara": ["Current Gender_ara", "New Gender_ara"], "fra": ["Current Gender_fra", "New Gender_fra"] }, "controlType": "dropdown", "tabgroup": "identity" }, 
-    { "id": "proofOfIdentity", "description": "", "labelName": { "eng": ["Identity Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Identity Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Identity Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "identity" }, 
-    { "id": "addressLine1", "description": "", "labelName": { "eng": ["Current Address Line1", "New Address Line1"], "ara": ["Current Address Line1_ara", "New Address Line1_ara"], "fra": ["Current Address Line1_fra", "New Address Line1_fra"] }, "controlType": "textbox", "tabgroup": "address" }, 
-    { "id": "region", "name": "Region", "description": "", "labelName": { "eng": ["Current Region", "New Region"], "ara": ["Current Region_ara", "New Region_ara"], "fra": ["Current Region_fra", "New Region_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 1 }, 
-    { "id": "province", "name": "Province", "description": "", "labelName": { "eng": ["Current Province", "New Province"], "ara": ["Current Province_ara", "New Province_ara"], "fra": ["Current Province_fra", "New Province_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 2 }, 
-    { "id": "city", "name": "City", "description": "", "labelName": { "eng": ["Current City", "New City"], "ara": ["Current City_ara", "New City_ara"], "fra": ["Current City_fra", "New City_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 3 }, 
-    { "id": "zone", "name": "Zone", "description": "", "labelName": { "eng": ["Current Zone", "New Zone"], "ara": ["Current Zone_ara", "New Zone_ara"], "fra": ["Current Zone_fra", "New Zone_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 4 }, 
-    { "id": "postalCode", "name": "Postal Code", "description": "", "labelName": { "eng": ["Current Postal Code", "New Postal Code"], "ara": ["Current Postal Code_ara", "New Postal Code_ara"], "fra": ["Current Postal Code_fra", "New Postal Code_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 5 }, 
-    { "id": "proofOfAddress", "description": "", "labelName": { "eng": ["Address Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Address Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Address Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "address" }, 
-    { "id": "email", "description": "", "labelName": { "eng": ["Current email ID", "New email ID", "Confirm New email ID", "Send OTP"], "ara": ["Current email ID_ara", "New email ID_ara", "Confirm New email ID_ara", "Send OTP_ara"], "fra": ["Current email ID_fra", "New email ID_fra", "Confirm New email ID_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact" }, 
-    { "id": "phone", "description": "", "labelName": { "eng": ["Current Phone Number", "New Phone Number", "Confirm New Phone Number", "Send OTP"], "ara": ["Current Phone Number_ara", "New Phone Number_ara", "Confirm New Phone Number_ara", "Send OTP_ara"], "fra": ["Current Phone Number_fra", "New Phone Number_fra", "Confirm New Phone Number_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact" }, 
-    { "id": "preferredLang", "description": "", "labelName": { "eng": ["Current Notification Language", "New Notification Language"], "ara": ["Current Notification Language_ara", "New Notification Language_ara"], "fra": ["Current Notification Language_fra", "New Notification Language_fra"] }, "controlType": "dropdown", "tabgroup": "notificationLanguage" }] };
+  schema: any = {
+    "identity": [
+      { "id": "fullName", "description": "", "labelName": { "eng": ["Current Name", "New Name"], "ara": ["Current Name_ara", "New Name_ara"], "fra": ["Current Name_fra", "New Name_fra"] }, "controlType": "textbox", "tabgroup": "identity" },
+      { "id": "dateOfBirth", "description": "", "labelName": { "eng": ["Current DOB", "New DOB"], "ara": ["Current DOB_ara", "New DOB_ara"], "fra": ["Current DOB_fra", "New DOB_fra"] }, "controlType": "calendar", "tabgroup": "identity" },
+      { "id": "gender", "description": "", "labelName": { "eng": ["Current Gender", "New Gender"], "ara": ["Current Gender_ara", "New Gender_ara"], "fra": ["Current Gender_fra", "New Gender_fra"] }, "controlType": "dropdown", "tabgroup": "identity" },
+      { "id": "proofOfIdentity", "description": "", "labelName": { "eng": ["Identity Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Identity Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Identity Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "identity" },
+      { "id": "addressLine1", "description": "", "labelName": { "eng": ["Current Address Line1", "New Address Line1"], "ara": ["Current Address Line1_ara", "New Address Line1_ara"], "fra": ["Current Address Line1_fra", "New Address Line1_fra"] }, "controlType": "textbox", "tabgroup": "address" },
+      { "id": "region", "name": "Region", "description": "", "labelName": { "eng": ["Current Region", "New Region"], "ara": ["Current Region_ara", "New Region_ara"], "fra": ["Current Region_fra", "New Region_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 1 },
+      { "id": "province", "name": "Province", "description": "", "labelName": { "eng": ["Current Province", "New Province"], "ara": ["Current Province_ara", "New Province_ara"], "fra": ["Current Province_fra", "New Province_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 2 },
+      { "id": "city", "name": "City", "description": "", "labelName": { "eng": ["Current City", "New City"], "ara": ["Current City_ara", "New City_ara"], "fra": ["Current City_fra", "New City_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 3 },
+      { "id": "zone", "name": "Zone", "description": "", "labelName": { "eng": ["Current Zone", "New Zone"], "ara": ["Current Zone_ara", "New Zone_ara"], "fra": ["Current Zone_fra", "New Zone_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 4 },
+      { "id": "postalCode", "name": "Postal Code", "description": "", "labelName": { "eng": ["Current Postal Code", "New Postal Code"], "ara": ["Current Postal Code_ara", "New Postal Code_ara"], "fra": ["Current Postal Code_fra", "New Postal Code_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 5 },
+      { "id": "proofOfAddress", "description": "", "labelName": { "eng": ["Address Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Address Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Address Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "address" },
+      { "id": "email", "description": "", "labelName": { "eng": ["Current email ID", "New email ID", "Confirm New email ID", "Send OTP"], "ara": ["Current email ID_ara", "New email ID_ara", "Confirm New email ID_ara", "Send OTP_ara"], "fra": ["Current email ID_fra", "New email ID_fra", "Confirm New email ID_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact" },
+      { "id": "phone", "description": "", "labelName": { "eng": ["Current Phone Number", "New Phone Number", "Confirm New Phone Number", "Send OTP"], "ara": ["Current Phone Number_ara", "New Phone Number_ara", "Confirm New Phone Number_ara", "Send OTP_ara"], "fra": ["Current Phone Number_fra", "New Phone Number_fra", "Confirm New Phone Number_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact" },
+      { "id": "preferredLang", "description": "", "labelName": { "eng": ["Current Notification Language", "New Notification Language"], "ara": ["Current Notification Language_ara", "New Notification Language_ara"], "fra": ["Current Notification Language_fra", "New Notification Language_fra"] }, "controlType": "dropdown", "tabgroup": "notificationLanguage" }]
+  };
   subscriptions: Subscription[] = [];
   buildJSONData: any = {};
   langCode: string = localStorage.getItem("langCode");
@@ -59,11 +61,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   showPreviewPage: boolean = false;
   userInfoClone: any = {};
   buildCloneJsonData: any = {};
-  uploadedFiles:any[] = [];
-  previewDisabled:boolean = true;
+  uploadedFiles: any[] = [];
+  previewDisabled: boolean = true;
   pdfSrcInPreviewPage = "";
-  previewDisabledInAddress:boolean = true;
-  selectedDate:any;
+  previewDisabledInAddress: boolean = true;
+  selectedDate: any;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -107,7 +109,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   buildData() {
-    try{
+    try {
       let self = this;
       for (var schema of self.schema['identity']) {
         if (self.userInfo[schema.id]) {
@@ -122,19 +124,19 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
                     return data.value.trim()
                   }
                 });
-                console.log("schema.id>>>"+JSON.stringify(schema.id));
+                console.log("schema.id>>>" + JSON.stringify(schema.id));
                 self.buildJSONData[schema.id][language] = value[0].value;
               });
             }
           }
         }
       }
-      console.log("this.buildJSONData>>>"+JSON.stringify(this.buildJSONData));
+      console.log("this.buildJSONData>>>" + JSON.stringify(this.buildJSONData));
       this.getGender();
       this.getLocationHierarchyLevel();
       this.getDocumentType("POI", "proofOfIdentity"); this.getDocumentType("POA", "proofOfAddress");
-    }catch(ex){
-      console.log("Exception>>>"+ex.message);
+    } catch (ex) {
+      console.log("Exception>>>" + ex.message);
     }
     console.log(this.buildJSONData)
   }
@@ -157,36 +159,40 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
                   console.log(data)
                 }
               });
-            if (value.length >0) {
+            if (value.length > 0) {
               self.buildCloneJsonData[schema.id][language] = value[0].value;
             }
           });
         }
       }
     }
-    this.buildCloneJsonData = {...this.buildCloneJsonData,...this.dynamicFieldValue}
+    this.buildCloneJsonData = { ...this.buildCloneJsonData, ...this.dynamicFieldValue }
     this.addingAddessData()
   }
 
-  addingAddessData(){
-      Object.keys(this.userInfo).forEach(data =>{
-        Object.keys(this.dynamicFieldValue).filter(item =>{
-         let changedItem = item === "Postal Code" ? "postalCode" : item.split(" ").join("").toLowerCase();
-         if(this.dynamicFieldValue[item] !== ""){
-          if(typeof this.userInfo[data] !== "string"){
-            if(changedItem === data.trim()){
+  addingAddessData() {
+    Object.keys(this.userInfo).forEach(data =>{
+      Object.keys(this.dynamicFieldValue).filter(item =>{
+       let changedItem = item === "Postal Code" ? "postalCode" : item.split(" ").join("").toLowerCase();
+       if(changedItem === data){
+       if(this.dynamicFieldValue[item] !== ""){
+        if(typeof this.userInfo[data] === "string"){
+          this.userInfoClone[changedItem] = this.dynamicFieldValue[item]
+        }else{
+         
             let newData =  this.userInfo[changedItem].map(newItem =>{
                newItem["value"] = this.dynamicFieldValue[item]
                return newItem
             })
             this.userInfoClone[changedItem] = newData
+            console.log(this.userInfoClone)
           }
-          }else{
-            this.userInfoClone[changedItem] = this.dynamicFieldValue[item]
-          }
-        }
-        })
+        
+      }
+    }
       })
+    })
+    console.log(this.userInfoClone)
   }
 
   getDocumentType(type: string, id: string) {
@@ -229,7 +235,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     } else {
       fieldName = this.locationFieldNameList[parseInt(index)];
       locationCode = event.value;
-      this.dynamicFieldValue[this.locationFieldNameList[parseInt(index) - 1]] =  event.value;
+      this.dynamicFieldValue[this.locationFieldNameList[parseInt(index) - 1]] = event.value;
     }
     this.dataStorageService.getImmediateChildren(locationCode, this.langCode)
       .subscribe(response => {
@@ -384,14 +390,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.userId = event.target.value;
     let self = this;
     if (event.target.value === "" && this.userInfoClone[formControlName]) {
-      this.userInfoClone[formControlName].forEach(item =>{
-        if(item.language === language){
+      this.userInfoClone[formControlName].forEach(item => {
+        if (item.language === language) {
           console.log(this.userInfoClone[formControlName])
-          let index =  this.userInfoClone[formControlName].findIndex(data => data === item)
-          this.userInfoClone[formControlName].splice(index,1)
+          let index = this.userInfoClone[formControlName].findIndex(data => data === item)
+          this.userInfoClone[formControlName].splice(index, 1)
         }
       })
-    }else{
+    } else {
       if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
         if (typeof self.userInfo[formControlName] === "string") {
           self.userInfo[formControlName] = event.target.value;
@@ -425,14 +431,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   captureDatePickerValue(event: any, formControlName: string) {
-    this.selectedDate= event.target.value
+    this.selectedDate = event.target.value
     let self = this;
     let dateFormat = new Date(event.target.value);
     let formattedDate = dateFormat.getFullYear() + "/" + ("0" + (dateFormat.getMonth() + 1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);
-    if(event.target.value === null && this.userInfoClone["dateOfBirth"]){
+    if (event.target.value === null && this.userInfoClone["dateOfBirth"]) {
       delete this.userInfoClone["dateOfBirth"]
-    }else{
-        self.userInfoClone[formControlName] = formattedDate;
+    } else {
+      self.userInfoClone[formControlName] = formattedDate;
     }
     console.log(this.userInfoClone)
   }
@@ -464,7 +470,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         self[formControlName]["documenttype"] = event.source.value;
       }
     }
-   
+
   }
 
   previewBtn(issue: any) {
@@ -473,7 +479,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       this.auditService.audit('RP-028', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my address');
     } else if (issue === "languagePreference") {
       this.auditService.audit('RP-031', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update notification language');
-    }else if(issue === "identity"){
+    } else if (issue === "identity") {
       this.auditService.audit('RP-027', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my data');
     }
     this.changedBuildData()
@@ -484,24 +490,24 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.conditionsForupdateDemographicData();
   }
 
-  uploadFiles(files, transactionID, docCatCode, docTypCode, referenceId){
+  uploadFiles(files, transactionID, docCatCode, docTypCode, referenceId) {
     this.dataStorageService.uploadfile(files, transactionID, docCatCode, docTypCode, referenceId).subscribe(response => {
     });
   }
 
-  updateDemographicData(){
-    console.log("self.proofOfIdentity>>>"+JSON.stringify(this.proofOfIdentity));
-    console.log("self.proofOfAddress>>>"+JSON.stringify(this.proofOfAddress));
-    console.log("this.dynamicFieldValue>>>"+JSON.stringify(this.dynamicFieldValue));
-    console.log("self.userInfo>>>"+JSON.stringify(this.userInfo));
+  updateDemographicData() {
+    console.log("self.proofOfIdentity>>>" + JSON.stringify(this.proofOfIdentity));
+    console.log("self.proofOfAddress>>>" + JSON.stringify(this.proofOfAddress));
+    console.log("this.dynamicFieldValue>>>" + JSON.stringify(this.dynamicFieldValue));
+    console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
     let transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
-    if(this.proofOfIdentity['documenttype']){
+    if (this.proofOfIdentity['documenttype']) {
       const formData = new FormData();
       formData.append('file', this.files[0]);
       this.uploadFiles(formData, transactionID, 'POI', this.proofOfIdentity['documenttype'], this.proofOfIdentity['documentreferenceId']);
       console.log(this.files[0]);
     }
-     if(this.proofOfAddress['documenttype']){
+    if (this.proofOfAddress['documenttype']) {
       this.uploadFiles(this.filesPOA[0], transactionID, 'POA', this.proofOfAddress['documenttype'], this.proofOfAddress['documentreferenceId']);
       console.log(this.filesPOA[0]);
     }
@@ -560,14 +566,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    * Preview file from files list
    * @param index (File index)
    */
-  previewFile(index: number, type:string) {
-    if(type === "POI"){
+  previewFile(index: number, type: string) {
+    if (type === "POI") {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.pdfSrc = e.target.result;
       };
       reader.readAsDataURL(this.files[index]);
-    }else{
+    } else {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.pdfSrc = e.target.result;
@@ -576,7 +582,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }
   }
 
-  previewFileInPreviewPage(index:number){
+  previewFileInPreviewPage(index: number) {
     const reader = new FileReader();
     reader.onload = (e: any) => {
       this.pdfSrcInPreviewPage = e.target.result;
@@ -594,10 +600,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     } else {
       this.filesPOA.splice(index, 1);
     }
-    if(this.files.length <1){
+    if (this.files.length < 1) {
       this.previewDisabled = true;
     }
-    if(this.filesPOA.length <1){
+    if (this.filesPOA.length < 1) {
       this.previewDisabledInAddress = true;
     }
     this.uploadedFiles = this.files.concat(this.filesPOA)
@@ -658,7 +664,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       this.uploadFilesSimulator(0, type);
       this.previewDisabledInAddress = false
     }
-    
+
 
   }
 
@@ -683,14 +689,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   onItemSelected(item: any) {
-    if(item === 'demographic'){
-        this.showPreviewPage = false;
-    }else{
+    if (item === 'demographic') {
+      this.showPreviewPage = false;
+    } else {
       this.router.navigate([item]);
     }
   }
 
-  backBtn(){
+  backBtn() {
     this.showPreviewPage = false
   }
 }
