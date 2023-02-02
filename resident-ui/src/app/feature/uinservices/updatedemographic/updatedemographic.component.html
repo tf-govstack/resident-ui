@@ -213,7 +213,7 @@
                   <td width="45%"><label>{{field.labelName[language][1]}}</label></td>
                 </tr>
                 <tr>
-                  <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
+                  <td *ngIf="buildJSONData[field.attributeName]" width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
                       value="{{buildJSONData[field.attributeName][language]}}"></td>
                   <td width="10%"></td>
                   <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
@@ -238,7 +238,7 @@
                   <td width="45%">
                     <input *ngIf="field.attributeName === 'postalCode'" type="text" class="readonly" readonly="true"
                       disabled="true" value="{{buildJSONData[field.attributeName]}}">
-                    <input *ngIf="field.attributeName !== 'postalCode'" type="text" class="readonly" readonly="true"
+                    <input *ngIf="field.attributeName !== 'postalCode' && buildJSONData[field.attributeName][langCode] " type="text" class="readonly" readonly="true"
                       disabled="true" value="{{buildJSONData[field.attributeName][langCode]}}">
                   </td>
                   <td width="10%"></td>
