@@ -97,13 +97,21 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     this.buildHTML = ""
     if (type === "datacheck") {
       if (data.attributeName.toString() in this.sharableAttributes) {
-        delete this.sharableAttributes[data.id];
+        delete this.sharableAttributes[data.attributeName];
       } else {
         let value = "";
         if (typeof this.userInfo[data.attributeName] === "string") {
-          value = this.userInfo[data.attributeName];
+          if (this.userInfo[data.attributeName]) {
+            value = this.userInfo[data.attributeName];
+          } else {
+            value = "Not Available"
+          }
         } else {
-          value = this.userInfo[data.attributeName][0].value;
+          if (this.userInfo[data.attributeName] === undefined || this.userInfo[data.attributeName].length < 1) {
+            value = "Not Available"
+          } else {
+            value = this.userInfo[data.attributeName][0].value;
+          }
         }
         this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": false, "format": "", "value": value };
       }

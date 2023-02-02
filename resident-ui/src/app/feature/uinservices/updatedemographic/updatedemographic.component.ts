@@ -118,6 +118,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
               self.buildJSONData[schema.attributeName] = self.userInfo[schema.attributeName];
             } else {
               self.buildJSONData[schema.attributeName] = {};
+              if(self.userInfo[schema.attributeName].length){
               self.supportedLanguages.map((language) => {
                 let value = self.userInfo[schema.attributeName].filter(function (data) {
                   if (data.language.trim() === language.trim()) {
@@ -127,6 +128,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
                 console.log("schema.id>>>" + JSON.stringify(schema.attributeName));
                 self.buildJSONData[schema.attributeName][language] = value[0].value;
               });
+            }
             }
           }
         }
@@ -139,6 +141,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       console.log("Exception>>>" + ex.message);
     }
     console.log(this.buildJSONData)
+    console.log(this.userInfo)
   }
 
   changedBuildData() {
@@ -524,9 +527,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     };
     this.dataStorageService.updateuin(request).subscribe(response => {
       if (response["response"]) {
-
+          this.showMessage(response["response"]['message'])
       } else {
-        console.log("No")
+          this.showErrorPopup(response["errors"][0].message)
       }
     }, error => {
       console.log(error)
@@ -673,6 +676,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    * @param bytes (File size in bytes)
    * @param decimals (Decimals point)
    */
+
   formatBytes(bytes, decimals) {
     if (bytes === 0) {
       return '0 Bytes';
