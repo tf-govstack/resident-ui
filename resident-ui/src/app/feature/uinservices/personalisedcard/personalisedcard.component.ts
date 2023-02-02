@@ -36,7 +36,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   givenNameBox: boolean = false;
   downloadBtnDisabled: boolean = true;
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService) {
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private auditService: AuditService) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
     //   if(id === "downloadPersonalCard"){
     //     this.convertpdf()
@@ -92,9 +92,18 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       } else {
         let value = "";
         if (typeof this.userInfo[data.attributeName] === "string") {
-          value = this.userInfo[data.attributeName];
+          if (this.userInfo[data.attributeName]) {
+            value = this.userInfo[data.attributeName];
+          } else {
+            value = "Not Available"
+          }
+
         } else {
-          value = this.userInfo[data.attributeName][0].value;
+          if (this.userInfo[data.attributeName] === undefined || this.userInfo[data.attributeName].length < 1) {
+            value = "Not Available"
+          } else {
+            value = this.userInfo[data.attributeName][0].value;
+          }
         }
         this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value };
       }
@@ -106,17 +115,17 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           return item
         }
       })
-    
+
     } else {
-      if(!data.formatRequired){
+      if (!data.formatRequired) {
         let value;
-        if(this.dataDisplay[data.attributeName].value === this.userInfo[type]){
+        if (this.dataDisplay[data.attributeName].value === this.userInfo[type]) {
           value = this.userInfo[data.attributeName];
-        }else{
+        } else {
           value = this.userInfo[type]
         }
         this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value }
-      }else{
+      } else {
         let value = "";
         if (typeof this.userInfo[data.attributeName] === "string") {
           value = moment(this.userInfo[data.attributeName]).format(type.value);
@@ -124,7 +133,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           value = this.userInfo[data.attributeName][0].value;
         }
         this.dataDisplay[data.attributeName] = { "label": data.label[this.langCode], "value": value }
-      }      
+      }
     }
 
     if (Object.keys(this.dataDisplay).length >= 3) {
