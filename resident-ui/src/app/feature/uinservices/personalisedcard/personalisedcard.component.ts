@@ -144,9 +144,9 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
 
     for (const key in this.dataDisplay) {
       if (key === "photo") {
-        rowImage = "<tr><td><img src=' " + this.dataDisplay[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
+        rowImage = "<tr><td><img src=' " + this.dataDisplay[key].value + "' alt='' style='margin-left:60%;' width='70px' height='70px'/></td></tr>";
       } else {
-        row = row + "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td>" + this.dataDisplay[key].value + "</td></tr>";
+        row = row + "<tr><td style='font-weight:600;'>" + this.dataDisplay[key].label + ":</td><td><div style='width:300px; word-wrap: break-word;'>" + this.dataDisplay[key].value + "</div></td></tr>";
       }
     }
     this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;
@@ -155,7 +155,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
 
   downloadFile() {
     this.auditService.audit('RP-032', 'Download personalised card', 'RP-Download personalised card', 'Download personalised card', 'User clicks on "download" button on download personalised card page');
-    this.convertpdf()
+    this.convertpdf();
   }
 
   convertpdf() {

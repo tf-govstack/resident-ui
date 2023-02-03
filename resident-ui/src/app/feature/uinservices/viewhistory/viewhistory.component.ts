@@ -12,6 +12,7 @@ import { saveAs } from 'file-saver';
 import { HeaderService } from 'src/app/core/services/header.service';
 import { FormControl } from "@angular/forms";
 import { AuditService } from "src/app/core/services/audit.service";
+import { ConditionalExpr } from "@angular/compiler";
 
 @Component({
   selector: "app-viewhistory",
@@ -30,7 +31,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [5, 10, 15, 20];
   serviceTypeFilter:any;
   statusTypeFilter:any;
-  showFirstLastButtons:boolean = true
+  showFirstLastButtons:boolean = true;
 
   today: Date;
   startdate: Date = new Date(2022, 0, 1)
@@ -42,6 +43,10 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   statusFilter:string = "";
   controlTypes = ["searchText", "serviceType", "statusFilter", "fromDate", "toDate"];
   datas:{};
+  isStatusAllValue:boolean = false;
+  statusSelectedValue:string;
+  isHistoryAllValue:boolean = false;
+  historySelectedValue:string;
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService) {
     this.dateAdapter.setLocale('en-GB'); 
   }
@@ -75,6 +80,22 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
   }
 
+  tosslePerOne(event:any){
+    if(event === "all"){
+      this.isStatusAllValue = !this.isStatusAllValue;
+      this.statusSelectedValue = event
+    }
+  }
+
+  historyTosslePerOne(event:any){
+    if(event === "ALL"){
+      this.isHistoryAllValue = !this.isHistoryAllValue;
+      this.historySelectedValue = event
+    }
+    console.log(this.isHistoryAllValue)
+    console.log(this.historySelectedValue)
+  }
+
   parsedrodowndata(){
     let serviceTypeFilter = this.serviceTypeFilter;
     this.serviceTypeFilter = [];
@@ -95,6 +116,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, controlType: string) {
+    console.log(event)
     this.selectedDate = this.today
     if(controlType === "dropdown"){
       this[formControlName] = event.value.toString().toUpperCase();

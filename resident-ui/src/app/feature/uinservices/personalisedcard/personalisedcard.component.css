@@ -11,6 +11,11 @@
     border-radius: 6px; 
     padding: 12px;
 }
+@media screen and (max-width:1480px) {
+    .seleted-details-card{ 
+        width: 70%;
+    }
+}
 .download-btn{
     background-color: #03A64A;
     color: #ffffff;
