@@ -23,14 +23,14 @@
         <button mat-menu-item (click)="onlanguagechange(item)" *ngFor="let item of selectLanguagesArr">{{item.value}}</button>
       </mat-menu>
 
-      <mat-list-item *ngIf="fullName">
+      <mat-list-item>
         <button mat-menu-item [matMenuTriggerFor]="notificationMenu" (click)="loadNotificationData()"  >
           <mat-icon style="margin-right: 0px;color: white; margin-top: 8px;" matBadge="{{notificationCount}}" matBadgeColor="warn" matBadgeSize="small"  *ngIf="notificationCount">notifications</mat-icon>
           <mat-icon style="margin-right: 0px;color: white; margin-top: 8px;" *ngIf="!notificationCount">notifications</mat-icon>
         </button>
       </mat-list-item>&nbsp;&nbsp;&nbsp;
       <mat-menu #notificationMenu="matMenu" [overlapTrigger]="false" id="notificationMenu">
-        <div *ngFor="let data of notificationList; let i = index"><button mat-menu-item (click)="viewDetails(data)">{{data.requestType}}&nbsp;|&nbsp;{{data.summary}}</button><mat-divider></mat-divider></div>        
+        <div *ngFor="let data of notificationList; let i = index"><div class="each-notification"><span> EID: {{data.eventId}}&nbsp;|&nbsp;{{data.description}}</span></div><mat-divider></mat-divider></div>        
       </mat-menu>
   
       <mat-list-item  *ngIf="fullName">

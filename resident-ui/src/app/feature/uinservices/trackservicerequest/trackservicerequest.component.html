@@ -135,6 +135,6 @@
 			</div>
 
 		</div>
-		<P *ngIf="eidStatus">To raise a support request against this EID <a href="">click here</a></P>
+		<P *ngIf="eidStatus">{{'trackservicerequest.raiseSupportRequest' | translate}} <span class="click-here" (click)="navigateGrievance(eidStatus.eventId)">{{'trackservicerequest.clickHere' | translate}}</span></P>
 	</mat-card>
 </div>

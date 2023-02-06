@@ -26,6 +26,7 @@ export class GrievanceComponent implements OnInit {
   message:string;
   popupMessages:any;
   errorCode:string;
+  userInfo:any;
 
   constructor(
     private router: Router,
@@ -34,7 +35,7 @@ export class GrievanceComponent implements OnInit {
     private appConfigService: AppConfigService,
     private dialog: MatDialog
   ) { 
-      this.eventId = this.router.getCurrentNavigation().extras.state.eventId
+      this.eventId = this.router.getCurrentNavigation().extras.state.eventId;
   }
 
 
@@ -43,9 +44,10 @@ export class GrievanceComponent implements OnInit {
     .getProfileInfo()
     .subscribe((response) => {
       if(response["response"]){  
-        this.name = response["response"].fullName ? response["response"].fullName : null;
-        this.emailId = response["response"].email ? response["response"].email : null;
-        this.phoneNo = response["response"].phone ? response["response"].phone : null;
+        this.userInfo = response["response"]
+        // this.name = response["response"].fullName ? response["response"].fullName : null;
+        // this.emailId = response["response"].email ? response["response"].email : null;
+        // this.phoneNo = response["response"].phone ? response["response"].phone : null;
         this.alternateEmailId = response["response"].alternateEmailId ? response["response"].alternateEmailId : null;
         this.alternatePhoneNo = response["response"].alternatePhoneNo ?response["response"].alternatePhoneNo:  null;
       }
@@ -57,7 +59,7 @@ export class GrievanceComponent implements OnInit {
     this.translateService.getTranslation(localStorage.getItem("langCode"))
     .subscribe(response =>{
        this.grievanceData = response["grievanceRedressal"]
-       this.popupMessages = response
+       this.popupMessages = response;
     })
     this.getProfileInfo()
   }
@@ -80,7 +82,7 @@ export class GrievanceComponent implements OnInit {
      
       this.dataStorageService.sendGrievanceRedressal(request).subscribe(response =>{
         if(response["response"]){
-           this.showMessage(response["response"])
+          this.showMessage(response["response"])
           this.router.navigate(["dashboard"])
         }else{
            this.showErrorPopup(response["errors"])
