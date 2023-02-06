@@ -1,12 +1,15 @@
 <span class="breadcrumb">
-	<a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<span class="active">{{'trackservicerequest.title' | translate}}</span>
+	<a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a
+		(click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
+	&nbsp;&nbsp;<span class="active">{{'trackservicerequest.title' | translate}}</span>
 </span>
 
 <div class="main-div" *ngIf="langJSON">
 	<mat-card>
 		<table style="width: 100%;">
 			<tr>
-				<td style="padding: 10px; color:#505050; font-size: 22px;"><span>{{'trackservicerequest.title2' | translate}} </span></td>
+				<td style="padding: 10px; color:#505050; font-size: 22px;"><span>{{'trackservicerequest.title2' |
+						translate}} </span></td>
 			</tr>
 			<tr>
 				<td style="color: #909090;">
@@ -15,67 +18,123 @@
 			</tr>
 			<tr>
 				<td style="padding: 10px;">
-					<label class="label-card">{{'trackservicerequest.searchLabel' | translate}}<span style="color: #FF0000; margin-bottom:8px;">*</span>
-						<mat-icon  (mouseover)="openPopupMsg()" (mouseout)="openPopupMsg()" class="info-icon" matTooltip="">info</mat-icon>
+					<label class="label-card">{{'trackservicerequest.searchLabel' | translate}}<span
+							style="color: #FF0000; margin-bottom:8px;">*</span>
+						<mat-icon (mouseover)="openPopupMsg()" (mouseout)="openPopupMsg()" class="info-icon"
+							matTooltip="">info</mat-icon>
 					</label>
 					<div *ngIf="isPopUpShow" class="info-box">
 						<p style="margin-top: 0px;">{{infoText}}</p>
 					</div>
-          			<input type="text" id="appIdValue" name="appIdValue" value={{eidVal}} (input)="captureValue($event, 'eidVal', 'textbox')" placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;
-					<button [disabled]="disableTrackBtn" id="getEIDStatusbtn" mat-raised-button class="track-btn" (click)="getEIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
+					<input type="text" id="appIdValue" name="appIdValue" value={{eidVal}}
+						(input)="captureValue($event, 'eidVal', 'textbox')"
+						placeholder="{{'trackservicerequest.searchPlaceholder' | translate}}" />&nbsp;&nbsp;&nbsp;&nbsp;
+					<button [disabled]="disableTrackBtn" id="getEIDStatusbtn" mat-raised-button class="track-btn"
+						(click)="getEIDStatus()">{{'trackservicerequest.searchButton' | translate}}</button>
 				</td>
 			</tr>
 		</table>
 		<div *ngIf="eidStatus" class="trackDetails">
-		<table   style="width: 100%; border-radius: 10px; border-collapse: collapse;">
-			<tr style="border-bottom: 1px solid silver;">
-				<td colspan="2">
-					<table style="width: 100%;">
-						<tr>
-							<td><label>{{'trackservicerequest.eventId' | translate}}</label></td>
-							<td><label>{{'trackservicerequest.eventType' | translate}}</label></td>
-							<td><label>{{'trackservicerequest.eventStatus' | translate}}</label></td>
-						</tr>
-						<tr>
-							<td>{{eidStatus.eventId}}</td>
-							<td>{{eidStatus.eventType}}</td>
-							<td>{{eidStatus.eventStatus}}</td>
-						</tr>
-					</table>					
-				</td>
-			</tr>			
-			<tr style="padding:10px;">
-				<td><label>{{'trackservicerequest.description' | translate}}</label></td>
-				<td><label>{{'trackservicerequest.individualId' | translate}}</label></td>
-			</tr>
-			<tr style="border-bottom: 1px solid silver;padding:10px;">
-				<td>{{eidStatus.info.description}}</td>
-				<td>{{eidStatus.individualId}}</td>
-			</tr>
-			<tr style="padding:10px;">
-				<td><label>{{'trackservicerequest.authenticationMode' | translate}} </label></td>
-				<td><label>{{'trackservicerequest.vidType' | translate}}</label></td>
-			</tr>
-			<tr style="border-bottom: 1px solid silver;padding:10px;">
-				<td>{{eidStatus.info.authenticationMode}}</td>
-				<td>{{eidStatus.info.vidType}}</td>
-			</tr>
-			<tr style="padding:10px;">
-				<td><label>{{'trackservicerequest.vid' | translate}}</label></td>
-				<td><label>{{'trackservicerequest.timestamp' | translate}}</label></td>
-			</tr>
-			<!-- style="border-bottom: 1px solid silver;padding:10px;" -->
-			<tr style="padding:10px;">
-				<td>{{eidStatus.info.vid}}</td>
-				<td>{{eidStatus.timestamp}}</td>
-			</tr>
-		</table>
-		<div style="text-align: right;">
-			<button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn" (click)="downloadAcknowledgement()"><img class="save-icon" src="./assets/images/save.png"/>{{'trackservicerequest.downloadbuttonLabel' | translate}}</button>
+			<table style="width: 100%; border-radius: 10px; border-collapse: collapse;">
+				<tr>
+					<td><label>{{'trackservicerequest.eventId' | translate}}</label></td>
+					<td><label>{{'trackservicerequest.eventType' | translate}}</label></td>
+					<td><label>{{'trackservicerequest.description' | translate}}</label></td>
+					<td><label>{{'trackservicerequest.eventStatus' | translate}}</label></td>
+				</tr>
+				<tr style="border-bottom: 1px solid silver;">
+					<td>{{eidStatus.eventId}}</td>
+					<td>{{eidStatus.eventType}}</td>
+					<td>{{eidStatus.info.description}}</td>
+					<td>{{eidStatus.eventStatus}}</td>
+
+				</tr>
+				<tr style="padding:10px;">
+					<td><label>{{'trackservicerequest.individualId' | translate}}</label></td>
+					<td><label>{{'trackservicerequest.summary' | translate}}</label></td>
+					<td><label>{{'trackservicerequest.timestamp' | translate}}</label></td>
+					<td><label>{{'trackservicerequest.authenticationMode' | translate}} </label></td>
+				</tr>
+				<tr style="padding:10px;">
+					<td>{{eidStatus.individualId}}</td>
+					<td>{{eidStatus.summary.replace("$attributes",eidStatus.info.attributeList)}}</td>
+					<td>{{eidStatus.timestamp}}</td>
+					<td>{{eidStatus.info.authenticationMode}}</td>
+				</tr>
+				<!-- Download Personalized Card and Update my data -->
+				<tr *ngIf="eidStatus.eventType === 'Download Personalized Card' || eidStatus.eventType === 'Update My Uin' "
+					style="padding:10px; border-top: 1px solid silver;">
+					<td><label>{{'trackservicerequest.attributeList' | translate}} </label></td>
+				</tr>
+				<tr
+					*ngIf="eidStatus.eventType === 'Download Personalized Card' || eidStatus.eventType === 'Update My Uin' ">
+					<td>{{eidStatus.info.attributeList}}</td>
+				</tr>
+				<!-- Authentication request -->
+				<tr *ngIf="eidStatus.eventType === 'Authentication request' "
+					style="padding:10px; padding:10px; border-top: 1px solid silver;">
+					<td style="height: 40px; width: 40px;">image</td>
+					<td><label>{{'trackservicerequest.partnerName' | translate}} </label></td>
+				</tr>
+				<tr *ngIf="eidStatus.eventType === 'Authentication request' ">
+					<td>{{eidStatus.info.partnerLogo}}</td>
+					<td>{{eidStatus.info.partnerName}}</td>
+				</tr>
+				<!-- Manage my VID	 -->
+				<tr *ngIf="eidStatus.eventType === 'Generate Vid' "
+					style="padding:10px; padding:10px; border-top: 1px solid silver;">
+					<td><label>{{'trackservicerequest.vidType' | translate}} </label></td>
+					<td><label>{{'trackservicerequest.vid' | translate}} </label></td>
+				</tr>
+				<tr *ngIf="eidStatus.eventType === 'Generate Vid' ">
+					<td>{{eidStatus.info.vidType}}</td>
+					<td>{{eidStatus.info.vid}}</td>
+				</tr>
+				<!-- Share credential with partner	 -->
+				<tr *ngIf="eidStatus.eventType === 'Share Credential With Partner' "
+					style="padding:10px; padding:10px; border-top: 1px solid silver;">
+					<td><label>{{'trackservicerequest.partnerLogo' | translate}} </label></td>
+					<td><label>{{'trackservicerequest.partnerName' | translate}} </label></td>
+					<td><label>{{'trackservicerequest.attributeList' | translate}} </label></td>
+					<td><label>{{'trackservicerequest.purpose' | translate}} </label></td>
+				</tr>
+				<tr *ngIf="eidStatus.eventType === 'Share Credential With Partner' ">
+					<td>image</td>
+					<td>{{eidStatus.info.partnerName}}</td>
+					<td>{{eidStatus.info.attributeList}}</td>
+					<td>{{eidStatus.info.purpose}}</td>
+				</tr>
+			</table>
+			<div *ngIf="eidStatus.eventType === 'Generate Vid'"
+				style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 1rem;">
+				<button id="downloadVIDCardBtn" style="cursor: pointer;" class="download-btn"><img class="save-icon"
+						src="./assets/images/save.png" />{{'trackservicerequest.downloadVIDCard' | translate}}</button>
+
+				<button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn"
+					(click)="downloadAcknowledgement()"><img class="save-icon"
+						src="./assets/images/save.png" />{{'trackservicerequest.downloadbuttonLabel' |
+					translate}}</button>
+			</div>
+			<div *ngIf="eidStatus.eventType === 'Update My Uin'"
+				style="display: flex; justify-content: space-between; width: 100%; margin-top: 1rem;">
+				<button id="downloadCardWithNewDataBtn" style="cursor: pointer;" class="download-btn"><img
+						class="save-icon"
+						src="./assets/images/save.png" />{{'trackservicerequest.downloadCardWithNewData' |
+					translate}}</button>
+				<button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn"
+					(click)="downloadAcknowledgement()"><img class="save-icon"
+						src="./assets/images/save.png" />{{'trackservicerequest.downloadbuttonLabel' |
+					translate}}</button>
+			</div>
+			<div *ngIf="eidStatus.eventType !== 'Update My Uin' && eidStatus.eventType !== 'Generate Vid' "
+				style="display: flex; justify-content: flex-end; width: 100%; margin-top: 1rem;">
+				<button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn"
+					(click)="downloadAcknowledgement()"><img class="save-icon"
+						src="./assets/images/save.png" />{{'trackservicerequest.downloadbuttonLabel' |
+					translate}}</button>
+			</div>
+
 		</div>
-	</div>
-
-	</mat-card>	
+		<P *ngIf="eidStatus">To raise a support request against this EID <a href="">click here</a></P>
+	</mat-card>
 </div>
-
-
