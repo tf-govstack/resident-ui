@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .getNotificationCount()
     .subscribe((response) => {
-      if(response["response"])     
+      if(response["response"])
         if(parseInt(response["response"].unreadCount) < 100){          
           this.notificationCount = response["response"].unreadCount;
         }else{
@@ -109,12 +109,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     .updateNotificationTime()
     .subscribe((response) => {
     });
-    console.log(this.langCode)
+    
     this.dataStorageService
     .getNotificationData(this.langCode)
     .subscribe((response) => {
       if(response["response"])     
-        this.notificationList = response["response"];
+        this.notificationList = response["response"]["data"];
     });
 
     this.auditService.audit('RP-001', 'Notification section', 'RP-Notification', 'Notification section', 'User clicks on "notification" icon after logging in to UIN services');

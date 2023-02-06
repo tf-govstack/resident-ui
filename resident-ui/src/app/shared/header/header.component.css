@@ -94,7 +94,17 @@
   overflow-wrap: break-word;
 }
 
+::ng-deep .mat-menu-panel {
+  height: 100vh !important;
+  min-width: 270px!important;
+  margin-right:-90px !important;
+  margin-top: 80px !important;
+  border-radius: 0% !important;
+  background-color: white;
+}
+
 .each-notification{
-  min-width: 100px !important;
+  /* width: 200px !important; */
+  margin: 8px;
 }
 
