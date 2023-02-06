@@ -186,7 +186,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
 
   downloadFile() {
     this.auditService.audit('RP-032', 'Download personalised card', 'RP-Download personalised card', 'Download personalised card', 'User clicks on "download" button on download personalised card page');
-    this.convertpdf()
+    this.convertpdf();
   }
 
   convertpdf() {

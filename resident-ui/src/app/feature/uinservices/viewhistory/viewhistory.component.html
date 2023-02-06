@@ -31,7 +31,7 @@
 					<mat-select multiple id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
 						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
 						<!-- <mat-option>{{'viewhistory.selectAll' | translate}}</mat-option> -->
-						<mat-option *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
+						<mat-option [disabled]="isHistoryAllValue && historySelectedValue === 'ALL' && serviceType.value !== 'ALL' " (click)="historyTosslePerOne(serviceType.value)" *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
 							[value]="serviceType.value">{{serviceType.label}}</mat-option>
 					</mat-select>
 				</td>
@@ -53,7 +53,7 @@
 					<mat-select id="statusFilter" multiple placeholder="{{'viewhistory.inputStatus' | translate}}"
 						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
 						<!-- <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">{{'viewhistory.selectAll' | translate}}</mat-option> -->
-						<mat-option *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
+						<mat-option [disabled]="isStatusAllValue && statusSelectedValue === 'all' && status.label !== 'All' " *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
 							(click)="tosslePerOne(status.value)">
 							{{status.label}}</mat-option>
 					</mat-select>

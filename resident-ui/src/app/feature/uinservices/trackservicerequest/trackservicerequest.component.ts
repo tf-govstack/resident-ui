@@ -46,6 +46,9 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
         this.getEIDStatus();
       }
     );  
+    if(this.eidVal){
+        this.disableTrackBtn = this.eidVal.length === 16 ? false : true
+    }
 
     this.translateService
     .getTranslation(localStorage.getItem("langCode"))
