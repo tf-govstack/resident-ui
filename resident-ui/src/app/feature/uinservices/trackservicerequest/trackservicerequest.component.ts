@@ -137,6 +137,9 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   onItemSelected(item: any) {
     this.router.navigate([item]);
   }
+  navigateGrievance(eventId:any){
+    this.router.navigate(["grievanceRedressal"],{state:{eventId:eventId}})
+  }
 
   openPopupMsg(){
     this.isPopUpShow = !this.isPopUpShow

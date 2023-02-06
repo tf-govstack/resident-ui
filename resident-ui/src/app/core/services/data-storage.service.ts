@@ -269,8 +269,8 @@ export class DataStorageService {
     return this.httpClient.put(this.BASE_URL + '/bell/updatedttime', "");
   }
 
-  getNotificationData() {
-    return this.httpClient.get(this.BASE_URL + '/unread/service-list');
+  getNotificationData(langCode:any) {
+    return this.httpClient.get(this.BASE_URL + '/notifications/' + langCode);
   }
 
   getSupportingDocument() {

@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userImage:any;
   notificationCount:any="";
   notificationList:any;
+  langCode = localStorage.getItem("langCode");
 
   constructor(
     private router: Router,
@@ -108,9 +109,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     .updateNotificationTime()
     .subscribe((response) => {
     });
-
+    console.log(this.langCode)
     this.dataStorageService
-    .getNotificationData()
+    .getNotificationData(this.langCode)
     .subscribe((response) => {
       if(response["response"])     
         this.notificationList = response["response"];

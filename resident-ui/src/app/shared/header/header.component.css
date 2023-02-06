@@ -93,3 +93,8 @@
 .mat-menu-item {
   overflow-wrap: break-word;
 }
+
+.each-notification{
+  min-width: 100px !important;
+}
+

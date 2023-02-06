@@ -104,3 +104,8 @@ td {
   text-align: start;
   /* box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.5); */
 }
+.click-here{
+  text-decoration: underline;
+  color: #03A64A;
+  cursor: pointer;
+}
