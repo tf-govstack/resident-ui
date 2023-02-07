@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
 import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 import Utils from 'src/app/app.utils';
 import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatOption, MatDialog, MatSelect  } from '@angular/material';
 import { DateAdapter } from '@angular/material/core';
 import { saveAs } from 'file-saver';
 import { HeaderService } from 'src/app/core/services/header.service';
@@ -47,6 +47,8 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   statusSelectedValue:string;
   isHistoryAllValue:boolean = false;
   historySelectedValue:string;
+  @ViewChild('statusFilter') statusFilterSelectAll: MatSelect;
+  @ViewChild('serviceType') serviceTypeSelectAll: MatSelect;
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService) {
     this.dateAdapter.setLocale('en-GB'); 
   }
@@ -83,17 +85,27 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   tosslePerOne(event:any){
     if(event === "all"){
       this.isStatusAllValue = !this.isStatusAllValue;
-      this.statusSelectedValue = event
+      this.statusSelectedValue = event;
+      if (this.isStatusAllValue) {
+        this.statusFilterSelectAll.options.forEach( (item : MatOption) => item.select());
+      } else {
+        this.statusFilterSelectAll.options.forEach( (item : MatOption) => {item.deselect()});
+      }
+      this.statusFilterSelectAll.close();
     }
   }
 
   historyTosslePerOne(event:any){
     if(event === "ALL"){
       this.isHistoryAllValue = !this.isHistoryAllValue;
-      this.historySelectedValue = event
+      this.historySelectedValue = event;
+      if (this.isHistoryAllValue) {
+        this.serviceTypeSelectAll.options.forEach( (item : MatOption) => item.select());
+      } else {
+        this.serviceTypeSelectAll.options.forEach( (item : MatOption) => {item.deselect()});
+      }
+      this.serviceTypeSelectAll.close();
     }
-    console.log(this.isHistoryAllValue)
-    console.log(this.historySelectedValue)
   }
 
   parsedrodowndata(){
@@ -130,8 +142,10 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     }
     if(formControlName === "serviceType"){
       this.auditService.audit('RP-009', 'View history', 'RP-View history', 'View history', 'User chooses the "history filter" from the drop-down');
+      this.serviceType = this.serviceType.replace(/ALL,/ig, '');
     }else if(formControlName === "statusFilter"){
       this.auditService.audit('RP-010', 'View history', 'RP-View history', 'View history', 'User chooses the "status filter" from the drop-down');
+      this.statusFilter = this.statusFilter.replace(/ALL,/ig, '');
     }
   }
 
