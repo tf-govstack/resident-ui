@@ -86,11 +86,13 @@ input {
 .button2 {
   width: 108px;
   height: 36px;
-  background: #909090 0% 0% no-repeat padding-box;
+  /* background: #909090 0% 0% no-repeat padding-box; */
   border:none;
   color: #ffffff;
   border-radius: 5px;
   cursor: pointer;
+  background-color: #03A64A;
+
 }
 .get-uin-btn-card {
   margin-top: 1.7rem;
@@ -111,10 +113,11 @@ input {
 
 .otp-infromation-card {
   width: 305px;
-  height: 96px;
+  min-height: 96px;
   background: #E8FDF2 0% 0% no-repeat padding-box;
   border-radius: 10px;
   opacity: 1;
+  word-wrap: break-word;
 }
 
 .enter-opt-input {
