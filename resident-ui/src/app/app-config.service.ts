@@ -54,7 +54,8 @@ export class AppConfigService {
         this.appConfig["mosip.webui.auto.logout.ping"] = responseData["mosip.webui.auto.logout.ping"];   
         this.appConfig["mosip.webui.auto.logout.timeout"] = responseData["mosip.webui.auto.logout.timeout"];
         this.appConfig["resident.updateuin.id"] = responseData["resident.updateuin.id"];
-        this.appConfig["resident.ui.notification.update.interval.seconds"] = responseData["resident.ui.notification.update.interval.seconds"];        
+        this.appConfig["resident.ui.notification.update.interval.seconds"] = responseData["resident.ui.notification.update.interval.seconds"];  
+        this.appConfig["mosip.kernel.otp.expiry-time"] = responseData["mosip.kernel.otp.expiry-time"]      
       },
       (error) => {
         console.log(error);

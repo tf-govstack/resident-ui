@@ -27,19 +27,15 @@ export class VerifyComponent implements OnInit, OnDestroy {
   otp: string = "";
   otpChannel: any = [];
   popupMessages: any;
-  showOtpEnterPanel: boolean = true;
   showOtpPanel: boolean = false;
   siteKey: any;
   resetCaptcha: boolean;
   numBtnColors: string = "#909090";
   emailBtnColors: string = "#909090";
-  submitBtnBgColor: string = "#BFBCBC";
-  resendBtnBgColor: string = "#909090";
   resetBtnDisable: boolean = true;
-  submitBtnDisable: boolean = false;
+  submitBtnDisable: boolean = true;
   otpTimeSeconds: any = "00";
-  buttonbgColor: string = "#BFBCBC";
-  otpTimeMinutes: number = 2;
+  otpTimeMinutes: number;
   displaySeconds: any = this.otpTimeSeconds
   interval: any;
   message: string;
@@ -91,7 +87,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
           alert("Success!\nYou are right")
       }
     });*/
-
+    
   }
 
 
@@ -99,9 +95,9 @@ export class VerifyComponent implements OnInit, OnDestroy {
   captureOtpValue(value: string) {
     this.otp = value
     if (value !== "") {
-      this.submitBtnBgColor = "#03A64A"
+      this.submitBtnDisable = false
     } else {
-      this.submitBtnBgColor = "#BFBCBC"
+      this.submitBtnDisable = true
     }
   }
 
@@ -150,6 +146,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   setOtpTime() {
+    this.otpTimeMinutes = this.appConfigService.getConfig()['mosip.kernel.otp.expiry-time']/60;
     this.interval = setInterval(() => {
       if (this.otpTimeSeconds < 0 || this.otpTimeSeconds === "00") {
         this.otpTimeSeconds = 59
@@ -159,7 +156,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
         this.otpTimeSeconds = 0;
         this.otpTimeMinutes = 0;
         clearInterval(this.interval)
-        this.resendBtnBgColor = "#03A64A";
         this.displaySeconds = "00";
         this.resetBtnDisable = false;
         this.submitBtnDisable = true;
@@ -180,13 +176,11 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   resendOtp() {
     this.auditService.audit('RP-039', 'Verify phone number/email ID', 'RP-Verify phone number/email ID', 'Verify phone number/email ID', 'User clicks on "resend OTP" button on verify phone number/email Id page');
-    this.resendBtnBgColor = "#909090";
     clearInterval(this.interval)
     this.otpTimeSeconds = "00"
-    this.otpTimeMinutes = 2
+    this.otpTimeMinutes = this.appConfigService.getConfig()['mosip.kernel.otp.expiry-time']/60
     setInterval(this.interval)
     this.resetBtnDisable = true;
-    this.submitBtnDisable = false;
     this.generateOTP()
   }
 
@@ -211,7 +205,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
       "individualId": self.individualId,
       "otpChannel": self.otpChannel
     };
-
+  
     this.dataStorageService.generateOTP(request).subscribe(response => {
       if (!response["errors"]) {
         if (this.otpChannel[0] === "PHONE") {
@@ -220,12 +214,10 @@ export class VerifyComponent implements OnInit, OnDestroy {
           this.channelType = response["response"].maskedEmail
         }
         self.showOtpPanel = true;
-        self.showOtpEnterPanel = false;
         self.setOtpTime();
       } else {
         self.showErrorPopup(response["errors"]);
         self.showOtpPanel = false;
-        self.showOtpEnterPanel = true;
       }
     },
       error => {
@@ -242,6 +234,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
           this.router.navigate(["dashboard"])
         } else {
           this.generateOTP()
+          this.otpTimeMinutes = this.appConfigService.getConfig()['mosip.kernel.otp.expiry-time']/60
+          this.otpTimeSeconds = "00"
         }
       } else {
         this.showErrorPopup(response["errors"])
@@ -349,13 +343,10 @@ export class VerifyComponent implements OnInit, OnDestroy {
     if (item === "home") {
       this.router.navigate(["dashboard"]);
     } else if ("back") {
-      this.showOtpEnterPanel = true;
-      this.resendBtnBgColor = "#909090";
       this.showOtpPanel = false;
-      this.otpTimeSeconds = 59
-      this.otpTimeMinutes = 1
-      clearInterval(this.interval)
     }
+    clearInterval(this.interval)
+    this.displaySeconds = "00"
   }
 
   ngOnDestroy(): void {

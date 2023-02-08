@@ -3,7 +3,7 @@
     <a (click)="onItemSelected('home')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> >&nbsp;&nbsp;<span
       class="active">{{'dashboard.verify' | translate}}</span>
   </span>
-  <mat-card class="verify-phnumb-email-card" *ngIf="showOtpEnterPanel">
+  <mat-card class="verify-phnumb-email-card" *ngIf="!showOtpPanel">
     <div class="send-otp-container">
       <div class="btn-card">
         <mat-button-toggle id="phoneChannelBtn" (click)="radioChange('PHONE')" class="button"
@@ -15,9 +15,9 @@
         </mat-button-toggle>
         &nbsp;
         &nbsp;
-        <mat-button-toggle id="emailChannelBtn" [style.borderColor]="emailBtnColors"
-          (click)="radioChange('EMAIL')" class="button"><img src="./assets/images/email_black_24dp (1).png"
-            *ngIf="!mailIcon" /> <img *ngIf="mailIcon" src="./assets/icons/iconfont/email_black.svg" />&nbsp;<span
+        <mat-button-toggle id="emailChannelBtn" [style.borderColor]="emailBtnColors" (click)="radioChange('EMAIL')"
+          class="button"><img src="./assets/images/email_black_24dp (1).png" *ngIf="!mailIcon" /> <img *ngIf="mailIcon"
+            src="./assets/icons/iconfont/email_black.svg" />&nbsp;<span
             [style.color]="emailBtnColors">{{verifyChannelData.email | translate}}</span>
         </mat-button-toggle>
       </div>
@@ -68,13 +68,13 @@
             {{channelType}}</span>.</p>
       </div>
       <div class="get-uin-btn-card">
-        <button id="resendOtpBtn" mat-button-toggle [disabled]="resetBtnDisable" readonly="true" (click)="resendOtp()"
-          [style.backgroundColor]="resendBtnBgColor" class="button2">{{verifyChannelData.resendBtnLabel |
+        <button id="resendOtpBtn" mat-raised-button [disabled]="resetBtnDisable" readonly="true" (click)="resendOtp()"
+          class="button2">{{verifyChannelData.resendBtnLabel |
           translate}}</button>
         &nbsp;
         &nbsp;
-        <button id="submitOtpBtn" mat-button-toggle [disabled]="submitBtnDisable" (click)="submitOtp()" class="button2"
-          [style.backgroundColor]="submitBtnBgColor">{{verifyChannelData.submitBtnLabel | translate}}</button>
+        <button id="submitOtpBtn" mat-raised-button [disabled]="submitBtnDisable" (click)="submitOtp()"
+          class="button2">{{verifyChannelData.submitBtnLabel | translate}}</button>
       </div>
     </div>
   </mat-card>

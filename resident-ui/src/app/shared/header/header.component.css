@@ -94,9 +94,9 @@
   overflow-wrap: break-word;
 }
 
-::ng-deep .mat-menu-panel {
+::ng-deep .mat-menu-panel.myMenu {
   height: 100vh !important;
-  min-width: 270px!important;
+  min-width: 300px!important;
   margin-right:-90px !important;
   margin-top: 80px !important;
   border-radius: 0% !important;
