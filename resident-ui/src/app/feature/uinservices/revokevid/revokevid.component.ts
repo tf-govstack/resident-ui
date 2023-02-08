@@ -286,7 +286,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
         eventId:eventId,
-        message: "In this service, you can view details of the existing VIDs, generate new VIDs, manfjrnjkbghnjnfhfdbfhdnjfnbfhnfjkrjfnhbfjnjfnhbfjdnijenufbjdnbfmdnjfbdhfbdnfjdbhncmicjnhdb@gmail.com existing VIDs or download a VID card",
+        message: message,
         clickHere:this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
