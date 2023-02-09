@@ -40,6 +40,8 @@ export class GrievanceComponent implements OnInit {
   ) { 
     if (this.router.getCurrentNavigation().extras.state) {
       this.eventId = this.router.getCurrentNavigation().extras.state.eventId;
+    }else{
+      this.router.navigate(['uinservices/viewhistory'])
     }
   }
 
@@ -123,10 +125,12 @@ export class GrievanceComponent implements OnInit {
     this.errorCode = message[0]["errorCode"]
     this.errorMessage = message[0]["message"].split("-")[1].trim()
     if(this.errorMessage !== 'message'){
-    this.message = this.popupMessages.serverErrors[this.errorCode]['message']
+    this.message = this.popupMessages.serverErrors[this.errorCode][this.errorMessage]
     }else{
       this.message = this.popupMessages.serverErrors[this.errorCode]
     }
+    console.log(this.errorMessage)
+    console.log(this.message)
     this.dialog
       .open(DialogComponent, {
         width: '550px',
