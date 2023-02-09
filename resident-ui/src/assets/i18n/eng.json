@@ -193,7 +193,9 @@
         "alternateEmailPlaceholder":"Enter alternate Email",
         "alternatePhoneNoPlaceholder":"Enter alternate Phone number",
         "EnterMsgPlaceholder":"Please Enter message",
-        "submitBtn":"Submit"
+        "submitBtn":"Submit",
+        "TotalCharacters":"Total Characters",
+        "remainingCharacters":"Remaining"
     },
     "verifyuinvid": {
         "title": "",

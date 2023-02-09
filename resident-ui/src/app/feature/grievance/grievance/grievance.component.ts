@@ -27,7 +27,8 @@ export class GrievanceComponent implements OnInit {
   popupMessages:any;
   errorCode:string;
   userInfo:any;
-  commentLength:any;
+  totalCommentCount:number;
+  remainingChars:number;
   errorMessage:any;
 
   constructor(
@@ -37,7 +38,9 @@ export class GrievanceComponent implements OnInit {
     private appConfigService: AppConfigService,
     private dialog: MatDialog
   ) { 
+    if (this.router.getCurrentNavigation().extras.state) {
       this.eventId = this.router.getCurrentNavigation().extras.state.eventId;
+    }
   }
 
 
@@ -53,9 +56,7 @@ export class GrievanceComponent implements OnInit {
         this.alternateEmailId = response["response"].alternateEmailId ? response["response"].alternateEmailId : null;
         this.alternatePhoneNo = response["response"].alternatePhoneNo ?response["response"].alternatePhoneNo:  null;
       }
-    });   
-     this.commentLength = this.appConfigService.getConfig()["resident.share-credential.purpose.chars.limit"]
-    console.log(this.commentLength) 
+    });
   }
 
   ngOnInit() {
@@ -66,6 +67,10 @@ export class GrievanceComponent implements OnInit {
        this.popupMessages = response;
     })
     this.getProfileInfo()
+    setTimeout(() => {
+      this.totalCommentCount = this.appConfigService.getConfig()["resident.grievance-redressal.comments.chars.limit"]
+      this.remainingChars = this.totalCommentCount;
+    }, 400);
   }
 
   onItemSelected(value:any){
@@ -133,6 +138,11 @@ export class GrievanceComponent implements OnInit {
         },
         disableClose: true
       });
+  }
+
+  countCharacters(event:any){
+    let enterdChars = event.target.value.length
+    this.remainingChars = this.totalCommentCount - enterdChars
   }
 
 }
