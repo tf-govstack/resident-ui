@@ -38,7 +38,9 @@
           <br/>
           <input [readonly]="true" [(ngModel)]="eventId" type="text" name="eventId" ngModel/>
           <br/>
-          <textarea  placeholder={{grievanceData.EnterMsgPlaceholder}} rows="4" cols="55" name="message" [(ngModel)]="reportMsg"></textarea>
+          <textarea [maxlength]="totalCommentCount" (input)="countCharacters($event)" placeholder={{grievanceData.EnterMsgPlaceholder}} rows="4" cols="55" name="message" [(ngModel)]="reportMsg"></textarea>
+          <span style="color:red; font-size: 12px;">{{grievanceData.TotalCharacters}}: {{totalCommentCount}}</span>
+          <span style="color:red; font-size: 12px;">{{grievanceData.remainingCharacters}}: {{remainingChars}}</span>
         </div>
         </div>
         <div class="bnt-card">
