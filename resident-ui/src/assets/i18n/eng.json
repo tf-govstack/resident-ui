@@ -505,8 +505,8 @@
         "RES-SER-410": {
             "individualIdError": "Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again..",
             "channelError": "Please choose the channel that you want to verify.",
-            "EMAIL":"Please enter valid Email.",
-            "PHONE":"Please enter valid Phone."
+            "EMAIL":"The email Id you have entered is invalid. Please enter a valid email Id.",
+            "PHONE":"The email Id you have entered is invalid. Please enter a valid email Id."
         },
         "RES-SER-459": "The entered EID is not associated with the VID/UIN used to log in",
         "RES-SER-412": "Please enter valid UIN/VID.",
@@ -514,7 +514,7 @@
         "RES-SER-418":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
         "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in.",
         "RES-SER-449":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
-        "RES-SER-414":"please add some comment for report.",
+        "RES-SER-414":"Comment section cannot be blank. Please enter your comments in order to proceed.",
         "RES-SER-471":"This VID cannot be revoked since you have logged in using same VID",
         "RES-SER-513":"Failed to create VID, as the existing VID cannot be revoked since this VID was used to log into the current session.",
         "RES-OTP-007":"OTP is invalid"
