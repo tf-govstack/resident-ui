@@ -27,6 +27,8 @@ export class GrievanceComponent implements OnInit {
   popupMessages:any;
   errorCode:string;
   userInfo:any;
+  commentLength:any;
+  errorMessage:any;
 
   constructor(
     private router: Router,
@@ -51,7 +53,9 @@ export class GrievanceComponent implements OnInit {
         this.alternateEmailId = response["response"].alternateEmailId ? response["response"].alternateEmailId : null;
         this.alternatePhoneNo = response["response"].alternatePhoneNo ?response["response"].alternatePhoneNo:  null;
       }
-    });    
+    });   
+     this.commentLength = this.appConfigService.getConfig()["resident.share-credential.purpose.chars.limit"]
+    console.log(this.commentLength) 
   }
 
   ngOnInit() {
@@ -112,7 +116,12 @@ export class GrievanceComponent implements OnInit {
 
   showErrorPopup(message: string) {
     this.errorCode = message[0]["errorCode"]
-    this.message = this.popupMessages.serverErrors[this.errorCode]
+    this.errorMessage = message[0]["message"].split("-")[1].trim()
+    if(this.errorMessage !== 'message'){
+    this.message = this.popupMessages.serverErrors[this.errorCode]['message']
+    }else{
+      this.message = this.popupMessages.serverErrors[this.errorCode]
+    }
     this.dialog
       .open(DialogComponent, {
         width: '550px',
