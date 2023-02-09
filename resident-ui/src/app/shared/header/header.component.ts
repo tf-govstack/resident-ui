@@ -82,10 +82,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       let autonotificationcall = this.appConfigService.getConfig()['resident.ui.notification.update.interval.seconds'];
       let timeperiod = autonotificationcall*1000;
 
-      /*this.subscription = timer(0, timeperiod).pipe( map(() => { 
+      this.subscription = timer(0, timeperiod).pipe( map(() => { 
           this.getNotificationInfo();
         }) 
-      ).subscribe(); */
+      ).subscribe(); 
 
     }, 1000);    
     this.getProfileInfo();
