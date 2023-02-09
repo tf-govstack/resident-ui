@@ -505,7 +505,7 @@
             "channelError": "Please choose the channel that you want to verify."
         },
         "RES-SER-459": "The entered EID is not associated with the VID/UIN used to log in",
-        "RES-SER-412": "There seems to be some issue fetching the required page. Please try again in some time.",
+        "RES-SER-412": "Please enter valid UIN/VID.",
         "RES-SER-405":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
         "RES-SER-418":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
         "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in.",
