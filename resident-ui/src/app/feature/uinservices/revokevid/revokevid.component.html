@@ -38,8 +38,11 @@
 							    <td style="width:50%">
 							    	{{list.genratedOnTimestamp | date:'dd:MM:yyyy hh:mm'}}&nbsp;{{ list.genratedOnTimestamp | date : 'a' | lowercase }}
 							    </td>
-							    <td style="width:50%">
+							    <td style="width:50%" *ngIf="list.expiryTimestamp">
 							    	{{list.expiryTimestamp | date:'dd:MM:yyyy hh:mm'}}&nbsp;{{ list.expiryTimestamp | date : 'a' | lowercase }}
+							    </td>
+								<td style="width:50%" *ngIf="!list.expiryTimestamp">
+							    	NA
 							    </td>
 							  </tr>
 							  <tr>
