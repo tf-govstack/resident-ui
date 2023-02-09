@@ -28,7 +28,7 @@
 						placeholder="{{'viewhistory.inputAppId' | translate}}" />
 				</td>
 				<td class="input-cards">
-					<mat-select multiple id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
+					<mat-select multiple #serviceType id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
 						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
 						<!-- <mat-option>{{'viewhistory.selectAll' | translate}}</mat-option> -->
 						<mat-option [disabled]="isHistoryAllValue && historySelectedValue === 'ALL' && serviceType.value !== 'ALL' " (click)="historyTosslePerOne(serviceType.value)" *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
@@ -50,7 +50,7 @@
 					<mat-datepicker #toPicker></mat-datepicker>
 				</td>
 				<td class="input-cards">
-					<mat-select id="statusFilter" multiple placeholder="{{'viewhistory.inputStatus' | translate}}"
+					<mat-select multiple #statusFilter id="statusFilter" placeholder="{{'viewhistory.inputStatus' | translate}}"
 						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
 						<!-- <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">{{'viewhistory.selectAll' | translate}}</mat-option> -->
 						<mat-option [disabled]="isStatusAllValue && statusSelectedValue === 'all' && status.label !== 'All' " *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
