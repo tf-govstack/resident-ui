@@ -20,7 +20,7 @@ const routes: Routes = [
   {path: 'trackservicerequest', component: TrackservicerequestComponent,canActivate: [AuthguardService]},
   {path: 'personalisedcard', component: PersonalisedcardComponent,canActivate: [AuthguardService]},
   {path: 'physicalcard', component: PhysicalcardComponent,canActivate: [AuthguardService]},
-  {path: 'sharewithpartner', component: SharewithpartnerComponent,canActivate: [AuthguardService]};
+  {path: 'sharewithpartner', component: SharewithpartnerComponent,canActivate: [AuthguardService]}
 ];
 
 @NgModule({
