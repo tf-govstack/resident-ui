@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }else if (window.innerWidth <= 1400 && window.innerWidth >= 1370){
       this.rowHeight = "240px"
     }else if (window.innerWidth <= 1366){
-      this.rowHeight = "200px"
+      this.rowHeight = "220px"
     }else{
       this.rowHeight = "180px"
     }
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }else if (event.target.innerWidth <= 1400 && event.target.innerWidth >= 1370){
       this.rowHeight = "240px"
     }else if (event.target.innerWidth <= 1366){
-      this.rowHeight = "200px"
+      this.rowHeight = "220px"
     }else{
       this.rowHeight = "200px"
     }
