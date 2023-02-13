@@ -96,7 +96,7 @@
 
 ::ng-deep .mat-menu-panel.myMenu {
   height: 100vh !important;
-  min-width: 300px!important;
+  min-width: 320px!important;
   margin-right:-90px !important;
   top: 140px !important;
   border-radius: 0% !important;
@@ -106,5 +106,14 @@
 .each-notification{
   /* width: 200px !important; */
   margin: 8px;
+}
+
+::ng-deep .cdk-overlay-pane{
+  top: 80px !important;
+}
+
+::ng-deep .mat-menu-panel.myMenu > .mat-menu-content {
+  width: 290px !important;
+  height: auto !important;
 }
 
