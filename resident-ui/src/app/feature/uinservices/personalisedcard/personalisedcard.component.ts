@@ -35,6 +35,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   eventId: any;
   givenNameBox: boolean = false;
   downloadBtnDisabled: boolean = true;
+  valuesSelected: any = [];
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private auditService: AuditService) {
     // this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id)=>{
@@ -61,6 +62,9 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
         this.schema = response["identity"];
+        this.schema.forEach(data =>{
+          this.valuesSelected.push(data.attributeName)
+        })
       });
     this.getUserInfo();
     this.getMappingData()
@@ -179,7 +183,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         });
         row = row + "<tr><td style='font-weight:600;'>" + this.dataDisplay[key][0].label + ":</td><td>" + datadisplay + "</td></tr>";
       }
-    }    
+    }  
     this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;
     $event.stopPropagation();
   }

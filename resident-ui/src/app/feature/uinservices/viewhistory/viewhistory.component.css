@@ -98,6 +98,13 @@ span.label {
   padding: 10px;
 }
 
+
+.date-input-cards {
+  width: 18%;
+  padding: 10px;
+}
+
+
 .datepicker-card {
   width: 80%;
   height: 37px;

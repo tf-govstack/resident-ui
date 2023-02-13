@@ -506,9 +506,10 @@
             "individualIdError": "Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again..",
             "channelError": "Please choose the channel that you want to verify.",
             "EMAIL":"The email Id you have entered is invalid. Please enter a valid email Id.",
-            "PHONE":"The email Id you have entered is invalid. Please enter a valid email Id."
+            "PHONE":"The phone number you have entered is invalid. Please enter a valid phone number.",
+            "eventId":"The event Id you have entered is invalid. Please enter a valid event Id."
         },
-        "RES-SER-459": "The entered EID is not associated with the VID/UIN used to log in",
+        "RES-SER-459": "The entered EID is not associated with the VID/UIN used to log in.",
         "RES-SER-412": "Please enter valid UIN/VID.",
         "RES-SER-405":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
         "RES-SER-418":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",

@@ -90,8 +90,8 @@
 }
 
 .attribute-card{
-  height: 275px; 
-  width: 60%; 
+  min-height: 200px; 
+  width: 50%; 
   border: 1px solid #505050; 
   border-radius: 6px; 
   padding: 12px;

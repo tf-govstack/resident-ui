@@ -30,11 +30,20 @@
 					</table>					
 				</td>
 				<td style="width:70%;vertical-align: top;">
-					<div class="seleted-details-card" *ngIf="buildHTML">
-					<table style="width:500px;" *ngIf="buildHTML">
+					<div class="seleted-details-card">
+					<table >
 						<tr>
-							<td>
-								<div [innerHTML]="buildHTML | sanitize"></div>
+							<td *ngIf="dataDisplay['photo']">
+								<img [src]="dataDisplay['photo'][0]['value']" alt='' style="margin-left:48%;" width='70px' height='70px'/>
+						   </td>
+						</tr>
+						<tr *ngFor="let value of valuesSelected">
+							<td style='font-weight:600;' *ngIf="dataDisplay[value] && value !== 'photo' ">
+								<!-- <div [innerHTML]="buildHTML | sanitize"></div> -->
+								{{dataDisplay[value][0]['label']}}:
+							</td>
+							<td *ngIf="dataDisplay[value] && value !== 'photo' ">
+								{{dataDisplay[value][0]['value']}}
 							</td>
 						</tr>
 					</table>

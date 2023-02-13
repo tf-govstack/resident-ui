@@ -98,7 +98,7 @@
   height: 100vh !important;
   min-width: 300px!important;
   margin-right:-90px !important;
-  margin-top: 80px !important;
+  top: 140px !important;
   border-radius: 0% !important;
   background-color: white;
 }
