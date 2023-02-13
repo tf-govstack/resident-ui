@@ -116,10 +116,16 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
 
   showErrorPopup(message: string) {
     this.errorCode = message[0]["errorCode"]
-    this.message = this.popupMessages.serverErrors[this.errorCode]
+    if(this.errorCode === "RES-SER-410"){
+      let errorMessageType = message[0]["message"].split("-")[1].trim()
+      this.message = this.popupMessages.serverErrors[this.errorCode][errorMessageType]
+    }else{
+      this.message = this.popupMessages.serverErrors[this.errorCode]
+    }
+  
     this.dialog
       .open(DialogComponent, {
-        width: '850px',
+        width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,

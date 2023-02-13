@@ -36,6 +36,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   formatData: any;
   eventId: any;
   shareBthDisabled: boolean = true;
+  valuesSelected: any = [];
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -62,6 +63,10 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
         this.schema = response["identity"];
+        this.schema.forEach(data =>{
+          this.valuesSelected.push(data.attributeName)
+          console.log(this.valuesSelected)
+        })
       });
 
     this.getPartnerDetails();
