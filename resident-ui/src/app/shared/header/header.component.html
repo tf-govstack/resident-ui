@@ -1,7 +1,7 @@
 <mat-sidenav-container [dir]="textDirection()">
   <mat-sidenav #sidenav role="navigation" position="start" mode="push">
     <mat-nav-list class="sidenav-list">
-     
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -9,45 +9,69 @@
       <div class="sidenav-button">
         <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
       </div>
-      <img class="img-fluid" src="assets\logo.png"/>
+      <img class="img-fluid" src="assets\logo.png" />
       <span class="spacer"></span>
 
 
-      <button mat-button [matMenuTriggerFor]="menu2"> <span class="mat-button-wrapper">Aa<mat-icon>keyboard_arrow_down</mat-icon></span></button>
+      <button mat-button [matMenuTriggerFor]="menu2"> <span
+          class="mat-button-wrapper">Aa<mat-icon>keyboard_arrow_down</mat-icon></span></button>
       <mat-menu #menu2="matMenu">
-        <button mat-menu-item (click)="zoom(item)" *ngFor="let item of zoomLevel"><span [style.font-size.px]="item.fontSize">{{item.label}}</span></button>
+        <button mat-menu-item (click)="zoom(item)" *ngFor="let item of zoomLevel"><span
+            [style.font-size.px]="item.fontSize">{{item.label}}</span></button>
       </mat-menu>
 
-      <button mat-button [matMenuTriggerFor]="menu1"> <span class="mat-button-wrapper"><mat-icon>g_translate</mat-icon> {{selectedLanguage}} <mat-icon>keyboard_arrow_down</mat-icon></span></button>
+      <button mat-button [matMenuTriggerFor]="menu1"> <span class="mat-button-wrapper"><mat-icon>g_translate</mat-icon>
+          {{selectedLanguage}} <mat-icon>keyboard_arrow_down</mat-icon></span></button>
       <mat-menu #menu1="matMenu">
-        <button mat-menu-item (click)="onlanguagechange(item)" *ngFor="let item of selectLanguagesArr">{{item.value}}</button>
+        <button mat-menu-item (click)="onlanguagechange(item)"
+          *ngFor="let item of selectLanguagesArr">{{item.value}}</button>
       </mat-menu>
-      
+
       <mat-list-item *ngIf="fullName">
-        <button mat-menu-item [matMenuTriggerFor]="notificationMenu" (click)="loadNotificationData()"  >
-          <mat-icon style="margin-right: 0px;color: white; margin-top: 8px;" matBadge="{{notificationCount}}" matBadgeColor="warn" matBadgeSize="small"  *ngIf="notificationCount">notifications</mat-icon>
-          <mat-icon style="margin-right: 0px;color: white; margin-top: 8px;" *ngIf="!notificationCount">notifications</mat-icon>
+        <button mat-menu-item [matMenuTriggerFor]="notificationMenu" (click)="loadNotificationData()">
+          <mat-icon style="margin-right: 0px;color: white; margin-top: 8px;" matBadge="{{notificationCount}}"
+            matBadgeColor="warn" matBadgeSize="small" *ngIf="notificationCount">notifications</mat-icon>
+          <mat-icon style="margin-right: 0px;color: white; margin-top: 8px;"
+            *ngIf="!notificationCount">notifications</mat-icon>
         </button>
       </mat-list-item>&nbsp;&nbsp;&nbsp;
       <mat-menu class="myMenu" #notificationMenu="matMenu" [overlapTrigger]="false" id="notificationMenu">
-        <div *ngFor="let data of notificationList; let i = index"><div class="each-notification" (click)="viewDetails(data)"><span> EID: {{data.eventId}}&nbsp;|&nbsp;{{data.description}}</span></div><mat-divider></mat-divider></div>        
+        <div *ngFor="let data of notificationList; let i = index">
+          <div class="each-notification" style="display: flex; align-items: center;">
+            <img *ngIf=" data.serviceType === 'DATA_SHARE_REQUEST'" src="./assets/images/sharewithpartner.png" />
+            <img *ngIf=" data.serviceType === 'SERVICE_REQUEST'" src="./assets/download.png" />
+            <img *ngIf=" data.serviceType === 'DATA_UPDATE_REQUEST'" src="./assets/images/updatedemographic.png" />
+            <div style="margin-left:6px; width: 280px;" > EID:
+              {{data.eventId}}&nbsp;|&nbsp;{{data.description}}. <span (click)="viewDetails(data)" style="text-decoration: underline; color: #551A8B; cursor: pointer;">Click here</span>
+              to see more details.
+            </div>
+          </div><mat-divider></mat-divider>
+        </div>
       </mat-menu>
-  
-      <mat-list-item  *ngIf="fullName">
-        <button mat-menu-item [matMenuTriggerFor]="profilemenu" style="border: 1px solid white;border-radius: 5px;padding: 0px 8px;line-height: 36px;height: 36px;background-color: white;"><mat-icon style="margin-right: 0px;color: green;">person</mat-icon></button>
-      </mat-list-item>      
-      <mat-menu #profilemenu="matMenu" [overlapTrigger]="false" id="profileMenu">        
-        <div style="min-width: 250px;padding: 15px 20px;background: #03A64A;display: flex;align-items: center;"><img [src]="userImage" alt="" style="width:50px;height: 50px;border-radius: 50px;border: 2px solid white;" />&nbsp;&nbsp;&nbsp;<span style="color:white;">{{fullName}}</span></div>
+
+      <mat-list-item *ngIf="fullName">
+        <button mat-menu-item [matMenuTriggerFor]="profilemenu"
+          style="border: 1px solid white;border-radius: 5px;padding: 0px 8px;line-height: 36px;height: 36px;background-color: white;"><mat-icon
+            style="margin-right: 0px;color: green;">person</mat-icon></button>
+      </mat-list-item>
+      <mat-menu #profilemenu="matMenu" [overlapTrigger]="false" id="profileMenu">
+        <div style="min-width: 250px;padding: 15px 20px;background: #03A64A;display: flex;align-items: center;"><img
+            [src]="userImage" alt=""
+            style="width:50px;height: 50px;border-radius: 50px;border: 2px solid white;" />&nbsp;&nbsp;&nbsp;<span
+            style="color:white;">{{fullName}}</span></div>
         <mat-divider></mat-divider>
         <div style="height: 10px;"></div>
-        <div style="height: 30px;"><span style="font-size: 12px;padding: 30px;color: rgba(0,0,0,.87);">Last Login</span></div>
-        <div style="height: 30px;"><span style="font-size: 14px;padding: 28px;color: rgba(0,0,0,.87);">{{lastLogin | date:'medium'}}</span></div>
+        <div style="height: 30px;"><span style="font-size: 12px;padding: 30px;color: rgba(0,0,0,.87);">Last Login</span>
+        </div>
+        <div style="height: 30px;"><span style="font-size: 14px;padding: 28px;color: rgba(0,0,0,.87);">{{lastLogin |
+            date:'medium'}}</span></div>
         <mat-divider></mat-divider>
-        <button (click)="doLogout()" mat-menu-item style="padding-left: 27px;"><mat-icon>power_settings_new</mat-icon><span>Logout</span>
+        <button (click)="doLogout()" mat-menu-item
+          style="padding-left: 27px;"><mat-icon>power_settings_new</mat-icon><span>Logout</span>
         </button>
       </mat-menu>
 
-      
+
     </mat-toolbar>
   </mat-sidenav-content>
 </mat-sidenav-container>
