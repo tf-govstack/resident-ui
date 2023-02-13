@@ -207,17 +207,22 @@ export class DialogComponent implements OnInit {
     if (value.length > 0) {
       this.submitBtnDisabled = true
     }
-    this.interactionService.sendClickEvent(value)
+    
     if (value !== "resend") {
       clearInterval(this.interval)
+      let data = {'otp':value, 'type':"otp"}
+      this.interactionService.sendClickEvent(data)
     } else {
       clearInterval(this.interval)
+      this.interactionService.sendClickEvent(value)
       this.otpTimeMinutes = 2;
+      console.log(value)
       this.displaySeconds = "00";
       this.setOtpTime()
       this.resendBtnDisabled = true;
       this.submitBtnBgColor = "#BCBCBC";
       this.resendBtnBgColor = "#BCBCBC";
+      
     }
   }
 }
