@@ -70,11 +70,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "updateMyData") {
-        this.updateDemographicData()
+        this.updateDemographicData();
       } else if (id === "resend") {
-        this.reGenerateOtp()
-      } else {
-        this.verifyupdatedData(id)
+        this.reGenerateOtp();
+      } else if (id !== 'string' && id.type === 'otp'){
+        this.verifyupdatedData(id.otp);
       }
     })
   }
@@ -322,6 +322,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   verifyupdatedData(otp: any) {
+    console.log(otp)
     const request = {
       "id": "mosip.resident.contact.details.update.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
