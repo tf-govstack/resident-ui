@@ -77,15 +77,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
 
       self.translateService.use(localStorage.getItem("langCode")); 
-      self.textDir = localStorage.getItem("dir");
-
-      let autonotificationcall = this.appConfigService.getConfig()['resident.ui.notification.update.interval.seconds'];
-      let timeperiod = autonotificationcall*1000;
-
-      this.subscription = timer(0, timeperiod).pipe( map(() => { 
-          this.getNotificationInfo();
-        }) 
-      ).subscribe(); 
+      self.textDir = localStorage.getItem("dir"); 
 
     }, 1000);    
     this.getProfileInfo();
@@ -127,10 +119,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   getProfileInfo(){
+    let self = this;
     this.dataStorageService
     .getProfileInfo()
     .subscribe((response) => {
-      if(response["response"])     
+      if(response["response"]){
+        let autonotificationcall = self.appConfigService.getConfig()['resident.ui.notification.update.interval.seconds'];
+        let timeperiod = autonotificationcall*1000;
+
+        self.subscription = timer(0, timeperiod).pipe( map(() => { 
+            this.getNotificationInfo();
+          }) 
+        ).subscribe();   
         this.fullName = response["response"].fullName;
         this.lastLogin = response["response"].lastLogin;
         if(response["response"].photo.data){
@@ -140,6 +140,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
         this.headerService.setUsername(this.fullName);
         this.getNotificationInfo();
+      }  
     });    
   }
 
