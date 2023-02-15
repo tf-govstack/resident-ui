@@ -118,7 +118,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
             value = this.userInfo[data.attributeName][0].value;
           }
         }
-        this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": false, "format": "", "value": value };
+        this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": data['maskRequired'], "format": data['attributeName'], "value": value };
       }
       this.schema = this.schema.map(item => {
         if (item.attributeName === data.attributeName) {

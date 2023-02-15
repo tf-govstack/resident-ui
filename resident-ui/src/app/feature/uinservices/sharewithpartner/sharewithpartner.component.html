@@ -33,7 +33,7 @@
 								<mat-menu #basic="matMenu">
 									<ng-container *ngFor="let data1 of data.formatOption[langCode];">
 										<button mat-menu-item id="{{data1}}"
-											(click)="captureCheckboxValue($event, data.label[langCode], data1.label)">
+											(click)="captureCheckboxValue($event, data, data1)">
 											<mat-checkbox id="{{data1.value}}">{{data1.label}}</mat-checkbox>
 										</button>
 									</ng-container>
