@@ -96,18 +96,19 @@
 
 ::ng-deep .mat-menu-panel.myMenu {
   height: 100vh !important;
-  min-width: 320px!important;
+  min-width: 303px!important;
   margin-right:-90px !important;
-  top: 140px !important;
+  /* top: 140px !important; */
   border-radius: 0% !important;
   background-color: white;
   font-size: 13px;
+  padding-bottom: 12px;
 }
 
-.each-notification{
-  /* width: 200px !important; */
+/* .each-notification{
+  width: 200px !important;
   margin: 8px;
-}
+} */
 
 ::ng-deep .cdk-overlay-pane{
   top: 80px !important;
@@ -116,5 +117,12 @@
 ::ng-deep .mat-menu-panel.myMenu > .mat-menu-content {
   width: 300px !important;
   height: auto !important;
+}
+.dot{
+  height: 10px;
+  width: 10px;
+  background-color: #464A8C;
+  border-radius: 100%;
+  top: 20px;
 }
 
