@@ -81,6 +81,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     }, 1000);    
     this.getProfileInfo();
+    console.log(window.innerWidth)
   }
 
   getNotificationInfo(){
@@ -158,6 +159,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }else if(item.fontSize === "18"){
       document.body.style["zoom"]= "120%";
     }    
+  }
+
+  onResize(event: any) {
+    console.log(event.target.innerWidth)
+    console.log(event.target.innerHeight)
   }
 
   onlanguagechange(item:any) {
