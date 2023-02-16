@@ -36,16 +36,16 @@
         </button>
       </mat-list-item>&nbsp;&nbsp;&nbsp;
       <mat-menu  class="myMenu" #notificationMenu="matMenu" [overlapTrigger]="false" id="notificationMenu">
-        <div *ngFor="let data of notificationList; let i = index"  [style.background-color]="data.readStatus ? '':'#c8e4fa'">
+        <div *ngFor="let data of notificationList; let i = index"  [style.background-color]="data.readStatus ? '':'#EFF0FF'">
           <div class="each-notification" style="display: flex; align-items: center; padding: 8px;" >
-            <div style="border:2px solid #b9cefa; border-radius: 7px; background-color: #ffffff;">
+            <div style="border:2px solid #DCDDF4; border-radius: 7px; background-color: #ffffff;">
               <div *ngIf="!data.readStatus" style="display: flex; justify-content: flex-end; margin-top: -4px;margin-right: -3px;">
                 <div class="dot"></div>
               </div>
-              <div style="display: flex; align-items: center; justify-content: center; height:45px; width:60px;">
-              <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'DATA_SHARE_REQUEST'" src="./assets/images/sharewithpartner.png" />
-              <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'SERVICE_REQUEST'" src="./assets/download.png" />
-              <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'DATA_UPDATE_REQUEST'" src="./assets/images/updatedemographic.png" />
+              <div [ngClass]="data.readStatus ? 'red-icon-card':'unread-icon-card'">
+              <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'DATA_SHARE_REQUEST'" src="./assets/icons/iconfont/Path 5853.svg" />
+              <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'SERVICE_REQUEST'" src="./assets/icons/iconfont/Group 218.svg" />
+              <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'DATA_UPDATE_REQUEST'" src="./assets/icons/iconfont/recent_actors_black_24dp.svg" />
           </div>
           </div>
             <div style="margin-left:6px; width: 280px;"> <span style="font-weight: 600;"> EID:
