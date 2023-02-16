@@ -70,8 +70,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   getServiceHistory(pageEvent:any, filters:any){  
+    let finalFilters = pageEvent ?  `statusFilter=${filters}` : filters
     this.dataStorageService
-    .getServiceHistory(pageEvent, filters)
+    .getServiceHistory(pageEvent, finalFilters)
     .subscribe((response) => {
       if(response["response"])     
         this.responselist = response["response"]["data"];
