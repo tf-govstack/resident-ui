@@ -186,13 +186,10 @@
       </div>
       <div class="pagination" dir="ltr">
       <span  *ngIf="this.totalItems !== 0">
-        <mat-paginator 
-          [length]="this.totalItems"
-          [pageSize]="this.pageSize"
-          [pageSizeOptions]="this.pageSizeOptions"
-          (page)="showResults(pageEvent = $event)"
-          >
-        </mat-paginator>
+        <mat-paginator #paginator  (page)="showResults(pageEvent = $event)"
+					[length]="this.totalItems" [pageSize]="this.pageSize" [showFirstLastButtons]="showFirstLastButtons"
+					[pageSizeOptions]="this.pageSizeOptions" [pageIndex]="pageIndex" aria-label="Select page">
+				</mat-paginator>
       </span>
     </div>
     </div>

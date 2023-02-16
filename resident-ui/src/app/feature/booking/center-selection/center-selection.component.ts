@@ -48,6 +48,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   recommendedCenterLocCode = 1;
   locationNames = [];
   locationCodes = [];
+  showFirstLastButtons:any = true
   // MatPaginator Inputs
   totalItems = 0;
   defaultPageSize = 5;
@@ -566,7 +567,7 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
 
   downloadCentersPdf() {
     this.auditService.audit('RP-041', 'Locate registration center', 'RP-Locate registration center', 'Locate registration center', 'User clicks on "download" button on locate registration center page');
-    this.dataService.registrationCentersList(this.langCode, this.pageSize, this.searchText)
+    this.dataService.registrationCentersList(this.langCode, this.locationType.hierarchyLevel, this.searchText)
       .subscribe(response => {
         if (response.headers.get('Content-Type') === 'application/pdf') {
           var fileName = "";
