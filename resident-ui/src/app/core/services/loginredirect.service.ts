@@ -10,7 +10,10 @@ export class LoginRedirectService {
 
   redirect(url: string) {
     const stateParam = uuid();
-   // console.log('returning false login redirect' + stateParam);
-    window.location.href = `${this.appService.getConfig().baseUrl}${this.appService.getConfig().login}` + btoa(url)+"?state="+stateParam;
+    let constructurl = url;
+    if(url.split("#")[1] === "/dashboard"){
+      constructurl = url.replace("/dashboard", "/uinservices/dashboard");
+    }
+    window.location.href = `${this.appService.getConfig().baseUrl}${this.appService.getConfig().login}` + btoa(constructurl)+"?state="+stateParam;
   }
 }
