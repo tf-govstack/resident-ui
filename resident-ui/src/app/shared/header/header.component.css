@@ -110,9 +110,9 @@
   margin: 8px;
 } */
 
-::ng-deep .cdk-overlay-pane{
+/* ::ng-deep .cdk-overlay-pane{
   top: 80px !important;
-}
+} */
 
 ::ng-deep .mat-menu-panel.myMenu > .mat-menu-content {
   width: 300px !important;
@@ -125,4 +125,17 @@
   border-radius: 100%;
   top: 20px;
 }
-
+.red-icon-card{
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  height:50px; 
+  width:50px;
+}
+.unread-icon-card{
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  height:41px; 
+  width:50px;
+}
