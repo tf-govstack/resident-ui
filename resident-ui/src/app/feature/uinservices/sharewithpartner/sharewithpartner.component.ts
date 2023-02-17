@@ -65,7 +65,6 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         this.schema = response["identity"];
         this.schema.forEach(data =>{
           this.valuesSelected.push(data.attributeName)
-          console.log(this.valuesSelected)
         })
       });
 
@@ -143,7 +142,12 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         if (typeof this.userInfo[data.attributeName] === "string") {
           value = moment(this.userInfo[data.attributeName]).format(type["value"]);
         } else {
-          value = this.userInfo[data.attributeName][0].value;
+          if(type["value"] !== 'fullAddress'){
+            value = this.userInfo[type["value"]][0].value;
+            console.log(value)
+          }else{
+            value = this.userInfo[data.attributeName][0].value;
+          }
         }
         this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": false, "format": type["value"], "value": value };    
       }

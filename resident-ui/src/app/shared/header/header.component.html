@@ -35,21 +35,26 @@
             *ngIf="!notificationCount">notifications</mat-icon>
         </button>
       </mat-list-item>&nbsp;&nbsp;&nbsp;
-      <mat-menu  class="myMenu" #notificationMenu="matMenu" [overlapTrigger]="false" id="notificationMenu">
-        <div *ngFor="let data of notificationList; let i = index"  [style.background-color]="data.readStatus ? '':'#EFF0FF'">
-          <div class="each-notification" style="display: flex; align-items: center; padding: 8px;" >
+      <mat-menu class="myMenu" #notificationMenu="matMenu" [overlapTrigger]="false" id="notificationMenu">
+        <div *ngFor="let data of notificationList; let i = index"
+          [style.background-color]="data.readStatus ? '':'#EFF0FF'">
+          <div class="each-notification" style="display: flex; align-items: center; padding: 8px;">
             <div style="border:2px solid #DCDDF4; border-radius: 7px; background-color: #ffffff;">
-              <div *ngIf="!data.readStatus" style="display: flex; justify-content: flex-end; margin-top: -4px;margin-right: -3px;">
+              <div *ngIf="!data.readStatus"
+                style="display: flex; justify-content: flex-end; margin-top: -4px;margin-right: -3px;">
                 <div class="dot"></div>
               </div>
               <div [ngClass]="data.readStatus ? 'red-icon-card':'unread-icon-card'">
-              <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'DATA_SHARE_REQUEST'" src="./assets/icons/iconfont/Path 5853.svg" />
-              <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'SERVICE_REQUEST'" src="./assets/icons/iconfont/Group 218.svg" />
-              <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'DATA_UPDATE_REQUEST'" src="./assets/icons/iconfont/recent_actors_black_24dp.svg" />
-          </div>
-          </div>
+                <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'DATA_SHARE_REQUEST'"
+                  src="./assets/icons/iconfont/Path 5853.svg" />
+                <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'SERVICE_REQUEST'"
+                  src="./assets/icons/iconfont/Group 218.svg" />
+                <img style="height:18px; width:18px;" *ngIf=" data.serviceType === 'DATA_UPDATE_REQUEST'"
+                  src="./assets/icons/iconfont/recent_actors_black_24dp.svg" />
+              </div>
+            </div>
             <div style="margin-left:6px; width: 280px;"> <span style="font-weight: 600;"> EID:
-              {{data.eventId}}</span>&nbsp;|&nbsp;{{data.description}}. <span (click)="viewDetails(data)"
+                {{data.eventId}}</span>&nbsp;|&nbsp;{{data.description}}. <span (click)="viewDetails(data)"
                 style="text-decoration: underline; color: #551A8B; cursor: pointer;">Click here</span>
               to see more details.
             </div>
@@ -63,7 +68,7 @@
           style="border: 1px solid white;border-radius: 5px;padding: 0px 8px;line-height: 36px;height: 36px;background-color: white;"><mat-icon
             style="margin-right: 0px;color: green;">person</mat-icon></button>
       </mat-list-item>
-      <mat-menu #profilemenu="matMenu" [overlapTrigger]="false" id="profileMenu">
+      <mat-menu class="profile-menu" #profilemenu="matMenu" [overlapTrigger]="false" id="profileMenu">
         <div style="min-width: 250px;padding: 15px 20px;background: #03A64A;display: flex;align-items: center;"><img
             [src]="userImage" alt=""
             style="width:50px;height: 50px;border-radius: 50px;border: 2px solid white;" />&nbsp;&nbsp;&nbsp;<span
