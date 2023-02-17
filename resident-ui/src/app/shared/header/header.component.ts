@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notificationCount:any="";
   notificationList:any;
   langCode = localStorage.getItem("langCode");
-
+  
   constructor(
     private router: Router,
     private appConfigService: AppConfigService,
@@ -162,8 +162,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onResize(event: any) {
-    console.log(event.target.innerWidth)
-    console.log(event.target.innerHeight)
+    // console.log(event.target.innerWidth)
+    // console.log(event.target.innerHeight)
   }
 
   onlanguagechange(item:any) {

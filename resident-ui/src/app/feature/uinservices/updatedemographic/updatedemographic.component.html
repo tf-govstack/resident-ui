@@ -23,7 +23,7 @@
                       </tr>
                       <tr>
                         <td width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
-                            value="{{buildJSONData[field.attributeName]}}"></td>
+                            value="{{buildJSONData[field.attributeName] | date:'dd/MM/yyyy'}}"></td>
                         <td width="10%"></td>
                         <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
                           <mat-form-field>
