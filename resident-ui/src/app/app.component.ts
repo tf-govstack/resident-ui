@@ -25,6 +25,9 @@ export class AppComponent {
   }
 
   ngOnInit() {    
+    if(!localStorage.getItem("langCode")){
+      localStorage.setItem("langCode", "eng");
+    }
     this.subscriptions.push(this.autoLogout.currentMessageAutoLogout.subscribe(() => {}));
     this.autoLogout.changeMessage({ timerFired: false });
     this.routerType();
