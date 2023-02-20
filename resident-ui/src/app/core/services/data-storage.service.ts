@@ -303,7 +303,7 @@ export class DataStorageService {
   }
 
   downloadVidCardStatus(eventId: any) {
-    return this.httpClient.get<Blob>(this.BASE_URL + '/download-card/event/' + eventId, { observe: 'response', responseType: 'blob' as 'json' })
+    return this.httpClient.get<Blob>(this.BASE_URL + '/download-card/event/' + eventId,  { observe: 'response', responseType: 'blob' as 'json' })
   }
 
   generateOtpForDemographicData(request: any) {

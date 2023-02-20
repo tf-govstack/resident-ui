@@ -54,6 +54,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
       this.langJSON = response;
+      console.log(this.langJSON)
       this.popupMessages = response;
       this.infoText = response.InfomationContent.trackStatus
     }); 
@@ -135,6 +136,22 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
         disableClose: true
       });
   }
+
+  downloadVIDCard(eventId:any){
+    this.dataStorageService.downloadVidCardStatus(eventId).subscribe(response =>{
+     let fileName = ""
+     const contentDisposition = response.headers.get('Content-Disposition');
+     console.log(contentDisposition)
+     if (contentDisposition) {
+       const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+       const matches = fileNameRegex.exec(contentDisposition);
+       if (matches != null && matches[1]) {
+         fileName = matches[1].replace(/['"]/g, '');
+       }
+     }
+     saveAs(response.body, fileName);
+    })
+ }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

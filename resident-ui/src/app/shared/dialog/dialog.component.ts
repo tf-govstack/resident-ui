@@ -81,7 +81,8 @@ export class DialogComponent implements OnInit {
     private translate: TranslateService,
     /*private headerService: HeaderService,*/
     private logoutService: LogoutService,
-    private interactionService: InteractionService
+    private interactionService: InteractionService,
+    private appConfigService: AppConfigService
   ) {
     this.translate.use(this.primaryLangCode);
     if (this.primaryLangCode === "ara") {
@@ -106,6 +107,7 @@ export class DialogComponent implements OnInit {
       this.setOtpTime()
       // setInterval(this.interval)
     }
+    this.appConfigService.getConfig();
   }
 
   async ngOnInit() {
@@ -114,6 +116,7 @@ export class DialogComponent implements OnInit {
   }
 
   setOtpTime() {
+    this.otpTimeMinutes = this.appConfigService.getConfig()['mosip.kernel.otp.expiry-time']/60;
     this.interval = setInterval(() => {
       if (this.otpTimeSeconds < 0 || this.displaySeconds === "00") {
         this.otpTimeSeconds = 59
@@ -215,7 +218,7 @@ export class DialogComponent implements OnInit {
     } else {
       clearInterval(this.interval)
       this.interactionService.sendClickEvent(value)
-      this.otpTimeMinutes = 2;
+      this.otpTimeMinutes = this.appConfigService.getConfig();
       console.log(value)
       this.displaySeconds = "00";
       this.setOtpTime()

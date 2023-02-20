@@ -37,7 +37,7 @@
       </mat-list-item>&nbsp;&nbsp;&nbsp;
       <mat-menu class="myMenu" #notificationMenu="matMenu" [overlapTrigger]="false" id="notificationMenu">
         <div *ngFor="let data of notificationList; let i = index"
-          [style.background-color]="data.readStatus ? '':'#EFF0FF'">
+          [style.background-color]="data.readStatus ? '':'#EFF0FF'" (click)="viewDetails(data)" style="cursor: pointer;">
           <div class="each-notification" style="display: flex; align-items: center; padding: 8px;">
             <div style="border:2px solid #DCDDF4; border-radius: 7px; background-color: #ffffff;">
               <div *ngIf="!data.readStatus"
@@ -54,7 +54,7 @@
               </div>
             </div>
             <div style="margin-left:6px; width: 280px;"> <span style="font-weight: 600;"> EID:
-                {{data.eventId}}</span>&nbsp;|&nbsp;{{data.description}}. <span (click)="viewDetails(data)"
+                {{data.eventId}}</span>&nbsp;|&nbsp;{{data.description}}. <span
                 style="text-decoration: underline; color: #551A8B; cursor: pointer;">Click here</span>
               to see more details.
             </div>
