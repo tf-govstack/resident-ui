@@ -202,12 +202,13 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   vidDownloadStatus(vid:any){
       this.dataStorageService.vidDownloadStatus(vid).subscribe(response =>{
         this.eventId = response.headers.get("eventid")
+        console.log(this.eventId)
         this.message = this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully.replace("$eventId", this.eventId)
         if(!response.body['errors'].length){
           this.successMsgForDownload(this.message, this.eventId)
-          setTimeout(()=>{
-            this.downloadVidCard(this.eventId)
-          },120000)
+          // setTimeout(()=>{
+          //   this.downloadVidCard(this.eventId)
+          // },120000)
         }else{
           console.log("error>>"+response.body['errors'])
         }

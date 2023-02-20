@@ -23,7 +23,7 @@ export class DownloadUinComponent implements OnInit {
   data: any;
   submitBtnBgColor: string = "#BFBCBC";
   resendOtpBtnBgColor: string = "#909090"
-  otpTimeMinutes: number = 2;
+  otpTimeMinutes: number;
   otpTimeSeconds: any = "00";
   displaySeconds: any = this.otpTimeSeconds
   showPopupForUidCard: boolean = false;
@@ -32,22 +32,13 @@ export class DownloadUinComponent implements OnInit {
   phoneNumber: any;
   emailId: any;
   resetBtnDisable: boolean = true;
-  submitBtnDisable: boolean = false;
+  submitBtnDisable: boolean = true;
   errorCode: string;
   message: string = "";
   pdfSrc = "";
   eventId: any;
 
   userPreferredLangCode = localStorage.getItem("langCode");
-
-  captureValue(val: any) {
-    this.otp = val
-    if (this.otp.length > 0) {
-      this.submitBtnBgColor = "#03A64A"
-    } else {
-      this.submitBtnBgColor = "#BFBCBC"
-    }
-  }
 
   constructor(
     private router: Router,
@@ -83,6 +74,7 @@ export class DownloadUinComponent implements OnInit {
   }
 
   setOtpTime() {
+    this.otpTimeMinutes = this.appConfigService.getConfig()['mosip.kernel.otp.expiry-time']/60;
     this.interval = setInterval(() => {
       if (this.otpTimeSeconds < 0 || this.displaySeconds === "00") {
         this.otpTimeSeconds = 59
@@ -107,12 +99,22 @@ export class DownloadUinComponent implements OnInit {
     }, 1000);
   }
 
+  captureValue(val: any) {
+    this.otp = val
+    if (this.otp.length > 0) {
+      this.submitBtnDisable = false;
+    } else {
+      this.submitBtnDisable = true;
+    }
+  }
+
   onItemSelected(item: any) {
     if (item === "home") {
       this.router.navigate(["dashboard"])
     } else if (item === "back") {
       this.router.navigate(["getuin"])
       clearInterval(this.interval)
+      this.displaySeconds = "00"
     } else if (item === "submit") {
       this.auditService.audit('RP-035', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on the "submit button" on Get my UIN page');
       this.validateUinCardOtp()
@@ -120,7 +122,7 @@ export class DownloadUinComponent implements OnInit {
     } else if (item === "resendOtp") {
       this.auditService.audit('RP-036', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on "resend OTP" button on Get my UIN page');
       clearInterval(this.interval)
-      this.otpTimeMinutes = 2;
+      this.otpTimeMinutes = this.appConfigService.getConfig()['mosip.kernel.otp.expiry-time']/60;
       this.displaySeconds = "00";
       this.generateOTP(this.data)
       this.resendOtpBtnBgColor = "#909090"

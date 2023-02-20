@@ -109,7 +109,7 @@
 		</table>
 		<div dir="ltr">
 			<span id="pageSizeOptions" *ngIf="this.totalItems !== 0">
-				<mat-paginator #paginator  (page)="getServiceHistory(pageEvent = $event,statusFilter)"
+				<mat-paginator style="display: flex; align-items: center; justify-content: flex-end;" class="demo-paginator" #paginator  (page)="getServiceHistory(pageEvent = $event,statusFilter)"
 					[length]="this.totalItems" [pageSize]="this.pageSize" [showFirstLastButtons]="showFirstLastButtons"
 					[pageSizeOptions]="this.pageSizeOptions" [pageIndex]="pageIndex" aria-label="Select page">
 				</mat-paginator>

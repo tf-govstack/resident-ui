@@ -136,3 +136,9 @@ span.label {
   border-collapse: separate;
   border-spacing: 1em;
 }
+
+::ng-deep .mat-paginator-page-size {
+  display: flex;
+  align-items: center !important;
+  margin-right: 8px;
+}
