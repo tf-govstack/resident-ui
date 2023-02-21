@@ -367,21 +367,18 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   }
 
   getLocation() {
-    console.log("getLocation>>>");
     this.REGISTRATION_CENTRES = [];
     this.nearbyClicked = true;
-    //console.log(navigator.geolocation);
     if (navigator.geolocation) {
       this.showMap = false;
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position.coords);
         //this.searchClick = true;
         const subs = this.dataService
           .getNearbyRegistrationCenters(position.coords)
           .subscribe(
             (response) => {
               //console.log(response[appConstants.RESPONSE]["registrationCenters"].length);
-              if (!response["errors"].length) {
+              if (!response["errors"]) {
                 //this.searchClick = false;
                 this.displayResults(response[appConstants.RESPONSE]);
               } else {
