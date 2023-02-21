@@ -10,6 +10,7 @@ import Utils from "src/app/app.utils";
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { AuditService } from "src/app/core/services/audit.service";
 import { isNgTemplate } from "@angular/compiler";
+import defaultJson from "src/assets/i18n/default.json";
 
 @Component({
   selector: "app-demographic",
@@ -66,6 +67,13 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   pdfSrcInPreviewPage = "";
   previewDisabledInAddress: boolean = true;
   selectedDate: any;
+  message: any;
+  errorCode: any;
+  selectedLanguage: any;
+  defaultJsonValue: any;
+  newLangArr:any =[];
+  perfLangArr:any = {};
+  newNotificationLanguages:any= [];
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -73,13 +81,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         this.updateDemographicData();
       } else if (id === "resend") {
         this.reGenerateOtp();
-      } else if (id !== 'string' && id.type === 'otp'){
+      } else if (id !== 'string' && id.type === 'otp') {
         this.verifyupdatedData(id.otp);
       }
     })
   }
 
   async ngOnInit() {
+    this.defaultJsonValue = {...defaultJson}
     this.initialLocationCode = "MOR";
     this.locCode = 5;
     this.translateService.use(localStorage.getItem("langCode"));
@@ -93,6 +102,27 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.popupMessages = response;
       });
+    
+    let supportedLanguages = this.appConfigService.getConfig()['supportedLanguages'].split(',');
+    supportedLanguages.forEach(data =>{
+     if(data === "eng"){
+      let newObj = {"code":data,"name":this.defaultJsonValue['languages'][data]['nativeName']}
+      this.newNotificationLanguages.push(newObj)
+     }
+    })
+
+    // setTimeout(()=>{        
+    //   if(!localStorage.getItem("langCode")){
+    //     localStorage.setItem("langCode", "eng");
+    //     this.selectedLanguage = defaultJson["languages"][0].nativeName;
+    //   }else{
+    //     Object.keys(defaultJson["languages"]).forEach(function(key) {
+    //       if(localStorage.getItem("langCode") === key){
+    //         this.selectedLanguage = defaultJson["languages"][key].nativeName;
+    //       }
+    //     });                
+    //   }
+    //  } ,400)
     this.getUserInfo();
   }
 
@@ -118,17 +148,17 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
               self.buildJSONData[schema.attributeName] = self.userInfo[schema.attributeName];
             } else {
               self.buildJSONData[schema.attributeName] = {};
-              if(self.userInfo[schema.attributeName].length){
-              self.supportedLanguages.map((language) => {
-                let value = self.userInfo[schema.attributeName].filter(function (data) {
-                  if (data.language.trim() === language.trim()) {
-                    return data.value.trim()
-                  }
+              if (self.userInfo[schema.attributeName].length) {
+                self.supportedLanguages.map((language) => {
+                  let value = self.userInfo[schema.attributeName].filter(function (data) {
+                    if (data.language.trim() === language.trim()) {
+                      return data.value.trim()
+                    }
+                  });
+                  console.log("schema.id>>>" + JSON.stringify(schema.attributeName));
+                  self.buildJSONData[schema.attributeName][language] = value[0].value;
                 });
-                console.log("schema.id>>>" + JSON.stringify(schema.attributeName));
-                self.buildJSONData[schema.attributeName][language] = value[0].value;
-              });
-            }
+              }
             }
           }
         }
@@ -140,8 +170,13 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     } catch (ex) {
       console.log("Exception>>>" + ex.message);
     }
+    let perfLangs = this.buildJSONData['preferredLang'].split(',');
+    perfLangs.forEach(data =>{
+      this.perfLangArr[data] = defaultJson['languages'][data]['nativeName']
+    })
+    console.log(this.perfLangArr)
+    this.buildJSONData['preferredLang'] = this.perfLangArr
     console.log(this.buildJSONData)
-    console.log(this.userInfo)
   }
 
   changedBuildData() {
@@ -174,25 +209,25 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   addingAddessData() {
-    Object.keys(this.userInfo).forEach(data =>{
-      Object.keys(this.dynamicFieldValue).filter(item =>{
-       let changedItem = item === "Postal Code" ? "postalCode" : item.split(" ").join("").toLowerCase();
-       if(changedItem === data){
-       if(this.dynamicFieldValue[item] !== ""){
-        if(typeof this.userInfo[data] === "string"){
-          this.userInfoClone[changedItem] = this.dynamicFieldValue[item]
-        }else{
-         
-            let newData =  this.userInfo[changedItem].map(newItem =>{
-               newItem["value"] = this.dynamicFieldValue[item]
-               return newItem
-            })
-            this.userInfoClone[changedItem] = newData
-            console.log(this.userInfoClone)
+    Object.keys(this.userInfo).forEach(data => {
+      Object.keys(this.dynamicFieldValue).filter(item => {
+        let changedItem = item === "Postal Code" ? "postalCode" : item.split(" ").join("").toLowerCase();
+        if (changedItem === data) {
+          if (this.dynamicFieldValue[item] !== "") {
+            if (typeof this.userInfo[data] === "string") {
+              this.userInfoClone[changedItem] = this.dynamicFieldValue[item]
+            } else {
+
+              let newData = this.userInfo[changedItem].map(newItem => {
+                newItem["value"] = this.dynamicFieldValue[item]
+                return newItem
+              })
+              this.userInfoClone[changedItem] = newData
+              console.log(this.userInfoClone)
+            }
+
           }
-        
-      }
-    }
+        }
       })
     })
     console.log(this.userInfoClone)
@@ -285,7 +320,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       if (response["response"]) {
         this.showOTPPopup()
       } else {
-        console.log("No")
+        this.showErrorPopup(response["errors"])
       }
     }, error => {
       console.log(error)
@@ -322,7 +357,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   verifyupdatedData(otp: any) {
-    console.log(otp)
     const request = {
       "id": "mosip.resident.contact.details.update.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
@@ -375,13 +409,20 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   showErrorPopup(message: string) {
+    this.errorCode = message[0]["errorCode"];
+    if (this.errorCode === "RES-SER-410") {
+      let messageType = message[0]["message"].split("-")[1].trim()
+      this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
+    } else {
+      this.message = this.popupMessages.serverErrors[this.errorCode]
+    }
     this.dialog
       .open(DialogComponent, {
         width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
-          message: message,
+          message: this.message,
           btnTxt: this.popupMessages.genericmessage.successButton
         },
         disableClose: true
@@ -474,7 +515,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         self[formControlName]["documenttype"] = event.source.value;
       }
     }
-
+   console.log(this.userInfoClone)
   }
 
   previewBtn(issue: any) {
@@ -528,9 +569,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     };
     this.dataStorageService.updateuin(request).subscribe(response => {
       if (response["response"]) {
-          this.showMessage(response["response"]['message'])
+        this.showMessage(response["response"]['message'])
       } else {
-          this.showErrorPopup(response["errors"][0].message)
+        this.showErrorPopup(response["errors"])
+        console.log("Hello")
       }
     }, error => {
       console.log(error)

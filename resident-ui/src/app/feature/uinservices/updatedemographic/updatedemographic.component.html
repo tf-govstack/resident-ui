@@ -1,7 +1,8 @@
 <span class="breadcrumb">
   <a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a
     (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
-  &nbsp;&nbsp;<span [ngClass]="!showPreviewPage ? 'active' : 'demographic' " (click)="onItemSelected('demographic')">{{'updatedemographic.title' | translate}}</span>
+  &nbsp;&nbsp;<span [ngClass]="!showPreviewPage ? 'active' : 'demographic' "
+    (click)="onItemSelected('demographic')">{{'updatedemographic.title' | translate}}</span>
   &nbsp;&nbsp;<span *ngIf="showPreviewPage" class="active"> > &nbsp; {{'preview.title' | translate}}</span>
 </span>
 
@@ -27,15 +28,18 @@
                         <td width="10%"></td>
                         <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
                           <mat-form-field>
-                            <input matInput [matDatepicker]="picker" id="{{field.attributeName}}"
-                              (dateChange)="captureDatePickerValue($event, field.attributeName)" [(ngModel)]="selectedDate"/>
-                            <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <input style="min-width: 100px;" matInput [matDatepicker]="picker"
+                              id="{{field.attributeName}}"
+                              (dateChange)="captureDatePickerValue($event, field.attributeName)"
+                              [(ngModel)]="selectedDate" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>
                         </td>
                         <td width="45%" *ngIf="!buildCloneJsonData[field.attributeName]">
                           <mat-form-field>
-                            <input matInput [matDatepicker]="picker" id="{{field.attributeName}}"
+                            <input style="min-width: 90%;" matInput [matDatepicker]="picker"
+                              id="{{field.attributeName}}"
                               (dateChange)="captureDatePickerValue($event, field.attributeName)" />
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
@@ -48,7 +52,7 @@
                 <tr *ngIf="field.controlType === 'textbox'">
                   <td width="100%">
                     <table width="100%" *ngFor="let language of supportedLanguages;">
-                      <tr >
+                      <tr>
                         <td width="45%"><label>{{field.labelName[language][0]}}</label></td>
                         <td width="10%"></td>
                         <td width="45%"><label>{{field.labelName[language][1]}}</label></td>
@@ -58,11 +62,13 @@
                             value="{{buildJSONData[field.attributeName][language]}}"></td>
                         <td width="10%"></td>
                         <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
-                            <input matInput #{{field.attributeName}} id="{{field.attributeName}}"
-                            (blur)="captureValue($event, field.attributeName, language)" [value]="buildCloneJsonData[field.attributeName][language]"/>
+                          <input matInput #{{field.attributeName}} id="{{field.attributeName}}"
+                            (blur)="captureValue($event, field.attributeName, language)"
+                            [value]="buildCloneJsonData[field.attributeName][language]" />
                         </td>
                         <td width="45%" *ngIf="!buildCloneJsonData[field.attributeName]">
-                          <input matInput #{{field.attributeName}} id="{{field.attributeName}}" (blur)="captureValue($event, field.attributeName, language)"/>
+                          <input matInput #{{field.attributeName}} id="{{field.attributeName}}"
+                            (blur)="captureValue($event, field.attributeName, language)" />
                         </td>
                       </tr>
                     </table>
@@ -195,163 +201,172 @@
       </tr>
     </table>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button [disabled]="previewDisabled" (click)="previewBtn('identity')" mat-raised-button color="primary" id="submit">Preview</button>
+      <button [disabled]="previewDisabled" (click)="previewBtn('identity')" mat-raised-button color="primary"
+        id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.address' | translate}}">
     <div class="address-page">
       <div>
-    <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
-      <div layout="row" *ngIf="field.tabgroup === 'address'">
-        <table width="700px">
-          <tr *ngIf="field.controlType === 'textbox'">
-            <td width="100%">
-              <table width="100%" *ngFor="let language of supportedLanguages;">
-                <tr>
-                  <td width="45%"><label>{{field.labelName[language][0]}}</label></td>
-                  <td width="10%"></td>
-                  <td width="45%"><label>{{field.labelName[language][1]}}</label></td>
-                </tr>
-                <tr>
-                  <td *ngIf="buildJSONData[field.attributeName]" width="45%"><input type="text" class="readonly" readonly="true" disabled="true"
-                      value="{{buildJSONData[field.attributeName][language]}}"></td>
-                  <td width="10%"></td>
-                  <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
-                    <input matInput #{{field.attributeName}} id="{{field.attributeName}}" (blur)="captureValue($event, field.attributeName, language)" [value]="buildCloneJsonData[field.attributeName][language]"/>
-                  </td>
-                  <td width="45%" *ngIf="!buildCloneJsonData[field.attributeName]">
-                    <input matInput #{{field.attributeName}} id="{{field.attributeName}}" (blur)="captureValue($event, field.attributeName, language)" />
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr *ngIf="field.controlType === 'dropdown'">
-            <td width="100%">
-              <table width="100%">
-                <tr>
-                  <td width="45%"><label>{{field.labelName[langCode][0]}}</label></td>
-                  <td width="10%"></td>
-                  <td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="45%">
-                    <input *ngIf="field.attributeName === 'postalCode'" type="text" class="readonly" readonly="true"
-                      disabled="true" value="{{buildJSONData[field.attributeName]}}">
-                    <input *ngIf="field.attributeName !== 'postalCode' && buildJSONData[field.attributeName][langCode] " type="text" class="readonly" readonly="true"
-                      disabled="true" value="{{buildJSONData[field.attributeName][langCode]}}">
-                  </td>
-                  <td width="10%"></td>
-                  <td width="45%">
-                    <mat-select [value]="dynamicFieldValue[field.name]" id="{{field.name}}"
-                      (selectionChange)="loadLocationDataDynamically($event, field.locationHierarchyLevel);">
-                      <mat-option *ngFor="let data of dynamicDropDown[field.name]" [value]="data.code">
-                        {{ data.name }}
-                      </mat-option>
-                    </mat-select>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr *ngIf="field.controlType === 'fileupload'">
-            <td width="100%">
-              <table width="100%">
-                <tr>
-                  <td width="100%" colspan="3"><label>{{field.labelName[langCode][0]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
-                  <td width="10%"></td>
-                  <td width="45%"><label>{{field.labelName[langCode][2]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="45%">
-                    <mat-select id="{{field.attributeName}}">
-                      <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
-                        (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)" [value]="data.code">{{
-                        data.name }}</mat-option>
-                    </mat-select>
-                  </td>
-                  <td width="10%"></td>
-                  <td width="45%">
-                    <input matInput #{{field.attributeName}} id="{{field.attributeName}}" (blur)="captureValue($event, field.attributeName, language)" />
-                  </td>
-                </tr>
-                <tr>
-                  <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="100%" colspan="3">
-                    <div class="container" appDnd (fileDropped)="onFileDropped($event, 'POA')">
-                      <input type="file" #fileAddRef id="fileAddRef"
-                        (change)="fileBrowseHandler($event.target.files, 'POA')" accept=".pdf, .jpg, .jpeg, .png" />
-                      <label for="fileAddRef">Upload Image</label>
-                      <h3>or</h3>
-                      <h3>Drop Image</h3>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="100%" colspan="3"><label>{{field.labelName[langCode][4]}}</label></td>
-                </tr>
-                <tr>
-                  <td width="100%" colspan="3">
-                    <div class="files-list">
-                      <div class="single-file" *ngFor="let file of filesPOA; let i = index">
-                        <div class="file-icon" style="width: 50px">
-                          <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 58 58"
-                            style="enable-background:new 0 0 58 58;" xml:space="preserve">
-                            <polygon style="fill:#EDEADA;" points="51.5,14 37.5,0 6.5,0 6.5,58 51.5,58 " />
-                            <g>
-                              <path style="fill:#CEC9AE;"
-                                d="M16.5,23h25c0.552,0,1-0.447,1-1s-0.448-1-1-1h-25c-0.552,0-1,0.447-1,1S15.948,23,16.5,23z" />
-                              <path style="fill:#CEC9AE;"
-                                d="M16.5,15h10c0.552,0,1-0.447,1-1s-0.448-1-1-1h-10c-0.552,0-1,0.447-1,1S15.948,15,16.5,15z" />
-                              <path style="fill:#CEC9AE;"
-                                d="M41.5,29h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,29,41.5,29z" />
-                              <path style="fill:#CEC9AE;"
-                                d="M41.5,37h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,37,41.5,37z" />
-                              <path style="fill:#CEC9AE;"
-                                d="M41.5,45h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,45,41.5,45z" />
-                            </g>
-                            <polygon style="fill:#CEC9AE;" points="37.5,0 37.5,14 51.5,14 " />
-                          </svg>
+        <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
+          <div layout="row" *ngIf="field.tabgroup === 'address'">
+            <table width="700px">
+              <tr *ngIf="field.controlType === 'textbox'">
+                <td width="100%">
+                  <table width="100%" *ngFor="let language of supportedLanguages;">
+                    <tr>
+                      <td width="45%"><label>{{field.labelName[language][0]}}</label></td>
+                      <td width="10%"></td>
+                      <td width="45%"><label>{{field.labelName[language][1]}}</label></td>
+                    </tr>
+                    <tr>
+                      <td *ngIf="buildJSONData[field.attributeName]" width="45%"><input type="text" class="readonly"
+                          readonly="true" disabled="true" value="{{buildJSONData[field.attributeName][language]}}"></td>
+                      <td width="10%"></td>
+                      <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
+                        <input matInput #{{field.attributeName}} id="{{field.attributeName}}"
+                          (blur)="captureValue($event, field.attributeName, language)"
+                          [value]="buildCloneJsonData[field.attributeName][language]" />
+                      </td>
+                      <td width="45%" *ngIf="!buildCloneJsonData[field.attributeName]">
+                        <input matInput #{{field.attributeName}} id="{{field.attributeName}}"
+                          (blur)="captureValue($event, field.attributeName, language)" />
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr *ngIf="field.controlType === 'dropdown'">
+                <td width="100%">
+                  <table width="100%">
+                    <tr>
+                      <td width="45%"><label>{{field.labelName[langCode][0]}}</label></td>
+                      <td width="10%"></td>
+                      <td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
+                    </tr>
+                    <tr>
+                      <td width="45%">
+                        <input *ngIf="field.attributeName === 'postalCode'" type="text" class="readonly" readonly="true"
+                          disabled="true" value="{{buildJSONData[field.attributeName]}}">
+                        <input
+                          *ngIf="field.attributeName !== 'postalCode' && buildJSONData[field.attributeName][langCode] "
+                          type="text" class="readonly" readonly="true" disabled="true"
+                          value="{{buildJSONData[field.attributeName][langCode]}}">
+                      </td>
+                      <td width="10%"></td>
+                      <td width="45%">
+                        <mat-select [value]="dynamicFieldValue[field.name]" id="{{field.name}}"
+                          (selectionChange)="loadLocationDataDynamically($event, field.locationHierarchyLevel);">
+                          <mat-option *ngFor="let data of dynamicDropDown[field.name]" [value]="data.code">
+                            {{ data.name }}
+                          </mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr *ngIf="field.controlType === 'fileupload'">
+                <td width="100%">
+                  <table width="100%">
+                    <tr>
+                      <td width="100%" colspan="3"><label>{{field.labelName[langCode][0]}}</label></td>
+                    </tr>
+                    <tr>
+                      <td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
+                      <td width="10%"></td>
+                      <td width="45%"><label>{{field.labelName[langCode][2]}}</label></td>
+                    </tr>
+                    <tr>
+                      <td width="45%">
+                        <mat-select id="{{field.attributeName}}">
+                          <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
+                            (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
+                            [value]="data.code">{{
+                            data.name }}</mat-option>
+                        </mat-select>
+                      </td>
+                      <td width="10%"></td>
+                      <td width="45%">
+                        <input matInput #{{field.attributeName}} id="{{field.attributeName}}"
+                          (blur)="captureValue($event, field.attributeName, language)" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}</label></td>
+                    </tr>
+                    <tr>
+                      <td width="100%" colspan="3">
+                        <div class="container" appDnd (fileDropped)="onFileDropped($event, 'POA')">
+                          <input type="file" #fileAddRef id="fileAddRef"
+                            (change)="fileBrowseHandler($event.target.files, 'POA')" accept=".pdf, .jpg, .jpeg, .png" />
+                          <label for="fileAddRef">Upload Image</label>
+                          <h3>or</h3>
+                          <h3>Drop Image</h3>
                         </div>
-                        <div class="info">
-                          <h4 class="name">
-                            {{ file?.name }}
-                          </h4>
-                          <p class="size">
-                            {{ formatBytes(file?.size) }}
-                          </p>
-                          <app-progress [progress]="file?.progress"></app-progress>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="100%" colspan="3"><label>{{field.labelName[langCode][4]}}</label></td>
+                    </tr>
+                    <tr>
+                      <td width="100%" colspan="3">
+                        <div class="files-list">
+                          <div class="single-file" *ngFor="let file of filesPOA; let i = index">
+                            <div class="file-icon" style="width: 50px">
+                              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 58 58"
+                                style="enable-background:new 0 0 58 58;" xml:space="preserve">
+                                <polygon style="fill:#EDEADA;" points="51.5,14 37.5,0 6.5,0 6.5,58 51.5,58 " />
+                                <g>
+                                  <path style="fill:#CEC9AE;"
+                                    d="M16.5,23h25c0.552,0,1-0.447,1-1s-0.448-1-1-1h-25c-0.552,0-1,0.447-1,1S15.948,23,16.5,23z" />
+                                  <path style="fill:#CEC9AE;"
+                                    d="M16.5,15h10c0.552,0,1-0.447,1-1s-0.448-1-1-1h-10c-0.552,0-1,0.447-1,1S15.948,15,16.5,15z" />
+                                  <path style="fill:#CEC9AE;"
+                                    d="M41.5,29h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,29,41.5,29z" />
+                                  <path style="fill:#CEC9AE;"
+                                    d="M41.5,37h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,37,41.5,37z" />
+                                  <path style="fill:#CEC9AE;"
+                                    d="M41.5,45h-25c-0.552,0-1,0.447-1,1s0.448,1,1,1h25c0.552,0,1-0.447,1-1S42.052,45,41.5,45z" />
+                                </g>
+                                <polygon style="fill:#CEC9AE;" points="37.5,0 37.5,14 51.5,14 " />
+                              </svg>
+                            </div>
+                            <div class="info">
+                              <h4 class="name">
+                                {{ file?.name }}
+                              </h4>
+                              <p class="size">
+                                {{ formatBytes(file?.size) }}
+                              </p>
+                              <app-progress [progress]="file?.progress"></app-progress>
+                            </div>
+                            <div class="preview" (click)="previewFile(i, 'POA')">
+                              <img mat-card-xs-image src='../assets/view.png' />
+                            </div>
+                            <div class="delete" (click)="deleteFile(i, 'POA')">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18">
+                                <path fill="#B1B1B1" fill-rule="nonzero"
+                                  d="M1 16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v10zm3.17-7.83a.996.996 0 0 1 1.41 0L7 9.59l1.42-1.42a.996.996 0 1 1 1.41 1.41L8.41 11l1.42 1.42a.996.996 0 1 1-1.41 1.41L7 12.41l-1.42 1.42a.996.996 0 1 1-1.41-1.41L5.59 11 4.17 9.58a.996.996 0 0 1 0-1.41zM10.5 1L9.79.29C9.61.11 9.35 0 9.09 0H4.91c-.26 0-.52.11-.7.29L3.5 1H1c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" />
+                              </svg>
+                            </div>
+                          </div>
                         </div>
-                        <div class="preview" (click)="previewFile(i, 'POA')">
-                          <img mat-card-xs-image src='../assets/view.png' />
-                        </div>
-                        <div class="delete" (click)="deleteFile(i, 'POA')">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18">
-                            <path fill="#B1B1B1" fill-rule="nonzero"
-                              d="M1 16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v10zm3.17-7.83a.996.996 0 0 1 1.41 0L7 9.59l1.42-1.42a.996.996 0 1 1 1.41 1.41L8.41 11l1.42 1.42a.996.996 0 1 1-1.41 1.41L7 12.41l-1.42 1.42a.996.996 0 1 1-1.41-1.41L5.59 11 4.17 9.58a.996.996 0 0 1 0-1.41zM10.5 1L9.79.29C9.61.11 9.35 0 9.09 0H4.91c-.26 0-.52.11-.7.29L3.5 1H1c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-    <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="400px" width="400px">
+      <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="400px" width="400px">
     </div>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-      <button [disabled]="previewDisabledInAddress" mat-raised-button (click)="previewBtn('address')" color="primary" id="submit">Preview</button>
+      <button [disabled]="previewDisabledInAddress" mat-raised-button (click)="previewBtn('address')" color="primary"
+        id="submit">Preview</button>
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.contact' | translate}}">
@@ -380,13 +395,14 @@
                   </td>
                   <td width="5%"></td>
                   <td width="25%">
-                    <input (input)="captureConfirmValue($event,field.attributeName)" matInput #confirm{{field.attributeName}}
-                      id="confirm{{field.attributeName}}" />
+                    <input (input)="captureConfirmValue($event,field.attributeName)" matInput
+                      #confirm{{field.attributeName}} id="confirm{{field.attributeName}}" />
                   </td>
                   <td width="5%"></td>
                   <td width="10%">
-                    <button [disabled]="sendOtpDisable || !(field.attributeName === updatedingId)" (click)="sendOTPBtn(field.attributeName)"
-                      mat-raised-button color="primary" id="sendOTP{{field.attributeName}}">{{field.labelName[langCode][3]
+                    <button [disabled]="sendOtpDisable || !(field.attributeName === updatedingId)"
+                      (click)="sendOTPBtn(field.attributeName)" mat-raised-button color="primary"
+                      id="sendOTP{{field.attributeName}}">{{field.labelName[langCode][3]
                       |translate}}</button>
                   </td>
                 </tr>
@@ -397,18 +413,51 @@
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="{{'updatedemographic.languagePreference' | translate}}">
+  <mat-tab label="{{'updatedemographic.languagePreference' | translate}}" style="display: flex; flex-direction: column; justify-content: space-between;align-items: flex-end;">
     <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
       <div layout="row" *ngIf="field.tabgroup === 'notificationLanguage'">
-        <div flex="50">
+        <mat-card-subtitle>My Language Preference</mat-card-subtitle>
+        <table width="50%" >
+          <tr *ngIf="field.controlType === 'dropdown'">
+            <td width="100%">
+              <table width="100%" *ngFor="let language of supportedLanguages;">
+                <tr>
+                  <td width="45%"><label>{{field.labelName[language][0]}}</label></td>
+                  <td width="10%"></td>
+                  <td width="45%"><label>{{field.labelName[language][1]}}</label></td>
+                </tr>
+                <tr>
+                  <td width="45%">
+                    <input style="border: none; background-color: #F7F7F7" type="text" class="readonly" readonly="true"
+                      disabled="true" value="{{buildJSONData[field.attributeName][language]}}">
+                  </td>
+                  <td width="10%"></td>
+                  <td width="45%">
+                    <mat-select id="{{field.attributeName}}">
+                      <mat-option *ngFor="let data of newNotificationLanguages"
+                        (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
+                        [value]="data.code">{{ data.name }}</mat-option>
+                    </mat-select>
+                  </td>
+                  <td width="10%"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <!-- <div flex="50">
           {{field.description}}
         </div>
         <div flex>
           {{field.tabgroup}}
-        </div>
+        </div> -->
       </div>
     </div>
-    <button mat-raised-button color="primary" id="submit" (click)="submitBtn('languagePreference')">Submit</button>
+    <div style="text-align: end;margin-right: 2rem; margin-top: none;">
+      <button [disabled]="previewDisabled && previewDisabledInAddress" mat-raised-button (click)="previewBtn('address')" color="primary"
+        id="submit">Preview</button>
+    </div>
+    <!-- <button mat-raised-button color="primary" id="submit" (click)="submitBtn('languagePreference')">Submit</button> -->
   </mat-tab>
 </mat-tab-group>
 
@@ -420,84 +469,84 @@
   <div class="identity-card">
     <mat-card-subtitle style="color: #000000; font-size: 14px;">Identity</mat-card-subtitle>
     <button (click)="backBtn()" mat-button-toggle class="edit-btn">
-    <img alt="" src="./assets/icons/iconfont/edit_black_24dp (2).svg"/>
-  </button>
+      <img alt="" src="./assets/icons/iconfont/edit_black_24dp (2).svg" />
+    </button>
   </div>
-<div class="input-values-main-card">
-  <div>
-  <div *ngFor="let field of schema['identity']">
-    <table width="700px">
-      <tr *ngIf="field.controlType === 'calendar' && buildCloneJsonData[field.attributeName]">
-        <td>
-          <table width="45%">
-            <tr *ngIf="field.labelName[langCode][1]">
-              <td width="45%">
-                {{field.labelName[langCode][1]}}
-              </td>
-            </tr>
-            <tr *ngIf="buildCloneJsonData[field.attributeName]">
-              <td width="45%">
-                <input type="text" class="readonly" readonly="true" disabled="true"
-                  value="{{buildCloneJsonData[field.attributeName]}}">
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr *ngIf="field.controlType === 'textbox'">
-        <td>
-          <table width="45%" *ngFor="let language of supportedLanguages;">
-            <tr *ngIf="field.labelName[language][1]">
-              <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
-                <label>{{field.labelName[language][1]}}</label>
-              </td>
-            </tr>
-            <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
-              <input type="text" class="readonly" readonly="true" disabled="true"
-                value="{{buildCloneJsonData[field.attributeName][language]}}">
+  <div class="input-values-main-card">
+    <div>
+      <div *ngFor="let field of schema['identity']">
+        <table width="700px">
+          <tr *ngIf="field.controlType === 'calendar' && buildCloneJsonData[field.attributeName]">
+            <td>
+              <table width="45%">
+                <tr *ngIf="field.labelName[langCode][1]">
+                  <td width="45%">
+                    {{field.labelName[langCode][1]}}
+                  </td>
+                </tr>
+                <tr *ngIf="buildCloneJsonData[field.attributeName]">
+                  <td width="45%">
+                    <input type="text" class="readonly" readonly="true" disabled="true"
+                      value="{{buildCloneJsonData[field.attributeName]}}">
+                  </td>
+                </tr>
+              </table>
             </td>
-          </table>
-        </td>
-      </tr>
-      <tr *ngIf="field.controlType === 'dropdown'">
-        <td>
-          <table width="45%" *ngFor="let language of supportedLanguages;">
-            <tr *ngIf="field.labelName[language][1]">
-              <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
-                <label>{{field.labelName[language][1]}}</label>
-              </td>
-            </tr>
-            <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
-              <input type="text" class="readonly" readonly="true" disabled="true"
-                value="{{buildCloneJsonData[field.attributeName][language]}}">
+          </tr>
+          <tr *ngIf="field.controlType === 'textbox'">
+            <td>
+              <table width="45%" *ngFor="let language of supportedLanguages;">
+                <tr *ngIf="field.labelName[language][1]">
+                  <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
+                    <label>{{field.labelName[language][1]}}</label>
+                  </td>
+                </tr>
+                <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
+                  <input type="text" class="readonly" readonly="true" disabled="true"
+                    value="{{buildCloneJsonData[field.attributeName][language]}}">
+                </td>
+              </table>
             </td>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table width="45%">
-            <tr *ngIf="buildCloneJsonData[field.name]">
-              <td>
-                 <label >{{field.name}}</label>
-              </td>
-            </tr>
-            <tr *ngIf="buildCloneJsonData[field.name]">
-              <td>
-                <input  type="text" class="readonly" readonly="true" disabled="true"
-                value="{{buildCloneJsonData[field.name]}}">
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
+          </tr>
+          <tr *ngIf="field.controlType === 'dropdown'">
+            <td>
+              <table width="45%" *ngFor="let language of supportedLanguages;">
+                <tr *ngIf="field.labelName[language][1]">
+                  <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
+                    <label>{{field.labelName[language][1]}}</label>
+                  </td>
+                </tr>
+                <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
+                  <input type="text" class="readonly" readonly="true" disabled="true"
+                    value="{{buildCloneJsonData[field.attributeName][language]}}">
+                </td>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table width="45%">
+                <tr *ngIf="buildCloneJsonData[field.name]">
+                  <td>
+                    <label>{{field.name}}</label>
+                  </td>
+                </tr>
+                <tr *ngIf="buildCloneJsonData[field.name]">
+                  <td>
+                    <input type="text" class="readonly" readonly="true" disabled="true"
+                      value="{{buildCloneJsonData[field.name]}}">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div style="width: 500px;">
+      <embed *ngIf="pdfSrcInPreviewPage" [src]="pdfSrcInPreviewPage | sanitizepdf" height="100%" width="100%">
+    </div>
   </div>
-</div>
-<div style="width: 500px;">
-  <embed *ngIf="pdfSrcInPreviewPage" [src]="pdfSrcInPreviewPage | sanitizepdf" height="100%" width="100%">
-</div>
-</div>
   <div style="margin-left: 13px; margin-top: 0px;">
     <mat-card-title style="font-size: 16px; color: #000000;">Document Uploaded</mat-card-title>
     <mat-card-subtitle style="font-size: 14px; color: #000000;">Identity Proof</mat-card-subtitle>

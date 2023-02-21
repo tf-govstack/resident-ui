@@ -142,3 +142,12 @@ span.label {
   align-items: center !important;
   margin-right: 8px;
 }
+
+::ng-deep.mat-paginator .mat-select-value {
+  padding-top: 13px !important;
+  padding-left: 5px !important;
+}
+
+::ng-deep.mat-paginator .mat-select-arrow-wrapper {
+  display: table-cell !important;
+}

@@ -75,6 +75,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
       if(response["response"]){
         this.eidStatus = response["response"];
       }else if(response["errors"]){
+        console.log("hai")
         this.showErrorPopup(response["errors"])
       }
         
@@ -116,6 +117,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   }
 
   showErrorPopup(message: string) {
+    console.log("Hello")
     this.errorCode = message[0]["errorCode"]
     if(this.errorCode === "RES-SER-410"){
       let errorMessageType = message[0]["message"].split("-")[1].trim()
