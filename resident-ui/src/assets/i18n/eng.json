@@ -507,7 +507,8 @@
             "channelError": "Please choose the channel that you want to verify.",
             "EMAIL":"The email Id you have entered is invalid. Please enter a valid email Id.",
             "PHONE":"The phone number you have entered is invalid. Please enter a valid phone number.",
-            "eventId":"The event Id you have entered is invalid. Please enter a valid event Id."
+            "eventId":"The event Id you have entered is invalid. Please enter a valid event Id.",
+            "userId":"The email Id/phone number you have entered is invalid. Please enter a valid email Id/phone number."
         },
         "RES-SER-459": "The entered EID is not associated with the VID/UIN used to log in.",
         "RES-SER-412": "Please enter valid UIN/VID.",
@@ -518,6 +519,7 @@
         "RES-SER-414":"Comment section cannot be blank. Please enter your comments in order to proceed.",
         "RES-SER-471":"This VID cannot be revoked since you have logged in using same VID",
         "RES-SER-513":"Failed to create VID, as the existing VID cannot be revoked since this VID was used to log into the current session.",
-        "RES-OTP-007":"OTP is invalid"
+        "RES-OTP-007":"OTP is invalid",
+        "RES-SER-415":"Template exceptionServiceError."
     }
 }
