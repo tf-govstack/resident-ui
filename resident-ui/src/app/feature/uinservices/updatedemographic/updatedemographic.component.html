@@ -475,71 +475,18 @@
   <div class="input-values-main-card">
     <div>
       <div *ngFor="let field of schema['identity']">
-        <table width="700px">
-          <tr *ngIf="field.controlType === 'calendar' && buildCloneJsonData[field.attributeName]">
-            <td>
-              <table width="45%">
-                <tr *ngIf="field.labelName[langCode][1]">
-                  <td width="45%">
-                    {{field.labelName[langCode][1]}}
-                  </td>
-                </tr>
-                <tr *ngIf="buildCloneJsonData[field.attributeName]">
-                  <td width="45%">
-                    <input type="text" class="readonly" readonly="true" disabled="true"
-                      value="{{buildCloneJsonData[field.attributeName]}}">
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr *ngIf="field.controlType === 'textbox'">
-            <td>
-              <table width="45%" *ngFor="let language of supportedLanguages;">
-                <tr *ngIf="field.labelName[language][1]">
-                  <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
-                    <label>{{field.labelName[language][1]}}</label>
-                  </td>
-                </tr>
-                <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
-                  <input type="text" class="readonly" readonly="true" disabled="true"
-                    value="{{buildCloneJsonData[field.attributeName][language]}}">
-                </td>
-              </table>
-            </td>
-          </tr>
-          <tr *ngIf="field.controlType === 'dropdown'">
-            <td>
-              <table width="45%" *ngFor="let language of supportedLanguages;">
-                <tr *ngIf="field.labelName[language][1]">
-                  <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
-                    <label>{{field.labelName[language][1]}}</label>
-                  </td>
-                </tr>
-                <td *ngIf="buildCloneJsonData[field.attributeName]" width="45%">
-                  <input type="text" class="readonly" readonly="true" disabled="true"
-                    value="{{buildCloneJsonData[field.attributeName][language]}}">
-                </td>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <table width="45%">
-                <tr *ngIf="buildCloneJsonData[field.name]">
-                  <td>
-                    <label>{{field.name}}</label>
-                  </td>
-                </tr>
-                <tr *ngIf="buildCloneJsonData[field.name]">
-                  <td>
-                    <input type="text" class="readonly" readonly="true" disabled="true"
-                      value="{{buildCloneJsonData[field.name]}}">
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
+        <table width="100%" *ngFor="let language of supportedLanguages;">
+             <tr *ngIf="buildCloneJsonData[field.attributeName]">
+              <td width="75%">{{field.labelName[language][1]}}</td>
+            </tr>
+            <tr *ngIf="typeOf(buildCloneJsonData[field.attributeName]) !== 'string' && buildCloneJsonData[field.attributeName]">
+              <td width="75%"><input type="text" class="readonly" readonly="true" disabled="true"
+                value="{{buildCloneJsonData[field.attributeName][language]}}"></td>
+            </tr>
+            <tr *ngIf="typeOf(buildCloneJsonData[field.attributeName]) === 'string' && buildCloneJsonData[field.attributeName]">
+              <td width="75%"><input type="text" class="readonly" readonly="true" disabled="true"
+                value="{{buildCloneJsonData[field.attributeName]}}"></td>
+            </tr>
         </table>
       </div>
     </div>
