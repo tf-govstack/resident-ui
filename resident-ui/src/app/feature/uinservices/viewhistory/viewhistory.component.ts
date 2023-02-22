@@ -34,7 +34,8 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   showFirstLastButtons:boolean = true;
 
   today: Date;
-  startdate: Date = new Date(2022, 0, 1)
+  presentYear: any = new Date().getFullYear()
+  startdate: Date = new Date(this.presentYear, 0, 1)
   selected = 'All'
   selectedDate:any;
   toDateStartDate:any = this.startdate;

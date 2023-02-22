@@ -194,7 +194,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
                   if (data.language.trim() === language.trim()) {
                     return data.value.trim()
                   }
-                  console.log(data)
                 }
               });
             if (value.length > 0) {
@@ -204,8 +203,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         }
       }
     }
-    this.buildCloneJsonData = { ...this.buildCloneJsonData, ...this.dynamicFieldValue }
-    this.addingAddessData()
+    // this.buildCloneJsonData = { ...this.buildCloneJsonData, ...this.dynamicFieldValue }
   }
 
   addingAddessData() {
@@ -217,21 +215,35 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
             if (typeof this.userInfo[data] === "string") {
               this.userInfoClone[changedItem] = this.dynamicFieldValue[item]
             } else {
-
               let newData = this.userInfo[changedItem].map(newItem => {
                 newItem["value"] = this.dynamicFieldValue[item]
                 return newItem
               })
               this.userInfoClone[changedItem] = newData
-              console.log(this.userInfoClone)
             }
 
           }
         }
       })
     })
-    console.log(this.userInfoClone)
+    this.changedBuildData()
+    this.showPreviewPage = true
   }
+
+  previewBtn(issue: any) {
+    if (issue === "address") {
+      this.auditService.audit('RP-028', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my address');
+    } else if (issue === "languagePreference") {
+      this.auditService.audit('RP-031', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update notification language');
+    } else if (issue === "identity") {
+      this.auditService.audit('RP-027', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my data');
+    }
+    this.addingAddessData()
+    // this.showPreviewPage = true
+    this.uploadedFiles = this.files.concat(this.filesPOA)
+    console.log(this.buildCloneJsonData)
+  }
+
 
   getDocumentType(type: string, id: string) {
     this.dataStorageService.getDataForDropDown("/proxy/masterdata/documenttypes/" + type + "/" + localStorage.getItem("langCode")).subscribe(response => {
@@ -380,58 +392,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     })
   }
 
-
-  showOTPPopup() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '550px',
-      data: {
-        case: 'OTP',
-        message: "One Time Password (OTP) has been sent to your new channel ",
-        newContact: this.userId,
-        submitBtnTxt: this.popupMessages.genericmessage.submitButton,
-        resentBtnTxt: this.popupMessages.genericmessage.resentBtn
-      }
-    });
-    return dialogRef;
-  }
-
-  showMessage(message: string) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '550px',
-      data: {
-        case: 'MESSAGE',
-        title: this.popupMessages.genericmessage.successLabel,
-        message: message,
-        btnTxt: this.popupMessages.genericmessage.successButton
-      }
-    });
-    return dialogRef;
-  }
-
-  showErrorPopup(message: string) {
-    this.errorCode = message[0]["errorCode"];
-    if (this.errorCode === "RES-SER-410") {
-      let messageType = message[0]["message"].split("-")[1].trim()
-      this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
-    } else {
-      this.message = this.popupMessages.serverErrors[this.errorCode]
-    }
-    this.dialog
-      .open(DialogComponent, {
-        width: '550px',
-        data: {
-          case: 'MESSAGE',
-          title: this.popupMessages.genericmessage.errorLabel,
-          message: this.message,
-          btnTxt: this.popupMessages.genericmessage.successButton
-        },
-        disableClose: true
-      });
-  }
-
   captureValue(event: any, formControlName: string, language: string) {
-    console.log(event.target.value)
-    console.log(formControlName)
     this.userId = event.target.value;
     let self = this;
     if (event.target.value === "" && this.userInfoClone[formControlName]) {
@@ -471,7 +432,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       } else {
         self[formControlName]["documentreferenceId"] = event.target.value;
       }
-      console.log(this.proofOfIdentity)
     }
   }
 
@@ -515,20 +475,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         self[formControlName]["documenttype"] = event.source.value;
       }
     }
-   console.log(this.userInfoClone)
-  }
-
-  previewBtn(issue: any) {
-    this.showPreviewPage = true
-    if (issue === "address") {
-      this.auditService.audit('RP-028', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my address');
-    } else if (issue === "languagePreference") {
-      this.auditService.audit('RP-031', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update notification language');
-    } else if (issue === "identity") {
-      this.auditService.audit('RP-027', 'Update my data', 'RP-Update my data', 'Update my data', 'User clicks on "submit" button in update my data');
-    }
-    this.changedBuildData()
-    this.uploadedFiles = this.files.concat(this.filesPOA)
   }
 
   updateBtn() {
@@ -735,12 +681,65 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
+  showOTPPopup() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'OTP',
+        message: "One Time Password (OTP) has been sent to your new channel ",
+        newContact: this.userId,
+        submitBtnTxt: this.popupMessages.genericmessage.submitButton,
+        resentBtnTxt: this.popupMessages.genericmessage.resentBtn
+      }
+    });
+    return dialogRef;
+  }
+
+  showMessage(message: string) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        message: message,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
+  }
+
+  showErrorPopup(message: string) {
+    this.errorCode = message[0]["errorCode"];
+    if (this.errorCode === "RES-SER-410") {
+      let messageType = message[0]["message"].split("-")[1].trim()
+      this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
+    } else {
+      this.message = this.popupMessages.serverErrors[this.errorCode]
+    }
+    this.dialog
+      .open(DialogComponent, {
+        width: '550px',
+        data: {
+          case: 'MESSAGE',
+          title: this.popupMessages.genericmessage.errorLabel,
+          message: this.message,
+          btnTxt: this.popupMessages.genericmessage.successButton
+        },
+        disableClose: true
+      });
+  }
+
+
   onItemSelected(item: any) {
     if (item === 'demographic') {
       this.showPreviewPage = false;
     } else {
       this.router.navigate([item]);
     }
+  }
+
+  typeOf(value:any){
+     return typeof value
   }
 
   backBtn() {

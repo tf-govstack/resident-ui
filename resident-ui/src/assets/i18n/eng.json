@@ -520,6 +520,7 @@
         "RES-SER-471":"This VID cannot be revoked since you have logged in using same VID",
         "RES-SER-513":"Failed to create VID, as the existing VID cannot be revoked since this VID was used to log into the current session.",
         "RES-OTP-007":"OTP is invalid",
-        "RES-SER-415":"Template exceptionServiceError."
+        "RES-SER-415":"Template exceptionServiceError.",
+        "RES-SER-463":"Send OTP failed."
     }
 }
