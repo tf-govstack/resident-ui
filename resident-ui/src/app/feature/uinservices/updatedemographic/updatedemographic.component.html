@@ -28,7 +28,7 @@
                         <td width="10%"></td>
                         <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
                           <mat-form-field>
-                            <input style="min-width: 100px;" matInput [matDatepicker]="picker"
+                            <input style="min-width: 100px; height: 48px;" matInput [matDatepicker]="picker"
                               id="{{field.attributeName}}"
                               (dateChange)="captureDatePickerValue($event, field.attributeName)"
                               [(ngModel)]="selectedDate" />
@@ -87,11 +87,13 @@
                             value="{{buildJSONData[field.attributeName][langCode]}}"></td>
                         <td width="10%"></td>
                         <td width="45%">
-                          <mat-select id="{{field.attributeName}}">
+                          <mat-form-field>
+                          <mat-select [(ngModel)]="selected" id="{{field.attributeName}}">
                             <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
                               (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
                               [value]="data.code">{{ data.genderName }}</mat-option>
                           </mat-select>
+                        </mat-form-field>
                         </td>
                       </tr>
                     </table>
@@ -110,7 +112,7 @@
                       </tr>
                       <tr>
                         <td width="45%">
-                          <mat-select id="{{field.attributeName}}">
+                          <mat-select [value]="proofOfIdentity['documenttype'] ? proofOfIdentity['documenttype'] : '' " id="{{field.attributeName}}">
                             <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
                               (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
                               [value]="data.code">{{ data.name }}</mat-option>
@@ -118,7 +120,7 @@
                         </td>
                         <td width="10%"></td>
                         <td width="45%">
-                          <input matInput #{{field.attributeName}} id="{{field.attributeName}}value"
+                          <input [value]="proofOfIdentity['documentreferenceId'] ? proofOfIdentity['documentreferenceId'] : '' " matInput #{{field.attributeName}} id="{{field.attributeName}}value"
                             (blur)="captureValue($event, field.attributeName, language)" />
                         </td>
                       </tr>
@@ -279,7 +281,7 @@
                     </tr>
                     <tr>
                       <td width="45%">
-                        <mat-select id="{{field.attributeName}}">
+                        <mat-select [value]="proofOfAddress['documenttype'] ? proofOfAddress['documenttype'] : '' " id="{{field.attributeName}}">
                           <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
                             (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
                             [value]="data.code">{{
@@ -288,7 +290,7 @@
                       </td>
                       <td width="10%"></td>
                       <td width="45%">
-                        <input matInput #{{field.attributeName}} id="{{field.attributeName}}"
+                        <input [value]="proofOfAddress['documentreferenceId'] ? proofOfAddress['documentreferenceId'] : '' " matInput #{{field.attributeName}} id="{{field.attributeName}}"
                           (blur)="captureValue($event, field.attributeName, language)" />
                       </td>
                     </tr>
@@ -433,11 +435,13 @@
                   </td>
                   <td width="10%"></td>
                   <td width="45%">
-                    <mat-select id="{{field.attributeName}}">
+                    <mat-form-field>
+                    <mat-select [(ngModel)]="selected2" id="{{field.attributeName}}">
                       <mat-option *ngFor="let data of newNotificationLanguages"
                         (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
                         [value]="data.code">{{ data.name }}</mat-option>
                     </mat-select>
+                  </mat-form-field>
                   </td>
                   <td width="10%"></td>
                 </tr>

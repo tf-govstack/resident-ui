@@ -242,6 +242,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     // this.showPreviewPage = true
     this.uploadedFiles = this.files.concat(this.filesPOA)
     console.log(this.buildCloneJsonData)
+    console.log(this.userInfoClone)
   }
 
 
@@ -395,6 +396,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   captureValue(event: any, formControlName: string, language: string) {
     this.userId = event.target.value;
     let self = this;
+    if(event.target.value !== ''){
     if (event.target.value === "" && this.userInfoClone[formControlName]) {
       this.userInfoClone[formControlName].forEach(item => {
         if (item.language === language) {
@@ -434,6 +436,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       }
     }
   }
+  }
 
   captureDatePickerValue(event: any, formControlName: string) {
     this.selectedDate = event.target.value
@@ -449,7 +452,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   captureDropDownValue(event: any, formControlName: string, language: string) {
-    console.log(event)
     let self = this;
     if (event.source.selected) {
       if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
