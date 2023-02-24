@@ -14,7 +14,7 @@
 				"eng": "Name Format"
 			},
 			"formatOption":{
-				"eng": [{"label":"Full Name", "value":"fullName"}]
+				"eng": [{"label":"Full Name", "value":"fullName","checked":false}]
 			},
 			"displaykeyinsharewithpartner":true,
 			"displaykeyinpersonalisedcard":true,
@@ -34,7 +34,7 @@
 				"eng": "Date Format"
 			},
 			"formatOption":{
-				"eng": [{"label":"DD/MM", "value":"DD/MM"}, {"label":"DD/MM/YYYY", "value":"DD/MM/YYYY"}]
+				"eng": [{"label":"DD/MM", "value":"DD/MM","checked":false}, {"label":"DD/MM/YYYY", "value":"DD/MM/YYYY","checked":false}]
 			},
 			"displaykeyinsharewithpartner":true,
 			"displaykeyinpersonalisedcard":true,
@@ -114,7 +114,7 @@
 				"eng": "Address Format"
 			},
 			"formatOption":{
-				"eng": [{"label":"Region", "value":"region"}, {"label":"Province", "value":"province"}, {"label":"City", "value":"city"}, {"label":"Full Address", "value":"fullAddress"}]
+				"eng": [{"label":"Region", "value":"region","checked":false}, {"label":"Province", "value":"province","checked":false}, {"label":"City", "value":"city","checked":false}, {"label":"Full Address", "value":"fullAddress","checked":false}]
 			},
 			"displaykeyinsharewithpartner":true,
 			"displaykeyinpersonalisedcard":true,

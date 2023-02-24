@@ -83,6 +83,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .getServiceHistory(pageEvent, finalFilters)
     .subscribe((response) => {
+      console.log(response)
       if(response["response"])     
         this.responselist = response["response"]["data"];
         this.totalItems = response["response"]["totalItems"];

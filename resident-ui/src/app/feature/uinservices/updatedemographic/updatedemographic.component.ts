@@ -439,7 +439,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   captureDatePickerValue(event: any, formControlName: string) {
-    this.selectedDate = event.target.value
     let self = this;
     let dateFormat = new Date(event.target.value);
     let formattedDate = dateFormat.getFullYear() + "/" + ("0" + (dateFormat.getMonth() + 1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);

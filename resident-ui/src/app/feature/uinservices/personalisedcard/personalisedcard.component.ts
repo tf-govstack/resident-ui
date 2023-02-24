@@ -132,6 +132,18 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         this.dataDisplay[data.attributeName] = [];
         this.dataDisplay[data.attributeName].push({ "label": data.label[this.langCode], "value": value });
       } else {
+        this.schema =  this.schema.map(eachItem =>{
+          if(data['attributeName'] === eachItem['attributeName']){
+            eachItem['formatOption'][this.langCode].forEach(item =>{
+              if(item.value === type['value']){
+              return  item['checked'] = !item['checked']
+              }else{
+              return  item['checked'] = false
+              }
+            })
+          }
+          return eachItem
+        })
         let value = "";
         let find = function(array, name) {
           return array.some(function(object) {
@@ -151,14 +163,27 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
             this.dataDisplay[data.attributeName] = [];
             this.dataDisplay[data.attributeName].push({ "label": data.label[this.langCode], "value": value });
           } else {
-            if(type.value !== "fullName"){
-              if(type.value !== "fullAddress"){
-                if(this.userInfo[type.value]){
-                  value = this.userInfo[type.value][0].value;
-                }
-                this.dataDisplay[data.attributeName].push({ "label": type.value, "value": value });
-              }
-            }            
+            let value = ""
+            console.log(type)
+            if(type["value"] !== 'fullAddress'){
+              value = this.userInfo[type["value"]][0].value;
+            }else{
+              value = this.userInfo[data.attributeName][0].value;
+            }
+            console.log(value)
+            console.log(this.dataDisplay)
+            console.log(data)
+            this.dataDisplay[data['attributeName']][0]['value'] = value
+            // this.dataDisplay[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": false, "format": type["value"], "value": value };
+            // if(type.value !== "fullName"){
+            //   if(type.value !== "fullAddress"){
+            //     if(this.userInfo[type.value]){
+            //       value = this.userInfo[type.value][0].value;
+            //       console.log(value)
+            //     }
+            //     this.dataDisplay[data.attributeName].push({ "label": type.value, "value": value });
+            //   }
+            // }            
           }          
         }
       }
