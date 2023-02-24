@@ -100,6 +100,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   captureCheckboxValue($event: any, data: any, type: string) {
     this.buildHTML = ""
     if (type === "datacheck") {
+      console.log(data)
       if (data.attributeName.toString() in this.sharableAttributes) {
         delete this.sharableAttributes[data.attributeName];
       } else {
@@ -127,8 +128,21 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
           return item
         }
       })
-    console.log(this.sharableAttributes)
     } else {
+     if(typeof type !== 'string'){
+      this.schema =  this.schema.map(eachItem =>{
+        if(data['attributeName'] === eachItem['attributeName']){
+          eachItem['formatOption'][this.langCode].forEach(item =>{
+            if(item.value === type['value']){
+            return  item['checked'] = !item['checked']
+            }else{
+            return  item['checked'] = false
+            }
+          })
+        }
+        return eachItem
+      })
+    }
       if(!data.formatRequired){
         let value;
         if(this.sharableAttributes[data.attributeName].value === this.userInfo[type]){
@@ -144,7 +158,6 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         } else {
           if(type["value"] !== 'fullAddress'){
             value = this.userInfo[type["value"]][0].value;
-            console.log(value)
           }else{
             value = this.userInfo[data.attributeName][0].value;
           }
