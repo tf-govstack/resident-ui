@@ -14,7 +14,7 @@
 						<tr>
 							<td style="padding:10px;color: #505050;width: 33%"><mat-checkbox [checked]="data.checked" *ngIf="data.label[langCode] !== 'undefiend'" (click)="captureCheckboxValue($event, data,'datacheck')">{{data.label[langCode]}}</mat-checkbox></td>
 							<td *ngIf="data.maskRequired" style="width:33%;color: #505050;font-size: 16px;padding-left: 1.25rem;">
-								<mat-checkbox *ngIf="data.checked"  id="{{data.maskRequiredLabel[langCode]}}{{i}}" (click)="captureCheckboxValue($event, data,data.maskAttributeName)">{{data.maskRequiredLabel[langCode]}}</mat-checkbox>
+								<mat-checkbox [disabled]="!data.checked"  id="{{data.maskRequiredLabel[langCode]}}{{i}}" (click)="captureCheckboxValue($event, data,data.maskAttributeName)">{{data.maskRequiredLabel[langCode]}}</mat-checkbox>
 							</td>
 							<td *ngIf="data.formatRequired" style="width:33%">
 								<button [disabled]="!data.checked" mat-button [matMenuTriggerFor]="basic">{{data.formatOptionLabel[langCode]}}<mat-icon>keyboard_arrow_down</mat-icon></button>

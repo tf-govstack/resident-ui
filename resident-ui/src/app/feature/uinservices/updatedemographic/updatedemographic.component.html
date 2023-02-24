@@ -1,12 +1,13 @@
 <span class="breadcrumb">
   <a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a
     (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
-  &nbsp;&nbsp;<span [ngClass]="!showPreviewPage ? 'active' : 'demographic' "
+  &nbsp;&nbsp;<span style="cursor: pointer;"
     (click)="onItemSelected('demographic')">{{'updatedemographic.title' | translate}}</span>
-  &nbsp;&nbsp;<span *ngIf="showPreviewPage" class="active"> > &nbsp; {{'preview.title' | translate}}</span>
+    <span [ngClass]="!showPreviewPage ? 'active' : 'demographic' " *ngIf="!showPreviewPage">&nbsp; > &nbsp; {{matTabLabel}}</span>
+  &nbsp;&nbsp;<span *ngIf="showPreviewPage" class="active">&nbsp; > &nbsp; {{'preview.title' | translate}}</span>
 </span>
 
-<mat-tab-group animationDuration="0ms" *ngIf="userInfo && !showPreviewPage">
+<mat-tab-group animationDuration="0ms" *ngIf="userInfo && !showPreviewPage" (selectedTabChange)="logChange($event)">
   <mat-tab label="{{'updatedemographic.identity' | translate}}">
     <table width="100%">
       <tr>
