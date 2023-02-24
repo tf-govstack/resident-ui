@@ -74,6 +74,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   newLangArr:any =[];
   perfLangArr:any = {};
   newNotificationLanguages:any= [];
+  matTabLabel:string = "Identity";
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -243,6 +244,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.uploadedFiles = this.files.concat(this.filesPOA)
     console.log(this.buildCloneJsonData)
     console.log(this.userInfoClone)
+    this.matTabLabel = "Identity";
   }
 
 
@@ -745,5 +747,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   backBtn() {
     this.showPreviewPage = false
+  }
+
+  logChange(event:any){
+    this.matTabLabel =event.tab.textLabel
   }
 }
