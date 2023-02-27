@@ -164,15 +164,11 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
             this.dataDisplay[data.attributeName].push({ "label": data.label[this.langCode], "value": value });
           } else {
             let value = ""
-            console.log(type)
             if(type["value"] !== 'fullAddress'){
-              value = this.userInfo[type["value"]][0].value;
+              value =  typeof this.userInfo[type["value"]] !== 'string' ? this.userInfo[type["value"]][0].value : this.userInfo[type["value"]];
             }else{
               value = this.userInfo[data.attributeName][0].value;
             }
-            console.log(value)
-            console.log(this.dataDisplay)
-            console.log(data)
             this.dataDisplay[data['attributeName']][0]['value'] = value
             // this.dataDisplay[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": false, "format": type["value"], "value": value };
             // if(type.value !== "fullName"){
