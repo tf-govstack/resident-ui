@@ -75,6 +75,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   perfLangArr:any = {};
   newNotificationLanguages:any= [];
   matTabLabel:string = "Identity";
+  contactTye:string;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -364,7 +365,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       if (response["response"]) {
 
       } else {
-        console.log("No")
+        this.showErrorPopup(response["errors"])
       }
     }, error => {
       console.log(error)
@@ -383,20 +384,23 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       }
     }
     this.dataStorageService.verifyUpdateData(request).subscribe(response => {
-      if (response['response']) {
-        this.dialog.closeAll()
-        this.showMessage(JSON.stringify(response["response"]))
+      if (response.body['response']) {
+        let eventId = response.headers.get("eventid")
+        this.message =  this.contactTye === 'email' ? this.popupMessages.genericmessage.updateMyData.emailSuccessMsg.replace("$eventId", eventId) : this.popupMessages.genericmessage.updateMyData.phoneNumberSuccessMsg.replace("$eventId", eventId);
+        this.dialog.closeAll();
+        this.showMessage(this.message,eventId);
       } else {
-        this.dialog.closeAll()
-        this.showErrorPopup(JSON.stringify(response["errors"]))
+        this.dialog.closeAll();
+        this.showErrorPopup(response.body["errors"]);
       }
     }, error => {
-      console.log(error)
+      console.log(error);
     })
   }
 
   captureValue(event: any, formControlName: string, language: string) {
     this.userId = event.target.value;
+    this.contactTye = formControlName;
     let self = this;
     if(event.target.value !== ''){
     if (event.target.value === "" && this.userInfoClone[formControlName]) {
@@ -518,10 +522,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     };
     this.dataStorageService.updateuin(request).subscribe(response => {
       if (response["response"]) {
-        this.showMessage(response["response"]['message'])
+        this.showMessage(response["response"]['message'],'')
       } else {
         this.showErrorPopup(response["errors"])
-        console.log("Hello")
       }
     }, error => {
       console.log(error)
@@ -698,13 +701,15 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     return dialogRef;
   }
 
-  showMessage(message: string) {
+  showMessage(message: string,eventId:any) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
         message: message,
+        eventId:eventId,
+        clickHere: this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -714,7 +719,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   showErrorPopup(message: string) {
     this.errorCode = message[0]["errorCode"];
     if (this.errorCode === "RES-SER-410") {
-      let messageType = message[0]["message"].split("-")[1].trim()
+      let messageType = message[0]["message"].split("-")[1].trim();
       this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
     } else {
       this.message = this.popupMessages.serverErrors[this.errorCode]

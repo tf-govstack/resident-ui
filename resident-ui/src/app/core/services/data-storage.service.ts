@@ -311,7 +311,7 @@ export class DataStorageService {
   }
 
   verifyUpdateData(request: any) {
-    return this.httpClient.post(this.BASE_URL + '/contact-details/update-data', request)
+    return this.httpClient.post(this.BASE_URL + '/contact-details/update-data', request,{ observe: 'response' })
   }
 
   getStatus(individualId: any) {
