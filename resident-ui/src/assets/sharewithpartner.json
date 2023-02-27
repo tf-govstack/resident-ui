@@ -114,7 +114,7 @@
 				"eng": "Address Format"
 			},
 			"formatOption":{
-				"eng": [{"label":"Region", "value":"region","checked":false}, {"label":"Province", "value":"province","checked":false}, {"label":"City", "value":"city","checked":false}, {"label":"Full Address", "value":"fullAddress","checked":false}]
+				"eng": [{"label":"Address line1", "value":"addressLine1","checked":false},{"label":"Address line2", "value":"addressLine2","checked":false},{"label":"Address line3", "value":"addressLine3","checked":false}, {"label":"Region", "value":"region","checked":false}, {"label":"Province", "value":"province","checked":false}, {"label":"City", "value":"city","checked":false},{"label":"Postal code", "value":"postalCode","checked":false}, {"label":"Full Address", "value":"fullAddress","checked":false}]
 			},
 			"displaykeyinsharewithpartner":true,
 			"displaykeyinpersonalisedcard":true,
