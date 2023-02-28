@@ -10,16 +10,13 @@ import { MatDialog } from '@angular/material';
 import { resolve } from "url";
 import { runInThisContext } from "vm";
 import { AuditService } from "src/app/core/services/audit.service";
-
-
-
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: "app-verify",
   templateUrl: "./verify.component.html",
   styleUrls: ["./verify.component.css"],
 })
-
 export class VerifyComponent implements OnInit, OnDestroy {
   verifyChannelData:any;
   transactionID: any;
@@ -49,8 +46,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   phoneIcon:boolean = false;
   mailIcon:boolean = false;
   captchaChecked:boolean = false;
-
-
+  width : string;
 
   constructor(
     private router: Router,
@@ -59,10 +55,36 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private appConfigService: AppConfigService,
     private dialog: MatDialog,
     private renderer: Renderer2,
-    private auditService: AuditService
+    private auditService: AuditService, 
+    private breakpointObserver: BreakpointObserver
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
     this.appConfigService.getConfig();
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]).subscribe(result => {
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.width = "90%";
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.width = "90%";
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.width = "60%";
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.width = "55%";
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.width = "35%";
+        }
+      }
+    });
   }
 
   ngOnInit() {

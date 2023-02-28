@@ -8,6 +8,7 @@ import Utils from 'src/app/app.utils';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { AuditService } from 'src/app/core/services/audit.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-getuin',
@@ -33,6 +34,7 @@ export class GetuinComponent implements OnInit {
   aid:string;
   orderStatus:any;
   orderStatusIndex:any;
+  width : string;
 
   constructor(
     private router: Router,
@@ -40,10 +42,36 @@ export class GetuinComponent implements OnInit {
     private dataStorageService: DataStorageService,
     private appConfigService: AppConfigService,
     private dialog: MatDialog,
-    private auditService: AuditService
+    private auditService: AuditService, 
+    private breakpointObserver: BreakpointObserver
   ) {
     this.translateService.use(localStorage.getItem("langCode"));
     this.appConfigService.getConfig();
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]).subscribe(result => {
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.width = "90%";
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.width = "90%";
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.width = "60%";
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.width = "40%";
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.width = "30%";
+        }
+      }
+    });
   }
 
   ngOnInit() {

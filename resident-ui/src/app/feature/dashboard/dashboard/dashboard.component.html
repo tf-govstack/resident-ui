@@ -1,5 +1,6 @@
 <div class="main-div" *ngIf="menuItems">
-  <div class="grid-container">
+  <mat-grid-list #grid [cols]="cols" rowHeight="200px" gutterSize="5px">
+    <mat-grid-tile colspan="1" rowspan="2">
     <div class="item1 item-card" id="dashboardCard1" (click)="onItemSelected(menuItems[0].displayName)">
       <mat-card>
         <div class="title">
@@ -23,6 +24,8 @@
         </mat-card-header>
       </mat-card>
     </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1">
     <div class="item2 item-card" id="dashboardCard2" (click)="onItemSelected(menuItems[1].displayName)">
       <mat-card>
         <div class="title">
@@ -42,6 +45,8 @@
         </mat-card-header>
       </mat-card>
     </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1">
     <div class="item3 item-card" id="dashboardCard3"  (click)="onItemSelected(menuItems[2].displayName)">
       <mat-card >
         <div class="title">
@@ -61,6 +66,8 @@
         </mat-card-header>
       </mat-card>
     </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1">
     <div class="item4 item-card" id="dashboardCard3" (click)="onItemSelected(menuItems[3].route)">
       <mat-card>
         <div class="title">
@@ -80,6 +87,8 @@
         </mat-card-header>
       </mat-card>
     </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1">
     <div class="item5 item-card" id="dashboardCard4" (click)="onItemSelected(menuItems[4].route)">
       <mat-card>
         <div class="title">
@@ -99,5 +108,7 @@
         </mat-card-header>
       </mat-card>
     </div>
-  </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
+

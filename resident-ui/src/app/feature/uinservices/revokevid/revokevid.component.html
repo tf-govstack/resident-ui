@@ -17,7 +17,7 @@
 						</div>
 						<button [id]="policy.vidType" mat-raised-button color="primary" (click)="generateVIDBtn(policy.vidType)">{{'managemyvid.create' | translate}}</button></span>
 				</div>
-				    <mat-grid-list   style="width:100%;" gutterSize="10px" [cols]="cols"  [rowHeight]="rowHeight" (window:resize)="onResize($event)" *ngIf=finalTypeList[policy.vidType] class="each-vid-card">
+				    <mat-grid-list   style="width:100%;" gutterSize="10px" [cols]="cols"  rowHeight="180px" (window:resize)="onResize($event)" *ngIf=finalTypeList[policy.vidType] class="each-vid-card">
 						<mat-grid-tile *ngFor = "let list of finalTypeList[policy.vidType]; let i = index">
 							<mat-card [id]="list.vid" class="mini-card">
 							  <table style="width:100%">

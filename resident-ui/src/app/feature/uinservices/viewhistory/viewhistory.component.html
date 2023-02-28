@@ -8,21 +8,62 @@
 	<mat-card>
 		<h3 style="color: #505050; font-size:20px;">{{'viewhistory.title' | translate}}</h3>
 		<table *ngIf="responselist" style="width: 100%;">
-			<tr>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputsearch' |
-						translate}}</span></td>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputHistory' |
-						translate}}</span></td>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputFrom' | translate}}</span>
+			<tr class="display: flex;flex-flow: row wrap;justify-content: space-around;">
+				<td style="width:100%" colspan="5">
+					<mat-grid-list [cols]="cols" rowHeight="40px" gutterSize="5px" >
+					<mat-grid-tile><span class="label">{{'viewhistory.inputsearch' |translate}}</span></mat-grid-tile>
+					<mat-grid-tile><span class="label">{{'viewhistory.inputHistory' |translate}}</span></mat-grid-tile>
+					<mat-grid-tile><span class="label">{{'viewhistory.inputFrom' | translate}}</span></mat-grid-tile>
+					<mat-grid-tile><span class="label">{{'viewhistory.inputTo' | translate}}</span></mat-grid-tile>
+					<mat-grid-tile><span class="label">{{'viewhistory.inputStatus' |translate}}</span></mat-grid-tile>
+					</mat-grid-list>
 				</td>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputTo' | translate}}</span>
-				</td>
-				<td style="width: 16%;padding: 10px;"><span class="label">{{'viewhistory.inputStatus' |
-						translate}}</span></td>
-				<td style="width: 20%;padding: 10px;"></td>
 			</tr>
 			<tr style="vertical-align: baseline;">
-				<td class="input-cards">
+				<td style="width:100%" colspan="5">
+					<mat-grid-list [cols]="cols" rowHeight="80px" gutterSize="5px" >
+					<mat-grid-tile><span class="input">
+						<input type="text" id="appIdValue" name="appIdValue"
+						(blur)="captureValue($event, 'searchText', 'textbox')"
+						placeholder="{{'viewhistory.inputAppId' | translate}}" />
+					</span></mat-grid-tile>
+					<mat-grid-tile><span class="input">
+						<mat-select multiple #serviceType id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
+						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
+						<mat-option [disabled]="isHistoryAllValue && historySelectedValue === 'ALL' && serviceType.value !== 'ALL' " (click)="historyTosslePerOne(serviceType.value)" *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
+							[value]="serviceType.value">{{serviceType.label}}</mat-option>
+						</mat-select>
+					</span></mat-grid-tile>
+					<mat-grid-tile><span class="input">
+						<input id="fromPickertext" [(ngModel)]="startdate" [max]="today" matInput
+						[matDatepicker]="fromPicker" class="datepicker-card"
+						(dateChange)="captureValue($event, 'fromDate', 'datepicker')">
+						<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+						<mat-datepicker #fromPicker></mat-datepicker>
+					</span></mat-grid-tile>
+					<mat-grid-tile><span class="input">
+						<input id="toPickertext" [(ngModel)]="selectedDate" matInput [min]="toDateStartDate" [max]="today"
+						[matDatepicker]="toPicker" class="datepicker-card"
+						(dateChange)="captureValue($event, 'toDate', 'datepicker')">
+						<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+						<mat-datepicker #toPicker></mat-datepicker>
+					</span></mat-grid-tile>
+					<mat-grid-tile><span class="datepicker-card" style="display: contents;">
+						<mat-select multiple #statusFilter id="statusFilter" placeholder="{{'viewhistory.inputStatus' | translate}}"
+						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
+						<mat-option [disabled]="isStatusAllValue && statusSelectedValue === 'all' && status.label !== 'All' " *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
+							(click)="tosslePerOne(status.value)">
+							{{status.label}}</mat-option>
+						</mat-select>
+						&nbsp;&nbsp;&nbsp;&nbsp;<button id="searchbtn" mat-raised-button color="primary"
+						(click)="search()">{{'viewhistory.searchBtn' |
+						translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="downloadbtn" mat-raised-button
+						color="default" (click)="downloadServiceHistory()"><img class="save-icon"
+							src="./assets/images/save.png" /></button>
+					</span></mat-grid-tile>
+					</mat-grid-list>
+				</td>
+				<!-- <td class="input-cards">
 					<input type="text" id="appIdValue" name="appIdValue" style="margin-bottom: 1.2rem;"
 						(blur)="captureValue($event, 'searchText', 'textbox')"
 						placeholder="{{'viewhistory.inputAppId' | translate}}" />
@@ -30,7 +71,6 @@
 				<td class="input-cards">
 					<mat-select multiple #serviceType id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
 						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
-						<!-- <mat-option>{{'viewhistory.selectAll' | translate}}</mat-option> -->
 						<mat-option [disabled]="isHistoryAllValue && historySelectedValue === 'ALL' && serviceType.value !== 'ALL' " (click)="historyTosslePerOne(serviceType.value)" *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
 							[value]="serviceType.value">{{serviceType.label}}</mat-option>
 					</mat-select>
@@ -52,7 +92,6 @@
 				<td class="input-cards">
 					<mat-select multiple #statusFilter id="statusFilter" placeholder="{{'viewhistory.inputStatus' | translate}}"
 						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
-						<!-- <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">{{'viewhistory.selectAll' | translate}}</mat-option> -->
 						<mat-option [disabled]="isStatusAllValue && statusSelectedValue === 'all' && status.label !== 'All' " *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
 							(click)="tosslePerOne(status.value)">
 							{{status.label}}</mat-option>
@@ -63,7 +102,7 @@
 						translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="downloadbtn" mat-raised-button
 						color="default" (click)="downloadServiceHistory()"><img class="save-icon"
 							src="./assets/images/save.png" /></button>
-				</td>
+				</td> -->
 			</tr>
 		</table>
 		<table *ngIf="responselist" class="history-data">

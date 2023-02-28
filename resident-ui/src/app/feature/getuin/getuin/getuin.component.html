@@ -7,7 +7,7 @@
     <mat-card-subtitle class="login-heading" *ngIf="getUinData.login">{{getUinData.login |
       translate}}</mat-card-subtitle>
     <hr class="line" />
-    <div class="form-container">
+    <div class="form-container" [style.width] = "width">
       <form #basicForm="ngForm" (submit)="submitUserID(basicForm.value)">
         <div class="uin-login-title-card">
           <mat-card-subtitle class="login-Input-heading" *ngIf="getUinData.title">{{getUinData.title |
@@ -21,7 +21,7 @@
         <input id="aidValue" class="input-text" type="text" ngModel name="AID" />
         <br />
         <label class="label-text" *ngIf="getUinData.description">{{getUinData.description | translate}}</label>
-        <div class="not-robot-verifing-card" *ngIf="siteKey">
+        <div *ngIf="siteKey">
             <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha" (captchaEvent)="getCaptchaToken($event)"></app-captcha>
         </div>
         <br />

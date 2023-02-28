@@ -4,7 +4,7 @@
       class="active">{{'dashboard.verify' | translate}}</span>
   </span>
   <mat-card class="verify-phnumb-email-card" *ngIf="!showOtpPanel">
-    <div class="send-otp-container">
+    <div class="send-otp-container" [style.width] = "width">
       <div class="btn-card">
         <mat-button-toggle id="phoneChannelBtn" (click)="radioChange('PHONE')" class="button"
           [style.borderColor]="numBtnColors"><img *ngIf="!phoneIcon"

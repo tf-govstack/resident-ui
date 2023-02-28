@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { AuditService } from "src/app/core/services/audit.service";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: "app-lockunlockauth",
@@ -34,16 +35,42 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   clickEventSubscription: Subscription; 
   changedItems:any = {};
   showSpinner:boolean = true;
+  cols : number;
 
   constructor(private interactionService: InteractionService,private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
-    private router: Router,private auditService: AuditService) {
-      this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
-        if (id === "confirmBtn") {
-          this.updateAuthlockStatus()
+    private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
+    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
+      if (id === "confirmBtn") {
+        this.updateAuthlockStatus()
+      }
+
+    });
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]).subscribe(result => {
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.cols = 1;
         }
-  
-      })
-    }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.cols = 1;
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.cols = 2;
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.cols = 3;
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.cols = 3;
+        }
+      }
+    });
+  }
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));

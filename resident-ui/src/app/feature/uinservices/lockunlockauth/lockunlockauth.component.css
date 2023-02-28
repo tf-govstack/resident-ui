@@ -5,7 +5,7 @@ li {
 }
 
 .mini-card {
-  width: 362px;
+  width: 90%;
   height: 170px;
   border-radius: 5px;
   background: #F4F4F4 0% 0% no-repeat padding-box;
@@ -15,7 +15,7 @@ li {
 }
 
 .mini-card-yellow {
-  width: 362px;
+  width: 90%;
   height: 170px;
   border-radius: 5px;
   background: #FFF9DB 0% 0% no-repeat padding-box;

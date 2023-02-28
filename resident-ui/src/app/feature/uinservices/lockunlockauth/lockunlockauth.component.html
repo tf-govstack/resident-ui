@@ -8,7 +8,7 @@
 	<mat-card>
 		<h3 class="main-heading">{{'lockunlockauth.title' | translate}}</h3>
 		<p class="intro-description">{{'lockunlockauth.introDescription' | translate}}</p>
-		<mat-grid-list cols="3" rowHeight="2:1" gutterSize="10px" *ngIf="authlist">
+		<mat-grid-list [cols]="cols" rowHeight="190px" gutterSize="10px" *ngIf="authlist">
 			<mat-grid-tile *ngFor="let authInfo of authlist; let i = index">
 				<mat-card (click)="setAuthlockStatus(authInfo)" id="setAuthlockStatus{{i}}"  [ngClass]="authInfo.recorddirty == false ? 'mini-card' : 'mini-card-yellow'" >
 				  <mat-card-header>			  	
