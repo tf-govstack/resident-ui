@@ -30,7 +30,7 @@ mat-card-title {
 
 .main-card {
   background: #d7d1d11a;
-  height: 33.5rem;
+  height: auto !important;
 }
 
 .uin-heading {

@@ -13,6 +13,7 @@ import { HeaderService } from 'src/app/core/services/header.service';
 import { FormControl } from "@angular/forms";
 import { AuditService } from "src/app/core/services/audit.service";
 import { ConditionalExpr } from "@angular/compiler";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: "app-viewhistory",
@@ -32,7 +33,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   serviceTypeFilter:any;
   statusTypeFilter:any;
   showFirstLastButtons:boolean = true;
-
+  cols:number;
   today: Date;
   presentYear: any = new Date().getFullYear()
   startdate: Date = new Date(this.presentYear, 0, 1)
@@ -50,8 +51,34 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   historySelectedValue:string;
   @ViewChild('statusFilter') statusFilterSelectAll: MatSelect;
   @ViewChild('serviceType') serviceTypeSelectAll: MatSelect;
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService) {
+
+  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.dateAdapter.setLocale('en-GB'); 
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]).subscribe(result => {
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.cols = 1;
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.cols = 2;
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.cols = 4;
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.cols = 5;
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.cols = 5;
+        }
+      }
+    });
   }
 
   async ngOnInit() {

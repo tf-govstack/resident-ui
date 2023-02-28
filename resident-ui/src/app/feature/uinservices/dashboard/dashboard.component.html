@@ -6,7 +6,7 @@
 	<mat-card  class="main-card">
 		<mat-card-title class="uin-heading">{{'dashboard.uinservices' | translate}}</mat-card-title>
 		<mat-card-subtitle class="services-description">{{'dashboard.uindescription' | translate}}</mat-card-subtitle>
-		<mat-grid-list  (window:resize)="onResize($event)" cols="4" *ngIf="menuItems" [gutterSize]="'10px'" [rowHeight]="rowHeight">
+		<mat-grid-list *ngIf="menuItems" (window:resize)="onResize($event)" [cols]="cols" rowHeight="190px" gutterSize="7px">
 			<mat-grid-tile *ngFor="let item of menuItems[0].subMenus">
 				<mat-card class="mini-card" (click)="onItemSelected(item.route)">
 				  <span><img mat-card-xs-image [src]=item.icon/></span>

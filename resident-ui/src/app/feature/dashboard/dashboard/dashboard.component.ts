@@ -7,6 +7,7 @@ import { AppConfigService } from 'src/app/app-config.service';
 import Utils from 'src/app/app.utils';
 import { Subscription } from "rxjs";
 import { AuditService } from "src/app/core/services/audit.service";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: "app-dashboard",
@@ -14,19 +15,46 @@ import { AuditService } from "src/app/core/services/audit.service";
   styleUrls: ["./dashboard.component.css"],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+
   menuItems:any;
   message:any;
   subscriptions: Subscription[] = [];
-
   userPreferredLangCode = localStorage.getItem("langCode");
+  cols : number;
+  
   constructor(
     private router: Router,
     private dataStorageService: DataStorageService,
     private translateService: TranslateService,
     private appConfigService: AppConfigService,
-    private auditService: AuditService
+    private auditService: AuditService,
+    private breakpointObserver: BreakpointObserver
   ) {
-  
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]).subscribe(result => {
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.cols = 1;
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.cols = 1;
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.cols = 2;
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.cols = 3;
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.cols = 3;
+        }
+      }
+    });  
   }
 
   async ngOnInit() {

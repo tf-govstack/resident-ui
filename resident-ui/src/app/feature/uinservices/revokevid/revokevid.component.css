@@ -3,7 +3,7 @@ ul, li{
   padding: 2px 0px 3px 9px;
 }
 .mini-card {
-  width: 360px;
+  width: 98%;
   height: 172px;
   border-radius: 5px;
   background: #FAF8F8 0% 0% no-repeat padding-box;

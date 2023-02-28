@@ -91,9 +91,15 @@ input {
 span.label {
   color: #707070;
   font-size: 14px;
+  width: 100%;
+  text-align: left;
+}
+span.input {
+  width: 85%;
+  text-align: left;
 }
 
-.input-cards {
+/*.input-cards {
   width: 16%;
   padding: 10px;
 }
@@ -102,20 +108,23 @@ span.label {
 .date-input-cards {
   width: 18%;
   padding: 10px;
+}*/
+
+::ng-deep .mat-grid-tile>.mat-figure{
+  justify-content: flex-start !important;
 }
 
-
 .datepicker-card {
-  width: 80%;
+  width: 70%;
   height: 37px;
 }
 
-@media screen and (max-width:1500px) {
+/*@media screen and (max-width:1500px) {
   .datepicker-card {
     width: 60%;
     height: 37px;
   }
-}
+}*/
 
 ::ng-deep .mat-expansion-panel-header
 {

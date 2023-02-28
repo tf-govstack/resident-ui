@@ -4,6 +4,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: "app-uindashboard",
@@ -13,12 +14,37 @@ import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
 export class DashboardComponent implements OnInit, OnDestroy {
   menuItems: any;
   subscriptions: Subscription[] = [];
-  rowHeight: any = "180px"
   message:any;
-
+  cols : number;
   userPreferredLangCode = localStorage.getItem("langCode");
 
-  constructor(private autoLogout: AutoLogoutService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router) { }
+  constructor(private autoLogout: AutoLogoutService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private breakpointObserver: BreakpointObserver) { 
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]).subscribe(result => {
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.cols = 1;
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.cols = 1;
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.cols = 2;
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.cols = 3;
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.cols = 4;
+        }
+      }
+    });
+  }
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
@@ -27,16 +53,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.menuItems = response.menuItems;
       });
-    
-    if(window.innerWidth <= 1680 && window.innerWidth >= 1440){
-      this.rowHeight = "200px"
-    }else if (window.innerWidth <= 1400 && window.innerWidth >= 1370){
-      this.rowHeight = "240px"
-    }else if (window.innerWidth <= 1366){
-      this.rowHeight = "220px"
-    }else{
-      this.rowHeight = "180px"
-    }
 
     const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
       (message) => (this.message = message) //message =  {"timerFired":false}
@@ -55,7 +71,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onResize(event: any) {
-    if(event.target.innerWidth <= 1680 && event.target.innerWidth >= 1440){
+/*    if(event.target.innerWidth <= 1680 && event.target.innerWidth >= 1440){
       this.rowHeight = "200px"
     }else if (event.target.innerWidth <= 1400 && event.target.innerWidth >= 1370){
       this.rowHeight = "240px"
@@ -63,7 +79,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.rowHeight = "220px"
     }else{
       this.rowHeight = "200px"
-    }
+    }*/
    
   }
 

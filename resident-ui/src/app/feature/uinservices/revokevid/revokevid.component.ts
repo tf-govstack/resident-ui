@@ -12,6 +12,7 @@ import { ThrowStmt } from "@angular/compiler";
 import { HostListener } from '@angular/core';
 import {saveAs} from 'file-saver';
 import { AuditService } from "src/app/core/services/audit.service";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: "app-revokevid",
@@ -34,13 +35,13 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   message: string;
   newVidValue:string;
   rowHeight:string = "2:1.2";
-  cols:number = 4;
+  cols:number;
   showInfoCard:boolean = false;
   iIconVidType:any;
   infoText:any;
   eventId:any;
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService) {
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "confirmBtnForVid") {
         this.generateVID(this.newVidType)
@@ -50,14 +51,36 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         this.vidDownloadStatus(this.newVidValue)
       }
     })
+
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]).subscribe(result => {
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.cols = 1;
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.cols = 1;
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.cols = 2;
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.cols = 3;
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.cols = 4;
+        }
+      }
+    });
   }
 
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));
-    this.cols = (window.innerWidth <= 1400) ? 3 : 4 
-    this.rowHeight = (window.innerWidth <= 1420) ? "2:1.3" : "2:1.2"
-   
-
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
@@ -106,8 +129,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   onResize(event:any){
-    this.cols = (event.target.innerWidth  <= 1400 ) ? 3 : 4
-    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.3" : "2:1.2"
+    /*this.cols = (event.target.innerWidth  <= 1400 ) ? 3 : 4
+    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.3" : "2:1.2"*/
   }
 
   displayVid(finalTypeList, policyType, policy, showvid) {
