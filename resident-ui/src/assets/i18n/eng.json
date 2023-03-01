@@ -397,6 +397,7 @@
         "mappingMessage": " Mapped Successfully",
         "termsAndConditionsLabel": "Terms and Conditions",
         "clickHere":"click here.",
+        "relogin":" to relogin.",
         "successRemainMsg":"to track service request with pre-filled EID.",
         "passwordCombinationHeading":"Password combination: ",
         "passwordCombination":"First four letters of your first name and your year of birth. E.g.: If your name is Johnny Depp born on 09/06/1963, your password will be John1963.",
@@ -518,7 +519,6 @@
         "RES-SER-459": "The entered EID is not associated with the VID/UIN used to log in.",
         "RES-SER-412": "Please enter valid UIN/VID.",
         "RES-SER-405":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
-        "RES-SER-418":"Consent denied for this feature in the login. Please re-login with appropriate consent provided.",
         "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in.",
         "RES-SER-449":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
         "RES-SER-414":"Comment section cannot be blank. Please enter your comments in order to proceed.",
@@ -526,6 +526,7 @@
         "RES-SER-513":"Failed to create VID, as the existing VID cannot be revoked since this VID was used to log into the current session.",
         "RES-OTP-007":"OTP is invalid",
         "RES-SER-415":"Template exceptionServiceError.",
-        "RES-SER-463":"Send OTP failed."
+        "RES-SER-463":"Send OTP failed.",
+        "RES-SER-418":"Dear resident, you cannot access this service since you have not accepted the consent while logging in. Please re-login and accept the relevant consent in order to proceed further with this service."
     }
 }

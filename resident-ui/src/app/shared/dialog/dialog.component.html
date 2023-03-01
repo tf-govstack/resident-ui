@@ -133,6 +133,20 @@
     </div>
   </div>
 
+  <!-- Access denied -->
+  <div *ngIf="input.case === 'accessDenied'" style="padding: 12px; border: 1px solid red; background-color: #FFD9D8; color: red; border-radius: 8px;"  >
+    <div style="display: flex; align-items: start;">
+      <img src="./assets/cancel_icon.png" height="35px" width="35px" class="pop-up-icon" />
+    <p style="font-size: 14px; margin-left: 12px;">{{input.message}} <span (click)="logOut()"
+      class="navigate-link">{{input.clickHere.replace(".","")}}</span>{{input.relogin}}</p>
+    </div>
+    <div mat-dialog-actions class="pop-up-footer">
+        <button mat-button cdkFocusInitial (click)="dismissPage()">{{input.btnTxt}}</button>
+    </div>
+  </div>
+
+  <!-- ERROR -->
+
   <div class="pop-up" *ngIf="input.case === 'ERROR'">
     <div class="infro-card">
       <img [src]="icon" height="35px" width="35px" class="success-img" />
