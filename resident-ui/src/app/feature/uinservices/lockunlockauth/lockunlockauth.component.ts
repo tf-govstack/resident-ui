@@ -93,8 +93,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .getAuthlockStatus()
     .subscribe((response) => {
-      if(response["response"]) 
-        console.log(response["response"])       
+      if(response["response"]){  
         newAuthlist = response["response"]["authTypes"];
         if(response["response"]["authTypes"].length == 0){
           for (var i=0 ; i < authTypes.length ; i++){
@@ -134,7 +133,11 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
           }
         }
         this.showSpinner = false;
+      }else{
+          this.showErrorPopup(response["errors"])
+      }
     });
+    
   }
 
   updateAuthlockStatusBtn(){
@@ -214,7 +217,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
           this.showMessage(JSON.stringify(response["response"]),eventId);
           this.changedItems = {}
         }else{
-          this.showErrorPopup(JSON.stringify(response["errors"]));
+          this.showErrorPopup(response["errors"]);
         }
       },
       error => {
@@ -269,17 +272,36 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   }
 
   showErrorPopup(message: string) {
-    this.dialog
-      .open(DialogComponent, {
-        width: '550px',
-        data: {
-          case: 'MESSAGE',
-          title: this.popupMessages.genericmessage.errorLabel,
-          message: message,
-          btnTxt: this.popupMessages.genericmessage.successButton
-        },
-        disableClose: true
-      });
+      let errorCode = message[0]['errorCode']
+      setTimeout(() => {
+      if(errorCode === "RES-SER-418"){
+      this.dialog
+        .open(DialogComponent, {
+          width: '650px',
+          data: {
+            case: 'accessDenied',
+            title: this.popupMessages.genericmessage.errorLabel,
+            message: this.popupMessages.serverErrors[errorCode],
+            btnTxt: this.popupMessages.genericmessage.successButton,
+            clickHere: this.popupMessages.genericmessage.clickHere,
+            relogin: this.popupMessages.genericmessage.relogin
+          },
+          disableClose: true
+        });
+      }else{
+        this.dialog
+        .open(DialogComponent, {
+          width: '650px',
+          data: {
+            case: 'MESSAGE',
+            title: this.popupMessages.genericmessage.errorLabel,
+            message: this.popupMessages.serverErrors[errorCode],
+            btnTxt: this.popupMessages.genericmessage.successButton
+          },
+          disableClose: true
+        });
+      }
+    },400)
   }
 
   onToggle(event: any){

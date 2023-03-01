@@ -40,6 +40,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   iIconVidType:any;
   infoText:any;
   eventId:any;
+  errorCode:string;
 
   constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -86,6 +87,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.langJSON = response;
         this.popupMessages = response;
+        console.log(response)
+        console.log(this.popupMessages)
       });
     this.getVID();
   }
@@ -94,9 +97,12 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getVIDs()
       .subscribe((response) => {
-        if (response["response"])
+        if (response["response"]){
           this.vidlist = response["response"];
         this.getPolicy();
+        }else{
+          this.showErrorPopup(response["errors"])
+        }
       });
   }
 
@@ -294,7 +300,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         }, 400);
         this.showMessage(this.message ,this.eventId);
       } else {
-        this.showErrorPopup(response.body["errors"][0].errorCode);
+        this.showErrorPopup(response.body["errors"]);
       }
     },
       error => {
@@ -394,10 +400,28 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   showErrorPopup(message: string) {
-    this.message = this.popupMessages.serverErrors[message]
+    this.errorCode = message[0]['errorCode']
+    setTimeout(() => {
+      this.message = this.popupMessages.serverErrors[this.errorCode]
+   
+    if(this.errorCode === "RES-SER-418"){
     this.dialog
       .open(DialogComponent, {
-        width: '550px',
+        width: '650px',
+        data: {
+          case: 'accessDenied',
+          title: this.popupMessages.genericmessage.errorLabel,
+          message: this.message,
+          btnTxt: this.popupMessages.genericmessage.successButton,
+          clickHere: this.popupMessages.genericmessage.clickHere,
+          relogin: this.popupMessages.genericmessage.relogin
+        },
+        disableClose: true
+      });
+    }else{
+      this.dialog
+      .open(DialogComponent, {
+        width: '650px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
@@ -406,6 +430,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         },
         disableClose: true
       });
+    }
+  },400)
   }
 
   onToggle(event: any) {

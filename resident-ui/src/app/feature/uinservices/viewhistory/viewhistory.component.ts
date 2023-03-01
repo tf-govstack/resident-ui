@@ -88,7 +88,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
       this.langJSON = response;
-      console.log(response)
       this.popupMessages = response;
     });
 
@@ -284,7 +283,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
   showErrorPopup(message: string) {
     let errorCode = message[0]['errorCode']
-    console.log(this.popupMessages.genericmessage)
+    setTimeout(() => {
     if(errorCode === "RES-SER-418"){
     this.dialog
       .open(DialogComponent, {
@@ -312,6 +311,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
         disableClose: true
       });
     }
+  },400)
   }
 
   ngOnDestroy(): void {

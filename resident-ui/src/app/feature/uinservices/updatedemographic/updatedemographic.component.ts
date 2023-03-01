@@ -132,11 +132,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getUserInfo('update-demographics')
       .subscribe((response) => {
-        if (response["response"])
+        if (response["response"]){
           this.userInfo = response["response"];
         console.log(this.userInfo)
         UpdatedemographicComponent.actualData = response["response"];
         this.buildData();
+        }else{
+           this.showErrorPopup(response['errors'])
+        }
       });
   }
 
@@ -718,23 +721,41 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   showErrorPopup(message: string) {
     this.errorCode = message[0]["errorCode"];
+    setTimeout(() => {
     if (this.errorCode === "RES-SER-410") {
       let messageType = message[0]["message"].split("-")[1].trim();
       this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
     } else {
       this.message = this.popupMessages.serverErrors[this.errorCode]
     }
-    this.dialog
-      .open(DialogComponent, {
-        width: '550px',
-        data: {
-          case: 'MESSAGE',
-          title: this.popupMessages.genericmessage.errorLabel,
-          message: this.message,
-          btnTxt: this.popupMessages.genericmessage.successButton
-        },
-        disableClose: true
-      });
+    if(this.errorCode === "RES-SER-418"){
+      this.dialog
+        .open(DialogComponent, {
+          width: '650px',
+          data: {
+            case: 'accessDenied',
+            title: this.popupMessages.genericmessage.errorLabel,
+            message: this.popupMessages.serverErrors[this.errorCode],
+            btnTxt: this.popupMessages.genericmessage.successButton,
+            clickHere: this.popupMessages.genericmessage.clickHere,
+            relogin: this.popupMessages.genericmessage.relogin
+          },
+          disableClose: true
+        });
+      }else{
+        this.dialog
+        .open(DialogComponent, {
+          width: '650px',
+          data: {
+            case: 'MESSAGE',
+            title: this.popupMessages.genericmessage.errorLabel,
+            message: this.popupMessages.serverErrors[this.errorCode],
+            btnTxt: this.popupMessages.genericmessage.successButton
+          },
+          disableClose: true
+        });
+      }
+    },400)
   }
 
 

@@ -82,7 +82,12 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getUserInfo('personalized-card')
       .subscribe((response) => {
-        this.userInfo = response["response"];
+        if(response['response']){
+          this.userInfo = response["response"];
+        }else{
+          this.showErrorPopup(response['errors'])
+        }
+        
       });
   }
 
@@ -290,17 +295,36 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   }
 
   showErrorPopup(message: string) {
+    let errorCode = message[0]['errorCode']
+    setTimeout(() => {
+    if(errorCode === "RES-SER-418"){
     this.dialog
+      .open(DialogComponent, {
+        width: '650px',
+        data: {
+          case: 'accessDenied',
+          title: this.popupMessages.genericmessage.errorLabel,
+          message: this.popupMessages.serverErrors[errorCode],
+          btnTxt: this.popupMessages.genericmessage.successButton,
+          clickHere: this.popupMessages.genericmessage.clickHere,
+          relogin: this.popupMessages.genericmessage.relogin
+        },
+        disableClose: true
+      });
+    }else{
+      this.dialog
       .open(DialogComponent, {
         width: '650px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
-          message: message,
+          message: this.popupMessages.serverErrors[errorCode],
           btnTxt: this.popupMessages.genericmessage.successButton
         },
         disableClose: true
       });
+    }
+  },400)
   }
 
   ngOnDestroy(): void {
