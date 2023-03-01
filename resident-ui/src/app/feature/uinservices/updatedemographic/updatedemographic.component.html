@@ -421,7 +421,7 @@
                   <td width="45%"><label>{{field.labelName[language][1]}}</label></td>
                 </tr>
                 <tr>
-                  <td width="45%">
+                  <td *ngIf="buildJSONData[field.attributeName]" width="45%">
                     <input style="border: none; background-color: #F7F7F7" type="text" class="readonly" readonly="true"
                       disabled="true" value="{{buildJSONData[field.attributeName][language]}}">
                   </td>

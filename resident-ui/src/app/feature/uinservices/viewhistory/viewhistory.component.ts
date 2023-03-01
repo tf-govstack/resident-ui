@@ -88,6 +88,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
       this.langJSON = response;
+      console.log(response)
       this.popupMessages = response;
     });
 
@@ -98,10 +99,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   getServiceHistory(pageEvent:any, filters:any){  
-    console.log(filters)
-    console.log(pageEvent)
-    console.log(this.statusFilter)
-    console.log(this.serviceType)
     let finalFilters = ''
     if(filters === "" && pageEvent){
       finalFilters = filters
@@ -114,13 +111,15 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .getServiceHistory(pageEvent, finalFilters)
     .subscribe((response) => {
-      console.log(response)
-      if(response["response"])     
+      if(response["response"]){   
         this.responselist = response["response"]["data"];
         this.totalItems = response["response"]["totalItems"];
         this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
         this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
         this.parsedrodowndata();
+      }else{
+        this.showErrorPopup(response["errors"])
+      }
     });
   }
 
@@ -170,7 +169,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, controlType: string) {
-    console.log(event)
     this.selectedDate = this.today
     if(controlType === "dropdown"){
       this[formControlName] = event.value.toString().toUpperCase();
@@ -180,7 +178,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       let formattedDate = dateFormat.getFullYear() + "-" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "-" + ("0" + dateFormat.getDate()).slice(-2);
       this[formControlName] = formattedDate;
     }else{
+      if(event.target){
       this[formControlName] = event.target.value;
+      }
     }
     if(formControlName === "serviceType"){
       this.auditService.audit('RP-009', 'View history', 'RP-View history', 'View history', 'User chooses the "history filter" from the drop-down');
@@ -189,19 +189,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       this.auditService.audit('RP-010', 'View history', 'RP-View history', 'View history', 'User chooses the "status filter" from the drop-down');
       this.statusFilter = this.statusFilter.replace(/ALL,/ig, '');
     }
-  }
-
-  showMessage(message: string) {    
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '650px',
-      data: {
-        case: 'MESSAGE',
-        title: this.popupMessages.genericmessage.successLabel,
-        message: message,
-        btnTxt: this.popupMessages.genericmessage.successButton
-      }
-    });
-    return dialogRef;
   }
 
   pinData(data:any){
@@ -282,18 +269,49 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
   }
 
+  showMessage(message: string) {    
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '650px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        message: message,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
+  }
+
   showErrorPopup(message: string) {
+    let errorCode = message[0]['errorCode']
+    console.log(this.popupMessages.genericmessage)
+    if(errorCode === "RES-SER-418"){
     this.dialog
+      .open(DialogComponent, {
+        width: '650px',
+        data: {
+          case: 'accessDenied',
+          title: this.popupMessages.genericmessage.errorLabel,
+          message: this.popupMessages.serverErrors[errorCode],
+          btnTxt: this.popupMessages.genericmessage.successButton,
+          clickHere: this.popupMessages.genericmessage.clickHere,
+          relogin: this.popupMessages.genericmessage.relogin
+        },
+        disableClose: true
+      });
+    }else{
+      this.dialog
       .open(DialogComponent, {
         width: '650px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
-          message: message,
+          message: this.popupMessages.serverErrors[errorCode],
           btnTxt: this.popupMessages.genericmessage.successButton
         },
         disableClose: true
       });
+    }
   }
 
   ngOnDestroy(): void {
