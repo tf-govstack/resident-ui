@@ -62,7 +62,7 @@ export class GetuinComponent implements OnInit {
           this.width = "90%";
         }
         if (result.breakpoints[Breakpoints.Medium]) {
-          this.width = "60%";
+          this.width = "90%";
         }
         if (result.breakpoints[Breakpoints.Large]) {
           this.width = "40%";
