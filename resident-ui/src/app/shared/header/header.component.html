@@ -69,10 +69,10 @@
             style="margin-right: 0px;color: green;">person</mat-icon></button>
       </mat-list-item>
       <mat-menu class="profile-menu" #profilemenu="matMenu" [overlapTrigger]="false" id="profileMenu">
-        <div style="min-width: 250px;padding: 15px 20px;background: #03A64A;display: flex;align-items: center;"><img
+        <div style="width: 250px;padding: 15px 20px;background: #03A64A;display: flex;align-items: center; overflow-wrap: break-word;"><img
             [src]="userImage" alt=""
             style="width:50px;height: 50px;border-radius: 50px;border: 2px solid white;" />&nbsp;&nbsp;&nbsp;<span
-            style="color:white;">{{fullName}}</span></div>
+            style="color:white; width: 80%;">{{fullName}}</span></div>
         <mat-divider></mat-divider>
         <div style="height: 10px;"></div>
         <div style="height: 30px;"><span style="font-size: 12px;padding: 30px;color: rgba(0,0,0,.87);">Last Login</span>

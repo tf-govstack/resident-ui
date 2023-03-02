@@ -398,6 +398,7 @@
         "termsAndConditionsLabel": "Terms and Conditions",
         "clickHere":"click here.",
         "relogin":" to relogin.",
+        "loginSuccessfully":"Dear resident, you logged in complected successfully",
         "successRemainMsg":"to track service request with pre-filled EID.",
         "passwordCombinationHeading":"Password combination: ",
         "passwordCombination":"First four letters of your first name and your year of birth. E.g.: If your name is Johnny Depp born on 09/06/1963, your password will be John1963.",
