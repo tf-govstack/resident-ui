@@ -33,7 +33,7 @@
 }
 
 .main-container {
-  padding: 0 6rem 0 6rem;
+  padding: 0 6% 0 6%;
 }
 
 .send-otp-container {
@@ -65,7 +65,7 @@ label {
 }
 
 input {
-  width: 300px;
+  width: 70%;
   height: 36px;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   border: 1px solid #909090;

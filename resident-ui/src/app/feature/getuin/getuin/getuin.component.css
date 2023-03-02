@@ -1,5 +1,5 @@
 .main-container {
-    padding: 0 6rem 0 6rem;
+    padding: 0 6% 0 6%;
 }
 
 .login-card {
@@ -49,7 +49,7 @@
 }
 
 .input-text {
-    width: 300px;
+    width: 75%;
     height: 36px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 1px solid #909090;
