@@ -11,6 +11,7 @@ import { saveAs } from 'file-saver';
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { AuditService } from "src/app/core/services/audit.service";
 import moment from 'moment';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: "app-sharewithpartner",
@@ -37,13 +38,45 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   eventId: any;
   shareBthDisabled: boolean = true;
   valuesSelected: any = [];
+  width : string;
+  cols : number;
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService) {
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "shareWithPartner") {
         this.shareInfo()
       }
-    })
+    });
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]).subscribe(result => {
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.cols = 1;
+          this.width = "19em";
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.cols = 1;
+          this.width = "35em";
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.cols = 2;
+          this.width = "25em";
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.cols = 2;
+          this.width = "35em";
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.cols = 2;
+          this.width = "40em";
+        }
+      }
+    });
   }
 
   async ngOnInit() {

@@ -11,10 +11,10 @@
   <mat-tab label="{{'updatedemographic.identity' | translate}}">
     <table width="100%">
       <tr>
-        <td>
+        <td [style.width] = "width">
           <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
             <div layout="row" *ngIf="field.tabgroup === 'identity'">
-              <table width="700px">
+              <table width="100%">
                 <tr *ngIf="field.controlType === 'calendar'">
                   <td width="100%">
                     <table width="100%">
@@ -201,10 +201,10 @@
   </mat-tab>
   <mat-tab label="{{'updatedemographic.address' | translate}}">
     <div class="address-page">
-      <div>
+      <div [style.width] = "width">
         <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
           <div layout="row" *ngIf="field.tabgroup === 'address'">
-            <table width="700px">
+            <table width="100%">
               <tr *ngIf="field.controlType === 'textbox'">
                 <td width="100%">
                   <table width="100%" *ngFor="let language of supportedLanguages;">
