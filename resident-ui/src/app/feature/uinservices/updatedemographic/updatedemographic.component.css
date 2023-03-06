@@ -197,7 +197,7 @@ label{
   display: block;
   position: relative;
   flex: auto;
-  width: 138% !important;
+  /*width: 138% !important;*/
   margin-top: 1.4rem !important;
 }
 
@@ -212,4 +212,25 @@ label{
 
 ::ng-deep .mat-form-field-underline {
   display: none;
+}
+
+::ng-deep .mat-grid-tile .mat-figure{
+  align-items: baseline !important;
+  display: block !important;
+}
+
+::ng-deep .mat-form-field-flex{
+  align-items: center !important;
+}
+
+::ng-deep  .mat-form-field{
+  width: 100% !important;
+}
+
+mat-select {
+  outline: 1px solid !important;
+  outline-color: #ccc !important;
+  outline-width: thin;
+  border-radius: 5px;
+  color: white !important;
 }

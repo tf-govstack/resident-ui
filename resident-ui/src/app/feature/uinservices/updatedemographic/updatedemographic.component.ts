@@ -11,6 +11,7 @@ import { InteractionService } from "src/app/core/services/interaction.service";
 import { AuditService } from "src/app/core/services/audit.service";
 import { isNgTemplate } from "@angular/compiler";
 import defaultJson from "src/assets/i18n/default.json";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: "app-demographic",
@@ -76,8 +77,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   newNotificationLanguages:any= [];
   matTabLabel:string = "Identity";
   contactTye:string;
+  width : string;
+  cols : number;
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService) {
+  constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "updateMyData") {
         this.updateDemographicData();
@@ -87,6 +90,36 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         this.verifyupdatedData(id.otp);
       }
     })
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ]).subscribe(result => {
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.cols = 1;
+          this.width = "95%";
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.cols = 1;
+          this.width = "90%";
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.cols = 1;
+          this.width = "75%";
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.cols = 1;
+          this.width = "50%";
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.cols = 1;
+          this.width = "40%";
+        }
+      }
+    });
   }
 
   async ngOnInit() {
