@@ -26,6 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
   errorMessages: any;
   decoded: any;
   invokedurl: any;
+  popupMessages:any;
   localTimeZoneOffset: any = new Date().getTimezoneOffset();
   constructor(
     private redirectService: LoginRedirectService,
@@ -33,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private dialog: MatDialog,
     private translateService: TranslateService,
     private appService: AppConfigService,
-    public headerService: HeaderService
+    public headerService: HeaderService,
   ) { }
   // function which will be called for all http calls
   intercept(
@@ -82,6 +83,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.router.navigateByUrl(`dashboard`);
               } else {
                 this.redirectService.redirect(window.location.href);
+                this.showMessage()
               }
             } else if (err.status === 403) {
               this.translateService
@@ -177,5 +179,26 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       )
     );
+  }
+
+  async ngOnInit(){
+    this.translateService
+    .getTranslation(localStorage.getItem("langCode"))
+    .subscribe(response => {
+      this.popupMessages = response;
+    });
+  }
+
+  showMessage(){
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '650px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        message: this.popupMessages.genericmessage.loginSuccessfully,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
   }
 }

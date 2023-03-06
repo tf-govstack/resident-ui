@@ -51,6 +51,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   historySelectedValue:string;
   @ViewChild('statusFilter') statusFilterSelectAll: MatSelect;
   @ViewChild('serviceType') serviceTypeSelectAll: MatSelect;
+  searchParam:string;
 
   constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.dateAdapter.setLocale('en-GB'); 
@@ -97,12 +98,12 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.captureValue("","ALL","")
   }
 
-  getServiceHistory(pageEvent:any, filters:any){  
+  getServiceHistory(pageEvent:any, filters:any){ 
     let finalFilters = ''
     if(filters === "" && pageEvent){
       finalFilters = filters
     }else if(filters !== "" && pageEvent){
-      finalFilters = `statusFilter=${filters}`
+      finalFilters = filters
     }else{
       finalFilters = filters
     }
@@ -220,18 +221,19 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   search(){    
-    let searchParam = "", self = this;    
+    let searchParam = "",
+     self = this;    
     this.controlTypes.forEach(controlType => {
       if(self[controlType]){
-        if(searchParam){
-          searchParam = searchParam+"&"+controlType+"="+self[controlType];
+        if(self.searchParam){
+          self.searchParam = self.searchParam+"&"+controlType+"="+self[controlType];
         }else{
-          searchParam = controlType+"="+self[controlType];
+          self.searchParam = controlType+"="+self[controlType];
         }
       }     
     });
-    console.log(searchParam);
-    this.getServiceHistory("",searchParam);  
+    console.log(self.searchParam);
+    this.getServiceHistory("",self.searchParam);  
     this.auditService.audit('RP-004', 'View history', 'RP-View history', 'View history', 'User clicks on "Go" button for applying "the chosen filter"');  
   }
 

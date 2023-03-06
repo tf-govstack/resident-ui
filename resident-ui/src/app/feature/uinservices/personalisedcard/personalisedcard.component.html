@@ -17,7 +17,8 @@
 								<mat-checkbox [disabled]="!data.checked"  id="{{data.maskRequiredLabel[langCode]}}{{i}}" (click)="captureCheckboxValue($event, data,data.maskAttributeName)">{{data.maskRequiredLabel[langCode]}}</mat-checkbox>
 							</td>
 							<td *ngIf="data.formatRequired" style="width:50%">
-								<button [disabled]="!data.checked" mat-button [matMenuTriggerFor]="basic">{{data.formatOptionLabel[langCode]}}<mat-icon>keyboard_arrow_down</mat-icon></button>
+								<button *ngIf="data.attributeName !== 'addressLine1' " [disabled]="!data.checked" mat-button [matMenuTriggerFor]="basic">{{data.formatOptionLabel[langCode]}}<mat-icon>keyboard_arrow_down</mat-icon></button>
+								<button *ngIf="data.attributeName === 'addressLine1' " [disabled]="!data.checked" mat-button [matMenuTriggerFor]="basic2">{{data.formatOptionLabel[langCode]}}<mat-icon>keyboard_arrow_down</mat-icon></button>
 								<mat-menu #basic="matMenu">
 									<!-- <ng-container *ngFor="let data1 of data.formatOption[langCode];"> -->
 									<ng-container *ngFor="let data1 of data.formatOption[langCode];">
@@ -28,6 +29,13 @@
 											<img style="margin-left: -3px;" src="./assets/icons/iconfont/check_box_black_24dp (1).svg"/> &nbsp;
 											{{data1.label}}
 										</span>
+										</button>
+								  	</ng-container>
+								</mat-menu>
+								<mat-menu #basic2="matMenu">
+									<ng-container *ngFor="let data1 of data.formatOption[langCode];">
+								  		<button id="{{data1.value}}Btn"  mat-menu-item (click)="captureCheckboxValue($event, data,data1)">
+											<mat-checkbox id="{{data1.value}}">{{data1.label}}</mat-checkbox>
 										</button>
 								  	</ng-container>
 								</mat-menu>
