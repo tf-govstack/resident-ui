@@ -5,18 +5,22 @@
 }
 
 .seleted-details-card{
-    min-height: 260px; 
-    width: 50%; 
+    min-height: 400px; 
+    width: 100%; 
     border: 1px solid #505050; 
     border-radius: 6px; 
     padding: 12px;
 }
-@media screen and (max-width:1480px) {
+/*@media screen and (max-width:1480px) {
     .seleted-details-card{ 
         width: 70%;
     }
-}
+}*/
 .download-btn{
     background-color: #03A64A;
     color: #ffffff;
+}
+::ng-deep .mat-grid-tile .mat-figure{
+    align-items: baseline !important;
+    display: block !important;
 }

@@ -90,8 +90,8 @@
 }
 
 .attribute-card{
-  min-height: 200px; 
-  width: 50%; 
+  min-height: 400px; 
+  width: 100%; 
   border: 1px solid #505050; 
   border-radius: 6px; 
   padding: 12px;
@@ -115,4 +115,9 @@
 
 .main-label{
   color: #505050;
+}
+
+::ng-deep .mat-grid-tile .mat-figure{
+  align-items: baseline !important;
+  display: block !important;
 }
