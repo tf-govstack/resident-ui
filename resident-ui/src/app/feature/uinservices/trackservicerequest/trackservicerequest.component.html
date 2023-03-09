@@ -37,29 +37,29 @@
 		<div *ngIf="eidStatus" class="trackDetails">
 			<table style="width: 100%; border-radius: 10px; border-collapse: collapse;">
 				<tr>
-					<td><label>{{'trackservicerequest.eventId' | translate}}</label></td>
-					<td><label>{{'trackservicerequest.eventType' | translate}}</label></td>
-					<td><label>{{'trackservicerequest.description' | translate}}</label></td>
-					<td><label>{{'trackservicerequest.eventStatus' | translate}}</label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.eventId' | translate}}</label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.eventType' | translate}}</label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.description' | translate}}</label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.eventStatus' | translate}}</label></td>
 				</tr>
 				<tr style="border-bottom: 1px solid silver;">
-					<td>{{eidStatus.eventId}}</td>
-					<td>{{eidStatus.eventType}}</td>
-					<td>{{eidStatus.info.description}}</td>
-					<td>{{eidStatus.eventStatus}}</td>
+					<td style="width:25%">{{eidStatus.eventId}}</td>
+					<td style="width:25%">{{eidStatus.eventType}}</td>
+					<td style="width:25%">{{eidStatus.info.description}}</td>
+					<td style="width:25%">{{eidStatus.eventStatus}}</td>
 
 				</tr>
 				<tr style="padding:10px;">
-					<td><label>{{'trackservicerequest.individualId' | translate}}</label></td>
-					<td><label>{{'trackservicerequest.summary' | translate}}</label></td>
-					<td><label>{{'trackservicerequest.timestamp' | translate}}</label></td>
-					<td><label>{{'trackservicerequest.authenticationMode' | translate}} </label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.individualId' | translate}}</label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.summary' | translate}}</label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.timestamp' | translate}}</label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.authenticationMode' | translate}} </label></td>
 				</tr>
 				<tr style="padding:10px;">
-					<td>{{eidStatus.individualId}}</td>
-					<td>{{eidStatus.summary.replace("$attributes",eidStatus.info.attributeList)}}</td>
-					<td>{{eidStatus.timestamp}}</td>
-					<td>{{eidStatus.info.authenticationMode}}</td>
+					<td style="width:25%">{{eidStatus.individualId}}</td>
+					<td style="width:25%">{{eidStatus.summary.replace("$attributes",eidStatus.info.attributeList)}}</td>
+					<td style="width:25%">{{eidStatus.timestamp}}</td>
+					<td style="width:25%">{{eidStatus.info.authenticationMode}}</td>
 				</tr>
 				<!-- Download Personalized Card and Update my data -->
 				<tr *ngIf="eidStatus.eventType === 'Download Personalized Card' || eidStatus.eventType === 'Update My Uin' "
@@ -93,16 +93,16 @@
 				<!-- Share credential with partner	 -->
 				<tr *ngIf="eidStatus.eventType === 'Share Credential With Partner' "
 					style="padding:10px; padding:10px; border-top: 1px solid silver;">
-					<td><label>{{'trackservicerequest.partnerLogo' | translate}} </label></td>
-					<td><label>{{'trackservicerequest.partnerName' | translate}} </label></td>
-					<td><label>{{'trackservicerequest.attributeList' | translate}} </label></td>
-					<td><label>{{'trackservicerequest.purpose' | translate}} </label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.partnerLogo' | translate}} </label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.partnerName' | translate}} </label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.attributeList' | translate}} </label></td>
+					<td style="width:25%"><label>{{'trackservicerequest.purpose' | translate}} </label></td>
 				</tr>
 				<tr *ngIf="eidStatus.eventType === 'Share Credential With Partner' ">
-					<td>image</td>
-					<td>{{eidStatus.info.partnerName}}</td>
-					<td>{{eidStatus.info.attributeList}}</td>
-					<td>{{eidStatus.info.purpose}}</td>
+					<td style="width:25%">image</td>
+					<td style="width:25%">{{eidStatus.info.partnerName}}</td>
+					<td style="width:25%">{{eidStatus.info.attributeList}}</td>
+					<td style="width:25%">{{eidStatus.info.purpose}}</td>
 				</tr>
 			</table>
 			<div *ngIf="eidStatus.eventType === 'Generate Vid'"

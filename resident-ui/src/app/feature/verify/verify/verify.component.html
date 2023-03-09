@@ -5,7 +5,7 @@
   </span>
   <mat-card class="verify-phnumb-email-card" *ngIf="!showOtpPanel">
     <div class="send-otp-container" [style.width] = "width">
-      <div class="btn-card">
+      <div class="btn-card" [ngClass]="deviceSize !== 'XSmall' ? 'btn-card' : 'btn-card-xs'">
         <mat-button-toggle id="phoneChannelBtn" (click)="radioChange('PHONE')" class="button"
           [style.borderColor]="numBtnColors"><img *ngIf="!phoneIcon"
             src="./assets/images/phone_iphone_black_24dp.png" /><img *ngIf="phoneIcon"

@@ -283,8 +283,8 @@ mat-keyboard-container mat-keyboard-key .mat-keyboard-key {
   color: #ff4081;
 }
 app-center-selection, app-document, app-verify, uin-dashboard, app-uindashboard, app-viewhistory, app-revokevid, app-lockunlockauth, app-demographic, app-trackservicerequest, app-personalisedcard, app-physicalcard, app-sharewithpartner {
-  margin-left: 60px !important;
-  margin-right: 60px !important;
+  margin-left: 3% !important;
+  margin-right: 3% !important;
 }
 
 .breadcrumb {
