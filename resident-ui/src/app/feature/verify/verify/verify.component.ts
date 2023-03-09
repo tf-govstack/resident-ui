@@ -47,6 +47,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   mailIcon:boolean = false;
   captchaChecked:boolean = false;
   width : string;
+  deviceSize:string = "";
 
   constructor(
     private router: Router,
@@ -70,18 +71,23 @@ export class VerifyComponent implements OnInit, OnDestroy {
       if (result.matches) {
         if (result.breakpoints[Breakpoints.XSmall]) {
           this.width = "90%";
+          this.deviceSize = "XSmall";
         }
         if (result.breakpoints[Breakpoints.Small]) {
           this.width = "90%";
+          this.deviceSize = "Small";
         }
         if (result.breakpoints[Breakpoints.Medium]) {
           this.width = "60%";
+          this.deviceSize = "Medium";
         }
         if (result.breakpoints[Breakpoints.Large]) {
           this.width = "55%";
+          this.deviceSize = "Large";
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
           this.width = "35%";
+          this.deviceSize = "XLarge";
         }
       }
     });

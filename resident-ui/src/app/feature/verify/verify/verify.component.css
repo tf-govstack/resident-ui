@@ -32,6 +32,10 @@
   display: flex;
 }
 
+.btn-card-xs {
+  display: contents;
+}
+
 .main-container {
   padding: 0 6% 0 6%;
 }
