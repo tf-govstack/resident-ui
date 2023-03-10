@@ -125,7 +125,16 @@
                             <input type="file" #fileDropRef id="fileDropRef"
                               (change)="fileBrowseHandler($event.target.files, 'POI')"
                               accept=".pdf, .jpg, .jpeg, .png" />
-                            <label for="fileDropRef">Upload Image</label>
+                            <label for="fileDropRef">
+                              <svg id="upload_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24.042" viewBox="0 0 24 24.042">
+                                <g id="Group_13" data-name="Group 13" transform="translate(3 2.504)">
+                                  <path id="Path_988" data-name="Path 988" d="M13,11.337l2.59,2.585L17,12.509,12,7.5,7,12.509l1.41,1.412L11,11.337v9.687h2Z" transform="translate(-3 -7.5)" fill="#03a64a"/>
+                                  <path id="Path_2004" data-name="Path 2004" d="M19,3v7.012H5V3H3v7.012a2.008,2.008,0,0,0,2,2H19a2.008,2.008,0,0,0,2-2V3Z" transform="translate(-3 6.517)" fill="#03a64a"/>
+                                </g>
+                                <path id="Path_989" data-name="Path 989" d="M0,24.042H24V0H0Z" fill="none"/>
+                              </svg>
+                              <span style="margin-top: 4px;padding-left: 5px;">Upload Image</span>
+                            </label>
                             <h3>or</h3>
                             <h3>Drop Image</h3>
                           </div>
@@ -294,7 +303,16 @@
                         <div class="container" appDnd (fileDropped)="onFileDropped($event, 'POA')">
                           <input type="file" #fileAddRef id="fileAddRef"
                             (change)="fileBrowseHandler($event.target.files, 'POA')" accept=".pdf, .jpg, .jpeg, .png" />
-                          <label for="fileAddRef">Upload Image</label>
+                          <label for="fileDropRef">
+                            <svg id="upload_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24.042" viewBox="0 0 24 24.042">
+                              <g id="Group_13" data-name="Group 13" transform="translate(3 2.504)">
+                                <path id="Path_988" data-name="Path 988" d="M13,11.337l2.59,2.585L17,12.509,12,7.5,7,12.509l1.41,1.412L11,11.337v9.687h2Z" transform="translate(-3 -7.5)" fill="#03a64a"/>
+                                <path id="Path_2004" data-name="Path 2004" d="M19,3v7.012H5V3H3v7.012a2.008,2.008,0,0,0,2,2H19a2.008,2.008,0,0,0,2-2V3Z" transform="translate(-3 6.517)" fill="#03a64a"/>
+                              </g>
+                              <path id="Path_989" data-name="Path 989" d="M0,24.042H24V0H0Z" fill="none"/>
+                            </svg>
+                            <span style="margin-top: 4px;padding-left: 5px;">Upload Image</span>
+                          </label>
                           <h3>or</h3>
                           <h3>Drop Image</h3>
                         </div>
@@ -364,9 +382,44 @@
     </div>
   </mat-tab>
   <mat-tab label="{{'updatedemographic.contact' | translate}}">
-    <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
+    <div  *ngFor="let field of schema['identity']; let i = index">
+      <mat-grid-list *ngIf="field.tabgroup === 'contact'" [cols]="cols" rowHeight="100px" gutterSize="7px">
+        <mat-grid-tile class="mat-form1">
+          <div class="mini-card" *ngIf="field.controlType === 'textbox'">
+            <mat-card-header><mat-card-title>{{field.labelName[langCode][0]}}</mat-card-title></mat-card-header>
+            <mat-card-subtitle><input type="text" class="readonly" readonly="true" disabled="true"
+                      value="{{buildJSONData[field.attributeName]}}"></mat-card-subtitle>
+          </div>
+        </mat-grid-tile> 
+        <mat-grid-tile class="mat-form1">
+          <div class="mini-card" *ngIf="field.tabgroup === 'contact' && field.controlType === 'textbox'">
+            <mat-card-header><mat-card-title>{{field.labelName[langCode][1]}}</mat-card-title></mat-card-header>
+            <mat-card-subtitle><input matInput type="password" #{{field.attributeName}} id="{{field.attributeName}}"
+                      (blur)="captureValue($event, field.attributeName)" /></mat-card-subtitle>
+          </div>
+        </mat-grid-tile> 
+        <mat-grid-tile class="mat-form1">
+          <div class="mini-card" *ngIf="field.tabgroup === 'contact' && field.controlType === 'textbox'">
+            <mat-card-header><mat-card-title>{{field.labelName[langCode][2]}}</mat-card-title></mat-card-header>
+            <mat-card-subtitle><input (input)="captureConfirmValue($event,field.attributeName)" matInput
+                      #confirm{{field.attributeName}} id="confirm{{field.attributeName}}" /></mat-card-subtitle>
+          </div>
+        </mat-grid-tile> 
+         <mat-grid-tile class="mat-form1">
+          <div class="mini-card" *ngIf="field.tabgroup === 'contact' && field.controlType === 'textbox'">
+            <mat-card-header></mat-card-header>
+            <mat-card-subtitle><button [disabled]="sendOtpDisable || !(field.attributeName === updatedingId)"
+                      (click)="sendOTPBtn(field.attributeName)" mat-raised-button color="primary"
+                      id="sendOTP{{field.attributeName}}">{{field.labelName[langCode][3]
+                      |translate}}</button></mat-card-subtitle>
+          </div>
+        </mat-grid-tile>      
+      </mat-grid-list>
+    </div>
+
+    <!-- <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
       <div layout="row" *ngIf="field.tabgroup === 'contact'">
-        <table width="1200px">
+        <table [style.width] = "width">
           <tr *ngIf="field.controlType === 'textbox'">
             <td width="100%">
               <table width="100%">
@@ -405,11 +458,33 @@
           </tr>
         </table>
       </div>
-    </div>
+    </div> -->
   </mat-tab>
   <mat-tab label="{{'updatedemographic.languagePreference' | translate}}" style="display: flex; flex-direction: column; justify-content: space-between;align-items: flex-end;">
     <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
-      <div layout="row" *ngIf="field.tabgroup === 'notificationLanguage'">
+      <div *ngIf="field.tabgroup === 'notificationLanguage' && field.controlType === 'dropdown'">
+      <mat-grid-list *ngFor="let language of supportedLanguages;" [cols]="cols" rowHeight="100px" gutterSize="7px">
+        <mat-grid-tile class="mat-form1">
+          <div class="mini-card" *ngIf="field.tabgroup === 'notificationLanguage' && field.controlType === 'dropdown'">
+            <mat-card-header><mat-card-title>{{field.labelName[language][0]}}</mat-card-title></mat-card-header>
+            <mat-card-subtitle *ngIf="buildJSONData[field.attributeName]"><input style="border: none; background-color: #F7F7F7" type="text" class="readonly" readonly="true"
+                      disabled="true" value="{{buildJSONData[field.attributeName][language]}}"></mat-card-subtitle>
+          </div>
+        </mat-grid-tile> 
+        <mat-grid-tile class="mat-form1">
+          <div class="mini-card" *ngIf="field.tabgroup === 'notificationLanguage' && field.controlType === 'dropdown'">
+            <mat-card-header><mat-card-title>{{field.labelName[language][1]}}</mat-card-title></mat-card-header>
+            <mat-card-subtitle><mat-select [(ngModel)]="selected2" id="{{field.attributeName}}">
+                      <mat-option *ngFor="let data of newNotificationLanguages"
+                        (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
+                        [value]="data.code">{{ data.name }}</mat-option>
+                    </mat-select></mat-card-subtitle>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+      </div>
+
+      <!-- <div layout="row" *ngIf="field.tabgroup === 'notificationLanguage'">
         <h4 style="color: #505050;">My Language Preference</h4>
         <table width="50%" >
           <tr *ngIf="field.controlType === 'dropdown'">
@@ -441,13 +516,7 @@
             </td>
           </tr>
         </table>
-        <!-- <div flex="50">
-          {{field.description}}
-        </div>
-        <div flex>
-          {{field.tabgroup}}
-        </div> -->
-      </div>
+      </div> -->
     </div>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
       <button [disabled]="previewDisabled && previewDisabledInAddress" mat-raised-button (click)="previewBtn('address')" color="primary"

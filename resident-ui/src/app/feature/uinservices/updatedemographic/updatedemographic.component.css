@@ -21,7 +21,7 @@ input.readonly{
   /* margin: 0 0 8px 8px; */
   display: inline-block;
   border: 1px solid #ccc;
-  background: #F7F7F7 0% 0% no-repeat padding-box;
+  background: #ededed 0% 0% no-repeat padding-box;
   border-radius: 5px;
   color: #909090;
 }
@@ -31,9 +31,14 @@ input.readonly{
   padding: 8px 16px;
   display: inline-block;
   border: 1px solid #ccc;
-  background: #F7F7F7 0% 0% no-repeat padding-box;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
   border-radius: 5px;
   color: #909090;
+  height: 42px;
+}
+
+.mini-card{
+  width: 85%;
 }
 
 label{
@@ -44,15 +49,21 @@ label{
   padding-left:50px;
 }
 
+/*::ng-deep .mat-card-header-text{
+  padding: 15px 0px;
+}*/
 
-
+.mat-card-header .mat-card-title {
+    font-size: 14px !important;
+}
 
 .container {
-   height: 150px;
+   height: 100px;
    padding: 2rem;
    border: dashed 1px #03A64A;
    background-color: #E8FDF2;
    position: relative;
+   display: flex;
 }
 .container input {
    opacity: 0;
@@ -64,16 +75,22 @@ label{
    left: 0;
 }
  .container label {
-   color: white;
-   width: 183px;
-   height: 44px;
-   border-radius: 21.5px;
-   background-color: #db202f;
-   padding: 8px 16px;
+    color: #03A64A;
+    width: 148px;
+    height: 44px;
+    border-radius: 5px;
+    background: #FFFFFF;
+    padding: 10px;
+    border: 1px solid #CCCCCC;
+    display: flex;
+    font-size: 12px;
+    font-weight: 200;
 }
 .container h3 {
-   font-size: 14px;
+   font-size: 11px;
    color: #03A64A;
+   padding-left: 3px;
+   padding-top: 7px;
 }
 .fileover {
    animation: shake 1s;
@@ -192,13 +209,15 @@ label{
   align-items: center;
   justify-content: space-between;
 }
-
+::ng-deep .mat-form-field-wrapper{
+  padding-bottom: 0.01em !important;;
+}
 ::ng-deep .mat-form-field-flex {
   display: block;
   position: relative;
   flex: auto;
   /*width: 138% !important;*/
-  margin-top: 1.4rem !important;
+/*  margin-top: 1.4rem !important;*/
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button{
@@ -214,10 +233,10 @@ label{
   display: none;
 }
 
-::ng-deep .mat-grid-tile .mat-figure{
+/*::ng-deep .mat-grid-tile .mat-figure{
   align-items: baseline !important;
   display: block !important;
-}
+}*/
 
 ::ng-deep .mat-form-field-flex{
   align-items: center !important;
@@ -233,4 +252,5 @@ mat-select {
   outline-width: thin;
   border-radius: 5px;
   color: white !important;
+  background: white;
 }
