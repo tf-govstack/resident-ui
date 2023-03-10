@@ -103,19 +103,19 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           this.width = "95%";
         }
         if (result.breakpoints[Breakpoints.Small]) {
-          this.cols = 1;
+          this.cols = 2;
           this.width = "90%";
         }
         if (result.breakpoints[Breakpoints.Medium]) {
-          this.cols = 1;
+          this.cols = 2;
           this.width = "75%";
         }
         if (result.breakpoints[Breakpoints.Large]) {
-          this.cols = 1;
+          this.cols = 4;
           this.width = "50%";
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
-          this.cols = 1;
+          this.cols = 4;
           this.width = "40%";
         }
       }

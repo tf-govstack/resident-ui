@@ -92,7 +92,7 @@ mat-card {
 }
 
 .center_selection-wrapper {
-  margin: 5px 2vw;
+  margin: 5px 0vw;
 }
 
 .center-selection__title-card {
@@ -123,7 +123,7 @@ section {
 }
 
 .centers-wrapper {
-  margin-left: 25px;
+  margin-left: 0px;
   margin-right: 2vw;
   width: 30%;
   height: 40rem;
