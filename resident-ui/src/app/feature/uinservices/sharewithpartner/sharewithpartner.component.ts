@@ -156,7 +156,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
             value = this.userInfo[data.attributeName][0].value;
           }
         }
-        this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": data['maskRequired'], "format": data['attributeName'], "value": value };
+        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": data['maskRequired'], "format": data['attributeName'], "value": value };
       }
       this.schema = this.schema.map(item => {
         if (item.attributeName === data.attributeName) {
@@ -188,7 +188,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         }else{
           value = this.userInfo[type];
         }
-        this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": $event.checked, "format": "", "value": value };   
+        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": $event.checked, "format": "", "value": value };   
         console.log(value) 
       }else{
         let value = "";
@@ -201,7 +201,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
             // value = this.userInfo[data.attributeName][0].value;
           }
         }
-        this.sharableAttributes[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": false, "format": type["value"], "value": value };    
+        this.sharableAttributes[data.attributeName] = {"label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": false, "format": type["value"], "value": value };    
       }
         
     }
@@ -254,6 +254,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     for (const key in this.sharableAttributes) {
       sharableAttributes.push(this.sharableAttributes[key]);
     }
+    console.log("sharableAttributes>>>"+JSON.stringify(sharableAttributes));
     let self = this;
     const request = {
       "id": "mosip.resident.share.credential",
