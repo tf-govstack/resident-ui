@@ -10,6 +10,8 @@ import { LogoutService } from './../../core/services/logout.service';
 import { HeaderService } from 'src/app/core/services/header.service';
 import { AuditService } from 'src/app/core/services/audit.service';
 import { map } from 'rxjs/operators'
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 
 @Component({
   selector: "app-header",
@@ -32,6 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notificationCount:any="";
   notificationList:any;
   langCode = localStorage.getItem("langCode");
+  popupMessages:any;
   
   constructor(
     private router: Router,
@@ -41,7 +44,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private logoutService: LogoutService,
     private headerService: HeaderService,
-    private auditService: AuditService
+    private auditService: AuditService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -81,6 +85,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     }, 1000);    
     this.getProfileInfo();
+   
+    if(localStorage.getItem("redirectURL") === window.location.href){
+      this.showMessage()
+      localStorage.removeItem("redirectURL")
+    }
+
+    this.translateService
+    .getTranslation(localStorage.getItem("langCode"))
+    .subscribe(response => {
+      this.popupMessages = response;
+    });
   }
 
   getNotificationInfo(){
@@ -192,7 +207,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   showMessage() {
-    let languagelabels ;
+    // let languagelabels ;
     /*this.dataStorageService
     .getI18NLanguageFiles(localStorage.getItem("langCode"))
     .subscribe((response) => {
@@ -218,6 +233,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         });
     });*/
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '550px',
+      data: {
+        case: 'MESSAGE',
+        title: this.popupMessages.genericmessage.successLabel,
+        message: this.popupMessages.genericmessage.SuccessLogin,
+        btnTxt: this.popupMessages.genericmessage.successButton
+      }
+    });
+    return dialogRef;
   }
 
   onItemSelected(item: any) {
