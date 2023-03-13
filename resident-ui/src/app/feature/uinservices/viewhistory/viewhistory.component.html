@@ -7,7 +7,64 @@
 <div class="main-div" *ngIf="langJSON">
 	<mat-card>
 		<h3 style="color: #505050; font-size:20px;">{{'viewhistory.title' | translate}}</h3>
-		<table *ngIf="responselist" style="width: 100%;">
+		<mat-grid-list *ngIf="responselist" [cols]="cols" rowHeight="100px" gutterSize="7px">
+	        <mat-grid-tile>
+	          <div class="mini-card">
+	            <mat-card-header><span class="label">{{'viewhistory.inputsearch' |translate}}</span></mat-card-header>
+	            <mat-card-subtitle><span class="input"><input type="text" id="appIdValue" name="appIdValue" (blur)="captureValue($event, 'searchText', 'textbox')" placeholder="{{'viewhistory.inputAppId' | translate}}" /></span></mat-card-subtitle>
+	          </div>
+	        </mat-grid-tile>
+	        <mat-grid-tile>
+	          <div class="mini-card">
+	            <mat-card-header><span class="label">{{'viewhistory.inputHistory' |translate}}</span></mat-card-header>
+	            <mat-card-subtitle><span class="input"><mat-select multiple #serviceType id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
+						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
+						<mat-option [disabled]="isHistoryAllValue && historySelectedValue === 'ALL' && serviceType.value !== 'ALL' " (click)="historyTosslePerOne(serviceType.value)" *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
+							[value]="serviceType.value">{{serviceType.label}}</mat-option>
+						</mat-select></span></mat-card-subtitle>
+	          </div>
+	        </mat-grid-tile>
+	        <mat-grid-tile>
+	          <div class="mini-card">
+	            <mat-card-header><span class="label">{{'viewhistory.inputFrom' |translate}}</span></mat-card-header>
+	            <mat-card-subtitle><span class="input"><input id="fromPickertext" [(ngModel)]="startdate" [max]="today" matInput
+						[matDatepicker]="fromPicker" class="datepicker-card"
+						(dateChange)="captureValue($event, 'fromDate', 'datepicker')">
+						<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+						<mat-datepicker #fromPicker></mat-datepicker></span></mat-card-subtitle>
+	          </div>
+	        </mat-grid-tile>
+	        <mat-grid-tile>
+	          <div class="mini-card">
+	            <mat-card-header><span class="label">{{'viewhistory.inputTo' |translate}}</span></mat-card-header>
+	            <mat-card-subtitle><span class="input"><input id="toPickertext" [(ngModel)]="selectedDate" matInput [min]="toDateStartDate" [max]="today"
+						[matDatepicker]="toPicker" class="datepicker-card"
+						(dateChange)="captureValue($event, 'toDate', 'datepicker')">
+						<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+						<mat-datepicker #toPicker></mat-datepicker></span></mat-card-subtitle>
+	          </div>
+	        </mat-grid-tile>
+	        <mat-grid-tile>
+	          <div class="mini-card">
+	            <mat-card-header><span class="label">{{'viewhistory.inputStatus' |translate}}</span></mat-card-header>
+	            <mat-card-subtitle style="display: flex;"><span class="datepicker-card" style="display: contents;">
+						<mat-select multiple #statusFilter id="statusFilter" placeholder="{{'viewhistory.inputStatus' | translate}}"
+						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
+						<mat-option [disabled]="isStatusAllValue && statusSelectedValue === 'all' && status.label !== 'All' " *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
+							(click)="tosslePerOne(status.value)">
+							{{status.label}}</mat-option>
+						</mat-select>
+						&nbsp;&nbsp;&nbsp;&nbsp;<button id="searchbtn" mat-raised-button color="primary"
+						(click)="search()">{{'viewhistory.searchBtn' |
+						translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="downloadbtn" mat-raised-button
+						color="default" (click)="downloadServiceHistory()"><img class="save-icon"
+							src="./assets/images/save.png" /></button>
+					</span></mat-card-subtitle>
+	          </div>
+	        </mat-grid-tile> 
+	    </mat-grid-list>
+
+		<!-- <table *ngIf="responselist" style="width: 100%;">
 			<tr class="display: flex;flex-flow: row wrap;justify-content: space-around;">
 				<td style="width:100%" colspan="5">
 					<mat-grid-list [cols]="cols" rowHeight="40px" gutterSize="5px" >
@@ -63,48 +120,8 @@
 					</span></mat-grid-tile>
 					</mat-grid-list>
 				</td>
-				<!-- <td class="input-cards">
-					<input type="text" id="appIdValue" name="appIdValue" style="margin-bottom: 1.2rem;"
-						(blur)="captureValue($event, 'searchText', 'textbox')"
-						placeholder="{{'viewhistory.inputAppId' | translate}}" />
-				</td>
-				<td class="input-cards">
-					<mat-select multiple #serviceType id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
-						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
-						<mat-option [disabled]="isHistoryAllValue && historySelectedValue === 'ALL' && serviceType.value !== 'ALL' " (click)="historyTosslePerOne(serviceType.value)" *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
-							[value]="serviceType.value">{{serviceType.label}}</mat-option>
-					</mat-select>
-				</td>
-				<td class="date-input-cards">
-					<input id="fromPickertext" [(ngModel)]="startdate" [max]="today" matInput
-						[matDatepicker]="fromPicker" class="datepicker-card"
-						(dateChange)="captureValue($event, 'fromDate', 'datepicker')">
-					<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-					<mat-datepicker #fromPicker></mat-datepicker>
-				</td>
-				<td class="date-input-cards">
-					<input id="toPickertext" [(ngModel)]="selectedDate" matInput [min]="toDateStartDate" [max]="today"
-						[matDatepicker]="toPicker" class="datepicker-card"
-						(dateChange)="captureValue($event, 'toDate', 'datepicker')">
-					<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-					<mat-datepicker #toPicker></mat-datepicker>
-				</td>
-				<td class="input-cards">
-					<mat-select multiple #statusFilter id="statusFilter" placeholder="{{'viewhistory.inputStatus' | translate}}"
-						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
-						<mat-option [disabled]="isStatusAllValue && statusSelectedValue === 'all' && status.label !== 'All' " *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
-							(click)="tosslePerOne(status.value)">
-							{{status.label}}</mat-option>
-					</mat-select>
-				</td>
-				<td class="input-cards"><button id="searchbtn" mat-raised-button color="primary"
-						(click)="search()">{{'viewhistory.searchBtn' |
-						translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="downloadbtn" mat-raised-button
-						color="default" (click)="downloadServiceHistory()"><img class="save-icon"
-							src="./assets/images/save.png" /></button>
-				</td> -->
 			</tr>
-		</table>
+		</table> -->
 		<table *ngIf="responselist" class="history-data">
 			<tr *ngFor="let data of responselist; let i = index" style="outline: thin solid silver;border-radius: 5px;"
 				multi>

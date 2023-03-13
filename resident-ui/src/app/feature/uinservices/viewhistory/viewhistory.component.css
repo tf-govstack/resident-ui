@@ -8,7 +8,7 @@ li {
   width: 90%;
   height: 75%;
   border-radius: 5px;
-  background: #F4F4F4 0% 0% no-repeat padding-box;
+  /*background: #F4F4F4 0% 0% no-repeat padding-box;*/
 }
 
 .tp-radio-group {
@@ -93,6 +93,8 @@ span.label {
   font-size: 14px;
   width: 100%;
   text-align: left;
+  margin-left: -30px;
+  padding-bottom: 20px;
 }
 span.input {
   width: 85%;
