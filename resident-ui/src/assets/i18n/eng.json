@@ -489,8 +489,8 @@
         "readLessLabel":"Read Less...",
          "revokevid":{
             "Perpetual":"A perpetual VID has no expiry date and no limit on the number of transactions that can be performed using this VID. One UIN can be associated with only one perpetual VID at a time.",
-            "Temporary":"A temporary VID is valid for 30 minutes and only one transaction can be performed using this VID. One UIN can be associated with 5 temporary VIDs at a time.",
-            "OneTimeUse":"A one-time VID has no expiry date but only one transaction can be performed using this VID. One UIN can be associated with only one one-time VID at a time."
+            "Temporary":"A temporary VID is valid for 30 minutes and only one transaction can be performed using this VID. One UIN can be associated with multiple temporary VIDs at a time.",
+            "OneTimeUse":"A one-time VID has no expiry date but only one transaction can be performed using this VID. One UIN can be associated with multiple one-time VID at a time."
          },
          "secureMyID":{
             "Email OTP Authentication":"On locking/unlocking 'Email OTP Authentication', any authentication attempt made using an email OTP will be disabled/enabled.",

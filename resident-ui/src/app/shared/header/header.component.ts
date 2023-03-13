@@ -86,16 +86,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }, 1000);    
     this.getProfileInfo();
    
-    if(localStorage.getItem("redirectURL") === window.location.href){
-      this.showMessage()
-      localStorage.removeItem("redirectURL")
-    }
+   
 
     this.translateService
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
       this.popupMessages = response;
     });
+    
+    if(localStorage.getItem("redirectURL") === window.location.href){
+      this.showMessage()
+      localStorage.removeItem("redirectURL")
+    }  
+    
   }
 
   getNotificationInfo(){
@@ -156,7 +159,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.headerService.setUsername(this.fullName);
         this.getNotificationInfo();
       }  
-    });    
+    });  
+
+   
   }
 
   textDirection() {
