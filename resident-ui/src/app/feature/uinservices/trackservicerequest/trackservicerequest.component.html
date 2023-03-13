@@ -126,12 +126,14 @@
 						src="./assets/images/save.png" />{{'trackservicerequest.downloadbuttonLabel' |
 					translate}}</button>
 			</div>
-			<div *ngIf="eidStatus.eventType === 'Vid Card Download'"
+			<div *ngIf="eidStatus.eventType === 'Vid Card Download' "
 				style="display: flex; justify-content: space-between; width: 100%; margin-top: 1rem;">
-				<button (click)="downloadVIDCard(eidStatus.eventId)" id="downloadCardWithNewDataBtn" style="cursor: pointer;" class="download-btn"><img
+				<div>
+				<button *ngIf="eidStatus.eventStatus === 'Success'" (click)="downloadVIDCard(eidStatus.eventId)" id="downloadCardWithNewDataBtn" style="cursor: pointer;" class="download-btn"><img
 						class="save-icon"
 						src="./assets/images/save.png" />{{'trackservicerequest.downloadCardWithNewData' |
 					translate}}</button>
+				</div>
 				<button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn"
 					(click)="downloadAcknowledgement()"><img class="save-icon"
 						src="./assets/images/save.png" />{{'trackservicerequest.downloadbuttonLabel' |
