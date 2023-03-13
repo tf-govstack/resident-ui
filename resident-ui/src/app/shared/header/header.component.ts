@@ -96,7 +96,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     
     if(localStorage.getItem("redirectURL") === window.location.href){
       this.showMessage()
-      localStorage.removeItem("redirectURL")
+      localStorage.removeItem('redirectURL');
+
     }  
     
   }
@@ -238,16 +239,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         });
     });*/
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '550px',
-      data: {
-        case: 'MESSAGE',
-        title: this.popupMessages.genericmessage.successLabel,
-        message: this.popupMessages.genericmessage.SuccessLogin,
-        btnTxt: this.popupMessages.genericmessage.successButton
-      }
-    });
-    return dialogRef;
+    setTimeout(() => {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '550px',
+        data: {
+          case: 'MESSAGE',
+          title: this.popupMessages.genericmessage.successLabel,
+          message: this.popupMessages.genericmessage.SuccessLogin,
+          btnTxt: this.popupMessages.genericmessage.successButton
+        }
+      });
+      return dialogRef;
+    },400)
+   
   }
 
   onItemSelected(item: any) {
