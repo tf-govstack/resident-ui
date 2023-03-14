@@ -95,10 +95,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     
     if(localStorage.getItem("redirectURL") === window.location.href){
-      this.showMessage()
+      this.showMessage(this.popupMessages.genericmessage.SuccessLogin)
       localStorage.removeItem('redirectURL');
 
-    }  
+    } 
+    
+    if(localStorage.getItem("logOut") === 'true'){
+      this.showMessage(this.popupMessages.genericmessage.successLogout)
+      localStorage.removeItem('logOut');
+    }
     
   }
 
@@ -212,7 +217,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.logoutService.logout();
   }
 
-  showMessage() {
+  showMessage(message:any) {
     // let languagelabels ;
     /*this.dataStorageService
     .getI18NLanguageFiles(localStorage.getItem("langCode"))
@@ -245,7 +250,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.successLabel,
-          message: this.popupMessages.genericmessage.SuccessLogin,
+          message: message,
           btnTxt: this.popupMessages.genericmessage.successButton
         }
       });
