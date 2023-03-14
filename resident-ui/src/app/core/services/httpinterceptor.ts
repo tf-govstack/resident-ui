@@ -64,7 +64,6 @@ export class AuthInterceptor implements HttpInterceptor {
                   appConstants.AUTH_ERROR_CODE[0] || event.body.errors[0]['errorCode'] === appConstants.AUTH_ERROR_CODE[1])
               ) {
                 this.redirectService.redirect(window.location.href);
-                console.log("Login SucccessFully");
               }
             }/*else{
                 if(event.body){

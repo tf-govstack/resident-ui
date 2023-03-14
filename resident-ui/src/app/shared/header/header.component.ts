@@ -245,22 +245,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
     });*/
     setTimeout(() => {
-      let newMessage = ''
       if(message === "logIn"){
-        newMessage = this.popupMessages.genericmessage.SuccessLogin
+        const dialogRef = this.dialog.open(DialogComponent, {
+          width: '550px',
+          data: {
+            case: 'LoginLogoutSuccessMessages',
+            title: this.popupMessages.genericmessage.successLabel,
+            message: this.popupMessages.genericmessage.SuccessLogin,
+            btnTxt: this.popupMessages.genericmessage.successButton
+          }
+        });
+        return dialogRef;
       }else{
-        newMessage = this.popupMessages.genericmessage.successLogout
+        const dialogRef = this.dialog.open(DialogComponent, {
+          width: '550px',
+          data: {
+            case: 'LoginLogoutSuccessMessages',
+            title: this.popupMessages.genericmessage.successLabel,
+            message: this.popupMessages.genericmessage.successLogout,
+            clickHere: this.popupMessages.genericmessage.clickHere2,
+            relogin: this.popupMessages.genericmessage.relogin,
+            btnTxt: this.popupMessages.genericmessage.successButton
+          }
+        });
+        return dialogRef;
       }
-      const dialogRef = this.dialog.open(DialogComponent, {
-        width: '550px',
-        data: {
-          case: 'MESSAGE',
-          title: this.popupMessages.genericmessage.successLabel,
-          message: newMessage,
-          btnTxt: this.popupMessages.genericmessage.successButton
-        }
-      });
-      return dialogRef;
+      
     },400)
    
   }
