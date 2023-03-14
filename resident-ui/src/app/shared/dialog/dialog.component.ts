@@ -7,6 +7,7 @@ import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as appConstants from '../../app.constants';
 import { DataStorageService } from 'src/app/core/services/data-storage.service';
+import { LoginRedirectService } from 'src/app/core/services/loginredirect.service';
 import {
   FormGroup,
   FormControl,
@@ -82,7 +83,8 @@ export class DialogComponent implements OnInit {
     /*private headerService: HeaderService,*/
     private logoutService: LogoutService,
     private interactionService: InteractionService,
-    private appConfigService: AppConfigService
+    private appConfigService: AppConfigService,
+    private redirectService: LoginRedirectService
   ) {
     this.translate.use(this.primaryLangCode);
     if (this.primaryLangCode === "ara") {
@@ -204,6 +206,10 @@ export class DialogComponent implements OnInit {
   viewDetails(eventId: any) {
     this.router.navigateByUrl(`uinservices/trackservicerequest?eid=` + eventId);
     this.dialog.closeAll();
+  }
+
+  openLoginPage(){
+    this.redirectService.redirect(window.location.href);
   }
 
   sendResponse(value: any) {

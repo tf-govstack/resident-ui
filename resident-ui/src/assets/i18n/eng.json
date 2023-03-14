@@ -397,13 +397,14 @@
         "mappingMessage": " Mapped Successfully",
         "termsAndConditionsLabel": "Terms and Conditions",
         "clickHere":"click here.",
-        "relogin":" to relogin.",
+        "clickHere2":"click here",
+        "relogin":" to login again.",
         "loginSuccessfully":"Dear resident, you logged in complected successfully",
         "successRemainMsg":"to track service request with pre-filled EID.",
         "passwordCombinationHeading":"Password combination: ",
         "passwordCombination":"First four letters of your first name and your year of birth. E.g.: If your name is Johnny Depp born on 09/06/1963, your password will be John1963.",
-        "SuccessLogin":"log in successfully",
-        "successLogout":"log out successfully",
+        "SuccessLogin":"You have successfully logged in.",
+        "successLogout":"You have successfully logged out. ",
         "getMyUin":{
             "downloadedSuccessFully":"Dear resident, your UIN card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can",
             "invalidOtp":" Invalid OTP was entered. Please click resend OTP and try again with a valid OTP "
