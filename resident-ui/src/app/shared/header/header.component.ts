@@ -95,13 +95,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     
     if(localStorage.getItem("redirectURL") === window.location.href){
-      this.showMessage(this.popupMessages.genericmessage.SuccessLogin)
+      this.showMessage("logIn")
       localStorage.removeItem('redirectURL');
 
     } 
     
     if(localStorage.getItem("logOut") === 'true'){
-      this.showMessage(this.popupMessages.genericmessage.successLogout)
+      this.showMessage("logout")
       localStorage.removeItem('logOut');
     }
     
@@ -245,12 +245,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
     });*/
     setTimeout(() => {
+      let newMessage = ''
+      if(message === "logIn"){
+        newMessage = this.popupMessages.genericmessage.SuccessLogin
+      }else{
+        newMessage = this.popupMessages.genericmessage.successLogout
+      }
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.successLabel,
-          message: message,
+          message: newMessage,
           btnTxt: this.popupMessages.genericmessage.successButton
         }
       });
