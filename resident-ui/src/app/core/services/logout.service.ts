@@ -27,14 +27,6 @@ export class LogoutService {
     private translateService: TranslateService
   ) {}
 
-  ngOnInit(){
-    this.translateService
-    .getTranslation(localStorage.getItem("langCode"))
-    .subscribe(response => {
-      this.popupMessages = response;
-    });
-  }
-
   logout() {
     window.location.href = `${this.appService.getConfig().baseUrl}/logout/user?redirecturi=`+btoa(window.location.href);
     this.showMessage()
@@ -59,13 +51,18 @@ export class LogoutService {
       );*/
   }
   showMessage() {
+    this.translateService
+    .getTranslation(localStorage.getItem("langCode"))
+    .subscribe(response => {
+      this.popupMessages = response;
+    });
     setTimeout(() => {
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '550px',
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.successLabel,
-          message: this.popupMessages.genericmessage.SuccessLogin,
+          message: this.popupMessages.genericmessage.successLogout,
           btnTxt: this.popupMessages.genericmessage.successButton
         }
       });
