@@ -210,6 +210,7 @@ export class DialogComponent implements OnInit {
 
   openLoginPage(){
     this.redirectService.redirect(window.location.href);
+    this.dialog.closeAll();
   }
 
   sendResponse(value: any) {
@@ -239,7 +240,7 @@ export class DialogComponent implements OnInit {
     this.dialog.closeAll()
   }
   logOut(){
-    this.logoutService.logout();
+    this.redirectService.redirect(window.location.href);
   }
 }
 

@@ -140,10 +140,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     
     let supportedLanguages = this.appConfigService.getConfig()['supportedLanguages'].split(',');
     supportedLanguages.forEach(data =>{
-     if(data === "eng"){
       let newObj = {"code":data,"name":this.defaultJsonValue['languages'][data]['nativeName']}
       this.newNotificationLanguages.push(newObj)
-     }
     })
 
     // setTimeout(()=>{        

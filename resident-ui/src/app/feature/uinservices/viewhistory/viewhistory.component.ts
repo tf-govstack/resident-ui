@@ -99,6 +99,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   getServiceHistory(pageEvent:any, filters:any){ 
+    console.log(pageEvent)
+    console.log(this.searchParam)
+    console.log(filters)
     let finalFilters = ''
     if(filters === "" && pageEvent){
       finalFilters = filters
