@@ -1,6 +1,6 @@
 <span class="breadcrumb">
-	<a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<a
-		(click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
+	<!-- <a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp; -->
+	<a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
 	&nbsp;&nbsp;<span class="active">{{'viewhistory.title' | translate}}</span>
 </span>
 
@@ -165,7 +165,7 @@
 		</table>
 		<div dir="ltr">
 			<span id="pageSizeOptions" *ngIf="this.totalItems !== 0">
-				<mat-paginator class="demo-paginator" #paginator  (page)="getServiceHistory(pageEvent = $event,searchParam)"
+				<mat-paginator class="demo-paginator" #paginator  (page)="getServiceHistory(pageEvent = $event,statusFilter)"
 					[length]="this.totalItems" [pageSize]="this.pageSize" [showFirstLastButtons]="showFirstLastButtons"
 					[pageSizeOptions]="this.pageSizeOptions" [pageIndex]="pageIndex" aria-label="Select page">
 				</mat-paginator>
