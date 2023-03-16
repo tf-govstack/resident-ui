@@ -23,7 +23,11 @@ export class LogoutService {
   ) {}
 
   logout() {
-    window.location.href = `${this.appService.getConfig().baseUrl}/logout/user?redirecturi=`+btoa(window.location.href);
+    let url = window.location.href
+    if(url.split("#")[1] !== "/dashboard"){
+      url = url.replace(url.split("#")[1], "/dashboard");
+    }
+    window.location.href = `${this.appService.getConfig().baseUrl}/logout/user?redirecturi=`+btoa(url);
     localStorage.setItem("logOut",'true')
     /*let adminUrl = this.appService.getConfig().adminUrl;
     this.http
