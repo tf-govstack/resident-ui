@@ -80,7 +80,7 @@ jobs:
           node-version: '14'
 
       - name: npm install
-        run: cd ${{ env.SERVICE_LOCATION }} && npm install --ignore-scripts
+        run: cd ${{ env.SERVICE_LOCATION }} && npm install --ignore-scripts && npm install -g npm-install-peers
 
       - name: npm build
         run: cd ${{ env.SERVICE_LOCATION }} && npm run-script build -- --prod --base-href . --output-path=dist
