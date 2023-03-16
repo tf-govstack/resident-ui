@@ -16,10 +16,13 @@
             menuItems[0].displayName | translate }}</mat-card-title>
         </div>
         <mat-card-subtitle class="display-description">{{menuItems[0].displaydescription}}</mat-card-subtitle>
+        <mat-card-subtitle class="display-description" style="margin-bottom: 0px;">{{menuItems[0].availableServicesDescription}}</mat-card-subtitle>
         <mat-card-header>
-          <mat-card-subtitle class="mat-card-subtitle" *ngFor="let subMenu of menuItems[0].subMenus"
+          <ul  class="uin-service-list">
+          <li *ngFor="let subMenu of menuItems[0].subMenus"
             (click)="onItemSelected(subMenu.route)" >{{
-            subMenu.displayName | translate }}</mat-card-subtitle>
+            subMenu.displayName | translate }}</li>
+          </ul>
           <div style="flex-grow: 1"></div>
         </mat-card-header>
       </mat-card>
