@@ -94,7 +94,6 @@ mat-card-subtitle{
 .title-card{ 
   display: flex; 
   align-items: center;
-  margin-bottom: .8rem; 
   margin-top: .3rem;
   column-gap: 15px;
   margin-bottom: 0px;
