@@ -8,8 +8,6 @@ import { AppConfigService } from 'src/app/app-config.service';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { InteractionService } from "src/app/core/services/interaction.service";
-import { ThrowStmt } from "@angular/compiler";
-import { HostListener } from '@angular/core';
 import {saveAs} from 'file-saver';
 import { AuditService } from "src/app/core/services/audit.service";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
