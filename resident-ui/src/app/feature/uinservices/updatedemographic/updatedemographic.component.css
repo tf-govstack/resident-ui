@@ -87,7 +87,7 @@ label{
     background: #FFFFFF;
     padding: 10px;
     border: 1px solid #CCCCCC;
-    display: flex;
+    /*display: flex;*/
     font-size: 12px;
     font-weight: 200;
 }

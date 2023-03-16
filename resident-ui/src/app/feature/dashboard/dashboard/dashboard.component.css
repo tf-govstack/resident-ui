@@ -8,7 +8,7 @@
 .mat-card-subtitle {
   cursor: pointer;
   text-align: left;
-  font: normal normal normal 14px/24px Roboto;
+  font-family: normal normal normal 14px/24px Roboto;
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
