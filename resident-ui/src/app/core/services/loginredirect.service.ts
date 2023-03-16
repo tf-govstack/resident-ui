@@ -15,6 +15,7 @@ export class LoginRedirectService {
       constructurl = url.replace("/dashboard", "/uinservices/dashboard");
     }
     window.location.href = `${this.appService.getConfig().baseUrl}${this.appService.getConfig().login}` + btoa(constructurl)+"?state="+stateParam;
+    localStorage.setItem("redirectURL", constructurl)
   }
 
 }

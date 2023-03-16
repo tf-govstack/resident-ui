@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ResponseModel } from './../models/response.model';
 import { LogoutResponse } from './../models/logoutresponse';
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import {
   HttpClient,
   HttpResponse,
@@ -18,11 +19,12 @@ export class LogoutService {
     private http: HttpClient,
     private router: Router,
     private redirectService: LoginRedirectService,
-    private appService: AppConfigService
+    private appService: AppConfigService,
   ) {}
 
   logout() {
     window.location.href = `${this.appService.getConfig().baseUrl}/logout/user?redirecturi=`+btoa(window.location.href);
+    localStorage.setItem("logOut",'true')
     /*let adminUrl = this.appService.getConfig().adminUrl;
     this.http
       .get(`${this.appService.getConfig().baseUrl}${this.appService.getConfig().logout}`, {

@@ -10,6 +10,8 @@ import { LogoutService } from './../../core/services/logout.service';
 import { HeaderService } from 'src/app/core/services/header.service';
 import { AuditService } from 'src/app/core/services/audit.service';
 import { map } from 'rxjs/operators'
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 
 @Component({
   selector: "app-header",
@@ -32,6 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notificationCount:any="";
   notificationList:any;
   langCode = localStorage.getItem("langCode");
+  popupMessages:any;
   
   constructor(
     private router: Router,
@@ -41,7 +44,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private logoutService: LogoutService,
     private headerService: HeaderService,
-    private auditService: AuditService
+    private auditService: AuditService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -81,6 +85,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     }, 1000);    
     this.getProfileInfo();
+   
+   
+
+    this.translateService
+    .getTranslation(localStorage.getItem("langCode"))
+    .subscribe(response => {
+      this.popupMessages = response;
+    });
+    
+    if(localStorage.getItem("redirectURL") === window.location.href){
+      this.showMessage("logIn")
+      localStorage.removeItem('redirectURL');
+
+    } 
+    
+    if(localStorage.getItem("logOut") === 'true'){
+      this.showMessage("logout")
+      localStorage.removeItem('logOut');
+    }
+    
   }
 
   getNotificationInfo(){
@@ -141,7 +165,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.headerService.setUsername(this.fullName);
         this.getNotificationInfo();
       }  
-    });    
+    });  
+
+   
   }
 
   textDirection() {
@@ -191,8 +217,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.logoutService.logout();
   }
 
-  showMessage() {
-    let languagelabels ;
+  showMessage(message:any) {
+    // let languagelabels ;
     /*this.dataStorageService
     .getI18NLanguageFiles(localStorage.getItem("langCode"))
     .subscribe((response) => {
@@ -218,6 +244,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         });
     });*/
+    setTimeout(() => {
+      if(message === "logIn"){
+        const dialogRef = this.dialog.open(DialogComponent, {
+          width: '550px',
+          data: {
+            case: 'LoginLogoutSuccessMessages',
+            title: this.popupMessages.genericmessage.successLabel,
+            message: this.popupMessages.genericmessage.SuccessLogin,
+            btnTxt: this.popupMessages.genericmessage.successButton
+          }
+        });
+        return dialogRef;
+      }else{
+        const dialogRef = this.dialog.open(DialogComponent, {
+          width: '550px',
+          data: {
+            case: 'LoginLogoutSuccessMessages',
+            title: this.popupMessages.genericmessage.successLabel,
+            message: this.popupMessages.genericmessage.successLogout,
+            clickHere: this.popupMessages.genericmessage.clickHere2,
+            relogin: this.popupMessages.genericmessage.relogin,
+            btnTxt: this.popupMessages.genericmessage.successButton
+          }
+        });
+        return dialogRef;
+      }
+      
+    },400)
+   
   }
 
   onItemSelected(item: any) {

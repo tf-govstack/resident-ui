@@ -59,7 +59,7 @@ mat-card-subtitle{
 
 
 .info-box{
-  margin-top: 80px;
+  margin-top: 210px;
   min-height: 90px;
   width: 200px;
   border-radius: 8px;
@@ -67,7 +67,7 @@ mat-card-subtitle{
   position: absolute ;
   background-color: #ffffff;
   /* top: -20px; */
-  left: 40px; 
+  left: 64px; 
   /* display: inline-block; */
   z-index: 2;
   transform: translate3d(0, -50%, 0);
@@ -93,6 +93,9 @@ mat-card-subtitle{
 
 .title-card{ 
   display: flex; 
-  align-items: flex-start;
-  column-gap: 5px;
+  align-items: center;
+  margin-bottom: .8rem; 
+  margin-top: .3rem;
+  column-gap: 15px;
+  margin-bottom: 0px;
 }
