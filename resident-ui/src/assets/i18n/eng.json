@@ -2,7 +2,7 @@
     "menuItems": [
         {
             "displayName": "UIN Services",
-            "displaydescription":"Click here to log in to avail the following services.",
+            "displaydescription": "Click here to log in to avail the following services.",
             "icon": "./assets/icons/iconfont/uin_services.svg",
             "activeIcon": "./assets/images/UIN Services.png",
             "route": "",
@@ -157,7 +157,7 @@
         "subTitle": "The OTP will expire in",
         "inputLabel": "Enter One Time Password (OTP)",
         "otpDescription": "One Time Password (OTP) has been sent to your registered Mobile Number",
-        "otpDescriptionEmail":" and your registered Email id",
+        "otpDescriptionEmail": " and your registered Email id",
         "resendBtnLabel": "Resend OTP",
         "submitBtnLabel": "Submit"
     },
@@ -181,21 +181,21 @@
     "downloadDocument": {
         "downloadbutton": "Download"
     },
-    "grievanceRedressal":{
-        "title":"Grievance Redressal Form",
-        "namelabel":"Name",
-        "emailidlabel":"Email ID",
-        "alternateemailidlabel":"Alternate Email ID",
-        "phonenumberlabel":"Phone number",
-        "alternatephonenumberlabel":"Alternate phone number",
-        "eventidlabel":"Event ID",
-        "commentlabel":"Comment",
-        "alternateEmailPlaceholder":"Enter alternate Email",
-        "alternatePhoneNoPlaceholder":"Enter alternate Phone number",
-        "EnterMsgPlaceholder":"Please Enter message",
-        "submitBtn":"Submit",
-        "TotalCharacters":"Total Characters",
-        "remainingCharacters":"Remaining"
+    "grievanceRedressal": {
+        "title": "Grievance Redressal Form",
+        "namelabel": "Name",
+        "emailidlabel": "Email ID",
+        "alternateemailidlabel": "Alternate Email ID",
+        "phonenumberlabel": "Phone number",
+        "alternatephonenumberlabel": "Alternate phone number",
+        "eventidlabel": "Event ID",
+        "commentlabel": "Comment",
+        "alternateEmailPlaceholder": "Enter alternate Email",
+        "alternatePhoneNoPlaceholder": "Enter alternate Phone number",
+        "EnterMsgPlaceholder": "Please Enter message",
+        "submitBtn": "Submit",
+        "TotalCharacters": "Total Characters",
+        "remainingCharacters": "Remaining"
     },
     "verifyuinvid": {
         "title": "",
@@ -226,9 +226,9 @@
         "searchBtn": "Go",
         "description": "Description",
         "timestamp": "Timestamp",
-        "selectAll" : "All",
+        "selectAll": "All",
         "serviceTypeFilter": {
-            "ALL":"All",
+            "ALL": "All",
             "AUTHENTICATION_REQUEST": "Authentication Request",
             "SERVICE_REQUEST": "Service Request",
             "DATA_UPDATE_REQUEST": "Data Update Request",
@@ -236,7 +236,7 @@
             "DATA_SHARE_REQUEST": "Data Share Request"
         },
         "statusTypeFilter": {
-            "all":"All",
+            "all": "All",
             "Success": "Success",
             "In Progress": "In Progress",
             "Failed": "Failed"
@@ -248,6 +248,18 @@
     },
     "managemyvid": {
         "title": "Manage my VID",
+        "Perpetual": {
+            "vidType": "Perpetual VID",
+            "message": "No limit to usage or expiry"
+        },
+        "Temporary": {
+            "vidType": "Temporary VID",
+            "message": "Expires after 30 mins and can be used only once"
+        },
+        "OneTimeUse": {
+            "vidType": "One-time VID",
+            "message": "Has no expiry date but  can be used only once"
+        },
         "generatevid": [
             {
                 "vidType": "Perpetual VID",
@@ -310,8 +322,8 @@
         "contact": "Contact",
         "languagePreference": "Language Preference"
     },
-    "preview":{
-        "title":"Preview"
+    "preview": {
+        "title": "Preview"
     },
     "trackservicerequest": {
         "title": "Track Service Request",
@@ -334,13 +346,13 @@
         "partnerLogo": "Partner logo",
         "transactionDate": "Transaction Date",
         "downloadbuttonLabel": "Download",
-        "summary":"Summary",
-        "attributeList":"Attribute List",
-        "downloadVIDCard":"Download VID card",
-        "downloadCardWithNewData":"Download card with new data",
-        "purpose":"Purpose",
-        "raiseSupportRequest":"To raise a support request against this EID",
-        "clickHere":"click here."
+        "summary": "Summary",
+        "attributeList": "Attribute List",
+        "downloadVIDCard": "Download VID card",
+        "downloadCardWithNewData": "Download card with new data",
+        "purpose": "Purpose",
+        "raiseSupportRequest": "To raise a support request against this EID",
+        "clickHere": "click here."
     },
     "personalisedcard": {
         "title": "Download Your Personalised Card",
@@ -369,45 +381,51 @@
         "orin": "or in",
         "viewHistoryLink": "view history"
     },
-    "uinStatus":{
-        "status":"Status",
-        "uinTitleDescription":"Your UIN against the AID: $AID is still in progress.",
-        "requestMsg":"Please try again after a few days.",
-        "UINCardStatus":"UIN Card Status",
-        "statusTime":"Completion Expected Date : $date",
-        "statusStages":["Request received","Validation stage","Verification stage","UIN generation stage","Card ready to download"],
-        "trackDetailsHeading":"Tracking Details"
+    "uinStatus": {
+        "status": "Status",
+        "uinTitleDescription": "Your UIN against the AID: $AID is still in progress.",
+        "requestMsg": "Please try again after a few days.",
+        "UINCardStatus": "UIN Card Status",
+        "statusTime": "Completion Expected Date : $date",
+        "statusStages": [
+            "Request received",
+            "Validation stage",
+            "Verification stage",
+            "UIN generation stage",
+            "Card ready to download"
+        ],
+        "trackDetailsHeading": "Tracking Details"
     },
     "genericmessage": {
         "successLabel": "Success",
         "successButton": "OK",
         "submitButton": "Submit",
-        "resentBtn":"Resend OTP",
-        "yesButton":"Yes",
-        "noButton":"No",
+        "resentBtn": "Resend OTP",
+        "yesButton": "Yes",
+        "noButton": "No",
         "shareButton": "Share",
         "sendButton": "Send",
         "deleteButton": "Delete",
         "errorLabel": "Error",
         "warningLabel": "Warning",
-        "downloadLabel":"Download",
-        "warningForChannel":"warningForChannel",
+        "downloadLabel": "Download",
+        "warningForChannel": "warningForChannel",
         "createMessage": "Created Successfully",
         "updateMessage": "Updated Successfully",
         "mappingMessage": " Mapped Successfully",
         "termsAndConditionsLabel": "Terms and Conditions",
-        "clickHere":"click here.",
-        "clickHere2":"click here",
-        "relogin":" to login again.",
-        "loginSuccessfully":"Dear resident, you logged in complected successfully",
-        "successRemainMsg":"to track service request with pre-filled EID.",
-        "passwordCombinationHeading":"Password combination: ",
-        "passwordCombination":"First four letters of your first name and your year of birth. E.g.: If your name is Johnny Depp born on 09/06/1963, your password will be John1963.",
-        "SuccessLogin":"You have successfully logged in.",
-        "successLogout":"You have successfully logged out. ",
-        "getMyUin":{
-            "downloadedSuccessFully":"Dear resident, your UIN card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can",
-            "invalidOtp":" Invalid OTP was entered. Please click resend OTP and try again with a valid OTP "
+        "clickHere": "click here.",
+        "clickHere2": "click here",
+        "relogin": " to login again.",
+        "loginSuccessfully": "Dear resident, you logged in complected successfully",
+        "successRemainMsg": "to track service request with pre-filled EID.",
+        "passwordCombinationHeading": "Password combination: ",
+        "passwordCombination": "First four letters of your first name and your year of birth. E.g.: If your name is Johnny Depp born on 09/06/1963, your password will be John1963.",
+        "SuccessLogin": "You have successfully logged in.",
+        "successLogout": "You have successfully logged out. ",
+        "getMyUin": {
+            "downloadedSuccessFully": "Dear resident, your UIN card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can",
+            "invalidOtp": " Invalid OTP was entered. Please click resend OTP and try again with a valid OTP "
         },
         "termsAndConditionsDescription": [
             "Your data will be shared with the chosen third party (credential partner)",
@@ -415,14 +433,13 @@
             "Under no circumstances will we be liable for loss or misuse of data whatsoever, arising from the usage of data shared with the partner.",
             "if a third-party provider ceases to make its service available or requires MOSIP to suspend or terminate the provision of all or any part of its services to you that part of data or services will be terminated immediately without notice or further obligation to you."
         ],
-        "conditionsForupdateDemographicData":[
+        "conditionsForupdateDemographicData": [
             "The data chosen by you will be updated after the proof of address or Proof of identity is duly verified.",
             "You are responsible for any and all costs and fees associated with an agreement to update your data.",
             "You are responsible for any changes made to your already existing personal data or uploaded document to support the same."
-
         ],
         "agreeLabel": "I agree to the terms and conditions to share my credentials with the chosen partner",
-        "agreeLabelForUpdateData":"I agree to the terms and conditions to update demograohic data",
+        "agreeLabelForUpdateData": "I agree to the terms and conditions to update demograohic data",
         "personalisedcardConditions": {
             "title": "Download Your Personalised Card",
             "wishes": "Dear Resident,",
@@ -449,7 +466,7 @@
                 "confirmationMessageForDownloadVid": "Are you sure you want to download one-time VID?"
             },
             "createdSuccessfully": "Dear resident, your VID has been successfully generated against the the Event Id: $eventId. In order to track the status of the event, you can ",
-            "downloadedSuccessFully":"Dear resident, your request to download the VID card has been successfully processed against the Event Id: $eventId. It will take some time for us to get the card ready. We will send you a link over your registered email Id and/or phone number using which you can download the requested card. You can also download the card from the notification section or track status section once it is ready. In order to track the status of the event, you can ",
+            "downloadedSuccessFully": "Dear resident, your request to download the VID card has been successfully processed against the Event Id: $eventId. It will take some time for us to get the card ready. We will send you a link over your registered email Id and/or phone number using which you can download the requested card. You can also download the card from the notification section or track status section once it is ready. In order to track the status of the event, you can ",
             "deletedSuccessfully": "Dear resident, your VID has been successfully deleted against the the Event Id: $eventId. In order to track the status of the event, you can "
         },
         "personalisedcardMessages": {
@@ -459,52 +476,51 @@
             "choosePartner": "Kindly choose a partner to proceed.",
             "purpose": "Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential."
         },
-        "sharewithpartner":{
-            "needPartner":"Kindly choose a partner to proceed.",
-            "needPurpose":"Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential."
+        "sharewithpartner": {
+            "needPartner": "Kindly choose a partner to proceed.",
+            "needPurpose": "Purpose of sharing your credential is a mandatory field. Kindly mention the purpose of sharing your credential."
         },
-        "verifyChannel":{
-            "warningMsg":"Your $channel has already been verified.",
-            "emailSuccess":"Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can ",
-            "phoneSuccess":"Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can "
+        "verifyChannel": {
+            "warningMsg": "Your $channel has already been verified.",
+            "emailSuccess": "Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can ",
+            "phoneSuccess": "Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can "
         },
-        "grievanceRedressal":{
-            "successMsg":"Dear resident, your complaint has been successfully sent against the $ticketId.",
-            "warningMsg":"Dear resident, your complaint could not be sent. Please try again later."
+        "grievanceRedressal": {
+            "successMsg": "Dear resident, your complaint has been successfully sent against the $ticketId.",
+            "warningMsg": "Dear resident, your complaint could not be sent. Please try again later."
         },
-        "secureMyId":{
-            "successMsg":"Dear resident, the changes requested to change the authentication types have been saved successfully against the Event Id: $eventId. In order to track the status of the event, you can ",
-            "confirmationMessage":" Are you sure you want to save the changes made in authentication types?"
+        "secureMyId": {
+            "successMsg": "Dear resident, the changes requested to change the authentication types have been saved successfully against the Event Id: $eventId. In order to track the status of the event, you can ",
+            "confirmationMessage": " Are you sure you want to save the changes made in authentication types?"
         },
-        "updateMyData":{
-            "emailSuccessMsg":"Dear resident, your email Id has been successfully updated against the eventId: $eventId. In order to track the status of the event, you can ",
-            "phoneNumberSuccessMsg":"Dear resident, your email Id has been successfully updated against the eventId: $eventId. In order to track the status of the event, you can "
+        "updateMyData": {
+            "emailSuccessMsg": "Dear resident, your email Id has been successfully updated against the eventId: $eventId. In order to track the status of the event, you can ",
+            "phoneNumberSuccessMsg": "Dear resident, your email Id has been successfully updated against the eventId: $eventId. In order to track the status of the event, you can "
         }
-
     },
     "autologout": {
         "preview": "You will be timed out in 60 secs due to inactivity. Please click anywhere to re-activate your session",
         "post": "You have been logged out due to inactivity."
-      },
-    "InfomationContent":{
-        "readMoreLabel":"Read More...",
-        "readLessLabel":"Read Less...",
-         "revokevid":{
-            "Perpetual":"A perpetual VID has no expiry date and no limit on the number of transactions that can be performed using this VID. One UIN can be associated with only one perpetual VID at a time.",
-            "Temporary":"A temporary VID is valid for 30 minutes and only one transaction can be performed using this VID. One UIN can be associated with multiple temporary VIDs at a time.",
-            "OneTimeUse":"A one-time VID has no expiry date but only one transaction can be performed using this VID. One UIN can be associated with multiple one-time VID at a time."
-         },
-         "secureMyID":{
-            "Email OTP Authentication":"On locking/unlocking 'Email OTP Authentication', any authentication attempt made using an email OTP will be disabled/enabled.",
-            "Mobile OTP Authentication":"On locking/unlocking 'Mobile OTP Authentication', any authentication attempt made using a mobile OTP will be disabled/enabled.",
-            "Demographic Authentication":"On locking/unlocking 'Demographic Authentication', any authentication attempt made using demographic details (name, age, address, or any combination of those) will be disabled/enabled.",
-            "Fingerprint Authentication":"On locking/unlocking 'Fingerprint Authentication', any authentication attempt made using a fingerprint will be disabled/enabled.",
-            "Iris Authentication":"On locking/unlocking 'Iris Authentication', any authentication attempt made using an iris will be disabled/enabled.",
-            "Face Authentication":"On locking/unlocking 'Face Authentication', any authentication attempt made using face will be disabled/enabled."
-         },
-         "trackStatus":"Please enter the EID (Event Id) associated with the event that you want to track. It is important that the EID you enter is associated with the logged-in UIN.",
-         "getUin":"An AID is your 16-digit Application ID which was provided to you after registration. A UIN is your 10-digit Unique Identity Number. A VID is your 16-digit Virtual ID.",
-         "verifyChannel":"A UIN is your 10-digit Unique Identity Number. A VID is your 16-digit Virtual ID."
+    },
+    "InfomationContent": {
+        "readMoreLabel": "Read More...",
+        "readLessLabel": "Read Less...",
+        "revokevid": {
+            "Perpetual": "A perpetual VID has no expiry date and no limit on the number of transactions that can be performed using this VID. One UIN can be associated with only one perpetual VID at a time.",
+            "Temporary": "A temporary VID is valid for 30 minutes and only one transaction can be performed using this VID. One UIN can be associated with multiple temporary VIDs at a time.",
+            "OneTimeUse": "A one-time VID has no expiry date but only one transaction can be performed using this VID. One UIN can be associated with multiple one-time VID at a time."
+        },
+        "secureMyID": {
+            "Email OTP Authentication": "On locking/unlocking 'Email OTP Authentication', any authentication attempt made using an email OTP will be disabled/enabled.",
+            "Mobile OTP Authentication": "On locking/unlocking 'Mobile OTP Authentication', any authentication attempt made using a mobile OTP will be disabled/enabled.",
+            "Demographic Authentication": "On locking/unlocking 'Demographic Authentication', any authentication attempt made using demographic details (name, age, address, or any combination of those) will be disabled/enabled.",
+            "Fingerprint Authentication": "On locking/unlocking 'Fingerprint Authentication', any authentication attempt made using a fingerprint will be disabled/enabled.",
+            "Iris Authentication": "On locking/unlocking 'Iris Authentication', any authentication attempt made using an iris will be disabled/enabled.",
+            "Face Authentication": "On locking/unlocking 'Face Authentication', any authentication attempt made using face will be disabled/enabled."
+        },
+        "trackStatus": "Please enter the EID (Event Id) associated with the event that you want to track. It is important that the EID you enter is associated with the logged-in UIN.",
+        "getUin": "An AID is your 16-digit Application ID which was provided to you after registration. A UIN is your 10-digit Unique Identity Number. A VID is your 16-digit Virtual ID.",
+        "verifyChannel": "A UIN is your 10-digit Unique Identity Number. A VID is your 16-digit Virtual ID."
     },
     "serverErrors": {
         "IDA-OTA-008": "Please choose the channel that you want to verify.",
@@ -514,23 +530,23 @@
         "RES-SER-410": {
             "individualIdError": "Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again..",
             "channelError": "Please choose the channel that you want to verify.",
-            "EMAIL":"The email Id you have entered is invalid. Please enter a valid email Id.",
-            "PHONE":"The phone number you have entered is invalid. Please enter a valid phone number.",
-            "eventId":"The event Id you have entered is invalid. Please enter a valid event Id.",
-            "userId":"The email Id/phone number you have entered is invalid. Please enter a valid email Id/phone number.",
-            "otp":"Invaild OTP"
+            "EMAIL": "The email Id you have entered is invalid. Please enter a valid email Id.",
+            "PHONE": "The phone number you have entered is invalid. Please enter a valid phone number.",
+            "eventId": "The event Id you have entered is invalid. Please enter a valid event Id.",
+            "userId": "The email Id/phone number you have entered is invalid. Please enter a valid email Id/phone number.",
+            "otp": "Invaild OTP"
         },
         "RES-SER-459": "The entered EID is not associated with the VID/UIN used to log in.",
         "RES-SER-412": "Please enter valid UIN/VID.",
-        "RES-SER-405":"Maximum allowed VIDs are active. Deactivate VID to generate new one.",
-        "RES-SER-511":"The entered EID is not associated with the UIN/VID used to log in.",
-        "RES-SER-449":"Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
-        "RES-SER-414":"Comment section cannot be blank. Please enter your comments in order to proceed.",
-        "RES-SER-471":"This VID cannot be revoked since you have logged in using same VID",
-        "RES-SER-513":"Failed to create VID, as the existing VID cannot be revoked since this VID was used to log into the current session.",
-        "RES-OTP-007":"OTP is invalid",
-        "RES-SER-415":"Template exceptionServiceError.",
-        "RES-SER-463":"Send OTP failed.",
-        "RES-SER-418":"Dear resident, you cannot access this service since you have not accepted the consent while logging in. Please re-login and accept the relevant consent in order to proceed further with this service."
+        "RES-SER-405": "Maximum allowed VIDs are active. Deactivate VID to generate new one.",
+        "RES-SER-511": "The entered EID is not associated with the UIN/VID used to log in.",
+        "RES-SER-449": "Invalid UIN/AID/VID entered. Please enter a valid UIN/AID/VID and try again.",
+        "RES-SER-414": "Comment section cannot be blank. Please enter your comments in order to proceed.",
+        "RES-SER-471": "This VID cannot be revoked since you have logged in using same VID",
+        "RES-SER-513": "Failed to create VID, as the existing VID cannot be revoked since this VID was used to log into the current session.",
+        "RES-OTP-007": "OTP is invalid",
+        "RES-SER-415": "Template exceptionServiceError.",
+        "RES-SER-463": "Send OTP failed.",
+        "RES-SER-418": "Dear resident, you cannot access this service since you have not accepted the consent while logging in. Please re-login and accept the relevant consent in order to proceed further with this service."
     }
 }

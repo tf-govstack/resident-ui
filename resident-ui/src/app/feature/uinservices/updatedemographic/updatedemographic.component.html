@@ -1,4 +1,4 @@
-<span class="breadcrumb">
+<span class="breadcrumb" style="margin-left: 15px;">
   <!-- <a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp; -->
   <a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
   &nbsp;&nbsp;<span style="cursor: pointer;"
@@ -7,7 +7,9 @@
   &nbsp;&nbsp;<span *ngIf="showPreviewPage" class="active">&nbsp; > &nbsp; {{'preview.title' | translate}}</span>
 </span>
 
-<mat-tab-group animationDuration="0ms" *ngIf="userInfo && !showPreviewPage" (selectedTabChange)="logChange($event)">
+<mat-card style="margin:1rem 4rem 0 4rem; min-height: 100%;" *ngIf="userInfo && !showPreviewPage">
+  <h1 style="font-weight: 500; font-size: 20px;color: #505050;">Update My Data</h1>
+<mat-tab-group animationDuration="0ms"  (selectedTabChange)="logChange($event)">
   <mat-tab label="{{'updatedemographic.identity' | translate}}">
     <table width="100%">
       <tr>
@@ -98,9 +100,9 @@
                         <td width="100%" colspan="3"><label>{{field.labelName[langCode][0]}}</label></td>
                       </tr>
                       <tr>
-                        <td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
+                        <td width="45%"><label>{{field.labelName[langCode][1]}}<span style="color: red;">*</span></label></td>
                         <td width="10%"></td>
-                        <td width="45%"><label>{{field.labelName[langCode][2]}}</label></td>
+                        <td width="45%"><label>{{field.labelName[langCode][2]}}<span style="color: red;">*</span></label></td>
                       </tr>
                       <tr>
                         <td width="45%">
@@ -117,7 +119,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}</label></td>
+                        <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}<span style="color: red;">*</span></label></td>
                       </tr>
                       <tr>
                         <td width="100%" colspan="3">
@@ -125,7 +127,7 @@
                             <input type="file" #fileDropRef id="fileDropRef"
                               (change)="fileBrowseHandler($event.target.files, 'POI')"
                               accept=".pdf, .jpg, .jpeg, .png" />
-                            <label for="fileDropRef">
+                            <label style="margin-right: 1rem;" for="fileDropRef">
                               <svg id="upload_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24.042" viewBox="0 0 24 24.042">
                                 <g id="Group_13" data-name="Group 13" transform="translate(3 2.504)">
                                   <path id="Path_988" data-name="Path 988" d="M13,11.337l2.59,2.585L17,12.509,12,7.5,7,12.509l1.41,1.412L11,11.337v9.687h2Z" transform="translate(-3 -7.5)" fill="#03a64a"/>
@@ -133,9 +135,10 @@
                                 </g>
                                 <path id="Path_989" data-name="Path 989" d="M0,24.042H24V0H0Z" fill="none"/>
                               </svg>
-                              <span style="margin-top: 4px;padding-left: 5px;">Upload Image</span>
+                              <span style="margin-top: 4px;padding-left: 5px; font-size: 14px; font-weight: 600;">Upload Image</span>
                             </label>
                             <h3>or</h3>
+                            &nbsp;
                             <h3>Drop Image</h3>
                           </div>
                         </td>
@@ -276,9 +279,9 @@
                       <td width="100%" colspan="3"><label>{{field.labelName[langCode][0]}}</label></td>
                     </tr>
                     <tr>
-                      <td width="45%"><label>{{field.labelName[langCode][1]}}</label></td>
+                      <td width="45%"><label>{{field.labelName[langCode][1]}}<span style="color: red;">*</span></label></td>
                       <td width="10%"></td>
-                      <td width="45%"><label>{{field.labelName[langCode][2]}}</label></td>
+                      <td width="45%"><label>{{field.labelName[langCode][2]}}<span style="color: red;">*</span></label></td>
                     </tr>
                     <tr>
                       <td width="45%">
@@ -296,14 +299,14 @@
                       </td>
                     </tr>
                     <tr>
-                      <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}</label></td>
+                      <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}<span style="color: red;">*</span></label></td>
                     </tr>
                     <tr>
                       <td width="100%" colspan="3">
                         <div class="container" appDnd (fileDropped)="onFileDropped($event, 'POA')">
                           <input type="file" #fileAddRef id="fileAddRef"
                             (change)="fileBrowseHandler($event.target.files, 'POA')" accept=".pdf, .jpg, .jpeg, .png" />
-                          <label for="fileDropRef">
+                          <label style="margin-right: 1rem;" for="fileDropRef">
                             <svg id="upload_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24.042" viewBox="0 0 24 24.042">
                               <g id="Group_13" data-name="Group 13" transform="translate(3 2.504)">
                                 <path id="Path_988" data-name="Path 988" d="M13,11.337l2.59,2.585L17,12.509,12,7.5,7,12.509l1.41,1.412L11,11.337v9.687h2Z" transform="translate(-3 -7.5)" fill="#03a64a"/>
@@ -311,9 +314,10 @@
                               </g>
                               <path id="Path_989" data-name="Path 989" d="M0,24.042H24V0H0Z" fill="none"/>
                             </svg>
-                            <span style="margin-top: 4px;padding-left: 5px;">Upload Image</span>
+                            <span style="margin-top: 4px;padding-left: 5px; font-size: 14px; font-weight: 600;">Upload Image</span>
                           </label>
                           <h3>or</h3>
+                          &nbsp;
                           <h3>Drop Image</h3>
                         </div>
                       </td>
@@ -525,6 +529,7 @@
     <!-- <button mat-raised-button color="primary" id="submit" (click)="submitBtn('languagePreference')">Submit</button> -->
   </mat-tab>
 </mat-tab-group>
+</mat-card>
 
 
 <!-- preview Page -->

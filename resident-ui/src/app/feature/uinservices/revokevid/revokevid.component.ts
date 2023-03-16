@@ -85,10 +85,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
-        this.langJSON = response;
+        this.langJSON = response.managemyvid;
         this.popupMessages = response;
-        console.log(response)
-        console.log(this.popupMessages)
       });
     this.getVID();
   }
@@ -113,6 +111,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     this.dataStorageService.getPolicy().subscribe(response => {
       if (response["response"]) {
         this.policyType = JSON.parse(response["response"]);
+        console.log(this.policyType)
         for (var i = 0; i < this.policyType.vidPolicies.length; i++) {
           results = [];
           for (var j = 0; j < self.vidlist.length; j++) {
