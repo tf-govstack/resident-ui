@@ -331,6 +331,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         eventId:eventId,
         passwordCombinationHeading:this.popupMessages.genericmessage.passwordCombinationHeading,
         passwordCombination:this.popupMessages.genericmessage.passwordCombination,
+        dearResident: this.popupMessages.genericmessage.dearResident,
         message: message,
         downloadedSuccessFully2: this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully2,
         trackStatusText:this.popupMessages.genericmessage.trackStatusText,
