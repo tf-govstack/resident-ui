@@ -101,7 +101,7 @@ export class DialogComponent implements OnInit {
     }
     else if (this.data.title === "Warning") {
       this.popMsgbgColor = "#FFF9DB"
-      this.popMsgColor = "#F2CC0C"
+      this.popMsgColor = "#89730B"
       this.icon = "./assets/AdobeStock_547798501-modified.png"
     }
 

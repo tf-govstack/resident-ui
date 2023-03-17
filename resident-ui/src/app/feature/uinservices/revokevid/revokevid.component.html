@@ -22,8 +22,9 @@
 						</div>
 						<button [id]="policy.vidType" mat-raised-button color="primary" style="width: 100px; height: 36px; display: flex; align-items: center;" (click)="generateVIDBtn(policy.vidType)"><img style="margin-right: 5px; margin-bottom: 2px;" src="./assets/icons/iconfont/add_circle_black_24dp (1).svg" alt=""/>{{'managemyvid.create' | translate}}</button>
 				</div>
-				    <mat-grid-list   style="width:100%;" gutterSize="10px" [cols]="cols"  rowHeight="180px" (window:resize)="onResize($event)" *ngIf=finalTypeList[policy.vidType] class="each-vid-card">
-						<mat-grid-tile *ngFor = "let list of finalTypeList[policy.vidType]; let i = index">
+				<mat-card style="width: 56%; background-color: #F4F4F4;" *ngIf="!finalTypeList[policy.vidType].length">{{langJSON.noVidsText.replace("$VIDTYPE",langJSON[policy.vidType].vidType)}}<span style="font-weight: 600;">{{langJSON.create}}</span>{{langJSON.noVidsText2}}</mat-card>
+				    <mat-grid-list   style="width:100%;" gutterSize="10px" [cols]="cols"  rowHeight="180px" (window:resize)="onResize($event)" *ngIf="finalTypeList[policy.vidType]" class="each-vid-card">
+						<mat-grid-tile  *ngFor = "let list of finalTypeList[policy.vidType]; let i = index">
 							<mat-card [id]="list.vid" class="mini-card">
 							  <table style="width:100%">
 							  <tr>
