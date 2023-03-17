@@ -228,7 +228,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   vidDownloadStatus(vid:any){
       this.dataStorageService.vidDownloadStatus(vid).subscribe(response =>{
         this.eventId = response.headers.get("eventid")
-        console.log(this.eventId)
         this.message = this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully.replace("$eventId", this.eventId)
         if(!response.body['errors'].length){
           this.successMsgForDownload(this.message, this.eventId)
@@ -314,6 +313,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         title: this.popupMessages.genericmessage.successLabel,
         eventId:eventId,
         message: message,
+        trackStatusText: this.popupMessages.genericmessage.trackStatusText,
+        dearResident: this.popupMessages.genericmessage.dearResident,
         clickHere:this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
@@ -331,6 +332,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         passwordCombinationHeading:this.popupMessages.genericmessage.passwordCombinationHeading,
         passwordCombination:this.popupMessages.genericmessage.passwordCombination,
         message: message,
+        downloadedSuccessFully2: this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully2,
+        trackStatusText:this.popupMessages.genericmessage.trackStatusText,
         clickHere:this.popupMessages.genericmessage.clickHere,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
@@ -388,6 +391,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.warningLabel,
         message: this.message,
+        clickYesToProceed: this.popupMessages.genericmessage.clickYesToProceed,
         yesBtnFor:"Vid",
         btnTxt: this.popupMessages.genericmessage.yesButton,
         btnTxtNo: this.popupMessages.genericmessage.noButton
@@ -411,6 +415,8 @@ export class RevokevidComponent implements OnInit, OnDestroy {
           message: this.message,
           btnTxt: this.popupMessages.genericmessage.successButton,
           clickHere: this.popupMessages.genericmessage.clickHere,
+          clickHere2: this.popupMessages.genericmessage.clickHere2,
+          dearResident: this.popupMessages.genericmessage.dearResident,
           relogin: this.popupMessages.genericmessage.relogin
         },
         disableClose: true

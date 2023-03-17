@@ -299,6 +299,8 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
           message: this.popupMessages.serverErrors[errorCode],
           btnTxt: this.popupMessages.genericmessage.successButton,
           clickHere: this.popupMessages.genericmessage.clickHere,
+          clickHere2: this.popupMessages.genericmessage.clickHere2,
+          dearResident: this.popupMessages.genericmessage.dearResident,
           relogin: this.popupMessages.genericmessage.relogin
         },
         disableClose: true
