@@ -91,18 +91,18 @@ export class DialogComponent implements OnInit {
       this.sitealignment = 'rtl';
     }
     if (this.data.title === "Error") {
-      this.popMsgbgColor = "#FFD9D8"
-      this.popMsgColor = "#C90500"
-      this.icon = "./assets/cancel_icon.png"
+      this.popMsgbgColor = "#FFD9D8";
+      this.popMsgColor = "#C90500";
+      this.icon = "./assets/cancel_icon.png";
     } else if (this.data.warningForChannel === "warningForChannel") {
-      this.popMsgbgColor = "#FFF9DB"
-      this.popMsgColor = "#F2CC0C"
-      this.icon = "./assets/sucess_icon.png"
+      this.popMsgbgColor = "#FFF9DB";
+      this.popMsgColor = "#F2CC0C";
+      this.icon = "./assets/sucess_icon.png";
     }
     else if (this.data.title === "Warning") {
-      this.popMsgbgColor = "#FFF9DB"
-      this.popMsgColor = "#89730B"
-      this.icon = "./assets/AdobeStock_547798501-modified.png"
+      this.popMsgbgColor = "#FFF9DB";
+      this.popMsgColor = "#89730B";
+      this.icon = "./assets/icons/iconfont/Group 130.svg";
     }
 
     if (this.data.case === "OTP") {

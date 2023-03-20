@@ -353,8 +353,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
       this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
-    } else {
-      this.transactionID = this.transactionID
     }
 
     const request = {
@@ -382,8 +380,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
       this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
-    } else {
-      this.transactionID = this.transactionID
     }
 
     const request = {
@@ -533,6 +529,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     console.log("this.dynamicFieldValue>>>" + JSON.stringify(this.dynamicFieldValue));
     console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
     let transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    if (transactionID.length < 10) {
+      let diffrence = 10 - transactionID.length;
+      transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
+    }
+    
     if (this.proofOfIdentity['documenttype']) {
       const formData = new FormData();
       formData.append('file', this.files[0]);
