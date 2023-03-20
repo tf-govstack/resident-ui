@@ -193,7 +193,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
+        "transactionID": window.crypto.getRandomValues(new Uint32Array(1)).toString(),
         "vidType": vidType,
         "channels": ["PHONE", "EMAIL"]
       }
@@ -281,7 +281,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       "version": this.appConfigService.getConfig()["resident.revokevid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
+        "transactionID": window.crypto.getRandomValues(new Uint32Array(1)).toString(),
         "vidStatus": "REVOKED"
       }
     };
