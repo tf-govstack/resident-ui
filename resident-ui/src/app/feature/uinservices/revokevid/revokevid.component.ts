@@ -132,8 +132,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   onResize(event:any){
-    /*this.cols = (event.target.innerWidth  <= 1400 ) ? 3 : 4
-    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.3" : "2:1.2"*/
+    
   }
 
   displayVid(finalTypeList, policyType, policy, showvid) {
