@@ -9,7 +9,6 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { InteractionService } from "src/app/core/services/interaction.service";
-import { HttpResponse } from '@angular/common/http';
 import { AuditService } from "src/app/core/services/audit.service";
 import moment from 'moment';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
