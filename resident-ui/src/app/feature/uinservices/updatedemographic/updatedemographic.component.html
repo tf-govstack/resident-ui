@@ -1,5 +1,4 @@
 <span class="breadcrumb" style="margin-left: 15px;">
-  <!-- <a (click)="onItemSelected('dashboard')">{{'dashboard.home' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp; -->
   <a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
   &nbsp;&nbsp;<span style="cursor: pointer;"
     (click)="onItemSelected('demographic')">{{'updatedemographic.title' | translate}}</span>
@@ -420,49 +419,6 @@
         </mat-grid-tile>      
       </mat-grid-list>
     </div>
-
-    <!-- <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
-      <div layout="row" *ngIf="field.tabgroup === 'contact'">
-        <table [style.width] = "width">
-          <tr *ngIf="field.controlType === 'textbox'">
-            <td width="100%">
-              <table width="100%">
-                <tr>
-                  <td width="25%"><label>{{field.labelName[langCode][0]}}</label></td>
-                  <td width="5%"></td>
-                  <td width="25%"><label>{{field.labelName[langCode][1]}}</label></td>
-                  <td width="5%"></td>
-                  <td width="25%"><label>{{field.labelName[langCode][2]}}</label></td>
-                  <td width="5%"></td>
-                  <td width="10%"></td>
-                </tr>
-                <tr>
-                  <td width="25%"><input type="text" class="readonly" readonly="true" disabled="true"
-                      value="{{buildJSONData[field.attributeName]}}"></td>
-                  <td width="5%"></td>
-                  <td width="25%">
-                    <input matInput type="password" #{{field.attributeName}} id="{{field.attributeName}}"
-                      (blur)="captureValue($event, field.attributeName)" />
-                  </td>
-                  <td width="5%"></td>
-                  <td width="25%">
-                    <input (input)="captureConfirmValue($event,field.attributeName)" matInput
-                      #confirm{{field.attributeName}} id="confirm{{field.attributeName}}" />
-                  </td>
-                  <td width="5%"></td>
-                  <td width="10%">
-                    <button [disabled]="sendOtpDisable || !(field.attributeName === updatedingId)"
-                      (click)="sendOTPBtn(field.attributeName)" mat-raised-button color="primary"
-                      id="sendOTP{{field.attributeName}}">{{field.labelName[langCode][3]
-                      |translate}}</button>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div> -->
   </mat-tab>
   <mat-tab label="{{'updatedemographic.languagePreference' | translate}}" style="display: flex; flex-direction: column; justify-content: space-between;align-items: flex-end;">
     <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
@@ -487,52 +443,14 @@
         </mat-grid-tile>
       </mat-grid-list>
       </div>
-
-      <!-- <div layout="row" *ngIf="field.tabgroup === 'notificationLanguage'">
-        <h4 style="color: #505050;">My Language Preference</h4>
-        <table width="50%" >
-          <tr *ngIf="field.controlType === 'dropdown'">
-            <td width="100%">
-              <table width="100%" *ngFor="let language of supportedLanguages;">
-                <tr>
-                  <td width="45%"><label>{{field.labelName[language][0]}}</label></td>
-                  <td width="10%" *ngIf="buildJSONData[field.attributeName]"></td>
-                  <td width="45%"><label>{{field.labelName[language][1]}}</label></td>
-                </tr>
-                <tr >
-                  <td *ngIf="buildJSONData[field.attributeName]" width="45%">
-                    <input style="border: none; background-color: #F7F7F7" type="text" class="readonly" readonly="true"
-                      disabled="true" value="{{buildJSONData[field.attributeName][language]}}">
-                  </td>
-                  <td width="10%"></td>
-                  <td width="45%">
-                    <mat-form-field style="min-width: 73%;">
-                    <mat-select [(ngModel)]="selected2" id="{{field.attributeName}}">
-                      <mat-option *ngFor="let data of newNotificationLanguages"
-                        (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
-                        [value]="data.code">{{ data.name }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  </td>
-                  <td width="10%"></td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </div> -->
     </div>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
       <button [disabled]="previewDisabled && previewDisabledInAddress" mat-raised-button (click)="previewBtn('address')" color="primary"
         id="submit">Preview</button>
     </div>
-    <!-- <button mat-raised-button color="primary" id="submit" (click)="submitBtn('languagePreference')">Submit</button> -->
   </mat-tab>
 </mat-tab-group>
 </mat-card>
-
-
-<!-- preview Page -->
 
 <mat-card style="margin:1rem 4rem 0 4rem; padding: 16px;" *ngIf="showPreviewPage">
   <mat-card-subtitle style="font-size: 20px;" class="preview-heading">Preview</mat-card-subtitle>
@@ -601,13 +519,6 @@
         <div class="preview" (click)="previewFileInPreviewPage(i)">
           <img mat-card-xs-image src='../assets/view.png' />
         </div>
-
-        <!-- <div class="delete" (click)="deleteFile(i, 'POI')">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18">
-          <path fill="#B1B1B1" fill-rule="nonzero"
-            d="M1 16c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v10zm3.17-7.83a.996.996 0 0 1 1.41 0L7 9.59l1.42-1.42a.996.996 0 1 1 1.41 1.41L8.41 11l1.42 1.42a.996.996 0 1 1-1.41 1.41L7 12.41l-1.42 1.42a.996.996 0 1 1-1.41-1.41L5.59 11 4.17 9.58a.996.996 0 0 1 0-1.41zM10.5 1L9.79.29C9.61.11 9.35 0 9.09 0H4.91c-.26 0-.52.11-.7.29L3.5 1H1c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z" />
-        </svg>
-      </div> -->
       </div>
     </div>
   </div>
