@@ -18,11 +18,12 @@ export class AuditService {
   audit(auditEventId: string, auditEventName: string, moduleId: string, moduleName: string, description: string) {
     const auditObject = new AuditModel();
     let temporaryId = '';
-    temporaryId = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    temporaryId = window.crypto.getRandomValues(new Uint32Array(1)).toString();
+    /*temporaryId = (Math.floor(Math.random() * 9000000000) + 1).toString();
     if(parseInt(temporaryId) < 10){
       let diffrence = 10 - temporaryId.length;
       temporaryId = (Math.floor(Math.random() * 9000000000) + diffrence).toString()
-    }
+    }*/
 
     auditObject.id = temporaryId;
     auditObject.createdBy = this.headerService.getUsername();

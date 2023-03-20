@@ -134,7 +134,8 @@ export class DownloadUinComponent implements OnInit {
   }
 
   generateOTP(data: any) {
-    this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
+    //(Math.floor(Math.random() * 9000000000) + 1).toString();
     let self = this;
     const request = {
       "id": "mosip.identity.otp.internal",

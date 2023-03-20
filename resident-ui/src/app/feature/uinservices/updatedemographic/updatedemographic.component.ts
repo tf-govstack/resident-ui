@@ -349,13 +349,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   generateOtp() {
-    this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
+    /*this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
       this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
     } else {
       this.transactionID = this.transactionID
-    }
+    }*/
 
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
@@ -378,13 +379,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   reGenerateOtp() {
-    this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
+    /*this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
       this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
     } else {
       this.transactionID = this.transactionID
-    }
+    }*/
 
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
@@ -532,7 +534,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     console.log("self.proofOfAddress>>>" + JSON.stringify(this.proofOfAddress));
     console.log("this.dynamicFieldValue>>>" + JSON.stringify(this.dynamicFieldValue));
     console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
-    let transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    //let transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+    let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (this.proofOfIdentity['documenttype']) {
       const formData = new FormData();
       formData.append('file', this.files[0]);
