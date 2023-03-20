@@ -534,7 +534,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     console.log("self.proofOfAddress>>>" + JSON.stringify(this.proofOfAddress));
     console.log("this.dynamicFieldValue>>>" + JSON.stringify(this.dynamicFieldValue));
     console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
-    //let transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
+
     let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (this.proofOfIdentity['documenttype']) {
       const formData = new FormData();

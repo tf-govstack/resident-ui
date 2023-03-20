@@ -18,7 +18,8 @@
   padding: 0px;
   color: #000000;
   font-size: 14px;
-  /*font-family: normal normal normal 14px/24px Roboto;*/
+  line-height: 24px;
+  font-family: Roboto;
   margin-top: 0px;
 }
 
@@ -133,3 +134,4 @@ mat-icon.mat-card-avatar {
 .mat-card{
   border-radius: 25px !important;
 }
+
