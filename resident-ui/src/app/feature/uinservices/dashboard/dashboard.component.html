@@ -7,7 +7,7 @@
 	<mat-card  class="main-card">
 		<mat-card-title class="uin-heading">{{'dashboard.uinservices' | translate}}</mat-card-title>
 		<mat-card-subtitle class="services-description">{{'dashboard.uindescription' | translate}}</mat-card-subtitle>
-		<mat-grid-list *ngIf="menuItems" (window:resize)="onResize($event)" [cols]="cols" rowHeight="190px" gutterSize="7px">
+		<mat-grid-list *ngIf="menuItems" [cols]="cols" rowHeight="190px" gutterSize="7px">
 			<mat-grid-tile *ngFor="let item of menuItems[0].subMenus">
 				<mat-card class="mini-card" (click)="onItemSelected(item.route)">
 				  <span><img mat-card-xs-image [src]=item.icon/></span>
@@ -21,13 +21,5 @@
 	</mat-card>
 </div>
 
-<!-- Order a physical card now pending need to add on eng.json in future -->
-<!-- {
-	"_displayName": "Order A Physical Card",
-	"_icon": "assets/images/physicalcard.png",
-	"_route": "uinservices/physicalcard",
-	"_description": "This service can be used to order a physical card to the preferred address. The types of cards available, tariffs and other features will depend on the partner chosen in the process.",
-	"_auditEventId": "ADM-004"
-}, -->
 
 

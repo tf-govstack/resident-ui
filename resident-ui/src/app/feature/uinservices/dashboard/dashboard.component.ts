@@ -70,19 +70,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  onResize(event: any) {
-/*    if(event.target.innerWidth <= 1680 && event.target.innerWidth >= 1440){
-      this.rowHeight = "200px"
-    }else if (event.target.innerWidth <= 1400 && event.target.innerWidth >= 1370){
-      this.rowHeight = "240px"
-    }else if (event.target.innerWidth <= 1366){
-      this.rowHeight = "220px"
-    }else{
-      this.rowHeight = "200px"
-    }*/
-   
-  }
-
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }

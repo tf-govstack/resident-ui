@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
-import {FormControl, Validators} from '@angular/forms';
 import { TranslateService } from "@ngx-translate/core";
 import { DataStorageService } from "src/app/core/services/data-storage.service";
 import { AppConfigService } from 'src/app/app-config.service';
-import Utils from 'src/app/app.utils';
 import { Subscription } from "rxjs";
 import { AuditService } from "src/app/core/services/audit.service";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -14,7 +12,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.css"],
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit {
 
   menuItems:any;
   message:any;
@@ -77,8 +75,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }else{
      this.router.navigate([item]); 
    }    
-  }
-
-  ngOnDestroy(): void {
   }
 }
