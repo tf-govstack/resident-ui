@@ -17,8 +17,9 @@
 .uin-service-list{
   padding: 0px;
   color: #000000;
-  /* font-size: 14px; */
-  font: normal normal normal 14px/24px Roboto;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: Roboto;
   margin-top: 0px;
 }
 

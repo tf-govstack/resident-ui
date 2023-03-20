@@ -132,8 +132,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   onResize(event:any){
-    /*this.cols = (event.target.innerWidth  <= 1400 ) ? 3 : 4
-    this.rowHeight = (event.target.innerWidth <= 1430) ? "2:1.3" : "2:1.2"*/
+    
   }
 
   displayVid(finalTypeList, policyType, policy, showvid) {
@@ -193,7 +192,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
+        "transactionID": window.crypto.getRandomValues(new Uint32Array(1)).toString(),
         "vidType": vidType,
         "channels": ["PHONE", "EMAIL"]
       }
@@ -281,7 +280,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       "version": this.appConfigService.getConfig()["resident.revokevid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": (Math.floor(Math.random() * 9000000000) + 1).toString(),
+        "transactionID": window.crypto.getRandomValues(new Uint32Array(1)).toString(),
         "vidStatus": "REVOKED"
       }
     };
