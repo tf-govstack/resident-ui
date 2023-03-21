@@ -350,14 +350,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   generateOtp() {
     this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
-    /*this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
-      this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
-    } else {
-      this.transactionID = this.transactionID
-    }*/
-
+      for(let i=0; i < diffrence; i++){
+          this.transactionID = this.transactionID + i
+      }
+    } 
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
@@ -380,13 +378,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   reGenerateOtp() {
     this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
-    /*this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
-      this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
-    } else {
-      this.transactionID = this.transactionID
-    }*/
+      for(let i=0; i < diffrence; i++){
+          this.transactionID = this.transactionID + i
+      }
+    } 
 
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
@@ -536,6 +533,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
 
     let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
+    if (transactionID.length < 10) {
+      let diffrence = 10 - transactionID.length;
+      for(let i=0; i < diffrence; i++){
+           transactionID = transactionID + i
+      }
+    } 
     if (this.proofOfIdentity['documenttype']) {
       const formData = new FormData();
       formData.append('file', this.files[0]);
