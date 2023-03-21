@@ -157,7 +157,7 @@ span.input {
 }
 
 ::ng-deep.mat-paginator .mat-select-value {
-  padding-top: 13px !important;
+  padding-top: 12px !important;
   padding-left: 5px !important;
 }
 
