@@ -27,9 +27,9 @@
 	        <mat-grid-tile>
 	          <div class="mini-card">
 	            <mat-card-header><span class="label">{{'viewhistory.inputFrom' |translate}}</span></mat-card-header>
-	            <mat-card-subtitle><span class="input"><input id="fromPickertext" [(ngModel)]="startdate" [max]="today" matInput
+	            <mat-card-subtitle><span class="input"><input readonly id="fromPickertext" [(ngModel)]="startdate" [max]="today" matInput
 						[matDatepicker]="fromPicker" class="datepicker-card"
-						(dateChange)="captureValue($event, 'fromDate', 'datepicker')">
+						(dateChange)="captureValue($event, 'fromDate', 'datepicker')" (click)="fromPicker.open()">
 						<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
 						<mat-datepicker #fromPicker></mat-datepicker></span></mat-card-subtitle>
 	          </div>
@@ -37,8 +37,8 @@
 	        <mat-grid-tile>
 	          <div class="mini-card">
 	            <mat-card-header><span class="label">{{'viewhistory.inputTo' |translate}}</span></mat-card-header>
-	            <mat-card-subtitle><span class="input"><input id="toPickertext" [(ngModel)]="selectedDate" matInput [min]="toDateStartDate" [max]="today"
-						[matDatepicker]="toPicker" class="datepicker-card"
+	            <mat-card-subtitle><span class="input"><input readonly id="toPickertext" [(ngModel)]="selectedDate" matInput [min]="toDateStartDate" [max]="today"
+						[matDatepicker]="toPicker" (click)="toPicker.open()" class="datepicker-card"
 						(dateChange)="captureValue($event, 'toDate', 'datepicker')">
 						<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
 						<mat-datepicker #toPicker></mat-datepicker></span></mat-card-subtitle>

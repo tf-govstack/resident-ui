@@ -31,15 +31,17 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   statusTypeFilter:any;
   showFirstLastButtons:boolean = true;
   cols:number;
-  today: Date;
+  today: Date = new Date()
   presentYear: any = new Date().getFullYear()
   startdate: Date = new Date(this.presentYear, 0, 1)
   selected = 'All'
-  selectedDate:any;
+  selectedDate:any = new Date()
   toDateStartDate:any = this.startdate;
   searchText:string = "";
   serviceType:string = "";
   statusFilter:string = "";
+  fromDate:string = this.startdate.getFullYear() + "-" + ("0"+(this.startdate.getMonth()+1)).slice(-2) + "-" + ("0" + this.startdate.getDate()).slice(-2);
+  toDate:string = this.today.getFullYear() + "-" + ("0"+(this.today.getMonth()+1)).slice(-2) + "-" + ("0" + this.today.getDate()).slice(-2);
   controlTypes = ["searchText", "serviceType", "statusFilter", "fromDate", "toDate"];
   datas:{};
   isStatusAllValue:boolean = false;
@@ -88,8 +90,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       this.langJSON = response;
       this.popupMessages = response;
     });
-
-    this.today = new Date()
     
     this.getServiceHistory("",""); 
     this.captureValue("","ALL","")
@@ -165,6 +165,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       formControlName === "fromDate" ? this.toDateStartDate = dateFormat : "";
       let formattedDate = dateFormat.getFullYear() + "-" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "-" + ("0" + dateFormat.getDate()).slice(-2);
       this[formControlName] = formattedDate;
+      console.log(this[formControlName])
     }else{
       if(event.target){
       this[formControlName] = event.target.value;
@@ -177,7 +178,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       this.auditService.audit('RP-010', 'View history', 'RP-View history', 'View history', 'User chooses the "status filter" from the drop-down');
       this.statusFilter = this.statusFilter.replace(/ALL,/ig, '');
     }
-    console.log(this[formControlName])
   }
 
   pinData(data:any){
