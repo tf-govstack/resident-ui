@@ -95,21 +95,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.captureValue("","ALL","")
   }
 
-  getServiceHistory(pageEvent:any, filters:any){ 
-    console.log(pageEvent)
-    console.log(this.searchParam)
-    console.log(filters)
-    let finalFilters = ''
-    if(filters === "" && pageEvent){
-      finalFilters = filters
-    }else if(filters !== "" && pageEvent){
-      finalFilters = filters
-    }else{
-      finalFilters = filters
-    }
-    console.log(finalFilters)
+  getServiceHistory(pageEvent:any, filters:any){
     this.dataStorageService
-    .getServiceHistory(pageEvent, finalFilters)
+    .getServiceHistory(pageEvent, filters)
     .subscribe((response) => {
       if(response["response"]){   
         this.responselist = response["response"]["data"];
@@ -189,6 +177,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       this.auditService.audit('RP-010', 'View history', 'RP-View history', 'View history', 'User chooses the "status filter" from the drop-down');
       this.statusFilter = this.statusFilter.replace(/ALL,/ig, '');
     }
+    console.log(this[formControlName])
   }
 
   pinData(data:any){
@@ -222,19 +211,37 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
   search(){    
     let searchParam = "",
-     self = this;    
+     self = this;
     this.controlTypes.forEach(controlType => {
+      console.log(self[controlType])
       if(self[controlType]){
-        if(self.searchParam){
-          self.searchParam = self.searchParam+"&"+controlType+"="+self[controlType];
+        if(searchParam){
+          searchParam = searchParam+"&"+controlType+"="+self[controlType];
         }else{
-          self.searchParam = controlType+"="+self[controlType];
+          searchParam = controlType+"="+self[controlType];
         }
       }     
     });
-    console.log(self.searchParam);
-    this.getServiceHistory("",self.searchParam);  
+    console.log(searchParam);
+    this.getServiceHistory("",searchParam);  
     this.auditService.audit('RP-004', 'View history', 'RP-View history', 'View history', 'User clicks on "Go" button for applying "the chosen filter"');  
+  }
+
+  capturePageValue(pageEvent:any){
+    let searchParam = "",
+    self = this;
+   this.controlTypes.forEach(controlType => {
+     console.log(self[controlType])
+     if(self[controlType]){
+       if(searchParam){
+         searchParam = searchParam+"&"+controlType+"="+self[controlType];
+       }else{
+         searchParam = controlType+"="+self[controlType];
+       }
+     }     
+   });
+
+   this.getServiceHistory(pageEvent,searchParam); 
   }
 
   downloadServiceHistory(){
