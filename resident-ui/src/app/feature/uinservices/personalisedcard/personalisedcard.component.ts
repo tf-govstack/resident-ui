@@ -118,6 +118,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   }
 
   captureCheckboxValue($event: any, data: any, type: any) {
+   try{
     this.buildHTML = "";
     let row = "";
     let datadisplay = "";
@@ -194,23 +195,52 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
             this.dataDisplay[data.attributeName] = [];
             this.dataDisplay[data.attributeName].push({ "label": data.label[this.langCode], "value": value });
           } else {
-            let value = ""
+            let value = "";
+            let allValue = "";
+            let self = this;
             if(type["value"] !== 'fullAddress'){
-              value =  typeof this.userInfo[type["value"]] !== 'string' ? this.userInfo[type["value"]][0].value : this.userInfo[type["value"]];
+              this.schema.map(eachItem =>{
+                if(data['attributeName'] === eachItem['attributeName']){
+                  eachItem['formatOption'][this.langCode].forEach((item, index) =>{
+                    if(document.getElementById(item.value+"-input").getAttribute('aria-checked') !== "false"){
+                      if(allValue){
+                        if(self.userInfo[item.value] !== undefined){
+                          if(item.value === "postalCode"){
+                            allValue = allValue+", "+self.userInfo[item.value];
+                          }else{
+                            allValue = allValue+", "+self.userInfo[item.value][0].value;
+                          }
+                        }
+                      }else{
+                        if(self.userInfo[item.value] !== undefined){
+                          allValue = self.userInfo[item.value][0].value;
+                        }
+                      }
+                    }else if(item.value === type['value']){
+                      if(allValue){
+                        if(self.userInfo[item.value] !== undefined){
+                          if(item.value === "postalCode"){
+                            allValue = allValue+", "+self.userInfo[item.value];
+                          }else{
+                            allValue = allValue+", "+self.userInfo[item.value][0].value;
+                          }
+                        }
+                      }else{
+                        if(self.userInfo[item.value] !== undefined){
+                          allValue = self.userInfo[type['value']][0].value;
+                        }
+                      }
+                    }
+                    return "";
+                  });
+                }
+              });
+              value = allValue;
+              //value =  typeof this.userInfo[type["value"]] !== 'string' ? this.userInfo[type["value"]][0].value : this.userInfo[type["value"]];
             }else{
               value = this.userInfo[data.attributeName][0].value;
             }
-            this.dataDisplay[data['attributeName']][0]['value'] = value
-            // this.dataDisplay[data.attributeName] = { "attributeName": data.label[this.langCode], "isMasked": false, "format": type["value"], "value": value };
-            // if(type.value !== "fullName"){
-            //   if(type.value !== "fullAddress"){
-            //     if(this.userInfo[type.value]){
-            //       value = this.userInfo[type.value][0].value;
-            //       console.log(value)
-            //     }
-            //     this.dataDisplay[data.attributeName].push({ "label": type.value, "value": value });
-            //   }
-            // }            
+            this.dataDisplay[data['attributeName']][0]['value'] = value;
           }          
         }
       }
@@ -238,6 +268,10 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     }  
     this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;
     $event.stopPropagation();
+    }catch(ex){
+      $event.stopPropagation();
+      console.log(""+ex.message);
+    }
   }
 
   downloadFile() {
