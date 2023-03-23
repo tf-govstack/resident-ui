@@ -8,6 +8,7 @@ import * as appConstants from 'src/app/app.constants';
 import { DataStorageService } from './data-storage.service';
 import { Router } from "@angular/router";
 import { LogoutService } from './logout.service';
+import { AppConfigService } from 'src/app/app-config.service';
 
 /**
  * @description This class is responsible for auto logging out user when he is inactive for a
@@ -29,9 +30,9 @@ export class AutoLogoutService {
   languagelabels: any;
   langCode = localStorage.getItem('langCode');
 
-  idle: number = 180;
-  timeout: number = 60;
-  ping: number = 30;
+  idle: number;
+  timeout: number;
+  ping: number;
   dialogref;
   dialogreflogout;
 
@@ -41,7 +42,8 @@ export class AutoLogoutService {
     private configservice: ConfigService,
     private dataStorageService: DataStorageService,
     private router: Router,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private appConfigService: AppConfigService,
   ) {  
    
   }
@@ -55,13 +57,13 @@ export class AutoLogoutService {
 
   getValues(langCode) {
     (this.idle = Number(
-      this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_webui_auto_logout_idle)
+      this.appConfigService.getConfig()['mosip.webui.auto.logout.idle']
     )),
       (this.timeout = Number(
-        this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_webui_auto_logout_timeout)
+        this.appConfigService.getConfig()['mosip.webui.auto.logout.timeout']
       )),
       (this.ping = Number(
-        this.configservice.getConfigByKey(appConstants.CONFIG_KEYS.mosip_webui_auto_logout_ping)
+        this.appConfigService.getConfig()['mosip.webui.auto.logout.ping']
       ));
     this.dataStorageService
       .getI18NLanguageFiles(langCode)
@@ -80,6 +82,7 @@ export class AutoLogoutService {
 
   changeMessage(message: object) {
     this.messageAutoLogout.next(message);
+    console.log(message)
   }
   /**
    * @description This method sets value of idle,timeout and ping parameter from config file.
@@ -92,6 +95,7 @@ export class AutoLogoutService {
     this.timer.ping = this.ping;
     this.timer.timeout = this.timeout;
     this.userIdle.setConfigValues(this.timer);
+    console.log(this.timer)
   }
 
   /**
@@ -122,7 +126,7 @@ export class AutoLogoutService {
     );
 
     this.userIdle.onTimeout().subscribe(() => {
-      if (this.isActive) {
+      if (!this.isActive) {
         this.onLogOut();
       } else {
         this.userIdle.resetTimer();
@@ -140,7 +144,7 @@ export class AutoLogoutService {
    * @memberof AutoLogoutService
    */
   onLogOut() {
-    this.dialogref.close();
+    // this.dialogref.close();
     this.dialog.closeAll();
     this.userIdle.stopWatching();
     this.popUpPostLogOut();

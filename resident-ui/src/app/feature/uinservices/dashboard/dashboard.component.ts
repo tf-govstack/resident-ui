@@ -57,14 +57,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
       (message) => (this.message = message) //message =  {"timerFired":false}
     );
+    console.log(this.message)
 
     this.subscriptions.push(subs);
+
     if (!this.message["timerFired"]) {
       this.autoLogout.getValues(this.userPreferredLangCode);
       this.autoLogout.setValues();
       this.autoLogout.keepWatching();
     } else {
-      console.log(this.message["timerFired"])
       this.autoLogout.getValues(this.userPreferredLangCode);
       this.autoLogout.continueWatching();
     }
