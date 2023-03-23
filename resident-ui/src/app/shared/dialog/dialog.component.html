@@ -165,7 +165,8 @@
       <div class="pop-up-header">
         <div mat-dialog-content>
           <div>
-            <p>{{input.message}} <span (click)="openLoginPage()"
+            <p>{{input.dearResident}}</p>
+            <p>{{input.message}} {{input.clickHere2}} <span (click)="openLoginPage()"
                 class="navigate-link">{{input.clickHere}}</span>{{input.relogin}}</p>
           </div>
         </div>
@@ -290,15 +291,27 @@
     </div>
   </div>
 
-  <!-- checking-->
-  <div class="pop-up" *ngIf="input.case === 'POPUP'">
+  <!-- In active log out -->
+  <div class="pop-up log-out-warning-popup" *ngIf="input.case === 'LOGOUTWARNINGPOPUP'">
     <div class="infro-card">
-      <!-- <img [src]="icon" height="35px" width="35px" class="success-img" /> -->
-      <div class="pop-up-header">
-        <!-- <b mat-dialog-title>{{ input.title }}</b> -->
+      <img src="./assets/icons/iconfont/info_black_24dp (1).svg" height="35px" width="35px" class="success-img" />
+      <div style="margin-left: 8px;">
         <div mat-dialog-content>
-          <div [innerText]="input.message"></div>
+          <p>{{input.message}}</p>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pop-up inactive-log-out-popup" *ngIf="input.case === 'INACTIVELOGOUTPOPUP'">
+    <div class="infro-card">
+      <img src="./assets/cancel_icon.png" height="35px" width="35px" class="success-img" />
+      <div style="margin-left: 8px;">
+        <div mat-dialog-content>
+            <p>{{input.dearResident}}</p>
+            <p>{{input.message}} {{input.clickHere2}} <span (click)="openLoginPage()"
+                class="navigate-link">{{input.clickHere}}</span>{{input.relogin}}</p>
+          </div>
       </div>
     </div>
   </div>

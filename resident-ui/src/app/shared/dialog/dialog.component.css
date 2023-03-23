@@ -372,3 +372,15 @@ p{
 .button{
   color: #ffffff !important;
 }
+
+.log-out-warning-popup{
+  color: #89730B;
+  background-color: #FFF9DB;
+  border-color: #89730B;
+}
+
+.inactive-log-out-popup{
+  color: #C90500;
+  background-color: #FFD9D8;
+  border-color: #C90500;
+}

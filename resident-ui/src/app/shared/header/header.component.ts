@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy,HostListener } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription, timer } from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
@@ -99,6 +99,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       localStorage.removeItem('redirectURL');
 
     } 
+
+    if(localStorage.getItem("InactiveLogOut") === "true"){
+      this.showInactiveLogOutMsg()
+      localStorage.removeItem("logOut")
+      localStorage.removeItem("InactiveLogOut")
+    }
     
     if(localStorage.getItem("logOut") === 'true'){
       this.showMessage("logout")
@@ -231,32 +237,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   showMessage(message:any) {
-    // let languagelabels ;
-    /*this.dataStorageService
-    .getI18NLanguageFiles(localStorage.getItem("langCode"))
-    .subscribe((response) => {
-      languagelabels = response["login"]["logout_msg"];
-      const data = {
-        case: "CONFIRMATION",
-        title: response["header"]["link_logout"],
-        message: languagelabels,
-        yesButtonText: response["dialog"]["action_ok"],
-        noButtonText: response["dialog"]["action_close"]
-      };
-      this.dialog
-        .open(DialougComponent, {
-          width: "400px",
-          data: data,
-        })
-        .afterClosed()
-        .subscribe((response) => {
-          if (response === true) {
-            localStorage.removeItem("loggedOutLang");
-            localStorage.removeItem("loggedOut");
-            this.authService.onLogout();
-          }
-        });
-    });*/
     setTimeout(() => {
       if(message === "logIn"){
         const dialogRef = this.dialog.open(DialogComponent, {
@@ -265,6 +245,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             case: 'LoginLogoutSuccessMessages',
             title: this.popupMessages.genericmessage.successLabel,
             message: this.popupMessages.genericmessage.SuccessLogin,
+            dearResident:this.popupMessages.genericmessage.dearResident,
             btnTxt: this.popupMessages.genericmessage.successButton
           }
         });
@@ -276,7 +257,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
             case: 'LoginLogoutSuccessMessages',
             title: this.popupMessages.genericmessage.successLabel,
             message: this.popupMessages.genericmessage.successLogout,
-            clickHere: this.popupMessages.genericmessage.clickHere2,
+            clickHere: this.popupMessages.genericmessage.clickHere,
+            dearResident:this.popupMessages.genericmessage.dearResident,
+            clickHere2: this.popupMessages.genericmessage.clickHere2,
             relogin: this.popupMessages.genericmessage.relogin,
             btnTxt: this.popupMessages.genericmessage.successButton
           }
@@ -286,6 +269,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
       
     },400)
    
+  }
+   
+  showInactiveLogOutMsg(){
+    setTimeout(() => {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data: {
+        case: 'INACTIVELOGOUTPOPUP',
+        title: this.popupMessages.genericmessage.errorLabel,
+        message: this.popupMessages.autologout.post,
+        clickHere: this.popupMessages.genericmessage.clickHere,
+        dearResident:this.popupMessages.genericmessage.dearResident,
+        clickHere2: this.popupMessages.genericmessage.clickHere2,
+        relogin: this.popupMessages.genericmessage.relogin
+      }
+    });
+    return dialogRef;
+  },400)
   }
 
   onItemSelected(item: any) {
@@ -303,4 +304,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
 }
