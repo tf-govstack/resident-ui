@@ -1,14 +1,14 @@
 <span class="breadcrumb" style="margin-left: 15px;">
   <a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
   &nbsp;&nbsp;<span style="cursor: pointer;"
-    (click)="onItemSelected('demographic')">{{'updatedemographic.title' | translate}}</span>
-    <span [ngClass]="!showPreviewPage ? 'active' : 'demographic'" (click)="onItemSelected(matTabLabel)">&nbsp; > &nbsp; {{matTabLabel}}</span>
+    (click)="onItemSelected('uinservices/updatedemographic')">{{'updatedemographic.title' | translate}}</span>
+    <span [ngClass]="!showPreviewPage ? 'active' : 'demographic'" (click)="onItemSelected('matTabLabel')">&nbsp; > &nbsp; {{matTabLabel}}</span>
   &nbsp;&nbsp;<span *ngIf="showPreviewPage" class="active">&nbsp; > &nbsp; {{'preview.title' | translate}}</span>
 </span>
 
 <mat-card style="margin:1rem 4rem 0 4rem; min-height: 100%;" *ngIf="userInfo && !showPreviewPage">
   <h1 style="font-weight: 500; font-size: 20px;color: #505050;">Update My Data</h1>
-<mat-tab-group animationDuration="0ms"  (selectedTabChange)="logChange($event)">
+<mat-tab-group animationDuration="0ms" [selectedIndex]="matTabIndex"  (selectedTabChange)="logChange($event)">
   <mat-tab label="{{'updatedemographic.identity' | translate}}">
     <table width="100%">
       <tr>
@@ -101,7 +101,7 @@
                       <tr>
                         <td width="45%"><label>{{field.labelName[langCode][1]}}<span style="color: red;">*</span></label></td>
                         <td width="10%"></td>
-                        <td width="45%"><label>{{field.labelName[langCode][2]}}<span style="color: red;">*</span></label></td>
+                        <td width="45%"><label>{{field.labelName[langCode][2]}}</label></td>
                       </tr>
                       <tr>
                         <td width="45%">
@@ -280,7 +280,7 @@
                     <tr>
                       <td width="45%"><label>{{field.labelName[langCode][1]}}<span style="color: red;">*</span></label></td>
                       <td width="10%"></td>
-                      <td width="45%"><label>{{field.labelName[langCode][2]}}<span style="color: red;">*</span></label></td>
+                      <td width="45%"><label>{{field.labelName[langCode][2]}}</label></td>
                     </tr>
                     <tr>
                       <td width="45%">
