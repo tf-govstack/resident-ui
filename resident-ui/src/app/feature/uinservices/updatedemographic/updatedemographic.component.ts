@@ -77,6 +77,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   perfLangArr:any = {};
   newNotificationLanguages:any= [];
   matTabLabel:string = "Identity";
+  matTabIndex:number = 0;
   contactTye:string;
   width : string;
   cols : number;
@@ -296,7 +297,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.uploadedFiles = this.files.concat(this.filesPOA)
     console.log(this.buildCloneJsonData)
     console.log(this.userInfoClone)
-    this.matTabLabel = "Identity";
+    // this.matTabLabel = "Identity";
   }
 
 
@@ -816,9 +817,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
 
   onItemSelected(item: any) {
-    if (item === 'demographic') {
+    if (item === "matTabLabel"){
       this.showPreviewPage = false;
-    } else {
+    }else{
       this.router.navigate([item]);
     }
   }
@@ -832,6 +833,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   logChange(event:any){
-    this.matTabLabel =event.tab.textLabel
+    console.log(event)
+    this.matTabIndex = event.index;
+    this.matTabLabel =event.tab.textLabel;
   }
 }
