@@ -12,6 +12,7 @@ import { InteractionService } from "src/app/core/services/interaction.service";
 import { AuditService } from "src/app/core/services/audit.service";
 import moment from 'moment';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
 
 @Component({
   selector: "app-personalisedcard",
@@ -38,8 +39,9 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   valuesSelected: any = [];
   width : string;
   cols : number;
+  message2:any;
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
+  constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
@@ -93,7 +95,26 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         })
       });
     this.getUserInfo();
-    this.getMappingData()
+    this.getMappingData();
+
+    const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
+      (message) => (this.message2 = message) //message =  {"timerFired":false}
+    );
+    console.log(this.message2)
+
+    this.subscriptions.push(subs);
+
+    if (!this.message2["timerFired"]) {
+      console.log(this.message2)
+      this.autoLogout.getValues(this.langCode);
+      this.autoLogout.setValues();
+      this.autoLogout.keepWatching();
+    } else {
+      console.log(this.message2)
+      this.autoLogout.getValues(this.langCode);
+      this.autoLogout.continueWatching();
+    }
+
   }
 
   getMappingData() {

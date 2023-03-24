@@ -11,6 +11,7 @@ import { InteractionService } from "src/app/core/services/interaction.service";
 import {saveAs} from 'file-saver';
 import { AuditService } from "src/app/core/services/audit.service";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
 
 @Component({
   selector: "app-revokevid",
@@ -39,8 +40,10 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   infoText:any;
   eventId:any;
   errorCode:string;
+  message2:any;
+  userPreferredLangCode = localStorage.getItem("langCode");
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
+  constructor(private autoLogout: AutoLogoutService, private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "confirmBtnForVid") {
         this.generateVID(this.newVidType)
@@ -87,6 +90,22 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         this.popupMessages = response;
       });
     this.getVID();
+
+    const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
+      (message) => (this.message2 = message) //message =  {"timerFired":false}
+    );
+
+    this.subscriptions.push(subs);
+
+    if (!this.message2["timerFired"]) {
+      this.autoLogout.getValues(this.userPreferredLangCode);
+      this.autoLogout.setValues();
+      this.autoLogout.keepWatching();
+    } else {
+      this.autoLogout.getValues(this.userPreferredLangCode);
+      this.autoLogout.continueWatching();
+    }
+
   }
 
   getVID() {

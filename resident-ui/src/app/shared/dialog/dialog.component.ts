@@ -114,7 +114,6 @@ export class DialogComponent implements OnInit {
 
   async ngOnInit() {
     this.input = this.data;
-    console.log(this.input)
   }
 
   setOtpTime() {

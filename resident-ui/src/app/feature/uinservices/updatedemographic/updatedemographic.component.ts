@@ -12,6 +12,7 @@ import { AuditService } from "src/app/core/services/audit.service";
 import { isNgTemplate } from "@angular/compiler";
 import defaultJson from "src/assets/i18n/default.json";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
 
 @Component({
   selector: "app-demographic",
@@ -79,8 +80,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   contactTye:string;
   width : string;
   cols : number;
+  message2:any;
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
+  constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "updateMyData") {
         this.updateDemographicData();
@@ -157,6 +159,21 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     //   }
     //  } ,400)
     this.getUserInfo();
+
+    const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
+      (message) => (this.message2 = message) //message =  {"timerFired":false}
+    );
+
+    this.subscriptions.push(subs);
+
+    if (!this.message2["timerFired"]) {
+      this.autoLogout.getValues(this.langCode);
+      this.autoLogout.setValues();
+      this.autoLogout.keepWatching();
+    } else {
+      this.autoLogout.getValues(this.langCode);
+      this.autoLogout.continueWatching();
+    }
   }
 
   getUserInfo() {

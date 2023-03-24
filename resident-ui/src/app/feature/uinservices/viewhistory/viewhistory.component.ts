@@ -11,6 +11,7 @@ import { saveAs } from 'file-saver';
 import { HeaderService } from 'src/app/core/services/header.service';
 import { AuditService } from "src/app/core/services/audit.service";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
 
 @Component({
   selector: "app-viewhistory",
@@ -51,8 +52,10 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   @ViewChild('statusFilter') statusFilterSelectAll: MatSelect;
   @ViewChild('serviceType') serviceTypeSelectAll: MatSelect;
   searchParam:string;
+  message2:any;
+  langCode = localStorage.getItem("langCode")
 
-  constructor(private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
+  constructor(private autoLogout: AutoLogoutService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.dateAdapter.setLocale('en-GB'); 
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
@@ -93,6 +96,21 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     
     this.getServiceHistory("",""); 
     this.captureValue("","ALL","")
+
+    const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
+      (message) => (this.message2 = message) //message =  {"timerFired":false}
+    );
+
+    this.subscriptions.push(subs);
+
+    if (!this.message2["timerFired"]) {
+      this.autoLogout.getValues(this.langCode);
+      this.autoLogout.setValues();
+      this.autoLogout.keepWatching();
+    } else {
+      this.autoLogout.getValues(this.langCode);
+      this.autoLogout.continueWatching();
+    }
   }
 
   getServiceHistory(pageEvent:any, filters:any){
