@@ -29,6 +29,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   infoText:string;
   disableTrackBtn:boolean = true;
   message2:any;
+  source:string;
   userPreferredLangCode = localStorage.getItem("langCode");
   constructor(private autoLogout: AutoLogoutService,private renderer:Renderer2 ,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute,private auditService: AuditService) {
     this.renderer.listen('window','click',(e:Event) =>{
@@ -44,6 +45,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
 
     this.route.queryParams
       .subscribe(params => {
+        this.source = params.source
         this.eidVal = params.eid;
         this.getEIDStatus();
       }
