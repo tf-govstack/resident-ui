@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { InteractionService } from "src/app/core/services/interaction.service";
 import { AuditService } from "src/app/core/services/audit.service";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
 
 @Component({
   selector: "app-lockunlockauth",
@@ -36,8 +37,10 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   changedItems:any = {};
   showSpinner:boolean = true;
   cols : number;
+  userPreferredLangCode = localStorage.getItem("langCode");
+  message2:any;
 
-  constructor(private interactionService: InteractionService,private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
+  constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService,private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
     private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "confirmBtn") {
@@ -81,9 +84,29 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
       this.langJSON = response;
       this.popupMessages = response;
     });
+
     setTimeout(() => {
       this.getAuthlockStatus();  
-    }, 700);    
+    }, 700);   
+    
+    const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
+      (message) => (this.message2 = message) //message =  {"timerFired":false}
+    );
+    console.log(this.message2)
+
+    this.subscriptions.push(subs);
+
+    if (!this.message2["timerFired"]) {
+      console.log(this.message2)
+      this.autoLogout.getValues(this.userPreferredLangCode);
+      this.autoLogout.setValues();
+      this.autoLogout.keepWatching();
+    } else {
+      console.log(this.message2)
+      this.autoLogout.getValues(this.userPreferredLangCode);
+      this.autoLogout.continueWatching();
+    }
+    
   }
 
   getAuthlockStatus(){
