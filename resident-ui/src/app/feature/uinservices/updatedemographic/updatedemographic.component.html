@@ -2,7 +2,7 @@
   <a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
   &nbsp;&nbsp;<span style="cursor: pointer;"
     (click)="onItemSelected('demographic')">{{'updatedemographic.title' | translate}}</span>
-    <span [ngClass]="!showPreviewPage ? 'active' : 'demographic' " *ngIf="!showPreviewPage">&nbsp; > &nbsp; {{matTabLabel}}</span>
+    <span [ngClass]="!showPreviewPage ? 'active' : 'demographic'" (click)="onItemSelected(matTabLabel)">&nbsp; > &nbsp; {{matTabLabel}}</span>
   &nbsp;&nbsp;<span *ngIf="showPreviewPage" class="active">&nbsp; > &nbsp; {{'preview.title' | translate}}</span>
 </span>
 

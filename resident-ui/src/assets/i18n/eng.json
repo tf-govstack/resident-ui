@@ -329,8 +329,8 @@
         "title": "Preview"
     },
     "trackservicerequest": {
-        "title": "Track Service Request",
-        "title2": "Track My Requests",
+        "title": "Track My Requests",
+        "source":"View My History",
         "searchLabel": "Enter the Event Id that you want to track",
         "searchPlaceholder": "Enter the 16-digit EID",
         "searchButton": "Track",
