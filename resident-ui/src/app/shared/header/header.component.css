@@ -87,7 +87,7 @@
 
 ::ng-deep .mat-menu-content {
   width: 250px !important;
-  height: auto !important;
+  /* height: auto !important; */
   padding-top: 0px !important;
   padding-bottom: 0px !important;
 }
@@ -97,7 +97,7 @@
 }
 
 ::ng-deep .mat-menu-panel.myMenu {
-  height: 100vh !important;
+  height: 80%;
   min-width: 303px!important;
   margin-right:-90px !important;
   /* top: 140px !important; */
@@ -106,6 +106,7 @@
   font-size: 13px;
   padding-bottom: 12px;
   margin-left: -10.1rem;
+  overflow-y: scroll;
 }
 
 /* .each-notification{
