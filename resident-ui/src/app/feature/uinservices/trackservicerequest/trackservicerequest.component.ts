@@ -9,6 +9,7 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { AuditService } from "src/app/core/services/audit.service";
+import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
 
 @Component({
   selector: "app-trackservicerequest",
@@ -27,8 +28,10 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   iconBtnClicked:boolean = false;
   infoText:string;
   disableTrackBtn:boolean = true;
-
-  constructor(private renderer:Renderer2 ,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute,private auditService: AuditService) {
+  message2:any;
+  source:string;
+  userPreferredLangCode = localStorage.getItem("langCode");
+  constructor(private autoLogout: AutoLogoutService,private renderer:Renderer2 ,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute,private auditService: AuditService) {
     this.renderer.listen('window','click',(e:Event) =>{
        if(!this.iconBtnClicked){
           this.isPopUpShow = false
@@ -42,6 +45,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
 
     this.route.queryParams
       .subscribe(params => {
+        this.source = params.source
         this.eidVal = params.eid;
         this.getEIDStatus();
       }
@@ -58,6 +62,21 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
       this.popupMessages = response;
       this.infoText = response.InfomationContent.trackStatus
     }); 
+
+    const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
+      (message) => (this.message2 = message) //message =  {"timerFired":false}
+    );
+
+    this.subscriptions.push(subs);
+
+    if (!this.message2["timerFired"]) {
+      this.autoLogout.getValues(this.userPreferredLangCode);
+      this.autoLogout.setValues();
+      this.autoLogout.keepWatching();
+    } else {
+      this.autoLogout.getValues(this.userPreferredLangCode);
+      this.autoLogout.continueWatching();
+    }
   }
 
   captureValue(event: any, formControlName: string) {

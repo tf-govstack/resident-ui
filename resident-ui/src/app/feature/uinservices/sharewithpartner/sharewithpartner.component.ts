@@ -12,6 +12,7 @@ import { InteractionService } from "src/app/core/services/interaction.service";
 import { AuditService } from "src/app/core/services/audit.service";
 import moment from 'moment';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
 
 @Component({
   selector: "app-sharewithpartner",
@@ -40,8 +41,9 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   valuesSelected: any = [];
   width : string;
   cols : number;
+  message2:any;
 
-  constructor(private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
+  constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "shareWithPartner") {
         this.shareInfo()
@@ -104,6 +106,21 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     this.getPartnerDetails();
     this.getUserInfo()
     this.getMappingData()
+
+    const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
+      (message) => (this.message2 = message) //message =  {"timerFired":false}
+    );
+
+    this.subscriptions.push(subs);
+
+    if (!this.message2["timerFired"]) {
+      this.autoLogout.getValues(this.langCode);
+      this.autoLogout.setValues();
+      this.autoLogout.keepWatching();
+    } else {
+      this.autoLogout.getValues(this.langCode);
+      this.autoLogout.continueWatching();
+    }
   }
 
   getMappingData() {

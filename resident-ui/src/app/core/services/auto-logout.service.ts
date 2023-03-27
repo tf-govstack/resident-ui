@@ -82,7 +82,6 @@ export class AutoLogoutService {
 
   changeMessage(message: object) {
     this.messageAutoLogout.next(message);
-    console.log(message)
   }
   /**
    * @description This method sets value of idle,timeout and ping parameter from config file.
@@ -95,7 +94,6 @@ export class AutoLogoutService {
     this.timer.ping = this.ping;
     this.timer.timeout = this.timeout;
     this.userIdle.setConfigValues(this.timer);
-    console.log(this.timer)
   }
 
   /**
@@ -147,9 +145,10 @@ export class AutoLogoutService {
     // this.dialogref.close();
     this.dialog.closeAll();
     this.userIdle.stopWatching();
-    this.popUpPostLogOut();
+    // this.popUpPostLogOut();
     this.router.navigate(["dashboard"])
     // this.dataStorageService.onLogout().subscribe();
+    localStorage.setItem("InactiveLogOut","true")
     this.logoutService.logout()
     // this.authService.onLogout();
   }
@@ -163,18 +162,18 @@ export class AutoLogoutService {
     this.dialogref = this.dialog.open(DialogComponent, {
       width: '400px',
       data: {
-        case: 'POPUP',
+        case: 'LOGOUTWARNINGPOPUP',
         message: this.languagelabels.preview
       }
     });
   }
-  popUpPostLogOut() {
-    this.dialogreflogout = this.dialog.open(DialogComponent, {
-      width: '400px',
-      data: {
-        case: 'POPUP',
-        message: this.languagelabels.post
-      }
-    });
-  }
+  // popUpPostLogOut() {
+  //   this.dialogreflogout = this.dialog.open(DialogComponent, {
+  //     width: '400px',
+  //     data: {
+  //       case: 'POPUP',
+  //       message: this.languagelabels.post
+  //     }
+  //   });
+  // }
 }

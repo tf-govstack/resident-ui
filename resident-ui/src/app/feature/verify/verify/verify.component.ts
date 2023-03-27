@@ -317,7 +317,9 @@ export class VerifyComponent implements OnInit, OnDestroy {
         eventId:eventId,
         clickHere: this.popupMessages.genericmessage.clickHere,
         endMsg: this.popupMessages.genericmessage.successRemainMsg,
-        btnTxt: this.popupMessages.genericmessage.successButton
+        btnTxt: this.popupMessages.genericmessage.successButton,
+        trackStatusText: this.popupMessages.genericmessage.trackStatusText,
+        dearResident:this.popupMessages.genericmessage.dearResident,
       }
     });
     return dialogRef;

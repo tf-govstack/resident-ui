@@ -329,8 +329,8 @@
         "title": "Preview"
     },
     "trackservicerequest": {
-        "title": "Track Service Request",
-        "title2": "Track My Requests",
+        "title": "Track My Requests",
+        "source":"View My History",
         "searchLabel": "Enter the Event Id that you want to track",
         "searchPlaceholder": "Enter the 16-digit EID",
         "searchButton": "Track",
@@ -506,7 +506,7 @@
         }
     },
     "autologout": {
-        "preview": "You will be timed out in 60 secs due to inactivity. Please click anywhere to re-activate your session",
+        "preview": "You will be timed out in 60 seconds due to inactivity. Please click anywhere on the screen to re-activate your session.",
         "post": "You have been logged out due to inactivity."
     },
     "InfomationContent": {
