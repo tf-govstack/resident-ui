@@ -12,6 +12,7 @@ import { HeaderService } from 'src/app/core/services/header.service';
 import { AuditService } from "src/app/core/services/audit.service";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
+import { MatPaginator } from '@angular/material';
 
 @Component({
   selector: "app-viewhistory",
@@ -29,7 +30,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 15, 20];
   serviceTypeFilter:any;
+  serviceTypeFilter2:any;
   statusTypeFilter:any;
+  statusTypeFilter2:any;
   showFirstLastButtons:boolean = true;
   cols:number;
   today: Date = new Date()
@@ -49,11 +52,14 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   statusSelectedValue:string;
   isHistoryAllValue:boolean = false;
   historySelectedValue:string;
-  @ViewChild('statusFilter') statusFilterSelectAll: MatSelect;
-  @ViewChild('serviceType') serviceTypeSelectAll: MatSelect;
+  @ViewChild('statusFilterSelectAll') statusFilterSelectAll: any;
+  @ViewChild('serviceTypeSelectAll') serviceTypeSelectAll: any;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   searchParam:string;
   message2:any;
-  langCode = localStorage.getItem("langCode")
+  langCode = localStorage.getItem("langCode");
+  serviceHistorySelectedValue:any;
+  statusHistorySelectedValue:any;
 
   constructor(private autoLogout: AutoLogoutService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.dateAdapter.setLocale('en-GB'); 
@@ -121,7 +127,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
         this.responselist = response["response"]["data"];
         this.totalItems = response["response"]["totalItems"];
         this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
+        this.serviceTypeFilter2 = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');  
         this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
+        this.statusTypeFilter2 = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
         this.parsedrodowndata();
       }else{
         this.showErrorPopup(response["errors"])
@@ -129,31 +137,31 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  tosslePerOne(event:any){
-    if(event === "all"){
-      this.isStatusAllValue = !this.isStatusAllValue;
-      this.statusSelectedValue = event;
-      if (this.isStatusAllValue) {
-        this.statusFilterSelectAll.options.forEach( (item : MatOption) => item.select());
-      } else {
-        this.statusFilterSelectAll.options.forEach( (item : MatOption) => {item.deselect()});
-      }
-      this.statusFilterSelectAll.close();
-    }
-  }
+  // tosslePerOne(event:any){
+  //   if(event === "all"){
+  //     this.isStatusAllValue = !this.isStatusAllValue;
+  //     this.statusSelectedValue = event;
+  //     if (this.isStatusAllValue) {
+  //       this.statusFilterSelectAll.options.forEach( (item : MatOption) => item.select());
+  //     } else {
+  //       this.statusFilterSelectAll.options.forEach( (item : MatOption) => {item.deselect()});
+  //     }
+  //     this.statusFilterSelectAll.close();
+  //   }
+  // }
 
-  historyTosslePerOne(event:any){
-    if(event === "ALL"){
-      this.isHistoryAllValue = !this.isHistoryAllValue;
-      this.historySelectedValue = event;
-      if (this.isHistoryAllValue) {
-        this.serviceTypeSelectAll.options.forEach( (item : MatOption) => item.select());
-      } else {
-        this.serviceTypeSelectAll.options.forEach( (item : MatOption) => {item.deselect()});
-      }
-      this.serviceTypeSelectAll.close();
-    }
-  }
+  // historyTosslePerOne(event:any){
+  //   if(event === "ALL"){
+  //     this.isHistoryAllValue = !this.isHistoryAllValue;
+  //     this.historySelectedValue = event;
+  //     if (this.isHistoryAllValue) {
+  //       this.serviceTypeSelectAll.options.forEach( (item : MatOption) => item.select());
+  //     } else {
+  //       this.serviceTypeSelectAll.options.forEach( (item : MatOption) => {item.deselect()});
+  //     }
+  //     this.serviceTypeSelectAll.close();
+  //   }
+  // }
 
   parsedrodowndata(){
     let serviceTypeFilter = this.serviceTypeFilter;
@@ -175,15 +183,34 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   captureValue(event: any, formControlName: string, controlType: string) {
+  
     this.selectedDate = this.today
     if(controlType === "dropdown"){
-      this[formControlName] = event.value.toString().toUpperCase();
+      if(event.value[0]==="ALL" ||  event.value[0]==="all"){
+        if(formControlName === "serviceType"){
+          this[formControlName] = this.serviceTypeFilter2.join(",");
+          this.serviceHistorySelectedValue = event.value[0];
+          this.serviceTypeSelectAll.close();
+        }else{
+          this[formControlName] = this.statusTypeFilter2.join(",");
+          this.statusHistorySelectedValue = event.value[0];
+          this.statusFilterSelectAll.close();
+        }
+      }else{
+        this[formControlName] = event.value.toString().toUpperCase();
+        if(formControlName === "serviceType"){
+          this.serviceHistorySelectedValue = ""
+        }else{
+          this.statusHistorySelectedValue = ""
+        }
+
+      }
     }else if(controlType === "datepicker"){
       let dateFormat = new Date(event.target.value);
       formControlName === "fromDate" ? this.toDateStartDate = dateFormat : "";
       let formattedDate = dateFormat.getFullYear() + "-" + ("0"+(dateFormat.getMonth()+1)).slice(-2) + "-" + ("0" + dateFormat.getDate()).slice(-2);
       this[formControlName] = formattedDate;
-      console.log(this[formControlName])
+
     }else{
       if(event.target){
       this[formControlName] = event.target.value;
@@ -203,7 +230,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .pinData(data.eventId)
     .subscribe((response) => {
-      console.log("response>>>"+response);
       this.getServiceHistory("",""); 
     });
   }
@@ -212,7 +238,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .unpinData(data.eventId)
     .subscribe((response) => {
-      console.log("response>>>"+response);
       this.getServiceHistory("",""); 
     });
   }
@@ -231,7 +256,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     let searchParam = "",
      self = this;
     this.controlTypes.forEach(controlType => {
-      console.log(self[controlType])
       if(self[controlType]){
         if(searchParam){
           searchParam = searchParam+"&"+controlType+"="+self[controlType];
@@ -240,16 +264,16 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
         }
       }     
     });
-    console.log(searchParam);
+  
     this.getServiceHistory("",searchParam);  
     this.auditService.audit('RP-004', 'View history', 'RP-View history', 'View history', 'User clicks on "Go" button for applying "the chosen filter"');  
+    this.paginator.pageIndex = 0;
   }
 
   capturePageValue(pageEvent:any){
     let searchParam = "",
     self = this;
    this.controlTypes.forEach(controlType => {
-     console.log(self[controlType])
      if(self[controlType]){
        if(searchParam){
          searchParam = searchParam+"&"+controlType+"="+self[controlType];
@@ -266,7 +290,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.auditService.audit('RP-005', 'View history', 'RP-View history', 'View history', 'User clicks on "download" button');
     let searchParam = "", self = this;    
     this.controlTypes.forEach(controlType => {
-      console.log(controlType)
+
       if(self[controlType]){
         if(searchParam){
           searchParam = searchParam+"&"+controlType+"="+self[controlType];
