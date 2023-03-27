@@ -59,7 +59,7 @@
 				<mat-grid-tile style="width: 400px;">
 				<td style="vertical-align: top;" [style.width] = "width">
 					<div class="attribute-card" [style.width] = "width">
-					<table>
+					<table [style.width] = "width">
 						<tr>
 							<td *ngIf="sharableAttributes['photo']">
 								<img [src]="sharableAttributes['photo']['value']" alt='' style="margin-left:48%;" width='70px' height='70px'/>
