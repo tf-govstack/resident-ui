@@ -17,9 +17,9 @@
 	        <mat-grid-tile>
 	          <div class="mini-card">
 	            <mat-card-header><span class="label">{{'viewhistory.inputHistory' |translate}}</span></mat-card-header>
-	            <mat-card-subtitle><span class="input"><mat-select multiple #serviceType id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
+	            <mat-card-subtitle><span class="input"><mat-select multiple #serviceTypeSelectAll id="serviceType" placeholder="{{'viewhistory.inputHistory' | translate}}"
 						(selectionChange)="captureValue($event, 'serviceType', 'dropdown')">
-						<mat-option [disabled]="isHistoryAllValue && historySelectedValue === 'ALL' && serviceType.value !== 'ALL' " (click)="historyTosslePerOne(serviceType.value)" *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
+						<mat-option [disabled]="serviceType.value !== 'ALL' && serviceHistorySelectedValue === 'ALL'" *ngFor="let serviceType of serviceTypeFilter" [id]="serviceType.value"
 							[value]="serviceType.value">{{serviceType.label}}</mat-option>
 						</mat-select></span></mat-card-subtitle>
 	          </div>
@@ -48,10 +48,10 @@
 	          <div class="mini-card">
 	            <mat-card-header><span class="label">{{'viewhistory.inputStatus' |translate}}</span></mat-card-header>
 	            <mat-card-subtitle style="display: flex;"><span class="datepicker-card" style="display: contents;">
-						<mat-select multiple #statusFilter id="statusFilter" placeholder="{{'viewhistory.inputStatus' | translate}}"
+						<mat-select multiple #statusFilterSelectAll id="statusFilter"  placeholder="{{'viewhistory.inputStatus' | translate}}"
 						(selectionChange)="captureValue($event, 'statusFilter', 'dropdown')">
-						<mat-option [disabled]="isStatusAllValue && statusSelectedValue === 'all' && status.label !== 'All' " *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
-							(click)="tosslePerOne(status.value)">
+						<mat-option [disabled]="statusHistorySelectedValue === 'all' && status.label !== 'All' " *ngFor="let status of statusTypeFilter" [id]="status.value" [value]="status.value"
+							>
 							{{status.label}}</mat-option>
 						</mat-select>
 						&nbsp;&nbsp;&nbsp;&nbsp;<button id="searchbtn" mat-raised-button color="primary"
