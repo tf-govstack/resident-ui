@@ -40,6 +40,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   shareBthDisabled: boolean = true;
   valuesSelected: any = [];
   width : string;
+  attributeWidth:string;
   cols : number;
   message2:any;
 
@@ -60,22 +61,27 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         if (result.breakpoints[Breakpoints.XSmall]) {
           this.cols = 1;
           this.width = "19em";
+          this.attributeWidth = "15%"
         }
         if (result.breakpoints[Breakpoints.Small]) {
           this.cols = 1;
           this.width = "35em";
+          this.attributeWidth = "32%"
         }
         if (result.breakpoints[Breakpoints.Medium]) {
           this.cols = 2;
           this.width = "25em";
+          this.attributeWidth = "25%"
         }
         if (result.breakpoints[Breakpoints.Large]) {
           this.cols = 2;
           this.width = "35em";
+          this.attributeWidth = "37%"
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
           this.cols = 2;
           this.width = "40em";
+          this.attributeWidth = "40%"
         }
       }
     });
