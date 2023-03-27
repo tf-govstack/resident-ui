@@ -40,6 +40,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   width : string;
   cols : number;
   message2:any;
+  attributeWidth:string;
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe([
@@ -53,22 +54,27 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         if (result.breakpoints[Breakpoints.XSmall]) {
           this.cols = 1;
           this.width = "19em";
+          this.attributeWidth = "10em";
         }
         if (result.breakpoints[Breakpoints.Small]) {
           this.cols = 1;
           this.width = "40em";
+          this.attributeWidth = "20em";
         }
         if (result.breakpoints[Breakpoints.Medium]) {
           this.cols = 2;
           this.width = "25em";
+          this.attributeWidth = "12em";
         }
         if (result.breakpoints[Breakpoints.Large]) {
           this.cols = 2;
           this.width = "35rem";
+          this.attributeWidth = "18em";
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
           this.cols = 2;
           this.width = "40vw";
+          this.attributeWidth = "25em";
         }
       }
     });

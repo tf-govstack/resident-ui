@@ -291,11 +291,12 @@ input[type="radio"] {
 
 .select-card {
   padding: 0;
-  box-shadow: 4px black;
+  box-shadow: 4px;
   border-radius: 4px !important;
   height: 40px;
   width: 40%;
-  margin-top: 10px;
+  margin-top: 7px;
+  outline: none;
 }
 
 .search-text {
@@ -306,6 +307,7 @@ input[type="radio"] {
   width: 80%;
   margin-top: 10px;
   margin-left: 25px;
+  height: 40px;
 }
 
 .search-card {
