@@ -20,7 +20,6 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ["viewhistory.component.css"],
 })
 export class ViewhistoryComponent implements OnInit, OnDestroy {
-  @ViewChild('paginator') paginator: MatPaginator;
   langJSON:any;
   popupMessages:any;
   subscriptions: Subscription[] = [];
