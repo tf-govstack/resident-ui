@@ -42,7 +42,7 @@
           <form class="search-form">
             <mat-card class="select-card" style="padding: 7px;">
               <mat-select
-               style="font-size: 11.5px;"
+               style="font-size: 11.5px; padding: 5px 5px; "
                 disableOptionCentering
                 name="select"
                 class="select-input"
@@ -65,7 +65,7 @@
                 name="search"
                 class="search-input"
                 [(ngModel)]="searchText"
-                (keyup.enter)="showResults()"
+                (keyup)="searchInput()"
               />
               <input
                 *ngIf="locationType === null"
@@ -75,6 +75,7 @@
                 name="search"
                 class="search-input"
                 [(ngModel)]="searchText"
+                (keyup)="searchInput()"
               />
               <!-- <button
                 matTooltip="{{ 'helpText.magnifying_glass' | translate }}"
@@ -88,14 +89,14 @@
                 <img src="assets\close.png" />
               </button> -->
             </mat-card>
-            <button (click)="showResults()" class="search-btn">
+            <button [disabled]="isBlankSpace" mat-raised-button  (click)="showResults()" class="search-btn">
               <mat-icon>search</mat-icon>
             </button>
             <button *ngIf="REGISTRATION_CENTRES.length >0" mat-raised-button (click)="downloadCentersPdf()" class="download-btn">
               <img class="save-icon"
 							src="./assets/icons/iconfont/download-1.svg" />
             </button>
-            
+
           </form>
         </div>
         <span class="search-text" *ngIf="searchTextFlag">{{ displayMessage }}</span>
