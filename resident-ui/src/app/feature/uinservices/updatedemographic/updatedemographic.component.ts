@@ -704,24 +704,27 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    * Convert Files list to normal array list
    * @param files (Files List)
    */
-  prepareFilesList(files: Array<any>, type: string) {
-    if (type === "POI") {
-      for (const item of files) {
-        item.progress = 0;
-        this.files.push(item);
+  prepareFilesList(files: Array<any>, type: string) {  
+    var allowedFiles = [".jpg", ".jpeg", ".png", ".pdf"];
+    var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+    if (!regex.test(files[0].name.toLowerCase())) {
+    }else{
+       if (type === "POI") {
+        for (const item of files) {
+          item.progress = 0;
+          this.files.push(item);
+        }
+        this.uploadFilesSimulator(0, type);
+        this.previewDisabled = false
+      } else {
+        for (const item of files) {
+          item.progress = 0;
+          this.filesPOA.push(item);
+        }
+        this.uploadFilesSimulator(0, type);
+        this.previewDisabledInAddress = false
       }
-      this.uploadFilesSimulator(0, type);
-      this.previewDisabled = false
-    } else {
-      for (const item of files) {
-        item.progress = 0;
-        this.filesPOA.push(item);
-      }
-      this.uploadFilesSimulator(0, type);
-      this.previewDisabledInAddress = false
     }
-
-
   }
 
   /**

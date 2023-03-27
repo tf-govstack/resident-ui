@@ -126,7 +126,7 @@
                             <input type="file" #fileDropRef id="fileDropRef"
                               (change)="fileBrowseHandler($event.target.files, 'POI')"
                               accept=".pdf, .jpg, .jpeg, .png" />
-                            <label style="margin-right: 1rem;" for="fileDropRef">
+                            <label style="margin-right: 1rem;display: flex;" for="fileDropRef">
                               <svg id="upload_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24.042" viewBox="0 0 24 24.042">
                                 <g id="Group_13" data-name="Group 13" transform="translate(3 2.504)">
                                   <path id="Path_988" data-name="Path 988" d="M13,11.337l2.59,2.585L17,12.509,12,7.5,7,12.509l1.41,1.412L11,11.337v9.687h2Z" transform="translate(-3 -7.5)" fill="#03a64a"/>
@@ -305,7 +305,7 @@
                         <div class="container" appDnd (fileDropped)="onFileDropped($event, 'POA')">
                           <input type="file" #fileAddRef id="fileAddRef"
                             (change)="fileBrowseHandler($event.target.files, 'POA')" accept=".pdf, .jpg, .jpeg, .png" />
-                          <label style="margin-right: 1rem;" for="fileDropRef">
+                          <label style="margin-right: 1rem;display: flex;" for="fileDropRef">
                             <svg id="upload_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24.042" viewBox="0 0 24 24.042">
                               <g id="Group_13" data-name="Group 13" transform="translate(3 2.504)">
                                 <path id="Path_988" data-name="Path 988" d="M13,11.337l2.59,2.585L17,12.509,12,7.5,7,12.509l1.41,1.412L11,11.337v9.687h2Z" transform="translate(-3 -7.5)" fill="#03a64a"/>

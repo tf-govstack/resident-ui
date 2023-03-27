@@ -12,7 +12,7 @@ import { HeaderService } from 'src/app/core/services/header.service';
 import { AuditService } from "src/app/core/services/audit.service";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
-import { MatPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: "app-viewhistory",
@@ -20,6 +20,7 @@ import { MatPaginator } from '@angular/material';
   styleUrls: ["viewhistory.component.css"],
 })
 export class ViewhistoryComponent implements OnInit, OnDestroy {
+  @ViewChild('paginator') paginator: MatPaginator;
   langJSON:any;
   popupMessages:any;
   subscriptions: Subscription[] = [];
@@ -90,6 +91,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.paginator.pageIndex = 2;
+  }
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));      
 
@@ -100,7 +104,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       this.popupMessages = response;
     });
     
-    this.getServiceHistory("",""); 
+    this.getServiceHistory("","",""); 
     this.captureValue("","ALL","")
 
     const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
@@ -119,7 +123,10 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     }
   }
 
-  getServiceHistory(pageEvent:any, filters:any){
+  getServiceHistory(pageEvent:any, filters:any, actionTriggered:string){
+    if(actionTriggered === "search"){
+      this.paginator.firstPage();
+    }
     this.dataStorageService
     .getServiceHistory(pageEvent, filters)
     .subscribe((response) => {
@@ -230,7 +237,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .pinData(data.eventId)
     .subscribe((response) => {
-      this.getServiceHistory("",""); 
+      this.getServiceHistory("","",""); 
     });
   }
 
@@ -238,7 +245,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .unpinData(data.eventId)
     .subscribe((response) => {
-      this.getServiceHistory("",""); 
+      this.getServiceHistory("","",""); 
     });
   }
 
@@ -264,8 +271,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
         }
       }     
     });
-  
-    this.getServiceHistory("",searchParam);  
+    this.getServiceHistory("",searchParam, "search");  
     this.auditService.audit('RP-004', 'View history', 'RP-View history', 'View history', 'User clicks on "Go" button for applying "the chosen filter"');  
     this.paginator.pageIndex = 0;
   }
@@ -283,7 +289,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
      }     
    });
 
-   this.getServiceHistory(pageEvent,searchParam); 
+   this.getServiceHistory(pageEvent,searchParam,""); 
   }
 
   downloadServiceHistory(){
