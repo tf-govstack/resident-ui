@@ -11,6 +11,8 @@ import { saveAs } from 'file-saver';
 import { HeaderService } from 'src/app/core/services/header.service';
 import { AuditService } from "src/app/core/services/audit.service";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatPaginator } from '@angular/material/paginator';
+
 
 @Component({
   selector: "app-viewhistory",
@@ -18,6 +20,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   styleUrls: ["viewhistory.component.css"],
 })
 export class ViewhistoryComponent implements OnInit, OnDestroy {
+  @ViewChild('paginator') paginator: MatPaginator;
   langJSON:any;
   popupMessages:any;
   subscriptions: Subscription[] = [];
@@ -81,6 +84,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.paginator.pageIndex = 2;
+  }
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));      
 
@@ -91,24 +97,27 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       this.popupMessages = response;
     });
     
-    this.getServiceHistory("",""); 
+    this.getServiceHistory("","",""); 
     this.captureValue("","ALL","")
   }
 
-  getServiceHistory(pageEvent:any, filters:any){
-    this.dataStorageService
-    .getServiceHistory(pageEvent, filters)
-    .subscribe((response) => {
-      if(response["response"]){   
-        this.responselist = response["response"]["data"];
-        this.totalItems = response["response"]["totalItems"];
-        this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
-        this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
-        this.parsedrodowndata();
-      }else{
-        this.showErrorPopup(response["errors"])
-      }
-    });
+  getServiceHistory(pageEvent:any, filters:any, actionTriggered:string){
+    if(actionTriggered === "search"){
+      this.paginator.firstPage();
+    }
+      this.dataStorageService
+      .getServiceHistory(pageEvent, filters)
+      .subscribe((response) => {
+        if(response["response"]){   
+          this.responselist = response["response"]["data"];
+          this.totalItems = response["response"]["totalItems"];
+          this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
+          this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
+          this.parsedrodowndata();
+        }else{
+          this.showErrorPopup(response["errors"])
+        }
+      });
   }
 
   tosslePerOne(event:any){
@@ -186,7 +195,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     .pinData(data.eventId)
     .subscribe((response) => {
       console.log("response>>>"+response);
-      this.getServiceHistory("",""); 
+      this.getServiceHistory("","",""); 
     });
   }
 
@@ -195,7 +204,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     .unpinData(data.eventId)
     .subscribe((response) => {
       console.log("response>>>"+response);
-      this.getServiceHistory("",""); 
+      this.getServiceHistory("","",""); 
     });
   }
 
@@ -223,7 +232,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       }     
     });
     console.log(searchParam);
-    this.getServiceHistory("",searchParam);  
+    this.getServiceHistory("",searchParam, "search");  
     this.auditService.audit('RP-004', 'View history', 'RP-View history', 'View history', 'User clicks on "Go" button for applying "the chosen filter"');  
   }
 
@@ -241,7 +250,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
      }     
    });
 
-   this.getServiceHistory(pageEvent,searchParam); 
+   this.getServiceHistory(pageEvent,searchParam,""); 
   }
 
   downloadServiceHistory(){
