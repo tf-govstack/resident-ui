@@ -57,6 +57,8 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [5, 10, 15, 20];
   centerSelection: any;
   isBlankSpace:boolean = true;
+  showWarningMsg:boolean = false;
+
   constructor(
     public dialog: MatDialog,
     private service: BookingService,
@@ -298,10 +300,15 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   }
   
   searchInput(){
-    if(!this.searchText.match(/^\s*$/) && this.searchText.length > 2){
+    if(this.searchText.length > 2 && !this.searchText.startsWith(" ")){
       this.isBlankSpace = false;
     }else{
       this.isBlankSpace = true;
+    }
+    if(this.searchText.startsWith(" ")){
+      this.showWarningMsg = true;
+    }else{
+      this.showWarningMsg = false;
     }
   }
 

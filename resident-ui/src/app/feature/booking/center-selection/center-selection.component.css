@@ -89,6 +89,12 @@ mat-card {
 
 .inline-flex {
   display: inline-flex;
+  align-items: flex-start;
+}
+.inline-flex2 {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 6px;
 }
 
 .center_selection-wrapper {
@@ -332,9 +338,18 @@ input[type="radio"] {
 .search-form {
   display: flex;
   /* flex-wrap: wrap; */
-  padding-bottom: 20px;
   align-items: center;
   justify-content: center;
+}
+.search-form-card{
+  padding-bottom: 20px;
+}
+
+.warning-message{
+  margin: 0px; 
+  color: red; 
+  font-size: 10px;
+  margin-left: 7px;
 }
 
 .pagination{
