@@ -404,6 +404,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.clickEventSubscription.unsubscribe()
   }
 
   onItemSelected(item: any) {
