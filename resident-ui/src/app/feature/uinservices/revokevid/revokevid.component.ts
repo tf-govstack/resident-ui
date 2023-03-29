@@ -53,7 +53,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         this.vidDownloadStatus(this.newVidValue)
       }
     })
-
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
@@ -128,7 +127,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     this.dataStorageService.getPolicy().subscribe(response => {
       if (response["response"]) {
         this.policyType = JSON.parse(response["response"]);
-        console.log(this.policyType)
         for (var i = 0; i < this.policyType.vidPolicies.length; i++) {
           results = [];
           for (var j = 0; j < self.vidlist.length; j++) {
@@ -139,8 +137,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
           }
           // console.log("this.policyType.vidPolicies[i].vidType>>>"+this.policyType.vidPolicies[i].vidType);
           self.finalTypeList[this.policyType.vidPolicies[i].vidType] = results;
-          console.log(this.finalTypeList)
-          console.log(this.finalTypeList)
         }
       }
     },
@@ -304,7 +300,6 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.revokeVID(request, vidValue).subscribe(response => {
-      console.log(response.headers.get("eventid"))
       this.eventId = response.headers.get("eventid")
       this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", this.eventId)
       if (!response.body["errors"].length) {
@@ -462,6 +457,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.clickEventSubscription.unsubscribe()
   }
 
   onItemSelected(item: any) {
