@@ -321,7 +321,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         }
       }else{
         let value = ""
-        if(type.value === 'addressLine1'){
+        if(data.attributeName === 'addressLine1'){
           value = this.fullAddress
         }else{
           if(typeof this.userInfo[type.value] === "string"){
@@ -336,7 +336,8 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           }
           
         }
-         console.log(this.userInfo)
+        console.log(type)
+        console.log(data)
          this.dataDisplay[data['attributeName']][0]['value'] = value;
       }
       }
