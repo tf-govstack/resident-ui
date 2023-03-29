@@ -28,7 +28,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   userInfo: any;
   buildHTML: any;
   dataDisplay: any = {};
-  clickEventSubscription: Subscription;
   message: string;
   formatData: any;
   nameFormatValues: string[];
@@ -41,6 +40,9 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   cols : number;
   message2:any;
   attributeWidth:string;
+  fullAddress:string = "";
+  formatLabels:any;
+  formatCheckBoxClicked:any;
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe([
@@ -106,17 +108,14 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     const subs = this.autoLogout.currentMessageAutoLogout.subscribe(
       (message) => (this.message2 = message) //message =  {"timerFired":false}
     );
-    console.log(this.message2)
 
     this.subscriptions.push(subs);
 
     if (!this.message2["timerFired"]) {
-      console.log(this.message2)
       this.autoLogout.getValues(this.langCode);
       this.autoLogout.setValues();
       this.autoLogout.keepWatching();
     } else {
-      console.log(this.message2)
       this.autoLogout.getValues(this.langCode);
       this.autoLogout.continueWatching();
     }
@@ -130,6 +129,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         this.formatData = { "Address Format": response["identity"]["fullAddress"]["value"].split(","), "Name Format": response["identity"]["name"]["value"].split(","), "Date Format": response["identity"]["dob"]["value"].split(",") }
       })
   }
+
 
   getUserInfo() {
     this.dataStorageService
@@ -165,12 +165,40 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           if (this.userInfo[data.attributeName] === undefined || this.userInfo[data.attributeName].length < 1) {
             value = "Not Available"
           } else {
-            value = this.userInfo[data.attributeName][0].value;
+            if(data.formatRequired){
+              if(data.attributeName === "addressLine1"){
+                this.schema.forEach(item=>{
+                  if(item.attributeName === data.attributeName){
+                    this.formatLabels = item.formatOption[this.langCode]
+                  }
+                })
+                
+                this.formatLabels.forEach(item =>{
+                  if(this.userInfo[item.value] !== undefined){
+                  if(typeof this.userInfo[item.value] !== "string" ){
+                  this.userInfo[item.value].forEach(eachLang =>{
+                      if(eachLang.language === this.langCode){
+                        this.fullAddress = eachLang.value  + ","  + this.fullAddress
+                      }
+                  })
+                }else{
+                  this.fullAddress =    this.fullAddress + this.userInfo[item.value]
+                }
+              }
+                })
+              value = this.fullAddress
+              }else{
+                value = this.userInfo[data.attributeName][0].value;
+              }
+            }else{
+              value = this.userInfo[data.attributeName][0].value;
+            }
           }
         }
         this.dataDisplay[data.attributeName] = [];
         this.dataDisplay[data.attributeName].push({ "label": data.label[this.langCode], "value": value });
       }
+
       this.schema = this.schema.map(item => {
         if (item.attributeName === data.attributeName) {
           let newItem = { ...item, checked: !item.checked }
@@ -203,12 +231,28 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           }
           return eachItem
         })
-        let value = "";
+        
+        for(let eachItem of this.schema){
+          if(data['attributeName'] === eachItem['attributeName']){
+              for(let item of eachItem['formatOption'][this.langCode]){
+                if(item.checked){
+                  this.formatCheckBoxClicked = true;
+                  break;
+                }else{
+                  this.formatCheckBoxClicked = false;
+                }
+              }
+          }
+        }
+        
+        if(this.formatCheckBoxClicked){
+          let value = "";
         let find = function(array, name) {
           return array.some(function(object) {
             return object.label === name;
           });
         };
+
         if(find(this.dataDisplay[data.attributeName], type.value)){
           this.dataDisplay[data.attributeName].forEach((value, index) => {     
             if(value.label === type.value){
@@ -254,7 +298,12 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
                         }
                       }else{
                         if(self.userInfo[item.value] !== undefined){
-                          allValue = self.userInfo[type['value']][0].value;
+                          if(item.value === "postalCode"){
+                            allValue = self.userInfo[item.value];
+                          }else{
+                            allValue = self.userInfo[type['value']][0].value;
+                          }
+                          
                         }
                       }
                     }
@@ -265,12 +314,33 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
               value = allValue;
               //value =  typeof this.userInfo[type["value"]] !== 'string' ? this.userInfo[type["value"]][0].value : this.userInfo[type["value"]];
             }else{
-              value = this.userInfo[data.attributeName][0].value;
+              value = this.fullAddress;
             }
             this.dataDisplay[data['attributeName']][0]['value'] = value;
           }          
         }
+      }else{
+        let value = ""
+        if(type.value === 'addressLine1'){
+          value = this.fullAddress
+        }else{
+          if(typeof this.userInfo[type.value] === "string"){
+            this.userInfo[type.value].forEach(item =>{
+              if(item['language'] === this.langCode){
+                value = item.value
+              }
+            })
+          }else{
+            let dateFormat = new Date(this.userInfo[data.attributeName]);
+            value = this.userInfo[data.attributeName]
+          }
+          
+        }
+         console.log(this.userInfo)
+         this.dataDisplay[data['attributeName']][0]['value'] = value;
       }
+      }
+      // elseConditonClosed
     }
 
     if (Object.keys(this.dataDisplay).length >= 3) {
