@@ -42,7 +42,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   attributeWidth:string;
   fullAddress:string = "";
   formatLabels:any;
-  formatCheckBoxClicked:any;
+  formatCheckBoxClicked:boolean = false;
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe([
@@ -225,7 +225,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
               if(item.value === type['value']){
               return  item['checked'] = !item['checked']
               }else{
-              return  item['checked'] = false
+              return  item['checked'] = item['checked']
               }
             })
           }
@@ -244,7 +244,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
               }
           }
         }
-        
+        console.log(this.schema)
         if(this.formatCheckBoxClicked){
           let value = "";
         let find = function(array, name) {

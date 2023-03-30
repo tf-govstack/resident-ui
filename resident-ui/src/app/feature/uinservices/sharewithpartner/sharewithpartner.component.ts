@@ -383,7 +383,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
-          message: this.popupMessages.serverErrors[errorCode],
+          message: message,
           btnTxt: this.popupMessages.genericmessage.successButton
         },
         disableClose: true
