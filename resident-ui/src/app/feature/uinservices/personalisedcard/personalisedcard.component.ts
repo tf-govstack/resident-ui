@@ -110,7 +110,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(subs);
-
     if (!this.message2["timerFired"]) {
       this.autoLogout.getValues(this.langCode);
       this.autoLogout.setValues();

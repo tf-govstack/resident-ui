@@ -132,7 +132,7 @@ export class GetuinComponent implements OnInit {
 
   getStatus(data:any){
     this.dataStorageService.getStatus(data["AID"]).subscribe(response =>{
-      if(response["response"].aidStatus === "SUCCESS"){
+      if(response["response"].transactionStage === "Card ready to download"){
         this.generateOTP(data)
       }else{
         this.isUinNotReady = true
