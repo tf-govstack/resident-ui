@@ -78,7 +78,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           this.width = "35rem";
           this.attributeWidth = "18em";
         }
-        }
       }
     });
   }
