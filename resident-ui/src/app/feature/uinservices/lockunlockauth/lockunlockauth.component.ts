@@ -42,12 +42,12 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService,private dialog: MatDialog,private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, 
     private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
-    this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
+      this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "confirmBtn") {
         this.updateAuthlockStatus()
       }
-
     });
+    console.log(this.clickEventSubscription)
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
@@ -232,7 +232,9 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
         "authTypes": this.authlist
       }
     };
+    console.log("Tesing1")
     this.dataStorageService.updateAuthlockStatus(request).subscribe(response => {
+      console.log("Tesing2")
         this.getAuthlockStatus();  
         if(!response["errors"]){
           this.submitBtnDisable = true;
@@ -337,6 +339,7 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.clickEventSubscription.unsubscribe()
   }
 
   onItemSelected(item: any) {

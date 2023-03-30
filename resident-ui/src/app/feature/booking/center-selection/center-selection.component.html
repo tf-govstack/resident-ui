@@ -39,10 +39,11 @@
             </span>
             <br />
           </div>
-          <form class="search-form">
+          <form class="search-form-card">
+            <div class="search-form">
             <mat-card class="select-card" style="padding: 7px;">
               <mat-select
-               style="font-size: 11.5px;"
+               style="font-size: 11.5px; padding: 5px 5px; "
                 disableOptionCentering
                 name="select"
                 class="select-input"
@@ -65,7 +66,7 @@
                 name="search"
                 class="search-input"
                 [(ngModel)]="searchText"
-                (keyup.enter)="showResults()"
+                (keyup)="searchInput()"
               />
               <input
                 *ngIf="locationType === null"
@@ -75,6 +76,7 @@
                 name="search"
                 class="search-input"
                 [(ngModel)]="searchText"
+                (keyup)="searchInput()"
               />
               <!-- <button
                 matTooltip="{{ 'helpText.magnifying_glass' | translate }}"
@@ -88,14 +90,16 @@
                 <img src="assets\close.png" />
               </button> -->
             </mat-card>
-            <button (click)="showResults()" class="search-btn">
+            <button [disabled]="isBlankSpace" mat-raised-button  (click)="showResults()" class="search-btn">
               <mat-icon>search</mat-icon>
             </button>
             <button *ngIf="REGISTRATION_CENTRES.length >0" mat-raised-button (click)="downloadCentersPdf()" class="download-btn">
               <img class="save-icon"
 							src="./assets/icons/iconfont/download-1.svg" />
             </button>
-            
+            </div>
+            <p *ngIf="showWarningMsg" class="warning-message">Please enter letters/numbers in order to search.</p>
+
           </form>
         </div>
         <span class="search-text" *ngIf="searchTextFlag">{{ displayMessage }}</span>
@@ -119,13 +123,14 @@
           {{ 'centerSelection.noResult_found' | translate }}
         </span>
         <ul>
-          <li *ngFor="let center of REGISTRATION_CENTRES; let i = index;">
+          <li style="margin-top: 0px;" *ngFor="let center of REGISTRATION_CENTRES; let i = index;">
             <div  [ngClass]="REGISTRATION_CENTRES.length === i+1 ? 'center-card item' :'center-card'">
-              <div>
-                <div class="inline-flex" [dir]="textDir">                  
+              <div style="width: 50%;">
+                <div class="inline-flex" [dir]="textDir">
+                  <img src="assets\address.png" (click)="selectedRow(center)" style="cursor:pointer;" />                  
                   <div>
                     <strong>{{center.name}}</strong>
-                  <!--   <strong *ngIf="center.addressLine1 != null && center.addressLine1 != ''">
+                    <strong *ngIf="center.addressLine1 != null && center.addressLine1 != ''">
                       {{ ', ' + center.addressLine1}}
                     </strong>
                     <strong *ngIf="center.addressLine2 != null && center.addressLine2 != ''">
@@ -133,13 +138,13 @@
                     </strong>
                     <strong *ngIf="center.addressLine3 != null && center.addressLine3 != ''">
                       {{ ', ' + center.addressLine3}}
-                    </strong> -->
+                    </strong>
                   </div>
                 </div>
-                <div>
-                  <!-- <span *ngIf="center.contactPerson !== ''"><img src="assets\contact number.png"/></span> -->
+                <div class="inline-flex2" >
+                  <span *ngIf="center.contactPerson !== ''"><img src="assets\contact number.png"/></span>
                   <span  *ngIf="center.contactPerson !== ''">
-                    {{ center.contactPerson}}
+                    {{ center.contactPerson}}, <span  *ngIf="center.contactPerson !== '' && center.contactPhone !== ''">{{ center.contactPhone }}</span>
                   </span>
                  <!--  <span  *ngIf="center.contactPerson !== '' && center.contactPhone !== ''">
                     {{ ', ' +  center.contactPhone }}
@@ -150,11 +155,11 @@
                 </div>
               </div>
               <span class="spacer"></span>
-              <div>
+              <div style="width: 40%;">
                 <div >
                   <span>
-                    <div><img src="assets\address.png" (click)="selectedRow(center)" style="cursor:pointer;" /></div>
-                    <div><span  *ngIf="center.contactPerson !== '' && center.contactPhone !== ''">{{ center.contactPhone }}</span><span *ngIf="center.contactPerson == '' && center.contactPhone !== ''">{{ center.contactPhone }}</span></div>
+                    <!-- <div><img src="assets\address.png" (click)="selectedRow(center)" style="cursor:pointer;" /></div> -->
+                    <!-- <div><span  *ngIf="center.contactPerson !== '' && center.contactPhone !== ''">{{ center.contactPhone }}</span><span *ngIf="center.contactPerson == '' && center.contactPhone !== ''">{{ center.contactPhone }}</span></div> -->
                     <div [dir]="textDir">
                       {{ 'centerSelection.text_timing' | translate }} :
                       <span dir="ltr">

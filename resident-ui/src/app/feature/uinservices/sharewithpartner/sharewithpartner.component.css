@@ -90,11 +90,12 @@
 }
 
 .attribute-card{
-  min-height: 400px; 
-  width: 100%; 
+  min-height: 400px;
   border: 1px solid #505050; 
   border-radius: 6px; 
   padding: 12px;
+  overflow-wrap: break-word;
+  width: 100%; 
 }
 
 

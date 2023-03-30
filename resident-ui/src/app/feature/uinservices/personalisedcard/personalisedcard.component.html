@@ -55,10 +55,10 @@
 						<tr *ngFor="let value of valuesSelected">
 							<td style='font-weight:600;' *ngIf="dataDisplay[value] && value !== 'photo' ">
 								<!-- <div [innerHTML]="buildHTML | sanitize"></div> -->
-								{{dataDisplay[value][0]['label']}}:
+								<p style="margin: 0px; width: 7rem;">{{dataDisplay[value][0]['label']}}:</p>
 							</td>
 							<td *ngIf="dataDisplay[value] && value !== 'photo' ">
-								{{dataDisplay[value][0]['value']}}
+								<p [style.width] = "attributeWidth" style="margin: 0px;">{{dataDisplay[value][0]['value']}}</p>
 							</td>
 						</tr>
 					</table>

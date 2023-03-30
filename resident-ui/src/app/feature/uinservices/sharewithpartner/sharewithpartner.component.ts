@@ -40,6 +40,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   shareBthDisabled: boolean = true;
   valuesSelected: any = [];
   width : string;
+  attributeWidth:string;
   cols : number;
   message2:any;
 
@@ -60,22 +61,27 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         if (result.breakpoints[Breakpoints.XSmall]) {
           this.cols = 1;
           this.width = "19em";
+          this.attributeWidth = "10em";
         }
         if (result.breakpoints[Breakpoints.Small]) {
           this.cols = 1;
           this.width = "35em";
+          this.attributeWidth = "20em";
         }
         if (result.breakpoints[Breakpoints.Medium]) {
           this.cols = 2;
           this.width = "25em";
+          this.attributeWidth = "12em";
         }
         if (result.breakpoints[Breakpoints.Large]) {
           this.cols = 2;
           this.width = "29em";
+          this.attributeWidth = "18em";
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
           this.cols = 2;
           this.width = "40em";
+          this.attributeWidth = "25em";
         }
       }
     });
@@ -377,7 +383,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         data: {
           case: 'MESSAGE',
           title: this.popupMessages.genericmessage.errorLabel,
-          message: this.popupMessages.serverErrors[errorCode],
+          message: message,
           btnTxt: this.popupMessages.genericmessage.successButton
         },
         disableClose: true
@@ -398,6 +404,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.clickEventSubscription.unsubscribe()
   }
 
   onItemSelected(item: any) {

@@ -744,10 +744,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-  }
-
   showOTPPopup() {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
@@ -839,5 +835,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     console.log(event)
     this.matTabIndex = event.index;
     this.matTabLabel =event.tab.textLabel;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.clickEventSubscription.unsubscribe()
   }
 }

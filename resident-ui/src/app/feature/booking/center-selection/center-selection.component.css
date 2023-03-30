@@ -89,6 +89,12 @@ mat-card {
 
 .inline-flex {
   display: inline-flex;
+  align-items: flex-start;
+}
+.inline-flex2 {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 6px;
 }
 
 .center_selection-wrapper {
@@ -116,6 +122,7 @@ mat-card {
 
 .spacer {
   flex: 1 1 auto;
+  width: 10%;
 }
 
 section {
@@ -291,11 +298,12 @@ input[type="radio"] {
 
 .select-card {
   padding: 0;
-  box-shadow: 4px black;
+  box-shadow: 4px;
   border-radius: 4px !important;
   height: 40px;
   width: 40%;
-  margin-top: 10px;
+  margin-top: 7px;
+  outline: none;
 }
 
 .search-text {
@@ -306,6 +314,7 @@ input[type="radio"] {
   width: 80%;
   margin-top: 10px;
   margin-left: 25px;
+  height: 40px;
 }
 
 .search-card {
@@ -330,9 +339,18 @@ input[type="radio"] {
 .search-form {
   display: flex;
   /* flex-wrap: wrap; */
-  padding-bottom: 20px;
   align-items: center;
   justify-content: center;
+}
+.search-form-card{
+  padding-bottom: 20px;
+}
+
+.warning-message{
+  margin: 0px; 
+  color: red; 
+  font-size: 10px;
+  margin-left: 7px;
 }
 
 .pagination{

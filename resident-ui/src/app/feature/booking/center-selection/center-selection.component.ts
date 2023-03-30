@@ -56,6 +56,9 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
   pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 15, 20];
   centerSelection: any;
+  isBlankSpace:boolean = true;
+  showWarningMsg:boolean = false;
+
   constructor(
     public dialog: MatDialog,
     private service: BookingService,
@@ -294,6 +297,19 @@ export class CenterSelectionComponent implements OnInit, OnDestroy {
     this.pageSize = this.defaultPageSize;
     this.pageIndex = 0;
     this.getRecommendedCenters();
+  }
+  
+  searchInput(){
+    if(this.searchText.length > 2 && !this.searchText.startsWith(" ")){
+      this.isBlankSpace = false;
+    }else{
+      this.isBlankSpace = true;
+    }
+    if(this.searchText.startsWith(" ")){
+      this.showWarningMsg = true;
+    }else{
+      this.showWarningMsg = false;
+    }
   }
 
   showResults(pageEvent) {

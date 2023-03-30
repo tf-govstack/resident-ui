@@ -55,7 +55,8 @@
 							</td>
 						</tr>
 					</table>
-				</td></mat-grid-tile><mat-grid-tile>
+				</td></mat-grid-tile>
+				<mat-grid-tile style="width: 400px;">
 				<td style="vertical-align: top;" [style.width] = "width">
 					<div class="attribute-card" [style.width] = "width">
 					<table [style.width] = "width">
@@ -66,10 +67,10 @@
 						</tr>
 						<tr *ngFor="let item of valuesSelected">
 							<td style='font-weight:600;' *ngIf="sharableAttributes[item] && item !== 'photo' ">
-								{{sharableAttributes[item]['label']}}:
+								<p style="margin: 0px; width: 7rem;">{{sharableAttributes[item]['label']}}:</p>
 							</td>
 							<td *ngIf="sharableAttributes[item] && item !== 'photo' ">
-								{{sharableAttributes[item]['value']}}
+								<p [style.width] = "attributeWidth" style="margin: 0px;">{{sharableAttributes[item]['value']}}</p>
 							</td>
 						</tr>
 						<!-- <tr>
