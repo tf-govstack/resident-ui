@@ -1,5 +1,12 @@
 .main-container {
-    padding: 0 6% 0 6%;
+    /* padding: 0 6% 0 6%;
+    width: 90%; */
+    padding: 0 5rem 2rem 5rem;
+}
+
+.main-container2 {
+    width: 90%;
+    padding: 0 5rem 2rem 5rem;
 }
 
 .login-card {
@@ -149,7 +156,7 @@
     border: 1px solid #FFB45C;
     margin-top: 10px;
     border-radius: 12px;
-    margin: 12px;
+    /* margin: 12px; */
     padding: 1.5rem 1rem 1.5rem 1rem;
 }
 
@@ -187,10 +194,21 @@
     color: #FAF8F8;
     font-size: 43px;
     margin-bottom: 2rem !important;
+    background-color: #FAF8F8;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%; 
  }
 
 .active-position-icon {
    color: #03A64A;
+   background-color: #03A64A;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .progress-card{
@@ -249,9 +267,9 @@ ul li{
 
 
 ul li:first-child hr{
-    width: 42%;
-    left: 60.5%;
+    width: 44%;
+    left: 57%;
 }
 ul li:last-child hr{
-    width: 48%;
+    width: 46%;
 }

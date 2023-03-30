@@ -7,7 +7,7 @@
     <mat-card-subtitle class="login-heading" *ngIf="getUinData.login">{{getUinData.login |
       translate}}</mat-card-subtitle>
     <hr class="line" />
-    <div class="form-container" [style.width] = "width">
+    <div class="form-container" [style.width]="width">
       <form #basicForm="ngForm" (submit)="submitUserID(basicForm.value)">
         <div class="uin-login-title-card">
           <mat-card-subtitle class="login-Input-heading" *ngIf="getUinData.title">{{getUinData.title |
@@ -22,7 +22,8 @@
         <br />
         <label class="label-text" *ngIf="getUinData.description">{{getUinData.description | translate}}</label>
         <div *ngIf="siteKey">
-            <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha" (captchaEvent)="getCaptchaToken($event)"></app-captcha>
+          <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha"
+            (captchaEvent)="getCaptchaToken($event)"></app-captcha>
         </div>
         <br />
         <button id="getUinSendOtpBtn" (click)="submitUserID()" [style.backgroundColor]="buttonbgColor"
@@ -35,7 +36,8 @@
 <div class="main-container" *ngIf="isUinNotReady">
   <span class="breadcrumb">
     <a (click)="onItemSelected('home')">{{'uinservices.home' | translate}} &nbsp;&nbsp;</a>
-    >&nbsp;&nbsp;<span style="cursor: pointer;" (click)="onItemSelected('')">{{'uinservices.label' | translate}} </span> >&nbsp;&nbsp;<span class="active">
+    >&nbsp;&nbsp;<span style="cursor: pointer;" (click)="onItemSelected('')">{{'uinservices.label' | translate}} </span>
+    >&nbsp;&nbsp;<span class="active">
       {{getStatusData.status}}</span>
   </span>
   <div class="status-title-card">
@@ -50,8 +52,11 @@
       <ul class="progressbar">
         <li *ngFor="let item of getStatusData.statusStages; let i = index">
           <div class="stages-card">
-            <mat-icon
-              [ngClass]=" i <= orderStatusIndex ? 'active-position-icon icon':'icon' ">check_circle_outline</mat-icon>
+            <div [ngClass]=" i <= orderStatusIndex ? 'active-position-icon icon':'icon' ">
+              <img *ngIf="i === orderStatusIndex" src="./assets/icons/iconfont/Path 7837.svg" />
+            </div>
+            <!-- <mat-icon
+              [ngClass]=" i <= orderStatusIndex ? 'active-position-icon icon':'icon' ">check_circle_outline</mat-icon> -->
             <hr [ngClass]=" i <= orderStatusIndex ? 'completed-stage-bar':'incompleted-stage-bar' " />
             <mat-card-subtitle
               [ngClass]="orderStatus === item ? 'active-position-text':'inactive-position-text' ">{{item}}</mat-card-subtitle>
