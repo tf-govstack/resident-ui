@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { Event as NavigationEvent, Router } from '@angular/router';
 import { filter, pairwise } from 'rxjs/operators';
 import { NavigationEnd, NavigationStart } from '@angular/router';
+import { LogoutService } from 'src/app/core/services/logout.service';
+import { AuditService } from 'src/app/core/services/audit.service';
 
 @Component({
   selector: 'app-root',
@@ -17,21 +19,33 @@ export class AppComponent {
   title = 'resident-ui';
   subscriptions: Subscription[] = [];
   previousUrl: string;
+
   constructor(
     private appConfigService: AppConfigService,
     private autoLogout: AutoLogoutService, 
-    private router: Router
+    private router: Router,
+    private logoutService: LogoutService,
+    private auditService: AuditService
   ) {
     this.appConfigService.getConfig();
   }
 
   @HostListener('window:popstate', ['$event'])
   onPopState(event) {
-    console.log("self.previousUrl>>>"+this.previousUrl);
-    console.log('Back button pressed');
+    if(window.location.hash.includes("uinservices")){
+
+    }else{
+      if(confirm("Are you sure want to leave the page. you will be logged out automatically if you press OK?")){
+        this.auditService.audit('RP-002', 'Logout', 'RP-Logout', 'Logout', 'User clicks on "logout" button after logging in to UIN services');
+        this.logoutService.logout();
+      }else{
+        this.router.navigate([this.router.url]); 
+        return false;
+      }
+    }
   }
   
-  ngOnInit() {    
+  ngOnInit() { 
     if(!localStorage.getItem("langCode")){
       localStorage.setItem("langCode", "eng");
     }
@@ -41,14 +55,6 @@ export class AppComponent {
   }
 
   routerType() {
-    let self = this;
-    this.router.events
-    .pipe(filter(event => event instanceof NavigationEnd))
-    .subscribe((event: NavigationEnd) => {
-      console.log("event.url>>>"+event.url);
-      self.previousUrl = event.url;
-    });
-
     this.subscriptions.push(
       this.router.events
         .pipe(filter((event: NavigationEvent) => event instanceof NavigationStart))

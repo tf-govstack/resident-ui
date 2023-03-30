@@ -12,6 +12,7 @@ import { AuditService } from 'src/app/core/services/audit.service';
 import { map } from 'rxjs/operators'
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { AuthService } from 'src/app/core/services/authservice.service';
 
 @Component({
   selector: "app-header",
@@ -48,7 +49,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private logoutService: LogoutService,
     private headerService: HeaderService,
     private auditService: AuditService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
   ) {
     
   }
@@ -228,15 +230,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }    
   }
 
-  onLogoClick() {
-   /* if (this.authService.isAuthenticated()) {
-      this.router.navigate([
-        localStorage.getItem("langCode"),
-        "dashboard",
-      ]);
+  godashboard() {
+    if (this.authService.isAuthenticated()) {
+      console.log("session exist>>>");
+      this.router.navigate(["uinservices/dashboard"]);
     } else {
-      this.router.navigate([`/${localStorage.getItem("langCode")}`]);
-    }*/
+      console.log("session doesn't exist>>>");
+      this.router.navigate(["dashboard"]);
+    }
   }
 
   onHome() {
