@@ -101,6 +101,15 @@ mat-card-header,
   margin-bottom: 0px;
 }
 
+::ng-deep .mat-tooltip {
+  background-color: #ffffff !important;
+  color: black !important;
+  font-size: 11px !important;
+  border-radius: 8px !important;
+  padding: 10px !important;
+  border: 1px solid silver !important;
+}
+
 .info-box:before{
   content: "";
   width: 20px;

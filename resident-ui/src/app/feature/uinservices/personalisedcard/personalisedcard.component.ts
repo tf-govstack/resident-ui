@@ -64,11 +64,11 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         }
         if (result.breakpoints[Breakpoints.Large]) {
           this.cols = 2;
-          this.width = "35rem";
+          this.width = "29em";
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
           this.cols = 2;
-          this.width = "40vw";
+          this.width = "40em";
         }
       }
     });

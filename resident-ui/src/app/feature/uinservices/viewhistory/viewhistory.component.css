@@ -64,7 +64,7 @@ input {
   border: 2px solid #909090;
   border-radius: 5px;
   opacity: 1;
-  padding: 10px;
+  padding: 5px;
 }
 
 ::placeholder {
@@ -119,8 +119,14 @@ span.input {
 }
 
 .datepicker-card {
-  width: 70%;
-  height: 37px;
+  width: 69%;
+  height: 40px;
+}
+
+mat-select {
+  outline: 2px solid !important;
+  outline-color: #909090 !important;
+  border-radius: 5px;
 }
 
 /*@media screen and (max-width:1500px) {

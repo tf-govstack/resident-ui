@@ -4,8 +4,8 @@ import { HostListener } from '@angular/core';
 import { AutoLogoutService } from 'src/app/core/services/auto-logout.service';
 import { Subscription } from 'rxjs';
 import { Event as NavigationEvent, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { NavigationStart } from '@angular/router';
+import { filter, pairwise } from 'rxjs/operators';
+import { NavigationEnd, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +16,7 @@ import { NavigationStart } from '@angular/router';
 export class AppComponent {
   title = 'resident-ui';
   subscriptions: Subscription[] = [];
+  previousUrl: string;
   constructor(
     private appConfigService: AppConfigService,
     private autoLogout: AutoLogoutService, 
@@ -24,6 +25,12 @@ export class AppComponent {
     this.appConfigService.getConfig();
   }
 
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    console.log("self.previousUrl>>>"+this.previousUrl);
+    console.log('Back button pressed');
+  }
+  
   ngOnInit() {    
     if(!localStorage.getItem("langCode")){
       localStorage.setItem("langCode", "eng");
@@ -34,6 +41,14 @@ export class AppComponent {
   }
 
   routerType() {
+    let self = this;
+    this.router.events
+    .pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe((event: NavigationEnd) => {
+      console.log("event.url>>>"+event.url);
+      self.previousUrl = event.url;
+    });
+
     this.subscriptions.push(
       this.router.events
         .pipe(filter((event: NavigationEvent) => event instanceof NavigationStart))

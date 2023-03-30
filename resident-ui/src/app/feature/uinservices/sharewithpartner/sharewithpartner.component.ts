@@ -71,7 +71,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         }
         if (result.breakpoints[Breakpoints.Large]) {
           this.cols = 2;
-          this.width = "35em";
+          this.width = "29em";
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
           this.cols = 2;

@@ -11,9 +11,10 @@ import { SanitizePipe } from './pipes/sanitize.pipe';
 import { SanitizepdfPipe } from './pipes/sanitizepdf.pipe';
 import { PDFViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { ProgressComponent } from './progress/progress.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, I18nModule, RecaptchaModule],
+  imports: [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, I18nModule, RecaptchaModule, InfiniteScrollModule],
   declarations: [DialogComponent, HeaderComponent, CaptchaComponent, SanitizePipe, PDFViewerComponent, ProgressComponent, SanitizepdfPipe],
   exports: [DialogComponent, MaterialModule, HeaderComponent, CaptchaComponent, SanitizePipe, PDFViewerComponent, ProgressComponent, SanitizepdfPipe],
   entryComponents: [DialogComponent],

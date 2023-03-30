@@ -35,7 +35,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notificationList:any;
   langCode = localStorage.getItem("langCode");
   popupMessages:any;
-  
+  throttle = 0;
+  distance = 2;
+  page = 1;
+
   constructor(
     private router: Router,
     private appConfigService: AppConfigService,
@@ -46,7 +49,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private headerService: HeaderService,
     private auditService: AuditService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    
+  }
+
+  onScroll() {
+    this.dataStorageService
+    .getNotificationData(this.langCode)
+    .subscribe((response) => {
+      if(response["response"])     
+        this.notificationList = response["response"]["data"];
+        console.log(this.notificationList)
+    });
+  }
 
   ngOnInit() {
     this.defaultJsonValue = defaultJson;
