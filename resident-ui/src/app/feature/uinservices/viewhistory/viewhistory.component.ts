@@ -81,10 +81,10 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
           this.cols = 4;
         }
         if (result.breakpoints[Breakpoints.Large]) {
-          this.cols = 5;
+          this.cols = 6;
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
-          this.cols = 5;
+          this.cols = 6;
         }
       }
     });
@@ -123,9 +123,6 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   getServiceHistory(pageEvent:any, filters:any, actionTriggered:string){
-    if(actionTriggered === "search"){
-      this.paginator.firstPage();
-    }
     this.dataStorageService
     .getServiceHistory(pageEvent, filters)
     .subscribe((response) => {
