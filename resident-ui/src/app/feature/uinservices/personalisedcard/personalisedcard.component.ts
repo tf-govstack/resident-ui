@@ -144,7 +144,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       });
   }
 
-  captureCheckboxValue($event: any, data: any, type: any) {
+async  captureCheckboxValue($event: any, data: any, type: any) {
    try{
     this.buildHTML = "";
     let row = "";
@@ -167,6 +167,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           } else {
             if(data.formatRequired){
               if(data.attributeName === "addressLine1"){
+                this.fullAddress = ""
                 this.schema.forEach(item=>{
                   if(item.attributeName === data.attributeName){
                     this.formatLabels = item.formatOption[this.langCode]
@@ -207,6 +208,17 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           return item
         }
       })
+
+      this.schema = await  this.schema.map(eachItem =>{
+        if(data['attributeName'] === eachItem['attributeName']){
+          eachItem['formatOption'][this.langCode].forEach(item =>{
+            return  item['checked'] = false
+          })
+        }
+        return eachItem
+      })
+      console.log(this.schema)
+      
     } else {
       if (!data.formatRequired) {
         let value;
@@ -219,7 +231,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         this.dataDisplay[data.attributeName] = [];
         this.dataDisplay[data.attributeName].push({ "label": data.label[this.langCode], "value": value });
       } else {
-        this.schema =  this.schema.map(eachItem =>{
+      this.schema = await  this.schema.map(eachItem =>{
           if(data['attributeName'] === eachItem['attributeName']){
             eachItem['formatOption'][this.langCode].forEach(item =>{
               if(item.value === type['value']){
@@ -231,7 +243,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           }
           return eachItem
         })
-        
+       
         for(let eachItem of this.schema){
           if(data['attributeName'] === eachItem['attributeName']){
               for(let item of eachItem['formatOption'][this.langCode]){
@@ -244,7 +256,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
               }
           }
         }
-        console.log(this.schema)
         if(this.formatCheckBoxClicked){
           let value = "";
         let find = function(array, name) {
@@ -268,49 +279,62 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           } else {
             let value = "";
             let allValue = "";
+            let allValue2 = ""
             let self = this;
             if(type["value"] !== 'fullAddress'){
               this.schema.map(eachItem =>{
                 if(data['attributeName'] === eachItem['attributeName']){
                   eachItem['formatOption'][this.langCode].forEach((item, index) =>{
-                    if(document.getElementById(item.value+"-input").getAttribute('aria-checked') !== "false"){
-                      if(allValue){
+                    // if(document.getElementById(item.value+"-input").getAttribute('aria-checked') !== "false"){
+                      if(item.checked){
                         if(self.userInfo[item.value] !== undefined){
                           if(item.value === "postalCode"){
-                            allValue = allValue+", "+self.userInfo[item.value];
+                            allValue = allValue +self.userInfo[item.value];
                           }else{
-                            allValue = allValue+", "+self.userInfo[item.value][0].value;
+                            allValue = allValue + self.userInfo[item.value][0].value + ",";
                           }
                         }
-                      }else{
-                        if(self.userInfo[item.value] !== undefined){
-                          allValue = self.userInfo[item.value][0].value;
-                        }
-                      }
-                    }else if(item.value === type['value']){
-                      if(allValue){
-                        if(self.userInfo[item.value] !== undefined){
-                          if(item.value === "postalCode"){
-                            allValue = allValue+", "+self.userInfo[item.value];
-                          }else{
-                            allValue = allValue+", "+self.userInfo[item.value][0].value;
-                          }
-                        }
-                      }else{
-                        if(self.userInfo[item.value] !== undefined){
-                          if(item.value === "postalCode"){
-                            allValue = self.userInfo[item.value];
-                          }else{
-                            allValue = self.userInfo[type['value']][0].value;
-                          }
-                          
-                        }
-                      }
+                      // if(allValue){
+                      //   if(self.userInfo[item.value] !== undefined){
+                      //     if(item.value === "postalCode"){
+                      //       allValue = allValue+", "+self.userInfo[item.value];
+                      //     }else{
+                      //       allValue = allValue+", "+self.userInfo[item.value][0].value;
+                      //     }
+                      //   }
+                      // }else{
+                      //   if(self.userInfo[item.value] !== undefined){
+                      //     allValue = self.userInfo[item.value][0].value;
+                      //   }
+                      // }
                     }
+                    // else if(item.value === type['value']){
+                    //   if(allValue){
+                    //     if(self.userInfo[item.value] !== undefined){
+                    //       if(item.value === "postalCode"){
+                    //         allValue = allValue+", "+self.userInfo[item.value];
+                    //       }else{
+                    //         allValue = allValue+", "+self.userInfo[item.value][0].value;
+                    //       }
+                    //     }
+                    //   }else{
+                    //     if(self.userInfo[item.value] !== undefined){
+                    //       if(item.value === "postalCode"){
+                    //         allValue = self.userInfo[item.value];
+                    //       }else{
+                    //         allValue = self.userInfo[type['value']][0].value;
+                    //       }
+                          
+                    //     }
+                    //   }
+                    // }
                     return "";
                   });
                 }
               });
+              if(allValue.endsWith(',')){
+                allValue = allValue.replace(/.$/,'')
+              }
               value = allValue;
               //value =  typeof this.userInfo[type["value"]] !== 'string' ? this.userInfo[type["value"]][0].value : this.userInfo[type["value"]];
             }else{
@@ -324,7 +348,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         if(data.attributeName === 'addressLine1'){
           value = this.fullAddress
         }else{
-          if(typeof this.userInfo[type.value] === "string"){
+          if(typeof this.userInfo[type.value] !== "string" && this.userInfo[type.value] !== undefined){
             this.userInfo[type.value].forEach(item =>{
               if(item['language'] === this.langCode){
                 value = item.value
@@ -336,8 +360,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
           }
           
         }
-        console.log(type)
-        console.log(data)
          this.dataDisplay[data['attributeName']][0]['value'] = value;
       }
       }
@@ -368,7 +390,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
     $event.stopPropagation();
     }catch(ex){
       $event.stopPropagation();
-      console.log(""+ex.message);
     }
   }
 
@@ -397,7 +418,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
         if (contentDisposition) {
           try {
             var fileName = ""
-            console.log("contentDisposition" + contentDisposition)
             if (contentDisposition) {
               const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
               const matches = fileNameRegex.exec(contentDisposition);
@@ -406,7 +426,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
                 console.log(matches[1].replace(/['"]/g, '') + "filename")
               }
             }
-            console.log("headers" + JSON.stringify(data.headers))
             saveAs(data.body, fileName);
             this.showMessage()
           } catch (error) {
