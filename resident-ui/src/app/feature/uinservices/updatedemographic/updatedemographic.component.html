@@ -117,10 +117,10 @@
                             (blur)="captureValue($event, field.attributeName, language)" />
                         </td>
                       </tr>
-                      <tr>
+                      <tr *ngIf="displayPOIUpload">
                         <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}<span style="color: red;">*</span></label></td>
                       </tr>
-                      <tr>
+                      <tr *ngIf="displayPOIUpload">
                         <td width="100%" colspan="3">
                           <div class="container" appDnd (fileDropped)="onFileDropped($event, 'POI')">
                             <input type="file" #fileDropRef id="fileDropRef"
@@ -142,7 +142,7 @@
                           </div>
                         </td>
                       </tr>
-                      <tr>
+                      <tr *ngIf="displayPOIUpload">
                         <td width="100%" colspan="3"><label>{{field.labelName[langCode][4]}}</label></td>
                       </tr>
                       <tr>
@@ -200,7 +200,8 @@
             </div>
           </div>
         </td>
-        <td>
+        <td width="100%" height="550px">
+          <div *ngIf="pdfSrc" (click)="closePreview()" width="100%" style="float: right;cursor: pointer;"><mat-icon matTooltip="Close Preview">clear</mat-icon></div>
           <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="100%" width="100%">
         </td>
       </tr>
@@ -212,7 +213,9 @@
   </mat-tab>
   <mat-tab label="{{'updatedemographic.address' | translate}}">
     <div class="address-page">
-      <div [style.width] = "width">
+      <table width="100%">
+      <tr>
+      <td [style.width] = "width">
         <div *ngFor="let field of schema['identity']; let i = index" class="mat-form1">
           <div layout="row" *ngIf="field.tabgroup === 'address'">
             <table width="100%">
@@ -297,10 +300,10 @@
                           (blur)="captureValue($event, field.attributeName, language)" />
                       </td>
                     </tr>
-                    <tr>
+                    <tr *ngIf="displayPOAUpload">
                       <td width="100%" colspan="3"><label>{{field.labelName[langCode][3]}}<span style="color: red;">*</span></label></td>
                     </tr>
-                    <tr>
+                    <tr *ngIf="displayPOAUpload">
                       <td width="100%" colspan="3">
                         <div class="container" appDnd (fileDropped)="onFileDropped($event, 'POA')">
                           <input type="file" #fileAddRef id="fileAddRef"
@@ -321,7 +324,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <tr *ngIf="displayPOAUpload">
                       <td width="100%" colspan="3"><label>{{field.labelName[langCode][4]}}</label></td>
                     </tr>
                     <tr>
@@ -376,8 +379,13 @@
             </table>
           </div>
         </div>
-      </div>
-      <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="400px" width="400px">
+      </td>
+      <td width="100%" height="850px">
+        <div *ngIf="pdfSrc" (click)="closePreview()" width="100%" style="float: right;cursor: pointer;"><mat-icon matTooltip="Close Preview">clear</mat-icon></div>
+        <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="100%" width="100%">
+      </td>
+    </tr>
+    </table>
     </div>
     <div style="text-align: end;margin-right: 2rem; margin-top: none;">
       <button [disabled]="previewDisabledInAddress" mat-raised-button (click)="previewBtn('address')" color="primary"
