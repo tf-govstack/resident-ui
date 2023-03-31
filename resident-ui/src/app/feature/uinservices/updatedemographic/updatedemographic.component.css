@@ -217,6 +217,7 @@ label{
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: .5rem 0 0 .5rem;
 }
 ::ng-deep .mat-form-field-wrapper{
   padding-bottom: 0.01em !important;;
@@ -262,4 +263,31 @@ mat-select {
   border-radius: 5px;
   color: white !important;
   background: white;
+}
+
+/* ::ng-deep .mat-tab-label{
+  border: 1px solid black;
+} */
+
+::ng-deep .mat-tab-label.mat-tab-label-active {
+  color: #03A64A;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #03A64A;
+}
+
+.tab-headings{
+  font-size:17px;
+  color: #505050;
+  margin-bottom: 0px;
+  font-weight: 500;
+  margin-left: 1.5rem;
+}
+
+.language-card{
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between;
+  align-items: flex-end;
 }
