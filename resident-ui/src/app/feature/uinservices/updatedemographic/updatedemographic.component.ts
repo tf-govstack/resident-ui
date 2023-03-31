@@ -13,6 +13,7 @@ import { isNgTemplate } from "@angular/compiler";
 import defaultJson from "src/assets/i18n/default.json";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: "app-demographic",
@@ -83,7 +84,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   cols : number;
   message2:any;
 
-  constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
+  constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver,private dateAdapter : DateAdapter<Date>) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "updateMyData") {
         this.updateDemographicData();
@@ -123,6 +124,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         }
       }
     });
+    this.dateAdapter.setLocale('en-GB');
   }
 
   async ngOnInit() {
@@ -499,6 +501,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     let self = this;
     let dateFormat = new Date(event.target.value);
     let formattedDate = dateFormat.getFullYear() + "/" + ("0" + (dateFormat.getMonth() + 1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);
+    this.selectedDate = dateFormat;
     if (event.target.value === null && this.userInfoClone["dateOfBirth"]) {
       delete this.userInfoClone["dateOfBirth"]
     } else {
@@ -545,10 +548,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   updateDemographicData() {
-    console.log("self.proofOfIdentity>>>" + JSON.stringify(this.proofOfIdentity));
-    console.log("self.proofOfAddress>>>" + JSON.stringify(this.proofOfAddress));
-    console.log("this.dynamicFieldValue>>>" + JSON.stringify(this.dynamicFieldValue));
-    console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
+    // console.log("self.proofOfIdentity>>>" + JSON.stringify(this.proofOfIdentity));
+    // console.log("self.proofOfAddress>>>" + JSON.stringify(this.proofOfAddress));
+    // console.log("this.dynamicFieldValue>>>" + JSON.stringify(this.dynamicFieldValue));
+    // console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
 
     let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (transactionID.length < 10) {
@@ -579,10 +582,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       }
     };
     this.dataStorageService.updateuin(request).subscribe(response => {
-      if (response["response"]) {
-        this.showMessage(response["response"]['message'],'')
+      let eventId =  response.headers.get("eventid")
+      this.message = this.popupMessages.genericmessage.updateMyData.phoneNumberSuccessMsg.replace("$eventId",eventId)
+      if (response.body["response"]) {
+        this.showMessage(this.message,eventId)
       } else {
-        this.showErrorPopup(response["errors"])
+        this.showErrorPopup(response.body["errors"])
       }
     }, error => {
       console.log(error)
@@ -764,9 +769,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
+        trackStatusText:this.popupMessages.genericmessage.trackStatusText,
+        clickHere:this.popupMessages.genericmessage.clickHere,
         message: message,
         eventId:eventId,
-        clickHere: this.popupMessages.genericmessage.clickHere,
+        clickHere2: this.popupMessages.genericmessage.clickHere2,
+        dearResident:this.popupMessages.genericmessage.dearResident,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -789,7 +797,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           data: {
             case: 'accessDenied',
             title: this.popupMessages.genericmessage.errorLabel,
-            message: this.popupMessages.serverErrors[this.errorCode],
+            message: this.message,
             btnTxt: this.popupMessages.genericmessage.successButton,
             clickHere: this.popupMessages.genericmessage.clickHere,
             clickHere2: this.popupMessages.genericmessage.clickHere2,
@@ -805,7 +813,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           data: {
             case: 'MESSAGE',
             title: this.popupMessages.genericmessage.errorLabel,
-            message: this.popupMessages.serverErrors[this.errorCode],
+            message: this.message,
             btnTxt: this.popupMessages.genericmessage.successButton
           },
           disableClose: true
@@ -832,13 +840,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   logChange(event:any){
-    console.log(event)
     this.matTabIndex = event.index;
     this.matTabLabel =event.tab.textLabel;
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-    this.clickEventSubscription.unsubscribe()
+    this.clickEventSubscription.unsubscribe();
   }
 }

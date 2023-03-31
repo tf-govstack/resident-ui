@@ -323,7 +323,11 @@
         "identity": "Identity",
         "address": "Address",
         "contact": "Contact",
-        "languagePreference": "Language Preference"
+        "languagePreference": "Language Preference",
+        "identityHeading":"My Identity",
+        "addressHeading":"My Address",
+        "contactHeading":"My Contact",
+        "languageHeading":"My Language Preference"
     },
     "preview": {
         "title": "Preview"
@@ -501,8 +505,9 @@
             "confirmationMessage": " Are you sure you want to save the changes made in authentication types?"
         },
         "updateMyData": {
-            "emailSuccessMsg": "Dear resident, your email Id has been successfully updated against the eventId: $eventId. In order to track the status of the event, you can ",
-            "phoneNumberSuccessMsg": "Dear resident, your email Id has been successfully updated against the eventId: $eventId. In order to track the status of the event, you can "
+            "emailSuccessMsg": "Your Email ID has been successfully updated against the Event ID:: $eventId.",
+            "phoneNumberSuccessMsg": "your phone number has been successfully updated against the eventId: $eventId.",
+            "newDataUpdatedSuccessMsg":"Your request to change your data has been submitted against the Event ID: $eventId."
         }
     },
     "autologout": {
@@ -553,6 +558,6 @@
         "RES-SER-415": "Template exceptionServiceError.",
         "RES-SER-463": "Failed to send OTP. Retry again in sometime.",
         "RES-SER-418": "You cannot access this service since you have not accepted the consent while logging in. Request you to re-login and accept the relevant consent to proceed.",
-        "RES-SER-461":"No document found."
+        "RES-SER-461":"Document type is a mandatory field. Kindly choose a document type in order to proceed."
     }
 }
