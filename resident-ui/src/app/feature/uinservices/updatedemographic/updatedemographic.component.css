@@ -291,3 +291,7 @@ mat-select {
   justify-content: space-between;
   align-items: flex-end;
 }
+
+::ng-deep .mat-form-field-infix{
+  width: 100% !important;
+}

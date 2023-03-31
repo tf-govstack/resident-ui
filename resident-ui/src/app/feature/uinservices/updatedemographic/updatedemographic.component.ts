@@ -213,7 +213,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
                       return data.value.trim()
                     }
                   });
-                  console.log("schema.id>>>" + JSON.stringify(schema.attributeName));
                   self.buildJSONData[schema.attributeName][language] = value[0].value;
                 });
               }
@@ -221,7 +220,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           }
         }
       }
-      console.log("this.buildJSONData>>>" + JSON.stringify(this.buildJSONData));
       this.getGender();
       this.getLocationHierarchyLevel();
       this.getDocumentType("POI", "proofOfIdentity"); this.getDocumentType("POA", "proofOfAddress");
@@ -232,9 +230,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     perfLangs.forEach(data =>{
       this.perfLangArr[data] = defaultJson['languages'][data]['nativeName']
     })
-    console.log(this.perfLangArr)
-    this.buildJSONData['preferredLang'] = this.perfLangArr
-    console.log(this.buildJSONData)
+    this.buildJSONData['preferredLang'] = this.perfLangArr;
   }
 
   changedBuildData() {
@@ -261,7 +257,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         }
       }
     }
-    // this.buildCloneJsonData = { ...this.buildCloneJsonData, ...this.dynamicFieldValue }
   }
 
   addingAddessData() {
@@ -298,9 +293,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }
     this.addingAddessData()
     // this.showPreviewPage = true
-    this.uploadedFiles = this.files.concat(this.filesPOA)
-    console.log(this.buildCloneJsonData)
-    console.log(this.userInfoClone)
+    this.uploadedFiles = this.files.concat(this.filesPOA);
     // this.matTabLabel = "Identity";
   }
 
@@ -356,8 +349,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   captureConfirmValue(event: any, id: any) {
     this.sendOtpDisable = this.userId === event.target.value ? false : true;
-    this.updatedingId = id
-    this.confirmContact = event.target.value
+    this.updatedingId = id;
+    this.confirmContact = event.target.value;
   }
 
   sendOTPBtn(id: any) {
@@ -569,7 +562,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       console.log(this.files[0]);
     }
     if (this.proofOfAddress['documenttype']) {
-      this.uploadFiles(this.filesPOA[0], transactionID, 'POA', this.proofOfAddress['documenttype'], this.proofOfAddress['documentreferenceId']);
+      const formData = new FormData();
+      formData.append('file', this.filesPOA[0]);
+      this.uploadFiles(formData, transactionID, 'POA', this.proofOfAddress['documenttype'], this.proofOfAddress['documentreferenceId']);
       console.log(this.filesPOA[0]);
     }
 
@@ -585,7 +580,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     };
     this.dataStorageService.updateuin(request).subscribe(response => {
       let eventId =  response.headers.get("eventid")
-      this.message = this.popupMessages.genericmessage.updateMyData.phoneNumberSuccessMsg.replace("$eventId",eventId)
+      this.message = this.popupMessages.genericmessage.updateMyData.newDataUpdatedSuccessMsg.replace("$eventId",eventId)
       if (response.body["response"]) {
         this.showMessage(this.message,eventId)
       } else {
