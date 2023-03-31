@@ -558,6 +558,8 @@
         "RES-SER-415": "Template exceptionServiceError.",
         "RES-SER-463": "Failed to send OTP. Retry again in sometime.",
         "RES-SER-418": "You cannot access this service since you have not accepted the consent while logging in. Request you to re-login and accept the relevant consent to proceed.",
-        "RES-SER-461":"Document type is a mandatory field. Kindly choose a document type in order to proceed."
+        "RES-SER-461":"Document type is a mandatory field. Kindly choose a document type in order to proceed.",
+        "RES-SER-519":"Please enter a different Email ID from the already existing one.",
+        "RES-SER-520":"Please enter a different phone number from the already existing one."
     }
 }
