@@ -323,7 +323,7 @@ export class DataStorageService {
   }
 
   updateuin(request: any){
-    return this.httpClient.patch(this.BASE_URL + '/update-uin', request);
+    return this.httpClient.patch(this.BASE_URL + '/update-uin', request,{ observe: 'response' });
   }
 
   uploadfile(request, transactionID, docCatCode, docTypCode, referenceId){
