@@ -56,13 +56,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onScroll() {
-    this.dataStorageService
+    /*this.dataStorageService
     .getNotificationData(this.langCode)
     .subscribe((response) => {
       if(response["response"])     
         this.notificationList = response["response"]["data"];
         console.log(this.notificationList)
-    });
+    });*/
   }
 
   ngOnInit() {
