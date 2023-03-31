@@ -83,6 +83,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   width : string;
   cols : number;
   message2:any;
+  displayPOIUpload:boolean = false;
+  displayPOAUpload:boolean = false;
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver,private dateAdapter : DateAdapter<Date>) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -533,6 +535,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           this.userInfoClone[formControlName] = [].concat(newData);
         }
       } else {
+        if(formControlName === "proofOfIdentity"){
+          this.displayPOIUpload = true;
+        }else if(formControlName === "proofOfAddress"){
+          this.displayPOAUpload = true;
+        }
         self[formControlName]["documenttype"] = event.source.value;
       }
     }
@@ -548,11 +555,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   updateDemographicData() {
-    // console.log("self.proofOfIdentity>>>" + JSON.stringify(this.proofOfIdentity));
-    // console.log("self.proofOfAddress>>>" + JSON.stringify(this.proofOfAddress));
-    // console.log("this.dynamicFieldValue>>>" + JSON.stringify(this.dynamicFieldValue));
-    // console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
-
     let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (transactionID.length < 10) {
       let diffrence = 10 - transactionID.length;
@@ -608,7 +610,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     });
     return dialogRef;
   }
-
+  closePreview(){
+    this.pdfSrc = "";
+  }
   /**
    * on file drop handler
    */
@@ -667,6 +671,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     if (this.filesPOA.length < 1) {
       this.previewDisabledInAddress = true;
     }
+    this.pdfSrc = "";
     this.uploadedFiles = this.files.concat(this.filesPOA)
   }
 
@@ -684,7 +689,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
               clearInterval(progressInterval);
               this.uploadFilesSimulator(index + 1, type);
             } else {
-              this.files[index].progress += 5;
+              this.files[index].progress += 20;
             }
           }, 200);
         }
@@ -697,7 +702,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
               clearInterval(progressInterval);
               this.uploadFilesSimulator(index + 1, type);
             } else {
-              this.filesPOA[index].progress += 5;
+              this.filesPOA[index].progress += 20;
             }
           }, 200);
         }
@@ -712,22 +717,25 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   prepareFilesList(files: Array<any>, type: string) {  
     var allowedFiles = [".jpg", ".jpeg", ".png", ".pdf"];
     var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+    let fileSize = Math.floor(Math.log(files[0].size) / Math.log(1024));
     if (!regex.test(files[0].name.toLowerCase())) {
     }else{
-       if (type === "POI") {
-        for (const item of files) {
-          item.progress = 0;
-          this.files.push(item);
+      if(fileSize < 2048){
+        if (type === "POI") {
+          for (const item of files) {
+            item.progress = 0;
+            this.files.push(item);
+          }
+          this.uploadFilesSimulator(0, type);
+          this.previewDisabled = false
+        } else {
+          for (const item of files) {
+            item.progress = 0;
+            this.filesPOA.push(item);
+          }
+          this.uploadFilesSimulator(0, type);
+          this.previewDisabledInAddress = false
         }
-        this.uploadFilesSimulator(0, type);
-        this.previewDisabled = false
-      } else {
-        for (const item of files) {
-          item.progress = 0;
-          this.filesPOA.push(item);
-        }
-        this.uploadFilesSimulator(0, type);
-        this.previewDisabledInAddress = false
       }
     }
   }
