@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });*/
   }
 
-  ngOnInit() {
+ async ngOnInit() {
     this.defaultJsonValue = defaultJson;
     this.supportedLanguages = [];
     this.selectLanguagesArr = []; 
@@ -105,7 +105,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    
    
 
-    this.translateService
+    await  this.translateService
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
       this.popupMessages = response;
