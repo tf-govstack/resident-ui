@@ -29,10 +29,11 @@ export class AppComponent {
   ) {
     this.appConfigService.getConfig();
   }
-
+  
   @HostListener('window:popstate', ['$event'])
   onPopState(event) {
     console.log("Testing1")
+    console.log(window.location.hash)
     if(window.location.hash.includes("uinservices")){
     console.log("Testing2")
     }else{ 

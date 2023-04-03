@@ -65,11 +65,11 @@ export class DownloadUinComponent implements OnInit {
       this.downloadUinData = response.downloadUin,
         this.popupMessages = response;
     })
-    this.translateService
-      .getTranslation(localStorage.getItem("langCode"))
-      .subscribe(response => {
-        this.popupMessages = response;
-      });
+    // this.translateService
+    //   .getTranslation(localStorage.getItem("langCode"))
+    //   .subscribe(response => {
+    //     this.popupMessages = response;
+    //   });
     this.setOtpTime()
   }
 
