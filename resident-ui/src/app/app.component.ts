@@ -32,6 +32,7 @@ export class AppComponent {
 
   @HostListener('window:popstate', ['$event'])
   onPopState(event) {
+    console.log("Testing")
     if(window.location.hash.includes("uinservices")){
 
     }else{
