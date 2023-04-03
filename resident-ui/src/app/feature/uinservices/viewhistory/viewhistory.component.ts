@@ -90,9 +90,9 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.paginator.pageIndex = 2;
-  }
+  // ngAfterViewInit(): void {
+  //   this.paginator.pageIndex = 2;
+  // }
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));      
 

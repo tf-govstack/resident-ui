@@ -30,14 +30,14 @@
                             value="{{buildJSONData[field.attributeName] | date:'dd/MM/yyyy'}}"></td>
                         <td width="10%"></td>
                         <td width="45%">
-                          <mat-form-field style="min-width: 100%;">
-                            <input matInput [matDatepicker]="picker" readonly
+                          <!-- <mat-form-field style="min-width: 100%;"> -->
+                            <input style="width: 85%;" matInput placeholder="DD/MM/YYYY" [matDatepicker]="picker" readonly
                               id="{{field.attributeName}}"
                               (dateChange)="captureDatePickerValue($event, field.attributeName)"
                               [(ngModel)]="selectedDate"  (click)="picker.open()"  />
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
-                          </mat-form-field>
+                          <!-- </mat-form-field> -->
                         </td>
                       </tr>
                     </table>
