@@ -429,3 +429,24 @@ input[type="radio"] {
 .mat-select-value{
   padding-top: 9px !important;
 }
+
+/* ::ng-deep .mat-menu-panel.locationType-card {
+  width: 150px !important;
+  height: auto !important;
+} */
+
+::ng-deep .cdk-overlay-connected-position-bounding-box{
+  right: auto !important;
+} 
+
+::ng-deep #cdk-overlay-0{
+  right: auto !important;
+} 
+
+::ng-deep #cdk-overlay-1{
+  right: auto !important;
+}
+
+::ng-deep #cdk-overlay-3{
+  right: auto !important;
+} 

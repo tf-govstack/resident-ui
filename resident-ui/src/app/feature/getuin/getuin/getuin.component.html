@@ -4,13 +4,13 @@
       class="active">{{'uinservices.label' | translate}}</span>
   </span>
   <mat-card class="login-card">
-    <mat-card-subtitle class="login-heading" *ngIf="getUinData.login">{{getUinData.login |
+    <!-- <mat-card-subtitle class="login-heading" *ngIf="getUinData.login">{{getUinData.login |
       translate}}</mat-card-subtitle>
-    <hr class="line" />
+    <hr class="line" /> -->
     <div class="form-container" [style.width]="width">
       <form #basicForm="ngForm" (submit)="submitUserID(basicForm.value)">
         <div class="uin-login-title-card">
-          <mat-card-subtitle class="login-Input-heading" *ngIf="getUinData.title">{{getUinData.title |
+          <mat-card-subtitle class="login-Input-heading" *ngIf="getUinData">{{getUinData.title |
             translate}}</mat-card-subtitle>
           <span (mouseover)="openPopup()" (mouseout)="openPopup()"><img alt="info-icon" class="info-icon"
               src="./assets/images/info_black_24dp (1).png" /></span>
@@ -20,14 +20,14 @@
         </div>
         <input id="aidValue" class="input-text" type="text" ngModel name="AID" />
         <br />
-        <label class="label-text" *ngIf="getUinData.description">{{getUinData.description | translate}}</label>
+        <label class="label-text" *ngIf="getUinData">{{getUinData.description | translate}}</label>
         <div *ngIf="siteKey">
           <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha"
             (captchaEvent)="getCaptchaToken($event)"></app-captcha>
         </div>
         <br />
         <button id="getUinSendOtpBtn" (click)="submitUserID()" [style.backgroundColor]="buttonbgColor"
-          class="login-uin-otp-btn" *ngIf="getUinData.buttonText">{{getUinData.buttonText | translate}}</button>
+          class="login-uin-otp-btn" *ngIf="getUinData">{{getUinData.buttonText | translate}}</button>
       </form>
     </div>
   </mat-card>
@@ -42,24 +42,21 @@
   </span>
   <div class="status-title-card">
     <mat-card-subtitle
-      class="status-title-text">{{getStatusData.uinTitleDescription.replace("$AID",aid)}}</mat-card-subtitle>
+      class="status-title-text" *ngIf="aid">{{getStatusData.uinTitleDescription.replace("$AID",aid)}}</mat-card-subtitle>
     <mat-card-subtitle class="req-msg-text">{{getStatusData.requestMsg}}</mat-card-subtitle>
   </div>
   <mat-card class="status-details-card">
     <mat-card-title class="uin-title">{{getStatusData.UINCardStatus}}</mat-card-title>
-    <!-- <mat-card-subtitle class="status-time">{{getStatusData.statusTime}}</mat-card-subtitle> -->
     <div class="progress-card">
       <ul class="progressbar">
-        <li *ngFor="let item of getStatusData.statusStages; let i = index">
+        <li *ngFor="let item of stageKeys; let i = index">
           <div class="stages-card">
             <div [ngClass]=" i <= orderStatusIndex ? 'active-position-icon icon':'icon' ">
               <img *ngIf="i === orderStatusIndex" src="./assets/icons/iconfont/Path 7837.svg" />
             </div>
-            <!-- <mat-icon
-              [ngClass]=" i <= orderStatusIndex ? 'active-position-icon icon':'icon' ">check_circle_outline</mat-icon> -->
             <hr [ngClass]=" i <= orderStatusIndex ? 'completed-stage-bar':'incompleted-stage-bar' " />
             <mat-card-subtitle
-              [ngClass]="orderStatus === item ? 'active-position-text':'inactive-position-text' ">{{item}}</mat-card-subtitle>
+              [ngClass]="orderStatus === item ? 'active-position-text':'inactive-position-text' ">{{getStatusData.statusStages[item]}}</mat-card-subtitle>
           </div>
         </li>
       </ul>
