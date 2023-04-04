@@ -187,7 +187,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         if (response["response"]){
           this.userInfo = response["response"];
-        console.log(this.userInfo)
         UpdatedemographicComponent.actualData = response["response"];
         this.buildData();
         }else{
@@ -544,6 +543,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   uploadFiles(files, transactionID, docCatCode, docTypCode, referenceId) {
     this.dataStorageService.uploadfile(files, transactionID, docCatCode, docTypCode, referenceId).subscribe(response => {
+      console.log(response)
     });
   }
 
@@ -559,15 +559,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       const formData = new FormData();
       formData.append('file', this.files[0]);
       this.uploadFiles(formData, transactionID, 'POI', this.proofOfIdentity['documenttype'], this.proofOfIdentity['documentreferenceId']);
-      console.log(this.files[0]);
     }
     if (this.proofOfAddress['documenttype']) {
       const formData = new FormData();
       formData.append('file', this.filesPOA[0]);
       this.uploadFiles(formData, transactionID, 'POA', this.proofOfAddress['documenttype'], this.proofOfAddress['documentreferenceId']);
-      console.log(this.filesPOA[0]);
     }
 
+    setTimeout(()=>{
     const request = {
       "id": this.appConfigService.getConfig()["resident.updateuin.id"],
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
@@ -581,6 +580,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.dataStorageService.updateuin(request).subscribe(response => {
       let eventId =  response.headers.get("eventid")
       this.message = this.popupMessages.genericmessage.updateMyData.newDataUpdatedSuccessMsg.replace("$eventId",eventId)
+      console.log(response.body)
       if (response.body["response"]) {
         this.showMessage(this.message,eventId)
       } else {
@@ -589,6 +589,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }, error => {
       console.log(error)
     })
+  },4000)
   }
 
   conditionsForupdateDemographicData() {
