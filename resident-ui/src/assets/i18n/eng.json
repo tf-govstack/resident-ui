@@ -394,13 +394,13 @@
         "requestMsg": "Please try again after a few days.",
         "UINCardStatus": "UIN Card Status",
         "statusTime": "Completion Expected Date : $date",
-        "statusStages": [
-            "Request received",
-            "Validation stage",
-            "Verification stage",
-            "UIN generation stage",
-            "Card ready to download"
-        ],
+        "statusStages": {
+            "REQUEST_RECEIVED":"Request received",
+            "VALIDATION_STAGE":"Validation stage",
+            "VERIFICATION_STAGE":"Verification stage",
+            "UIN_GENERATION_STAGE":"UIN generation stage",
+            "CARD_READY_TO_DOWNLOAD":"Card ready to download"
+        },
         "trackDetailsHeading": "Tracking Details"
     },
     "genericmessage": {

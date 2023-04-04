@@ -52,7 +52,7 @@
                 (selectionChange)="onChangeLocationType()"
                 placeholder="{{ 'centerSelection.text_select' | translate }}"
               >
-                <mat-option style="color:black;" *ngFor="let locationType of locationTypes" [value]="locationType">
+                <mat-option class="locationType-card" *ngFor="let locationType of locationTypes" [value]="locationType">
                   {{ locationType.hierarchyLevelName }}
                 </mat-option>
               </mat-select>

@@ -14,11 +14,13 @@
     box-shadow: 0px 0px 5px #00000014;
     border-radius: 10px;
     opacity: 1;
-    /* width: 1160px; */
     height: 628px;
     padding: .7rem 2rem .5rem 2rem;
     text-align: center;
     margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-heading {

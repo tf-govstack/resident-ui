@@ -35,6 +35,7 @@ export class GetuinComponent implements OnInit {
   orderStatus:any;
   orderStatusIndex:any;
   width : string;
+  stageKeys:any = [];
 
   constructor(
     private router: Router,
@@ -88,6 +89,8 @@ export class GetuinComponent implements OnInit {
         this.popupMessages = response
         this.infoText = response.InfomationContent.getUin
         this.getStatusData = response.uinStatus
+        this.stageKeys =  Object.keys(this.getStatusData.statusStages)
+
       });
   }
 
@@ -132,12 +135,12 @@ export class GetuinComponent implements OnInit {
 
   getStatus(data:any){
     this.dataStorageService.getStatus(data["AID"]).subscribe(response =>{
-      if(response["response"].transactionStage === "Card ready to download"){
+      if(response["response"].transactionStage === "CARD_READY_TO_DOWNLOAD"){
         this.generateOTP(data)
       }else{
         this.isUinNotReady = true
         this.orderStatus = response["response"].transactionStage
-        this.orderStatusIndex =  this.getStatusData.statusStages.indexOf(this.orderStatus)
+        this.orderStatusIndex =  this.stageKeys.indexOf(this.orderStatus)
       }
     })
   }
