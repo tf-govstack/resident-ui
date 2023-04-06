@@ -31,23 +31,23 @@ export class AppComponent {
     
   }
   
-  @HostListener('window:popstate', ['$event'])
-  PopState(event) {
-    console.log("Testing1")
-    console.log(window.location.hash)
-    if(window.location.hash.includes("uinservices")){
-    console.log("Testing2")
-    }else{ 
-      console.log("Testing3")
-      if(confirm("Are you sure want to leave the page. you will be logged out automatically if you press OK?")){
-        this.auditService.audit('RP-002', 'Logout', 'RP-Logout', 'Logout', 'User clicks on "logout" button after logging in to UIN services');
-        this.logoutService.logout();
-      }else{
-        this.router.navigate([this.router.url]); 
-        return false;
-      }
-    }
-  }
+  // @HostListener('window:popstate', ['$event'])
+  // PopState(event) {
+  //   console.log("Testing1")
+  //   console.log(window.location.hash)
+  //   if(window.location.hash.includes("uinservices")){
+  //   console.log("Testing2")
+  //   }else{ 
+  //     console.log("Testing3")
+  //     if(confirm("Are you sure want to leave the page. you will be logged out automatically if you press OK?")){
+  //       this.auditService.audit('RP-002', 'Logout', 'RP-Logout', 'Logout', 'User clicks on "logout" button after logging in to UIN services');
+  //       this.logoutService.logout();
+  //     }else{
+  //       this.router.navigate([this.router.url]); 
+  //       return false;
+  //     }
+  //   }
+  // }
   
   ngOnInit() { 
     if(!localStorage.getItem("langCode")){
