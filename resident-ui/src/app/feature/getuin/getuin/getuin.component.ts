@@ -113,7 +113,6 @@ export class GetuinComponent implements OnInit {
   
   getCaptchaToken(event: Event) {
     if (event !== undefined && event != null) {
-      console.log("Captcha event " + event);
       this.buttonbgColor = "#03A64A";
     } else {
       console.log("Captcha has expired" + event);
@@ -135,13 +134,18 @@ export class GetuinComponent implements OnInit {
 
   getStatus(data:any){
     this.dataStorageService.getStatus(data["AID"]).subscribe(response =>{
-      if(response["response"].transactionStage === "CARD_READY_TO_DOWNLOAD"){
-        this.generateOTP(data)
+      if(response["response"]){
+        if(response["response"].transactionStage === "CARD_READY_TO_DOWNLOAD"){
+          this.generateOTP(data)
+        }else{
+          this.isUinNotReady = true
+          this.orderStatus = response["response"].transactionStage
+          this.orderStatusIndex =  this.stageKeys.indexOf(this.orderStatus)
+        }
       }else{
-        this.isUinNotReady = true
-        this.orderStatus = response["response"].transactionStage
-        this.orderStatusIndex =  this.stageKeys.indexOf(this.orderStatus)
+        this.showErrorPopup(response["errors"])
       }
+     
     })
   }
 
@@ -181,7 +185,12 @@ export class GetuinComponent implements OnInit {
 
   showErrorPopup(message: any) {
     this.errorCode = message[0]["errorCode"]
-    this.message = this.popupMessages.serverErrors[this.errorCode]
+    if (this.errorCode === "RES-SER-410") {
+      let messageType = message[0]["message"].split("-")[1].trim();
+      this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
+    } else {
+      this.message = this.popupMessages.serverErrors[this.errorCode]
+    }
     this.dialog
       .open(DialogComponent, {
         width: '550px',

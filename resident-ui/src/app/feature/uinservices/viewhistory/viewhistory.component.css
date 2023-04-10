@@ -170,3 +170,19 @@ mat-select {
 ::ng-deep.mat-paginator .mat-select-arrow-wrapper {
   display: table-cell !important;
 }
+
+::ng-deep .cdk-overlay-connected-position-bounding-box{
+  right: auto !important;
+} 
+
+::ng-deep #cdk-overlay-0{
+  right: auto !important;
+} 
+
+::ng-deep #cdk-overlay-1{
+  right: auto !important;
+}
+
+::ng-deep #cdk-overlay-3{
+  right: auto !important;
+} 
