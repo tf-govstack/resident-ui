@@ -31,7 +31,7 @@
                         <td width="10%"></td>
                         <td width="45%">
                           <!-- <mat-form-field style="min-width: 100%;"> -->
-                            <input style="width: 85%;" matInput placeholder="DD/MM/YYYY" [matDatepicker]="picker" readonly
+                            <input [max]="maxdate" style="width: 85%;" matInput placeholder="DD/MM/YYYY" [matDatepicker]="picker" readonly
                               id="{{field.attributeName}}"
                               (dateChange)="captureDatePickerValue($event, field.attributeName)"
                               [(ngModel)]="selectedDate"  (click)="picker.open()"  />
@@ -456,7 +456,7 @@
         <mat-grid-tile>
           <div style="text-align: end;margin-right: 2rem; margin-top: none;">
             <button [disabled]="previewDisabled && previewDisabledInAddress" mat-raised-button (click)="previewBtn('address')" color="primary"
-              id="submit">Preview</button>
+              id="submit">Submit</button>
           </div>
         </mat-grid-tile>
       </mat-grid-list>

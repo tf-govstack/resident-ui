@@ -198,6 +198,10 @@
         "TotalCharacters": "Total Characters",
         "remainingCharacters": "Remaining"
     },
+    "breadCrumbNames":{
+        "trackMyRequest":"Track My Request",
+        "viewMyHistory":"View My History"
+    },
     "verifyuinvid": {
         "title": "",
         "mobileno": "Verify mobile number",
@@ -386,7 +390,9 @@
         "messageDescription2": ". In order to track the status of the transaction use the above EID in ",
         "trackMyserviceLink": "Track My Service Request",
         "orin": "or in",
-        "viewHistoryLink": "view history"
+        "viewHistoryLink": "view history",
+        "TotalCharacters": "Total Characters",
+        "remainingCharacters": "Remaining"
     },
     "uinStatus": {
         "status": "Status",

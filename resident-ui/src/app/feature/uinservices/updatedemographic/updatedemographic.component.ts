@@ -85,6 +85,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   message2:any;
   displayPOIUpload:boolean = false;
   displayPOAUpload:boolean = false;
+  maxdate:Date = new Date();
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver,private dateAdapter : DateAdapter<Date>) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {

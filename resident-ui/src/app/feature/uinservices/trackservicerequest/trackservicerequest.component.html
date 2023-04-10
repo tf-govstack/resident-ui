@@ -118,10 +118,12 @@
 			</div>
 			<div *ngIf="eidStatus.eventType === 'Update UIN Data'"
 				style="display: flex; justify-content: space-between; width: 100%; margin-top: 1rem;">
+				<div>
 				<button mat-raised-button id="downloadCardWithNewDataBtn" [disabled]="eidStatus.info.downloadLink === 'NA'" *ngIf="eidStatus.eventStatus === 'Success'" (click)="downloadVIDCard(eidStatus.eventId)" class="download-btn"><img
 						class="save-icon"
 						src="./assets/images/save.png" />{{'trackservicerequest.downloadUINCard' |
 					translate}}</button>
+				</div>
 				<button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn"
 					(click)="downloadAcknowledgement()"><img class="save-icon"
 						src="./assets/images/save.png" />{{'trackservicerequest.downloadbuttonLabel' |

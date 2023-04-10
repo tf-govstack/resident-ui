@@ -4,7 +4,7 @@
 	&nbsp;&nbsp;<span class="active">{{'sharewithpartner.title' | translate}}</span>
 </span>
 
-<div class="main-div" *ngIf="!showAcknowledgement">
+<div class="main-div">
 	<mat-card *ngIf="schema">
 		<h3 style="color: #050505;">{{'sharewithpartner.title' | translate}}</h3>
 		<p class="intro-description">{{'sharewithpartner.introDescription' | translate}}</p>
@@ -83,7 +83,7 @@
 					<table [style.width] = "width">
 						<tr>
 							<td style="padding-bottom: 10px;font-size: 14px;">
-								<mat-label>{{'sharewithpartner.partnerName' | translate}}</mat-label>
+								<mat-label>{{'sharewithpartner.partnerName' | translate}}<span style="color: red;">*</span></mat-label>
 							</td>
 						</tr>
 						<tr>
@@ -97,17 +97,19 @@
 						</tr>
 						<tr>
 							<td style="padding-top: 10px;padding-bottom: 10px;font-size: 14px;">
-								<mat-label>{{'sharewithpartner.sharingReason' | translate}}<span style="color: red;"> *</span></mat-label>
+								<mat-label>{{'sharewithpartner.sharingReason' | translate}}<span style="color: red;">*</span></mat-label>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<textarea
+								<textarea [attr.maxlength]="totalCommentCount"
 									 [style.width] = "width"
 								    id="sharingReasonPlaceholder"
 									class="purpose-input-box"
 									matInput placeholder="{{'sharewithpartner.sharingReasonPlaceholder' | translate}}"
-									(input)="purpose = $event.target.value"></textarea>
+									(input)="getpurpose($event)"></textarea>
+									<span style="color:red; font-size: 12px; display: block;">{{'sharewithpartner.TotalCharacters' | translate}}: {{totalCommentCount}}</span>
+                                    <span style="color:red; font-size: 12px; display: block;">{{'sharewithpartner.remainingCharacters' | translate}}: {{remainingChars}}</span>
 							</td>
 						</tr>
 					</table>
@@ -121,7 +123,7 @@
 	</mat-card>
 </div>
 
-<div class="main-div" *ngIf="showAcknowledgement">
+<!-- <div class="main-div" *ngIf="showAcknowledgement">
 	<mat-card class="successMsg-card">
 		<div class="succcess-title-card">
 			<img src="./assets/sucess_icon.png" />
@@ -171,7 +173,7 @@
 				(click)="downloadAcknowledgement(aidStatus.eventId)">{{'personalisedcard.downloadbutton' |
 				translate}}</button>
 		</div>
-		<!-- <table style="width: 100%;">
+		<table style="width: 100%;">
 			<tr>
 				<td><label>{{'trackservicerequest.eventId' | translate}}</label></td>
 				<td><label>{{'trackservicerequest.eventType' | translate}}</label></td>
@@ -187,8 +189,8 @@
 						(click)="downloadAcknowledgement(aidStatus.eventId)">{{'personalisedcard.downloadbutton' |
 						translate}}</button></td>
 			</tr>
-		</table> -->
+		</table>
 	</mat-card>
-</div>
+</div> -->
 
 

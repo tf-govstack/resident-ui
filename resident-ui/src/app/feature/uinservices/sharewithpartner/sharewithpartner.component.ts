@@ -43,6 +43,8 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   attributeWidth:string;
   cols : number;
   message2:any;
+  totalCommentCount:number;
+  remainingChars:number;
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -127,6 +129,11 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       this.autoLogout.getValues(this.langCode);
       this.autoLogout.continueWatching();
     }
+    
+    setTimeout(() =>{
+    this.totalCommentCount = this.appConfigService.getConfig()["resident.grievance-redressal.comments.chars.limit"]
+    this.remainingChars = this.totalCommentCount;
+  },400)
   }
 
   getMappingData() {
@@ -149,6 +156,12 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         }
         
       });
+  }
+
+  getpurpose(event:any){
+    this.purpose = event.target.value;
+    let enterdChars = this.purpose.length
+    this.remainingChars = this.totalCommentCount - enterdChars
   }
 
   getPartnerDetails() {
@@ -277,7 +290,6 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     for (const key in this.sharableAttributes) {
       sharableAttributes.push(this.sharableAttributes[key]);
     }
-    console.log("sharableAttributes>>>"+JSON.stringify(sharableAttributes));
     let self = this;
     const request = {
       "id": "mosip.resident.share.credential",
@@ -299,7 +311,8 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
           .subscribe((response) => {
             if (response["response"])
               this.aidStatus = response["response"];
-            this.showAcknowledgement = true;
+              this.router.navigateByUrl(`uinservices/trackservicerequest?eid=` + this.eventId)
+            // this.showAcknowledgement = true;
           });
         console.log("data>>>" + data);
       },
