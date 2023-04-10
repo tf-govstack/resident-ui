@@ -2,8 +2,9 @@
   <span class="breadcrumb">
     <a
       (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> >
-    &nbsp;&nbsp;<a (click)="onItemSelected('uinservices/viewhistory')">{{'viewhistory.title' | translate}}</a>
-    &nbsp;&nbsp; > <span class="active">{{"grievanceRedressal.title" | translate}}</span>
+    &nbsp;&nbsp;<a *ngIf="source1 && popupMessages" (click)="onItemSelected('uinservices/viewhistory')">{{popupMessages.breadCrumbNames[source1]}}</a>
+    &nbsp;&nbsp;<a *ngIf="source2 && popupMessages" (click)="onItemSelected('trackservicerequest')">> {{popupMessages.breadCrumbNames[source2]}}</a>
+    &nbsp;&nbsp; >  &nbsp;<span class="active">{{"grievanceRedressal.title" | translate}}</span>
   </span>
   <div class="form-container">
     <mat-card class="form-card">
@@ -25,7 +26,7 @@
           <br/>
           <label>{{grievanceData.commentlabel}}<span style="color: red;">*</span></label>
         </div>
-        <div class="input-card" *ngIf="grievanceData">
+        <div class="input-card" *ngIf="userInfo">
           <input [readonly]="true"   [(ngModel)]="userInfo.fullName" required type="text" name="name"/>
           <br/>
           <input [readonly]="true" [(ngModel)]="userInfo.email" type="text" name="emailId"/>

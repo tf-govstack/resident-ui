@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router,ActivatedRoute } from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { TranslateService } from "@ngx-translate/core";
 import { AppConfigService } from 'src/app/app-config.service';
@@ -30,19 +30,22 @@ export class GrievanceComponent implements OnInit {
   totalCommentCount:number;
   remainingChars:number;
   errorMessage:any;
+  source1:string;
+  source2:string;
 
   constructor(
     private router: Router,
     private translateService: TranslateService,
     private dataStorageService: DataStorageService,
     private appConfigService: AppConfigService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute
   ) { 
-    if (this.router.getCurrentNavigation().extras.state) {
-      this.eventId = this.router.getCurrentNavigation().extras.state.eventId;
-    }else{
-      this.router.navigate(['uinservices/viewhistory'])
-    }
+    // if (this.router.getCurrentNavigation().extras.state) {
+    //   this.eventId = this.router.getCurrentNavigation().extras.state.eventId;
+    // }else{
+    //   this.router.navigate(['uinservices/viewhistory'])
+    // }
   }
 
 
@@ -68,15 +71,28 @@ export class GrievanceComponent implements OnInit {
        this.grievanceData = response["grievanceRedressal"]
        this.popupMessages = response;
     })
+
     this.getProfileInfo()
     setTimeout(() => {
       this.totalCommentCount = this.appConfigService.getConfig()["resident.grievance-redressal.comments.chars.limit"]
       this.remainingChars = this.totalCommentCount;
     }, 400);
+
+    this.route.queryParams
+    .subscribe(params => {
+        this.source1 = params.source1
+        this.source2 = params.source2
+        this.eventId = params.eid;
+    }
+  ); 
   }
 
   onItemSelected(value:any){
+    if(value === "trackservicerequest"){
+      this.router.navigateByUrl(`uinservices/trackservicerequest?source=ViewMyHistory&eid=`+this.eventId);
+    }else{
      this.router.navigate([value])
+    }
   }
 
   getUserData(userFormData:NgForm){
@@ -94,7 +110,7 @@ export class GrievanceComponent implements OnInit {
       this.dataStorageService.sendGrievanceRedressal(request).subscribe(response =>{
         if(response["response"]){
           this.showMessage(response["response"])
-          this.router.navigate(["dashboard"])
+          this.router.navigate(["/uinservices/dashboard"])
         }else{
            this.showErrorPopup(response["errors"])
         }
@@ -129,8 +145,6 @@ export class GrievanceComponent implements OnInit {
     }else{
       this.message = this.popupMessages.serverErrors[this.errorCode]
     }
-    console.log(this.errorMessage)
-    console.log(this.message)
     this.dialog
       .open(DialogComponent, {
         width: '550px',
