@@ -331,7 +331,9 @@
         "identityHeading":"My Identity",
         "addressHeading":"My Address",
         "contactHeading":"My Contact",
-        "languageHeading":"My Language Preference"
+        "languageHeading":"My Language Preference",
+        "InvalidFormatMsg":"The file type that you are trying to upload is not supported. Please upload a different file type.",
+        "InvalidFileSize":"The document you are trying to upload exceeds the file size limit of 2mb. Please upload a document within 2mb."
     },
     "preview": {
         "title": "Preview"
@@ -546,6 +548,7 @@
         "RES-SER-422": "Invalid OTP entered. Please try again with a valid OTP.",
         "RES-SER-410": {
             "individualIdError": "Invalid UIN/ AID/ VID entered. Please enter a valid UIN/ AID/ VID and try again.",
+            "individualId":"Invalid UIN/ AID/ VID entered. Please enter a valid UIN/ AID/ VID and try again.",
             "EMAIL": "The email ID you have entered is invalid. Please enter a valid email ID.",
             "PHONE": "The phone number you have entered is invalid. Please enter a valid phone number.",
             "eventId": "The event ID you have entered is invalid. Please enter a valid event ID",
@@ -566,6 +569,7 @@
         "RES-SER-418": "You cannot access this service since you have not accepted the consent while logging in. Request you to re-login and accept the relevant consent to proceed.",
         "RES-SER-461":"Document type is a mandatory field. Kindly choose a document type in order to proceed.",
         "RES-SER-519":"Please enter a different Email ID from the already existing one.",
-        "RES-SER-520":"Please enter a different phone number from the already existing one."
+        "RES-SER-520":"Please enter a different phone number from the already existing one.",
+        "RES-SER-456":"Invalid AID entered. Please enter a valid AID and try again."
     }
 }

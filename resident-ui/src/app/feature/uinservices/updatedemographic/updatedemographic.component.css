@@ -295,3 +295,10 @@ mat-select {
 ::ng-deep .mat-form-field-infix{
   width: 80% !important;
 }
+
+.warning-message{
+  margin: 0px; 
+  color: red; 
+  font-size: 11px;
+  margin-top: 5px;
+}

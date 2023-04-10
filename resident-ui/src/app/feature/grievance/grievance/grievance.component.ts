@@ -96,6 +96,11 @@ export class GrievanceComponent implements OnInit {
   }
 
   getUserData(userFormData:NgForm){
+    for(let item in userFormData){
+      if(userFormData[item] === ""){
+          userFormData[item] = null
+      }
+    }
     this.sendGrievanceRedressal(userFormData)
   }
 

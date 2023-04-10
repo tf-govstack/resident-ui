@@ -86,6 +86,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   displayPOIUpload:boolean = false;
   displayPOAUpload:boolean = false;
   maxdate:Date = new Date();
+  isValidFileFormatPOI:boolean = false;
+  isValidFileFormatPOA:boolean = false;
+  warningMessage:string;
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver,private dateAdapter : DateAdapter<Date>) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -716,9 +719,16 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
     let fileSize = Math.floor(Math.log(files[0].size) / Math.log(1024));
     if (!regex.test(files[0].name.toLowerCase())) {
+      if( type === "POI"){
+        this.isValidFileFormatPOI = true
+      }else{
+        this.isValidFileFormatPOA = true
+      }
+      this.warningMessage = this.popupMessages.updatedemographic.InvalidFormatMsg
     }else{
-      if(fileSize < 2048){
+      if(fileSize < 2){
         if (type === "POI") {
+          this.isValidFileFormatPOI = false;
           for (const item of files) {
             item.progress = 0;
             this.files.push(item);
@@ -726,6 +736,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           this.uploadFilesSimulator(0, type);
           this.previewDisabled = false
         } else {
+          this.isValidFileFormatPOA = false;
           for (const item of files) {
             item.progress = 0;
             this.filesPOA.push(item);
@@ -733,6 +744,13 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           this.uploadFilesSimulator(0, type);
           this.previewDisabledInAddress = false
         }
+      }else{
+        if( type === "POI"){
+          this.isValidFileFormatPOI = true
+        }else{
+          this.isValidFileFormatPOA = true
+        }
+        this.warningMessage = this.popupMessages.updatedemographic.InvalidFileSize
       }
     }
   }

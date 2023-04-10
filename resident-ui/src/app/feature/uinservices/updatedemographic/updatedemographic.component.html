@@ -141,6 +141,7 @@
                             &nbsp;
                             <h3>Drop Image</h3>
                           </div>
+                        <p *ngIf="isValidFileFormatPOI" class="warning-message">{{warningMessage}}</p>
                         </td>
                       </tr>
                       <tr *ngIf="displayPOIUpload">
@@ -324,6 +325,7 @@
                           &nbsp;
                           <h3>Drop Image</h3>
                         </div>
+                        <p *ngIf="isValidFileFormatPOA" class="warning-message">{{warningMessage}}</p>
                       </td>
                     </tr>
                     <tr *ngIf="displayPOAUpload">
