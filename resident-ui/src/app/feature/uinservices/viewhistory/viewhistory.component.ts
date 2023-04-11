@@ -133,7 +133,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
         this.serviceTypeFilter2 = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');  
         this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
         this.statusTypeFilter2 = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
-        this.pageSize =  response["response"]['pageSize']
+        this.pageSize = response["response"]['pageSize']
         this.parsedrodowndata();
       }else{
         this.showErrorPopup(response["errors"])
