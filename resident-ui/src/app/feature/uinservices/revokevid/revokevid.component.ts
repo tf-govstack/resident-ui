@@ -221,7 +221,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         }, 400);
         this.showMessage(this.message.replace("$eventId", this.eventId ),this.eventId);
       } else {
-        this.showErrorPopup(response.body["errors"][0].errorCode);
+        this.showErrorPopup(response.body["errors"]);
       }
     });
   }

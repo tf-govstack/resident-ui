@@ -89,6 +89,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   isValidFileFormatPOI:boolean = false;
   isValidFileFormatPOA:boolean = false;
   warningMessage:string;
+  langJson:any;
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver,private dateAdapter : DateAdapter<Date>) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -146,6 +147,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
+        this.langJson = response.updatedemographic
         this.popupMessages = response;
       });
     

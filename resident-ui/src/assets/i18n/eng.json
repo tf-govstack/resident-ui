@@ -333,7 +333,10 @@
         "contactHeading":"My Contact",
         "languageHeading":"My Language Preference",
         "InvalidFormatMsg":"The file type that you are trying to upload is not supported. Please upload a different file type.",
-        "InvalidFileSize":"The document you are trying to upload exceeds the file size limit of 2mb. Please upload a document within 2mb."
+        "InvalidFileSize":"The document you are trying to upload exceeds the file size limit of 2mb. Please upload a document within 2mb.",
+        "sameNameInputErrorMsg":"The name you have entered already exists. Please enter a new name to proceed.",
+        "sameDobInputErrorMsg":"The DOB you have entered already exists. Please enter a new DOB to proceed.",
+        "sameGenderInputErrorMsg":"The gender you have chosen already exists. Please choose a new gender to proceed."
     },
     "preview": {
         "title": "Preview"
