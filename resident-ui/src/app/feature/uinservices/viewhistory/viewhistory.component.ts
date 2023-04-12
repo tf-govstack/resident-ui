@@ -124,7 +124,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
   getServiceHistory(pageEvent:any, filters:any, actionTriggered:string){
     this.dataStorageService
-    .getServiceHistory(pageEvent, filters)
+    .getServiceHistory(pageEvent, filters,this.pageSize)
     .subscribe((response) => {
       if(response["response"]){   
         this.responselist = response["response"]["data"];

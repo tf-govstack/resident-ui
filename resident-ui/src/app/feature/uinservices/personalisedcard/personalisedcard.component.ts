@@ -144,11 +144,11 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   }
 
 async  captureCheckboxValue($event: any, data: any, type: any) {
-   try{
-    this.buildHTML = "";
+  this.buildHTML = "";
     let row = "";
     let datadisplay = "";
     let rowImage = "";
+   try{
     if (type === "datacheck") {
       if (data.attributeName.toString() in this.dataDisplay) {
         delete this.dataDisplay[data.attributeName];
@@ -216,7 +216,6 @@ async  captureCheckboxValue($event: any, data: any, type: any) {
         }
         return eachItem
       })
-      console.log(this.schema)
       
     } else {
       if (!data.formatRequired) {
@@ -364,12 +363,18 @@ async  captureCheckboxValue($event: any, data: any, type: any) {
       }
       // elseConditonClosed
     }
-
+    
+   
+    $event.stopPropagation();
+    }catch(ex){
+      $event.stopPropagation();
+    }
     if (Object.keys(this.dataDisplay).length >= 3) {
       this.downloadBtnDisabled = false
     } else {
       this.downloadBtnDisabled = true
     }
+
     for (const key in this.dataDisplay) {
       if (key === "photo") {
         rowImage = "<tr><td><img src=' " + this.dataDisplay[key][0].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
@@ -386,10 +391,6 @@ async  captureCheckboxValue($event: any, data: any, type: any) {
       }
     }  
     this.buildHTML = `<html><head></head><body><table>` + rowImage + row + `</table></body></html>`;
-    $event.stopPropagation();
-    }catch(ex){
-      $event.stopPropagation();
-    }
   }
 
   downloadFile() {

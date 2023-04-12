@@ -32,6 +32,8 @@ export class GrievanceComponent implements OnInit {
   errorMessage:any;
   source1:string;
   source2:string;
+  phoneCharLimit:any;
+  emailCharLimit:any;
 
   constructor(
     private router: Router,
@@ -74,8 +76,10 @@ export class GrievanceComponent implements OnInit {
 
     this.getProfileInfo()
     setTimeout(() => {
-      this.totalCommentCount = this.appConfigService.getConfig()["resident.grievance-redressal.comments.chars.limit"]
+      this.totalCommentCount = this.appConfigService.getConfig()["resident.grievance-redressal.comments.chars.limit"];
       this.remainingChars = this.totalCommentCount;
+      this.phoneCharLimit = this.appConfigService.getConfig()["resident.grievance-redressal.alt-phone.chars.limit"];
+      this.emailCharLimit = this.appConfigService.getConfig()["resident.grievance-redressal.alt-email.chars.limit"];
     }, 400);
 
     this.route.queryParams
