@@ -175,7 +175,7 @@ export class DataStorageService {
     return this.httpClient.get(this.BASE_URL + '/profile');
   }
 
-  getServiceHistory(request: any, filters: any) {
+  getServiceHistory(request: any, filters: any,pageSize1:any) {
     let buildURL = "";
     if (request) {
       let pageSize = request.pageSize;
@@ -186,7 +186,7 @@ export class DataStorageService {
       }
     }
     if (!request && filters) {
-      buildURL = "?" + filters;
+      buildURL = "?pageFetch=" + pageSize1 + "&" + filters;
     }
     console.log("buildURL>>>" + buildURL);
     return this.httpClient.get(this.BASE_URL + '/service-history' + "/" + localStorage.getItem("langCode") + buildURL);

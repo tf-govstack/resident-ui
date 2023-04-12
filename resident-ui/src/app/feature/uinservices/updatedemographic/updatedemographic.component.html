@@ -260,13 +260,15 @@
                         <table width="100%" *ngFor="let language of supportedLanguages;">
                           <tr>
                             <td width="45%"><label>{{field.labelName[language][0]}}</label></td>
-                            <td width="10%" *ngIf="buildJSONData[field.attributeName]"></td>
+                            <td width="10%"></td>
                             <td width="45%"><label>{{field.labelName[language][1]}}</label></td>
                           </tr>
                           <tr>
-                            <td *ngIf="buildJSONData[field.attributeName]" width="45%"><input type="text"
+                            <td width="45%">
+                              <input *ngIf="buildJSONData[field.attributeName]" type="text"
                                 class="readonly" readonly="true" disabled="true"
-                                value="{{buildJSONData[field.attributeName][language]}}"></td>
+                                value="{{buildJSONData[field.attributeName][language]}}">
+                              </td>
                             <td width="10%"></td>
                             <td width="45%" *ngIf="buildCloneJsonData[field.attributeName]">
                               <input matInput #{{field.attributeName}} id="{{field.attributeName}}"

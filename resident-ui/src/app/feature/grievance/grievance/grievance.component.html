@@ -31,11 +31,11 @@
           <br/>
           <input [readonly]="true" [(ngModel)]="userInfo.email" type="text" name="emailId"/>
           <br/>
-          <input  placeholder={{grievanceData.alternateEmailPlaceholder}} placeholder="" [(ngModel)]="alternateEmailId" type="text" name="alternateEmailId"/>
+          <input [maxlength]="emailCharLimit"  placeholder={{grievanceData.alternateEmailPlaceholder}} placeholder="" [(ngModel)]="alternateEmailId" type="text" name="alternateEmailId"/>
           <br/>
           <input [readonly]="true" [(ngModel)]="userInfo.phone" type="text" name="phoneNo" ngModel/>
           <br/>
-          <input placeholder={{grievanceData.alternatePhoneNoPlaceholder}}  [(ngModel)]="alternatePhoneNo" type="text" name="alternatePhoneNo"/>
+          <input [maxlength]="phoneCharLimit" placeholder={{grievanceData.alternatePhoneNoPlaceholder}}  [(ngModel)]="alternatePhoneNo" type="text" name="alternatePhoneNo"/>
           <br/>
           <input [readonly]="true" [(ngModel)]="eventId" type="text" name="eventId" ngModel/>
           <br/>
