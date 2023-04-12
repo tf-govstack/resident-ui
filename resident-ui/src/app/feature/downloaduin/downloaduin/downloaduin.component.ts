@@ -21,8 +21,6 @@ export class DownloadUinComponent implements OnInit {
   transactionID: any;
   individualId: string = "";
   data: any;
-  submitBtnBgColor: string = "#BFBCBC";
-  resendOtpBtnBgColor: string = "#909090"
   otpTimeMinutes: number;
   otpTimeSeconds: any = "00";
   displaySeconds: any = this.otpTimeSeconds
@@ -83,9 +81,7 @@ export class DownloadUinComponent implements OnInit {
       if (this.otpTimeMinutes < 0 && this.displaySeconds === "00") {
         this.otpTimeSeconds = 0;
         this.otpTimeMinutes = 0;
-        clearInterval(this.interval)
-        this.resendOtpBtnBgColor = "#03A64A";
-        this.submitBtnBgColor = "#909090"
+        clearInterval(this.interval);
         this.displaySeconds = "00";
         this.resetBtnDisable = false;
         this.submitBtnDisable = true;
@@ -93,7 +89,7 @@ export class DownloadUinComponent implements OnInit {
       if (this.otpTimeSeconds < 10) {
         this.displaySeconds = "0" + this.otpTimeSeconds.toString()
       } else {
-        this.displaySeconds = this.otpTimeSeconds
+        this.displaySeconds = this.otpTimeSeconds;
       }
       this.otpTimeSeconds -= 1
     }, 1000);
@@ -108,34 +104,31 @@ export class DownloadUinComponent implements OnInit {
     }
   }
 
-  onItemSelected(item: any) {
-    if (item === "home") {
-      this.router.navigate(["dashboard"])
-    } else if (item === "back") {
-      this.router.navigate(["getuin"])
-      clearInterval(this.interval)
-      this.displaySeconds = "00"
-    } else if (item === "submit") {
-      this.auditService.audit('RP-035', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on the "submit button" on Get my UIN page');
-      this.validateUinCardOtp()
-      clearInterval(this.interval)
-    } else if (item === "resendOtp") {
-      this.auditService.audit('RP-036', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on "resend OTP" button on Get my UIN page');
-      clearInterval(this.interval)
-      this.otpTimeMinutes = this.appConfigService.getConfig()['mosip.kernel.otp.expiry-time']/60;
-      this.displaySeconds = "00";
-      this.generateOTP(this.data)
-      this.resendOtpBtnBgColor = "#909090"
-      this.submitBtnBgColor = "#03A64A"
-      this.setOtpTime()
-      this.resetBtnDisable = true;
-      this.submitBtnDisable = false;
-    }
+  submitOtp(){
+    this.auditService.audit('RP-035', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on the "submit button" on Get my UIN page');
+    this.validateUinCardOtp()
+  }
+
+  resendOtp(){
+    this.auditService.audit('RP-036', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on "resend OTP" button on Get my UIN page');
+    clearInterval(this.interval)
+    this.otpTimeMinutes = this.appConfigService.getConfig()['mosip.kernel.otp.expiry-time']/60;
+    this.displaySeconds = "00";
+    this.generateOTP(this.data)
+    this.setOtpTime()
+    this.resetBtnDisable = true;
+    this.submitBtnDisable = false;
   }
 
   generateOTP(data: any) {
     this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
-    //(Math.floor(Math.random() * 9000000000) + 1).toString();
+    if (this.transactionID.length < 10) {
+      let diffrence = 10 - this.transactionID.length;
+      for(let i=0; i < diffrence; i++){
+          this.transactionID = this.transactionID + i
+      }
+    } 
+
     let self = this;
     const request = {
       "id": "mosip.identity.otp.internal",
@@ -151,7 +144,7 @@ export class DownloadUinComponent implements OnInit {
     };
     this.dataStorageService.generateOTPForUid(request)
       .subscribe((response) => {
-        console.log(response)
+       
       },
         error => {
           console.log(error)
@@ -176,11 +169,10 @@ export class DownloadUinComponent implements OnInit {
       this.eventId = response.headers.get("eventid")
       if (response.body.type === "application/json") {
         self.showErrorPopup(this.popupMessages.genericmessage.getMyUin.invalidOtp);
-        this.resetBtnDisable = false;
+        // this.resetBtnDisable = false;
         this.submitBtnDisable = true;
-        this.resendOtpBtnBgColor = "#03A64A";
-        this.submitBtnBgColor = "#909090";
       } else {
+        clearInterval(this.interval)
         var fileName = self.data + ".pdf";
         const contentDisposition = response.headers.get('Content-Disposition');
         if (contentDisposition) {
@@ -233,6 +225,16 @@ export class DownloadUinComponent implements OnInit {
         },
         disableClose: true
       });
+  }
+
+  onItemSelected(item: any) {
+    if (item === "home") {
+      this.router.navigate(["dashboard"])
+    } else if (item === "back") {
+      this.router.navigate(["getuin"])
+      clearInterval(this.interval)
+      this.displaySeconds = "00"
+    }
   }
 
 }

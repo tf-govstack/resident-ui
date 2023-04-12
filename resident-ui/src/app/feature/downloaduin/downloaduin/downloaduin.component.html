@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" *ngIf="downloadUinData">
   <span class="breadcrumb">
     <a (click)="onItemSelected('home')">{{'downloadUin.home' | translate}} &nbsp;&nbsp;</a> >&nbsp;&nbsp;<span class="active">{{'downloadUin.label' | translate}}</span>
   </span>
@@ -18,10 +18,10 @@
             class="mobile-number"> {{emailId}}</span>.</p>
       </div>
       <div class="get-uin-btn-card">
-        <button [disabled]="resetBtnDisable" mat-button-toggle id="getUinResendOtpBtn" (click)="onItemSelected('resendOtp')" mat-raised-button class="button">{{downloadUinData.resendBtnLabel | translate}}</button>
+        <button [disabled]="resetBtnDisable" mat-button-toggle id="getUinResendOtpBtn" (click)="resendOtp()" mat-raised-button class="button">{{downloadUinData.resendBtnLabel | translate}}</button>
         &nbsp;
         &nbsp;
-        <button [disabled]="submitBtnDisable" mat-button-toggle id="getUinsubmitBtn" (click)="onItemSelected('submit')" mat-raised-button class="button">{{downloadUinData.submitBtnLabel | translate}}</button>
+        <button [disabled]="submitBtnDisable" mat-button-toggle id="getUinsubmitBtn" (click)="submitOtp()" mat-raised-button class="button">{{downloadUinData.submitBtnLabel | translate}}</button>
       </div>
     </div>
   </mat-card>

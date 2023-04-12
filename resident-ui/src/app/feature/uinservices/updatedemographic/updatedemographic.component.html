@@ -99,7 +99,7 @@
                               <mat-select [(ngModel)]="selected" id="{{field.attributeName}}">
                                 <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
                                   (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
-                                  [value]="data.code">{{ data.genderName }}</mat-option>
+                                  [value]="data.code">{{ data.value }}</mat-option>
                               </mat-select>
                             </mat-form-field>
                             <span *ngIf="userInfoClone[field.attributeName]">

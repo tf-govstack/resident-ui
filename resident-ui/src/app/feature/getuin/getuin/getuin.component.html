@@ -7,10 +7,10 @@
     <!-- <mat-card-subtitle class="login-heading" *ngIf="getUinData.login">{{getUinData.login |
       translate}}</mat-card-subtitle>
     <hr class="line" /> -->
-    <div class="form-container" [style.width]="width">
+    <div *ngIf="getUinData" class="form-container" [style.width]="width">
       <form #basicForm="ngForm" (submit)="submitUserID(basicForm.value)">
         <div class="uin-login-title-card">
-          <mat-card-subtitle class="login-Input-heading" *ngIf="getUinData">{{getUinData.title |
+          <mat-card-subtitle class="login-Input-heading">{{getUinData.title |
             translate}}</mat-card-subtitle>
           <span (mouseover)="openPopup()" (mouseout)="openPopup()"><img alt="info-icon" class="info-icon"
               src="./assets/images/info_black_24dp (1).png" /></span>
@@ -20,14 +20,14 @@
         </div>
         <input id="aidValue" class="input-text" type="text" ngModel name="AID" />
         <br />
-        <label class="label-text" *ngIf="getUinData">{{getUinData.description | translate}}</label>
+        <label class="label-text" >{{getUinData.description | translate}}</label>
         <div *ngIf="siteKey">
           <app-captcha [captchaSiteKey]="siteKey" [resetCaptcha]="resetCaptcha"
             (captchaEvent)="getCaptchaToken($event)"></app-captcha>
         </div>
         <br />
-        <button id="getUinSendOtpBtn" (click)="submitUserID()" [style.backgroundColor]="buttonbgColor"
-          class="login-uin-otp-btn" *ngIf="getUinData">{{getUinData.buttonText | translate}}</button>
+        <button id="getUinSendOtpBtn" (click)="submitUserID()" [disabled]="disableSendOtp" mat-raised-button
+          class="login-uin-otp-btn" >{{getUinData.buttonText | translate}}</button>
       </form>
     </div>
   </mat-card>
