@@ -310,8 +310,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   getGender() {
-    this.dataStorageService.getDataForDropDown("/auth-proxy/masterdata/gendertypes/" + localStorage.getItem("langCode")).subscribe(response => {
-      this.dropDownValues["gender"] = response["response"]["genderType"];
+    this.dataStorageService.getDataForDropDown("/auth-proxy/masterdata/dynamicfields/gender" + "/" + localStorage.getItem("langCode") + "?withValue=true").subscribe(response => {
+      this.dropDownValues["gender"] = response["response"]['values'];
     });
   }
 
