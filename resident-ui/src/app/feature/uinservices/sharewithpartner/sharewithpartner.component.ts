@@ -141,7 +141,6 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       .getMappingData()
       .subscribe((response) => {
         this.formatData = { "Address Format": response["identity"]["fullAddress"]["value"].split(","), "Name Format": response["identity"]["name"]["value"].split(","), "Date Format": response["identity"]["dob"]["value"].split(",") }
-        console.log(this.formatData)
       })
   }
 
@@ -192,7 +191,11 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
             value = this.userInfo[data.attributeName][0].value;
           }
         }
-        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": data['maskRequired'], "format": data['attributeName'], "value": value };
+        if(data.formatRequired){
+          this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": data['maskRequired'], "format": data['defaultFormat'], "value": value };
+        }else{
+          this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": data['maskRequired'], "value": value };
+        }
       }
       this.schema = this.schema.map(item => {
         if (item.attributeName === data.attributeName) {
@@ -224,8 +227,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         }else{
           value = this.userInfo[type];
         }
-        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": $event.checked, "format": "", "value": value };   
-        console.log(value) 
+        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": $event.checked, "value": value };   
       }else{
         let value = "";
         if (typeof this.userInfo[data.attributeName] === "string") {
@@ -237,7 +239,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
             // value = this.userInfo[data.attributeName][0].value;
           }
         }
-        this.sharableAttributes[data.attributeName] = {"label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": false, "format": type["value"], "value": value };    
+        this.sharableAttributes[data.attributeName] = {"label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": false, "format": type["value"], "value": value };   
       }
         
     }

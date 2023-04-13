@@ -4,6 +4,7 @@
 			"attributeName": "fullName",
 			"maskRequired": false,			
 			"formatRequired": true,
+			"defaultFormat":"fullName",
 			"label": {
 				"eng": "Name"
 			},
@@ -24,6 +25,7 @@
 			"attributeName": "dateOfBirth",
 			"maskRequired": false,
 			"formatRequired": true,
+			"defaultFormat":"DD/MM/YYYY",
 			"label": {
 				"eng": "DOB"
 			},
@@ -104,6 +106,7 @@
 			"attributeName": "addressLine1",
 			"maskRequired": false,
 			"formatRequired": true,
+			"defaultFormat":"fullAddress",
 			"label": {
 				"eng": "Address"
 			},
