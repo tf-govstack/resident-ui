@@ -329,4 +329,8 @@ export class DataStorageService {
   uploadfile(request, transactionID, docCatCode, docTypCode, referenceId){
     return this.httpClient.post(this.BASE_URL + '/documents/'+transactionID+'?docCatCode='+docCatCode+'&docTypCode='+docTypCode+'&langCode='+localStorage.getItem("langCode")+'&referenceId='+referenceId, request);
   }
+
+  isAuthenticated(){
+    return this.httpClient.get(this.BASE_URL+'/authorize/admin/validateToken');
+  }
 }

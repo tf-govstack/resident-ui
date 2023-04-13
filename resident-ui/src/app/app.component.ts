@@ -8,6 +8,7 @@ import { filter, pairwise } from 'rxjs/operators';
 import { NavigationEnd, NavigationStart } from '@angular/router';
 import { LogoutService } from 'src/app/core/services/logout.service';
 import { AuditService } from 'src/app/core/services/audit.service';
+import { DataStorageService } from 'src/app/core/services/data-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,8 @@ export class AppComponent {
     private autoLogout: AutoLogoutService, 
     private router: Router,
     private logoutService: LogoutService,
-    private auditService: AuditService
+    private auditService: AuditService,
+    private dataStorageService: DataStorageService
   ) {
     this.appConfigService.getConfig();
   }
@@ -46,6 +48,14 @@ export class AppComponent {
   }
   
   ngOnInit() { 
+    this.dataStorageService.isAuthenticated().subscribe((response) => {
+      if(response){
+        this.router.navigate(['uinservices/dashboard']); 
+      }else{
+        this.router.navigate(['dashboard']); 
+      }
+    });
+    
     if(!localStorage.getItem("langCode")){
       localStorage.setItem("langCode", "eng");
     }
