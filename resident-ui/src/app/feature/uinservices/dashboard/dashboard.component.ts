@@ -79,6 +79,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.autoLogout.getValues(this.userPreferredLangCode);
       this.autoLogout.continueWatching();
     }
+    
+    this.dataStorageService.getNotificationCount().subscribe((response) => {
+    });
   }
 
   @HostListener('window:popstate', ['$event'])

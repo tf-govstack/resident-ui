@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,HostListener } from "@angular/core";
+import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription, timer } from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import { map } from 'rxjs/operators'
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { AuthService } from 'src/app/core/services/authservice.service';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: "app-header",
@@ -36,9 +37,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notificationList:any;
   langCode = localStorage.getItem("langCode");
   popupMessages:any;
-  throttle = 0;
-  distance = 2;
   page = 1;
+  selector: string = "#notificationMenu";
 
   constructor(
     private router: Router,
@@ -56,6 +56,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onScroll() {
+    console.log("scroll down>>>");
+    /*this.dataStorageService
+    .getNotificationData(this.langCode)
+    .subscribe((response) => {
+      if(response["response"])     
+        this.notificationList = response["response"]["data"];
+        console.log(this.notificationList)
+    });*/
+  }
+
+  onScrollUp() {
+    console.log("scroll up>>>");
     /*this.dataStorageService
     .getNotificationData(this.langCode)
     .subscribe((response) => {
@@ -132,7 +144,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     //   document.body.style["zoom"] = localStorage.getItem("zoomLevel");
     // }
     
-
+    //window.addEventListener('scroll', this.scroll, true); //third parameter
   }
 
   getNotificationInfo(){
@@ -320,6 +332,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    //window.removeEventListener('scroll', this.scroll, true);
   }
 
 }
