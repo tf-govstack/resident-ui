@@ -59,6 +59,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   clickEventSubscription: Subscription;
   popupMessages: any;
   pdfSrc = "";
+  pdfSrcPOA = "";
   confirmContact: any;
   sendOtpDisable: boolean = true;
   updatedingId: any;
@@ -74,24 +75,26 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   errorCode: any;
   selectedLanguage: any;
   defaultJsonValue: any;
-  newLangArr:any =[];
-  perfLangArr:any = {};
-  newNotificationLanguages:any= [];
-  matTabLabel:string = "Identity";
-  matTabIndex:number = 0;
-  contactTye:string;
-  width : string;
-  cols : number;
-  message2:any;
-  displayPOIUpload:boolean = false;
-  displayPOAUpload:boolean = false;
-  maxdate:Date = new Date();
-  isValidFileFormatPOI:boolean = false;
-  isValidFileFormatPOA:boolean = false;
-  warningMessage:string;
-  langJson:any;
+  newLangArr: any = [];
+  perfLangArr: any = {};
+  newNotificationLanguages: any = [];
+  matTabLabel: string = "Identity";
+  matTabIndex: number = 0;
+  contactTye: string;
+  width: string;
+  cols: number;
+  message2: any;
+  displayPOIUpload: boolean = false;
+  displayPOAUpload: boolean = false;
+  maxdate: Date = new Date();
+  isValidFileFormatPOI: boolean = false;
+  isValidFileFormatPOA: boolean = false;
+  warningMessage: string;
+  langJson: any;
+  selectedPOIFileForPreview:string = "";
+  selectedPOAFileForPreview:string = "";
 
-  constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver,private dateAdapter : DateAdapter<Date>) {
+  constructor(private autoLogout: AutoLogoutService, private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver, private dateAdapter: DateAdapter<Date>) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "updateMyData") {
         this.updateDemographicData();
@@ -135,7 +138,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.defaultJsonValue = {...defaultJson}
+    this.defaultJsonValue = { ...defaultJson }
     this.initialLocationCode = "MOR";
     this.locCode = 5;
     this.translateService.use(localStorage.getItem("langCode"));
@@ -150,10 +153,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         this.langJson = response.updatedemographic
         this.popupMessages = response;
       });
-    
+
     let supportedLanguages = this.appConfigService.getConfig()['supportedLanguages'].split(',');
-    supportedLanguages.forEach(data =>{
-      let newObj = {"code":data,"name":this.defaultJsonValue['languages'][data]['nativeName']}
+    supportedLanguages.forEach(data => {
+      let newObj = { "code": data, "name": this.defaultJsonValue['languages'][data]['nativeName'] }
       this.newNotificationLanguages.push(newObj)
     })
 
@@ -191,12 +194,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getUserInfo('update-demographics')
       .subscribe((response) => {
-        if (response["response"]){
+        if (response["response"]) {
           this.userInfo = response["response"];
-        UpdatedemographicComponent.actualData = response["response"];
-        this.buildData();
-        }else{
-           this.showErrorPopup(response['errors'])
+          UpdatedemographicComponent.actualData = response["response"];
+          this.buildData();
+        } else {
+          this.showErrorPopup(response['errors'])
         }
       });
   }
@@ -232,7 +235,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       console.log("Exception>>>" + ex.message);
     }
     let perfLangs = this.buildJSONData['preferredLang'].split(',');
-    perfLangs.forEach(data =>{
+    perfLangs.forEach(data => {
       this.perfLangArr[data] = defaultJson['languages'][data]['nativeName']
     })
     this.buildJSONData['preferredLang'] = this.perfLangArr;
@@ -372,10 +375,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
-      for(let i=0; i < diffrence; i++){
-          this.transactionID = this.transactionID + i
+      for (let i = 0; i < diffrence; i++) {
+        this.transactionID = this.transactionID + i
       }
-    } 
+    }
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
@@ -400,10 +403,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
-      for(let i=0; i < diffrence; i++){
-          this.transactionID = this.transactionID + i
+      for (let i = 0; i < diffrence; i++) {
+        this.transactionID = this.transactionID + i
       }
-    } 
+    }
 
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
@@ -439,9 +442,9 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.dataStorageService.verifyUpdateData(request).subscribe(response => {
       if (response.body['response']) {
         let eventId = response.headers.get("eventid")
-        this.message =  this.contactTye === 'email' ? this.popupMessages.genericmessage.updateMyData.emailSuccessMsg.replace("$eventId", eventId) : this.popupMessages.genericmessage.updateMyData.phoneNumberSuccessMsg.replace("$eventId", eventId);
+        this.message = this.contactTye === 'email' ? this.popupMessages.genericmessage.updateMyData.emailSuccessMsg.replace("$eventId", eventId) : this.popupMessages.genericmessage.updateMyData.phoneNumberSuccessMsg.replace("$eventId", eventId);
         this.dialog.closeAll();
-        this.showMessage(this.message,eventId);
+        this.showMessage(this.message, eventId);
       } else {
         this.dialog.closeAll();
         this.showErrorPopup(response.body["errors"]);
@@ -455,46 +458,45 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.userId = event.target.value;
     this.contactTye = formControlName;
     let self = this;
-    if(event.target.value !== ''){
-    if (event.target.value === "" && this.userInfoClone[formControlName]) {
-      this.userInfoClone[formControlName].forEach(item => {
-        if (item.language === language) {
-          console.log(this.userInfoClone[formControlName])
-          let index = this.userInfoClone[formControlName].findIndex(data => data === item)
-          this.userInfoClone[formControlName].splice(index, 1)
-        }
-      })
-    } else {
-      if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
-        if (typeof self.userInfo[formControlName] === "string") {
-          self.userInfo[formControlName] = event.target.value;
-        } else {
-          let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
-          // self.userInfoClone[formControlName][index]["value"] = event.target.value;
-          let newData = { "language": language, "value": event.target.value };
-          if (formControlName in this.userInfoClone) {
-            this.userInfoClone[formControlName].forEach(item => {
-              if (item['language'] === language) {
-                item['value'] = event.target.value;
-              } else {
-                if (item['language']) {
-                  if (this.userInfoClone[formControlName]) {
-                    this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
-                  } else {
-                    this.userInfoClone[formControlName] = [].concat(newData);
+    if (event.target.value !== '') {
+      if (event.target.value === "" && this.userInfoClone[formControlName]) {
+        this.userInfoClone[formControlName].forEach(item => {
+          if (item.language === language) {
+            let index = this.userInfoClone[formControlName].findIndex(data => data === item)
+            this.userInfoClone[formControlName].splice(index, 1)
+          }
+        })
+      } else {
+        if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
+          if (typeof self.userInfo[formControlName] === "string") {
+            self.userInfo[formControlName] = event.target.value;
+          } else {
+            let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
+            // self.userInfoClone[formControlName][index]["value"] = event.target.value;
+            let newData = { "language": language, "value": event.target.value };
+            if (formControlName in this.userInfoClone) {
+              this.userInfoClone[formControlName].forEach(item => {
+                if (item['language'] === language) {
+                  item['value'] = event.target.value;
+                } else {
+                  if (item['language']) {
+                    if (this.userInfoClone[formControlName]) {
+                      this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
+                    } else {
+                      this.userInfoClone[formControlName] = [].concat(newData);
+                    }
                   }
                 }
-              }
-            })
-          } else {
-            this.userInfoClone[formControlName] = [].concat(newData);
+              })
+            } else {
+              this.userInfoClone[formControlName] = [].concat(newData);
+            }
           }
+        } else {
+          self[formControlName]["documentreferenceId"] = event.target.value;
         }
-      } else {
-        self[formControlName]["documentreferenceId"] = event.target.value;
       }
     }
-  }
   }
 
   captureDatePickerValue(event: any, formControlName: string) {
@@ -514,28 +516,37 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     let self = this;
     if (event.source.selected) {
       if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
-        let newData = { "language": language, "value": event.source.viewValue }
-        if (formControlName in this.userInfoClone) {
-          this.userInfoClone[formControlName].forEach(item => {
-            if (item['language'] === language) {
-              item['value'] = event.source.viewValue;
-            } else {
-              if (item['language']) {
-                if (this.userInfoClone[formControlName]) {
-                  this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
-                } else {
-                  this.userInfoClone[formControlName] = [].concat(newData);
+        if (typeof self.userInfo[formControlName] === "string") {
+          this.userInfoClone[formControlName] = event.source.viewValue;
+          // if (this.userInfoClone[formControlName]) {
+          //   this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(event.source.viewValue);
+          // } else {
+          //   this.userInfoClone[formControlName] = event.source.viewValue;
+          // }
+        } else {
+          let newData = { "language": language, "value": event.source.viewValue }
+          if (formControlName in this.userInfoClone) {
+            this.userInfoClone[formControlName].forEach(item => {
+              if (item['language'] === language) {
+                item['value'] = event.source.viewValue;
+              } else {
+                if (item['language']) {
+                  if (this.userInfoClone[formControlName]) {
+                    this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
+                  } else {
+                    this.userInfoClone[formControlName] = [].concat(newData);
+                  }
                 }
               }
-            }
-          })
-        } else {
-          this.userInfoClone[formControlName] = [].concat(newData);
+            })
+          } else {
+            this.userInfoClone[formControlName] = [].concat(newData);
+          }
         }
       } else {
-        if(formControlName === "proofOfIdentity"){
+        if (formControlName === "proofOfIdentity") {
           this.displayPOIUpload = true;
-        }else if(formControlName === "proofOfAddress"){
+        } else if (formControlName === "proofOfAddress") {
           this.displayPOAUpload = true;
         }
         self[formControlName]["documenttype"] = event.source.value;
@@ -557,10 +568,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (transactionID.length < 10) {
       let diffrence = 10 - transactionID.length;
-      for(let i=0; i < diffrence; i++){
-           transactionID = transactionID + i
+      for (let i = 0; i < diffrence; i++) {
+        transactionID = transactionID + i
       }
-    } 
+    }
     if (this.proofOfIdentity['documenttype']) {
       const formData = new FormData();
       formData.append('file', this.files[0]);
@@ -572,30 +583,53 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       this.uploadFiles(formData, transactionID, 'POA', this.proofOfAddress['documenttype'], this.proofOfAddress['documentreferenceId']);
     }
 
-    setTimeout(()=>{
+    setTimeout(() => {
+      const request = {
+        "id": this.appConfigService.getConfig()["resident.updateuin.id"],
+        "version": this.appConfigService.getConfig()["resident.vid.version.new"],
+        "requesttime": Utils.getCurrentDate(),
+        "request": {
+          "transactionID": transactionID,
+          "consent": "Accepted",
+          "identity": this.userInfoClone
+        }
+      };
+      this.dataStorageService.updateuin(request).subscribe(response => {
+        let eventId = response.headers.get("eventid")
+        this.message = this.popupMessages.genericmessage.updateMyData.newDataUpdatedSuccessMsg.replace("$eventId", eventId)
+        if (response.body["response"]) {
+          this.showMessage(this.message, eventId)
+        } else {
+          this.showErrorPopup(response.body["errors"])
+        }
+      }, error => {
+        console.log(error)
+      })
+    }, 4000)
+  }
+
+  updatenotificationLanguage(){
     const request = {
       "id": this.appConfigService.getConfig()["resident.updateuin.id"],
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": transactionID,
+        "transactionID": null,
         "consent": "Accepted",
         "identity": this.userInfoClone
       }
     };
     this.dataStorageService.updateuin(request).subscribe(response => {
-      let eventId =  response.headers.get("eventid")
-      this.message = this.popupMessages.genericmessage.updateMyData.newDataUpdatedSuccessMsg.replace("$eventId",eventId)
-      console.log(response.body)
+      let eventId = response.headers.get("eventid")
+      this.message = this.popupMessages.genericmessage.updateMyData.newDataUpdatedSuccessMsg.replace("$eventId", eventId)
       if (response.body["response"]) {
-        this.showMessage(this.message,eventId)
+        this.showMessage(this.message, eventId)
       } else {
         this.showErrorPopup(response.body["errors"])
       }
     }, error => {
       console.log(error)
     })
-  },4000)
   }
 
   conditionsForupdateDemographicData() {
@@ -612,8 +646,15 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     });
     return dialogRef;
   }
-  closePreview(){
-    this.pdfSrc = "";
+  closePreview(fileType:any) {
+    if(fileType === "POI"){
+      this.pdfSrc = "";
+      this.selectedPOIFileForPreview = "";
+    }else{
+      this.pdfSrcPOA = "";
+      this.selectedPOAFileForPreview = "";
+    }
+   
   }
   /**
    * on file drop handler
@@ -640,12 +681,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         this.pdfSrc = e.target.result;
       };
       reader.readAsDataURL(this.files[index]);
+      this.selectedPOIFileForPreview = this.files[index].name;
     } else {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.pdfSrc = e.target.result;
+        this.pdfSrcPOA = e.target.result;
       };
       reader.readAsDataURL(this.filesPOA[index]);
+      this.selectedPOAFileForPreview = this.filesPOA[index].name;
     }
   }
 
@@ -716,19 +759,19 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    * Convert Files list to normal array list
    * @param files (Files List)
    */
-  prepareFilesList(files: Array<any>, type: string) {  
+  prepareFilesList(files: Array<any>, type: string) {
     var allowedFiles = [".jpg", ".jpeg", ".png", ".pdf"];
     var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
     let fileSize = Math.floor(Math.log(files[0].size) / Math.log(1024));
     if (!regex.test(files[0].name.toLowerCase())) {
-      if( type === "POI"){
+      if (type === "POI") {
         this.isValidFileFormatPOI = true
-      }else{
+      } else {
         this.isValidFileFormatPOA = true
       }
       this.warningMessage = this.popupMessages.updatedemographic.InvalidFormatMsg
-    }else{
-      if(fileSize < 2){
+    } else {
+      if (fileSize <= 2) {
         if (type === "POI") {
           this.isValidFileFormatPOI = false;
           for (const item of files) {
@@ -746,10 +789,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           this.uploadFilesSimulator(0, type);
           this.previewDisabledInAddress = false
         }
-      }else{
-        if( type === "POI"){
+      } else {
+        if (type === "POI") {
           this.isValidFileFormatPOI = true
-        }else{
+        } else {
           this.isValidFileFormatPOA = true
         }
         this.warningMessage = this.popupMessages.updatedemographic.InvalidFileSize
@@ -788,18 +831,18 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     return dialogRef;
   }
 
-  showMessage(message: string,eventId:any) {
+  showMessage(message: string, eventId: any) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        trackStatusText:this.popupMessages.genericmessage.trackStatusText,
-        clickHere:this.popupMessages.genericmessage.clickHere,
+        trackStatusText: this.popupMessages.genericmessage.trackStatusText,
+        clickHere: this.popupMessages.genericmessage.clickHere,
         message: message,
-        eventId:eventId,
+        eventId: eventId,
         clickHere2: this.popupMessages.genericmessage.clickHere2,
-        dearResident:this.popupMessages.genericmessage.dearResident,
+        dearResident: this.popupMessages.genericmessage.dearResident,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -809,64 +852,64 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   showErrorPopup(message: string) {
     this.errorCode = message[0]["errorCode"];
     setTimeout(() => {
-    if (this.errorCode === "RES-SER-410") {
-      let messageType = message[0]["message"].split("-")[1].trim();
-      this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
-    } else {
-      this.message = this.popupMessages.serverErrors[this.errorCode]
-    }
-    if(this.errorCode === "RES-SER-418"){
-      this.dialog
-        .open(DialogComponent, {
-          width: '650px',
-          data: {
-            case: 'accessDenied',
-            title: this.popupMessages.genericmessage.errorLabel,
-            message: this.message,
-            btnTxt: this.popupMessages.genericmessage.successButton,
-            clickHere: this.popupMessages.genericmessage.clickHere,
-            clickHere2: this.popupMessages.genericmessage.clickHere2,
-            dearResident: this.popupMessages.genericmessage.dearResident,
-            relogin: this.popupMessages.genericmessage.relogin
-          },
-          disableClose: true
-        });
-      }else{
-        this.dialog
-        .open(DialogComponent, {
-          width: '650px',
-          data: {
-            case: 'MESSAGE',
-            title: this.popupMessages.genericmessage.errorLabel,
-            message: this.message,
-            btnTxt: this.popupMessages.genericmessage.successButton
-          },
-          disableClose: true
-        });
+      if (this.errorCode === "RES-SER-410") {
+        let messageType = message[0]["message"].split("-")[1].trim();
+        this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
+      } else {
+        this.message = this.popupMessages.serverErrors[this.errorCode]
       }
-    },400)
+      if (this.errorCode === "RES-SER-418") {
+        this.dialog
+          .open(DialogComponent, {
+            width: '650px',
+            data: {
+              case: 'accessDenied',
+              title: this.popupMessages.genericmessage.errorLabel,
+              message: this.message,
+              btnTxt: this.popupMessages.genericmessage.successButton,
+              clickHere: this.popupMessages.genericmessage.clickHere,
+              clickHere2: this.popupMessages.genericmessage.clickHere2,
+              dearResident: this.popupMessages.genericmessage.dearResident,
+              relogin: this.popupMessages.genericmessage.relogin
+            },
+            disableClose: true
+          });
+      } else {
+        this.dialog
+          .open(DialogComponent, {
+            width: '650px',
+            data: {
+              case: 'MESSAGE',
+              title: this.popupMessages.genericmessage.errorLabel,
+              message: this.message,
+              btnTxt: this.popupMessages.genericmessage.successButton
+            },
+            disableClose: true
+          });
+      }
+    }, 400)
   }
 
 
   onItemSelected(item: any) {
-    if (item === "matTabLabel"){
+    if (item === "matTabLabel") {
       this.showPreviewPage = false;
-    }else{
+    } else {
       this.router.navigate([item]);
     }
   }
 
-  typeOf(value:any){
-     return typeof value
+  typeOf(value: any) {
+    return typeof value
   }
 
   backBtn() {
     this.showPreviewPage = false
   }
 
-  logChange(event:any){
+  logChange(event: any) {
     this.matTabIndex = event.index;
-    this.matTabLabel =event.tab.textLabel;
+    this.matTabLabel = event.tab.textLabel;
   }
 
   ngOnDestroy(): void {

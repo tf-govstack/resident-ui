@@ -565,7 +565,7 @@
         "RES-SER-449": "Invalid UIN/ AID/ VID entered. Please enter a valid UIN/ AID/ VID and try again.",
         "RES-SER-414": "Comment section cannot be blank. Please enter your comments in order to proceed.",
         "RES-SER-471": "This VID cannot be revoked since you have logged in using the same VID.",
-        "RES-SER-513": "Failed to create a new VID as the existing VID is in use in the current session and it cannot be revoked.",
+        "RES-SER-513": "This VID cannot be revoked since you have logged in using the same VID.",
         "RES-OTP-007": "Invalid OTP entered. Please try again with a valid OTP.",
         "RES-SER-415": "Template exceptionServiceError.",
         "RES-SER-463": "Failed to send OTP. Retry again in sometime.",

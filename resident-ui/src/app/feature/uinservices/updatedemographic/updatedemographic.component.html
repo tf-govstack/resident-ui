@@ -129,7 +129,7 @@
                             <mat-select
                               [value]="proofOfIdentity['documenttype'] ? proofOfIdentity['documenttype'] : '' "
                               id="{{field.attributeName}}">
-                              <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
+                              <mat-option style="min-width: 25.2rem;" *ngFor="let data of dropDownValues[field.attributeName]"
                                 (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
                                 [value]="data.code">{{ data.name }}</mat-option>
                             </mat-select>
@@ -205,16 +205,17 @@
                                 </div>
                                 <div class="info">
                                   <h4 class="name">
-                                    {{ file?.name }}
                                   </h4>
                                   <p class="size">
                                     {{ formatBytes(file?.size) }}
                                   </p>
+                                  {{file?.name}}
                                   <app-progress [progress]="file?.progress"></app-progress>
                                 </div>
 
-                                <div class="preview" (click)="previewFile(i, 'POI')">
-                                  <img mat-card-xs-image src='../assets/view.png' />
+                                <div class="preview" >
+                                  <img *ngIf="file.name !== selectedPOIFileForPreview" (click)="previewFile(i, 'POI')" mat-card-xs-image style="margin: 0 0 -5px 0;" src='./assets/icons/iconfont/visibility_on.svg' />
+                                  <img *ngIf="file.name === selectedPOIFileForPreview" mat-card-xs-image (click)="closePreview('POI')" style="margin: 0 0 -5px 0;" src='./assets/icons/iconfont/visibility_off.svg' />
                                 </div>
 
                                 <div class="delete" (click)="deleteFile(i, 'POI')">
@@ -330,7 +331,7 @@
                               <mat-select
                                 [value]="proofOfAddress['documenttype'] ? proofOfAddress['documenttype'] : '' "
                                 id="{{field.attributeName}}">
-                                <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
+                                <mat-option style="min-width: 25.2rem;" *ngFor="let data of dropDownValues[field.attributeName]"
                                   (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
                                   [value]="data.code">{{
                                   data.name }}</mat-option>
@@ -414,8 +415,9 @@
                                     </p>
                                     <app-progress [progress]="file?.progress"></app-progress>
                                   </div>
-                                  <div class="preview" (click)="previewFile(i, 'POA')">
-                                    <img mat-card-xs-image src='../assets/view.png' />
+                                  <div class="preview" >
+                                    <img *ngIf="file.name !== selectedPOAFileForPreview" (click)="previewFile(i, 'POA')" mat-card-xs-image style="margin: 0 0 -5px 0;" src='./assets/icons/iconfont/visibility_on.svg' />
+                                    <img *ngIf="file.name === selectedPOAFileForPreview" mat-card-xs-image (click)="closePreview('POA')" style="margin: 0 0 -5px 0;" src='./assets/icons/iconfont/visibility_off.svg' />
                                   </div>
                                   <div class="delete" (click)="deleteFile(i, 'POA')">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 14 18">
@@ -435,9 +437,9 @@
               </div>
             </td>
             <td width="100%" height="850px">
-              <div *ngIf="pdfSrc" (click)="closePreview()" width="100%" style="float: right;cursor: pointer;"><mat-icon
+              <div *ngIf="pdfSrcPOA" (click)="closePreview()" width="100%" style="float: right;cursor: pointer;"><mat-icon
                   matTooltip="Close Preview">clear</mat-icon></div>
-              <embed *ngIf="pdfSrc" [src]="pdfSrc | sanitizepdf" height="100%" width="100%">
+              <embed *ngIf="pdfSrcPOA" [src]="pdfSrcPOA | sanitizepdf" height="100%" width="100%">
             </td>
           </tr>
         </table>
@@ -513,8 +515,8 @@
             </mat-grid-tile>
             <mat-grid-tile>
               <div style="text-align: end;margin-right: 2rem; margin-top: none;">
-                <button [disabled]="previewDisabled && previewDisabledInAddress" mat-raised-button
-                  (click)="previewBtn('address')" color="primary" id="submit">Submit</button>
+                <button mat-raised-button
+                  (click)="updatenotificationLanguage()" color="primary" id="submit">Submit</button>
               </div>
             </mat-grid-tile>
           </mat-grid-list>
