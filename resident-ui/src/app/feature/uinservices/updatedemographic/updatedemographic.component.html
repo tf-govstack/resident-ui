@@ -7,6 +7,10 @@
   &nbsp;&nbsp;<span *ngIf="showPreviewPage" class="active">&nbsp; > &nbsp; {{'preview.title' | translate}}</span>
 </span>
 
+<div class="spinner" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+ </div>
+<div *ngIf="!isLoading">
 <mat-card style="margin:1rem 4rem 0 4rem; min-height: 100%;" *ngIf="userInfo && !showPreviewPage">
   <h1 style="font-weight: 500; font-size: 20px;color: #505050;">Update My Data</h1>
   <mat-tab-group animationDuration="0ms" [selectedIndex]="matTabIndex" (selectedTabChange)="logChange($event)">
@@ -604,3 +608,4 @@
     </div>
   </div>
 </mat-card>
+</div>

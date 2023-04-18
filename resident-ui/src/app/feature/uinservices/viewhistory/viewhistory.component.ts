@@ -60,6 +60,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   langCode = localStorage.getItem("langCode");
   serviceHistorySelectedValue:any;
   statusHistorySelectedValue:any;
+  isLoading:boolean = true;
 
   constructor(private autoLogout: AutoLogoutService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.dateAdapter.setLocale('en-GB'); 
@@ -126,7 +127,8 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
     this.dataStorageService
     .getServiceHistory(pageEvent, filters,this.pageSize)
     .subscribe((response) => {
-      if(response["response"]){   
+      if(response["response"]){  
+        this.isLoading = false; 
         this.responselist = response["response"]["data"];
         this.totalItems = response["response"]["totalItems"];
         this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
@@ -136,6 +138,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
         this.pageSize = response["response"]['pageSize']
         this.parsedrodowndata();
       }else{
+        this.isLoading = false;
         this.showErrorPopup(response["errors"])
       }
     });
@@ -290,6 +293,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   downloadServiceHistory(){
+    this.isLoading = true;
     this.auditService.audit('RP-005', 'View history', 'RP-View history', 'View history', 'User clicks on "download" button');
     let searchParam = "", self = this;    
     this.controlTypes.forEach(controlType => {
@@ -309,6 +313,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       var fileName = ""
       const contentDisposition = data.headers.get('content-disposition');
       if (contentDisposition) {
+        this.isLoading = false;
         const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
         const matches = fileNameRegex.exec(contentDisposition);
         if (matches != null && matches[1]) {

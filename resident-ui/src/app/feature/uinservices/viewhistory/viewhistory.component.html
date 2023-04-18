@@ -4,8 +4,11 @@
 	&nbsp;&nbsp;<span class="active">{{'viewhistory.title' | translate}}</span>
 </span>
 
-<div class="main-div" *ngIf="langJSON">
-	<mat-card>
+<div class="main-div">
+	<div class="spinner spinner2" *ngIf="isLoading">
+		<mat-spinner></mat-spinner>
+   </div>
+	<mat-card *ngIf="!isLoading">
 		<h3 style="color: #505050; font-size:20px;">{{'viewhistory.title' | translate}}</h3>
 		<mat-grid-list *ngIf="responselist" [cols]="cols" rowHeight="100px" gutterSize="7px">
 	        <mat-grid-tile>

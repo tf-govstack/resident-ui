@@ -31,6 +31,7 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   message2:any;
   source:string;
   userPreferredLangCode = localStorage.getItem("langCode");
+  isLoading:boolean = true;
   constructor(private autoLogout: AutoLogoutService,private renderer:Renderer2 ,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private route: ActivatedRoute,private auditService: AuditService) {
     this.renderer.listen('window','click',(e:Event) =>{
        if(!this.iconBtnClicked){
@@ -85,20 +86,23 @@ export class TrackservicerequestComponent implements OnInit, OnDestroy {
   }
 
   getEIDStatus(){
+    this.isLoading = true;
     this.auditService.audit('RP-026', 'Track Service Request', 'RP-Track Service Request', 'Track Service Request', 'User clicks on "search" button');
     if(this.eidVal){
     this.dataStorageService
     .getEIDStatus(this.eidVal)
     .subscribe((response) => {
-      console.log(response)
       if(response["response"]){
+        this.isLoading = false;
         this.eidStatus = response["response"];
       }else if(response["errors"]){
-        console.log("hai")
+        this.isLoading = false;
         this.showErrorPopup(response["errors"])
       }
         
     });
+  }else{
+    this.isLoading = false;
   }
   }
 

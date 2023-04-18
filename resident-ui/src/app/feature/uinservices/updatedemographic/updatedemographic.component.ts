@@ -93,6 +93,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   langJson: any;
   selectedPOIFileForPreview:string = "";
   selectedPOAFileForPreview:string = "";
+  isLoading:boolean = true;
 
   constructor(private autoLogout: AutoLogoutService, private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver, private dateAdapter: DateAdapter<Date>) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -195,10 +196,12 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       .getUserInfo('update-demographics')
       .subscribe((response) => {
         if (response["response"]) {
+          this.isLoading = false;
           this.userInfo = response["response"];
           UpdatedemographicComponent.actualData = response["response"];
           this.buildData();
         } else {
+          this.isLoading = false;
           this.showErrorPopup(response['errors'])
         }
       });
@@ -429,6 +432,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   verifyupdatedData(otp: any) {
+    this.dialog.closeAll();
+    this.isLoading = true;
     const request = {
       "id": "mosip.resident.contact.details.update.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
@@ -443,10 +448,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       if (response.body['response']) {
         let eventId = response.headers.get("eventid")
         this.message = this.contactTye === 'email' ? this.popupMessages.genericmessage.updateMyData.emailSuccessMsg.replace("$eventId", eventId) : this.popupMessages.genericmessage.updateMyData.phoneNumberSuccessMsg.replace("$eventId", eventId);
-        this.dialog.closeAll();
+        this.isLoading = false;
         this.showMessage(this.message, eventId);
       } else {
-        this.dialog.closeAll();
+         this.isLoading = false;
         this.showErrorPopup(response.body["errors"]);
       }
     }, error => {
@@ -565,6 +570,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   updateDemographicData() {
+    this.isLoading = true;
     let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (transactionID.length < 10) {
       let diffrence = 10 - transactionID.length;
@@ -598,8 +604,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         let eventId = response.headers.get("eventid")
         this.message = this.popupMessages.genericmessage.updateMyData.newDataUpdatedSuccessMsg.replace("$eventId", eventId)
         if (response.body["response"]) {
-          this.showMessage(this.message, eventId)
+          this.isLoading = false;
+          this.showMessage(this.message, eventId);
         } else {
+          this.isLoading = false;
           this.showErrorPopup(response.body["errors"])
         }
       }, error => {
