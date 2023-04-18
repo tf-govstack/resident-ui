@@ -5,10 +5,10 @@
 </span>
 
 <div class="main-div">
-	<div class="spinner" *ngIf="!schema">
+	<div class="spinner" *ngIf="isLoading">
 		<mat-spinner></mat-spinner>
    </div>
-	<mat-card *ngIf="schema">
+	<mat-card *ngIf="!isLoading">
 		<h3 style="color: #050505;">{{'sharewithpartner.title' | translate}}</h3>
 		<p class="intro-description">{{'sharewithpartner.introDescription' | translate}}</p>
 		<label class="main-label">{{'sharewithpartner.mainlabel' |

@@ -492,7 +492,7 @@
             "deletedSuccessfully": "Your VID has been successfully deleted against the Event ID: $eventId."
         },
         "personalisedcardMessages": {
-            "downloadedSuccessFully": "Dear resident, your personalized card has been successfully downloaded against the the Event ID: $eventId. The password will be sent to your registered email ID or phone number. In order to track the status of the event, you can "
+            "downloadedSuccessFully": "Dear resident, your personalized card has been successfully downloaded against the the Event ID: $eventId. The password will be sent to your registered email ID or phone number."
         },
         "sharewithpartnerMessages": {
             "choosePartner": "Kindly choose a partner to proceed.",

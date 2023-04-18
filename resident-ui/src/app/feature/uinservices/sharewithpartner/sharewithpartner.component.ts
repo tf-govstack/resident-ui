@@ -45,6 +45,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   message2:any;
   totalCommentCount:number;
   remainingChars:number;
+  isLoading:boolean = true;
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -106,6 +107,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
         this.schema = response["identity"];
+        this.isLoading = false;
         this.schema.forEach(data =>{
           this.valuesSelected.push(data.attributeName)
         })
@@ -288,6 +290,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   }
 
   shareInfo() {
+    this.isLoading = true;
     let sharableAttributes = [];
     for (const key in this.sharableAttributes) {
       sharableAttributes.push(this.sharableAttributes[key]);
@@ -311,10 +314,12 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         this.dataStorageService
           .getEIDStatus(this.eventId)
           .subscribe((response) => {
-            if (response["response"])
+            if (response["response"]){
+              this.isLoading = false;
               this.aidStatus = response["response"];
               this.router.navigateByUrl(`uinservices/trackservicerequest?eid=` + this.eventId)
             // this.showAcknowledgement = true;
+            }
           });
         console.log("data>>>" + data);
       },

@@ -43,6 +43,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
   fullAddress:string = "";
   formatLabels:any;
   formatCheckBoxClicked:boolean = false;
+  isLoading:boolean = true;
 
   constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe([
@@ -98,6 +99,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
         this.schema = response["identity"];
+        this.isLoading = false;
         this.schema.forEach(data =>{
           this.valuesSelected.push(data.attributeName)
         })
@@ -399,6 +401,7 @@ async  captureCheckboxValue($event: any, data: any, type: any) {
   }
 
   convertpdf() {
+    this.isLoading = true;
     let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["mosip.resident.download.personalized.card.id"],
@@ -416,6 +419,7 @@ async  captureCheckboxValue($event: any, data: any, type: any) {
         let contentDisposition = data.headers.get('content-disposition');
         this.eventId = data.headers.get("eventid")
         if (contentDisposition) {
+          this.isLoading = false;
           try {
             var fileName = ""
             if (contentDisposition) {
@@ -429,6 +433,7 @@ async  captureCheckboxValue($event: any, data: any, type: any) {
             saveAs(data.body, fileName);
             this.showMessage()
           } catch (error) {
+            this.isLoading = false;
             console.log(error)
           }
         }
@@ -461,9 +466,11 @@ async  captureCheckboxValue($event: any, data: any, type: any) {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
         clickHere: this.popupMessages.genericmessage.clickHere,
+        clickHere2: this.popupMessages.genericmessage.clickHere2,
         eventId: this.eventId,
         passwordCombinationHeading: this.popupMessages.genericmessage.passwordCombinationHeading,
         passwordCombination: this.popupMessages.genericmessage.passwordCombination,
+        trackStatusText:this.popupMessages.genericmessage.trackStatusText,
         message: this.message,
         btnTxt: this.popupMessages.genericmessage.successButton
       }

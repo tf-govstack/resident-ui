@@ -35,6 +35,10 @@
 				</td>
 			</tr>
 		</table>
+		<div class="spinner spinner2" *ngIf="isLoading">
+			<mat-spinner></mat-spinner>
+	   </div>
+	   <div *ngIf="!isLoading">
 		<div *ngIf="eidStatus" class="trackDetails">
 			<table style="width: 100%; border-radius: 10px; border-collapse: collapse;">
 				<tr>
@@ -152,5 +156,6 @@
 
 		</div>
 		<P *ngIf="eidStatus">{{'trackservicerequest.raiseSupportRequest' | translate}} <span class="click-here" (click)="navigateGrievance(eidStatus.eventId)">{{'trackservicerequest.clickHere' | translate}}</span></P>
+	</div>
 	</mat-card>
 </div>
