@@ -3,7 +3,10 @@
 	<a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<span class="active">{{'personalisedcard.title' | translate}}</span>
 </span>
 
-<div class="main-div" *ngIf="langJSON">
+<div class="main-div">
+	<div class="spinner" *ngIf="!schema">
+		<mat-spinner></mat-spinner>
+   </div>
 	<mat-card *ngIf="schema">
 		<h3 style="color: #505050;">{{'personalisedcard.title' | translate}}</h3>
 		<p class="intro-description">{{'personalisedcard.introDescription' | translate}}</p>
