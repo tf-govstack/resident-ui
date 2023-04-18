@@ -201,13 +201,20 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   generateVID(vidType: any) {
+    let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
+    if (transactionID.length < 10) {
+      let diffrence = 10 - transactionID.length;
+      for(let i=0; i < diffrence; i++){
+          transactionID = transactionID + i
+      }
+    } 
     let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["resident.vid.id.generate"],
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": window.crypto.getRandomValues(new Uint32Array(1)).toString(),
+        "transactionID": transactionID,
         "vidType": vidType,
         "channels": ["PHONE", "EMAIL"]
       }
@@ -289,13 +296,20 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   revokeVID(vidValue: any) {
+    let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
+    if (transactionID.length < 10) {
+      let diffrence = 10 - transactionID.length;
+      for(let i=0; i < diffrence; i++){
+          transactionID = transactionID + i
+      }
+    } 
     let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["mosip.resident.revokevid.id"],
       "version": this.appConfigService.getConfig()["resident.revokevid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": window.crypto.getRandomValues(new Uint32Array(1)).toString(),
+        "transactionID": transactionID,
         "vidStatus": "REVOKED"
       }
     };
