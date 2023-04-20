@@ -110,15 +110,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
 
       self.translateService.use(localStorage.getItem("langCode")); 
-      self.textDir = localStorage.getItem("dir"); 
-      if (self.router.url.includes("uinservices")){
-        self.getProfileInfo();
-      }
+      self.textDir = localStorage.getItem("dir");
     }, 1000);    
 
-   
-   
-
+    this.getProfileInfo();
+    
     await  this.translateService
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
