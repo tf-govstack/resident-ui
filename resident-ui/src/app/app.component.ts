@@ -54,7 +54,9 @@ export class AppComponent {
   ngOnInit() { 
     this.dataStorageService.isAuthenticated().subscribe((response) => {
       if(response){
-        this.router.navigate(['uinservices/dashboard']); 
+        if(!response["errors"]["length"]){
+          this.router.navigate(['uinservices/dashboard']); 
+        }
       }else{
         this.router.navigate(['dashboard']); 
       }
