@@ -78,6 +78,7 @@ export class AuthInterceptor implements HttpInterceptor {
         },
         err => {
           if (err instanceof HttpErrorResponse) {
+            console.log("this.invokedurl>>>"+this.invokedurl);
             if (err.status === 401) {
               if (this.router.url.includes('uinservices')) {
                 this.redirectService.redirect(window.location.href);
