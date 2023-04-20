@@ -52,6 +52,10 @@ export class AppComponent {
   // }
   
   ngOnInit() { 
+    this.router.routeReuseStrategy.shouldReuseRoute = function(){
+      return false;
+    };
+
     this.dataStorageService.isAuthenticated().subscribe((response) => {
       if(response){
         console.log("response>>>"+response["errors"]["length"]);
