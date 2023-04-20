@@ -66,7 +66,8 @@ export class DashboardComponent implements OnInit {
 
   onItemSelected(item: any) {
     if(item === "UIN Services"){
-      this.router.navigate(['uinservices'])
+      console.log("this.router.navigate>>>");
+      this.router.navigateByUrl('uinservices/dashboard');
     }else if(item === "Get Information"){
       this.router.navigate(["regcenter"])
     }else if(item === "Booking an Appointment"){
