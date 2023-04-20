@@ -99,7 +99,6 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
         this.schema = response["identity"];
-        this.isLoading = false;
         this.schema.forEach(data =>{
           this.valuesSelected.push(data.attributeName)
         })
@@ -138,6 +137,7 @@ export class PersonalisedcardComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         if(response['response']){
           this.userInfo = response["response"];
+          this.isLoading = false;
         }else{
           this.showErrorPopup(response['errors'])
         }
@@ -279,7 +279,6 @@ async  captureCheckboxValue($event: any, data: any, type: any) {
           } else {
             let value = "";
             let allValue = "";
-            let allValue2 = ""
             let self = this;
             if(type["value"] !== 'fullAddress'){
               this.schema.map(eachItem =>{
@@ -336,7 +335,6 @@ async  captureCheckboxValue($event: any, data: any, type: any) {
                 allValue = allValue.replace(/.$/,'')
               }
               value = allValue;
-              //value =  typeof this.userInfo[type["value"]] !== 'string' ? this.userInfo[type["value"]][0].value : this.userInfo[type["value"]];
             }else{
               value = this.fullAddress;
             }

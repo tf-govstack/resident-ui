@@ -102,7 +102,7 @@
                             <mat-form-field style="min-width: 73%;">
                               <mat-select [(ngModel)]="selected" id="{{field.attributeName}}">
                                 <mat-option *ngFor="let data of dropDownValues[field.attributeName]"
-                                  (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
+                                  (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode, field.dataType)"
                                   [value]="data.code">{{ data.value }}</mat-option>
                               </mat-select>
                             </mat-form-field>
@@ -134,7 +134,7 @@
                               [value]="proofOfIdentity['documenttype'] ? proofOfIdentity['documenttype'] : '' "
                               id="{{field.attributeName}}">
                               <mat-option style="min-width: 25.2rem;" *ngFor="let data of dropDownValues[field.attributeName]"
-                                (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
+                                (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode, field.dataType)"
                                 [value]="data.code">{{ data.name }}</mat-option>
                             </mat-select>
                           </td>
@@ -336,7 +336,7 @@
                                 [value]="proofOfAddress['documenttype'] ? proofOfAddress['documenttype'] : '' "
                                 id="{{field.attributeName}}">
                                 <mat-option style="min-width: 25.2rem;" *ngFor="let data of dropDownValues[field.attributeName]"
-                                  (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
+                                  (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode, field.dataType)"
                                   [value]="data.code">{{
                                   data.name }}</mat-option>
                               </mat-select>
@@ -512,7 +512,7 @@
                 <mat-card-header><mat-card-title>{{field.labelName[language][1]}}</mat-card-title></mat-card-header>
                 <mat-card-subtitle><mat-select [(ngModel)]="selected2" id="{{field.attributeName}}">
                     <mat-option *ngFor="let data of newNotificationLanguages"
-                      (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode)"
+                      (onSelectionChange)="captureDropDownValue($event, field.attributeName, langCode, field.dataType)"
                       [value]="data.code">{{ data.name }}</mat-option>
                   </mat-select></mat-card-subtitle>
               </div>

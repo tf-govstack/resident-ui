@@ -122,3 +122,17 @@
   align-items: baseline !important;
   display: block !important;
 }
+
+.check-box-card{
+  display: flex;
+  align-items: center;
+}
+
+.check-box{
+  height: 17px;
+  width: 17px;
+  accent-color: #03A64A;
+  margin-right: 5px;
+}
+
+

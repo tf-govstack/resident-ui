@@ -9,8 +9,7 @@ const routes: Routes = [
   { path: 'regcenter', loadChildren: 'src/app/feature/booking/booking.module#BookingModule'},
   { path: 'verify', loadChildren:'src/app/feature/verify/verify.module#VerifyModule'},
   { path: 'uinservices', loadChildren:'src/app/feature/uinservices/uinservices.module#UinservicesModule'},
-  { path:'downloadMyUin', loadChildren:'src/app/feature/downloaduin/downloaduin.module#DownloadUinModule'},
-  {path:'grievanceRedressal',loadChildren:'src/app/feature/grievance/grievance.module#GrievanceModule'}
+  { path:'downloadMyUin', loadChildren:'src/app/feature/downloaduin/downloaduin.module#DownloadUinModule'}
 ];
 
 @NgModule({

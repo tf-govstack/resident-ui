@@ -256,7 +256,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
   reportDetails(data:any){
     this.auditService.audit('RP-007', 'View history', 'RP-View history', 'View history', 'User clicks on "Report an issue"');
-    this.router.navigateByUrl(`grievanceRedressal?source1=viewMyHistory&eid=`+data.eventId);
+    this.router.navigateByUrl(`uinservices/grievanceRedressal?source1=viewMyHistory&eid=`+data.eventId);
   }
 
   search(){    
