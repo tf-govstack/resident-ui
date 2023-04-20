@@ -16,9 +16,10 @@ import { TrackservicerequestComponent } from './trackservicerequest/trackservice
 import { PersonalisedcardComponent } from './personalisedcard/personalisedcard.component';
 import { PhysicalcardComponent } from './physicalcard/physicalcard.component';
 import { SharewithpartnerComponent } from './sharewithpartner/sharewithpartner.component';
+import { GrievanceComponent } from './grievance/grievance.component';
 
 @NgModule({ 
   imports: [CommonModule, UinservicesRoutingModule, FormsModule, ReactiveFormsModule, SharedModule, MaterialModule, RouterModule, I18nModule],
-  declarations: [DashboardComponent, ViewhistoryComponent, RevokevidComponent, LockunlockauthComponent, UpdatedemographicComponent, TrackservicerequestComponent, PersonalisedcardComponent, PhysicalcardComponent, SharewithpartnerComponent]
+  declarations: [DashboardComponent, ViewhistoryComponent, RevokevidComponent, LockunlockauthComponent, UpdatedemographicComponent, TrackservicerequestComponent, PersonalisedcardComponent, PhysicalcardComponent, SharewithpartnerComponent, GrievanceComponent]
 })
 export class UinservicesModule {}
