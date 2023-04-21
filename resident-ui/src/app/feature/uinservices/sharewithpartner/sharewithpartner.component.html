@@ -4,124 +4,151 @@
 	&nbsp;&nbsp;<span class="active">{{'sharewithpartner.title' | translate}}</span>
 </span>
 
-<div class="main-div" *ngIf="!showAcknowledgement">
-	<mat-card *ngIf="schema">
+<div class="main-div">
+	<div class="spinner" *ngIf="isLoading">
+		<mat-spinner></mat-spinner>
+	</div>
+	<mat-card *ngIf="!isLoading">
 		<h3 style="color: #050505;">{{'sharewithpartner.title' | translate}}</h3>
 		<p class="intro-description">{{'sharewithpartner.introDescription' | translate}}</p>
 		<label class="main-label">{{'sharewithpartner.mainlabel' |
 			translate}}</label>
 		<table style="width:100%;">
 			<tr><mat-grid-list [cols]="cols" rowHeight="690px" gutterSize="10px"><mat-grid-tile>
-				<td [style.width] = "width">
-					<table *ngFor="let data of schema; let i = index" style="width:100%;">
-						<tr>
-							<td style="padding:10px;color: #505050;width: 50%">
-								<mat-checkbox  [checked]="data.checked" id="{{data.label[langCode]}}" (click)="stopPropagation($event)"
-									(change)="captureCheckboxValue($event, data, 'datacheck')">{{data.label[langCode]}}
-								</mat-checkbox>
-							</td>
-							<td *ngIf="data.maskRequired"
-								style="width:50%;color: #505050;font-size: 16px;padding-left: 1.25rem;">
-								<mat-checkbox [disabled]="!data.checked" id="{{data.maskRequiredLabel[langCode]}}{{i}}" (click)="stopPropagation($event)"
-									(change)="captureCheckboxValue($event, data, data.maskAttributeName)">
-									{{data.maskRequiredLabel[langCode]}}</mat-checkbox>
-							</td>
-							<td *ngIf="data.formatRequired" style="width:50%">
-								<button *ngIf="data.attributeName !== 'addressLine1' " [disabled]="!data.checked" id="matIcon" mat-button [matMenuTriggerFor]="basic">{{data.formatOptionLabel[langCode]}}
+						<td [style.width]="width">
+							<table *ngFor="let data of schema; let i = index" style="width:100%;">
+								<tr>
+									<td style="padding:10px;color: #505050;width: 50%">
+										<mat-checkbox [checked]="data.checked" id="{{data.label[langCode]}}"
+											(click)="stopPropagation($event)"
+											(change)="captureCheckboxValue($event, data, 'datacheck')">{{data.label[langCode]}}
+										</mat-checkbox>
+									</td>
+									<td *ngIf="data.maskRequired"
+										style="width:50%;color: #505050;font-size: 16px;padding-left: 1.25rem;">
+										<mat-checkbox [disabled]="!data.checked"
+											id="{{data.maskRequiredLabel[langCode]}}{{i}}"
+											(click)="stopPropagation($event)"
+											(change)="captureCheckboxValue($event, data, data.maskAttributeName)">
+											{{data.maskRequiredLabel[langCode]}}</mat-checkbox>
+									</td>
+									<td *ngIf="data.formatRequired" style="width:50%">
+										<button [disabled]="!data.checked" id="matIcon" mat-button
+											[matMenuTriggerFor]="basic">{{data.formatOptionLabel[langCode]}}
+											<mat-icon>keyboard_arrow_down</mat-icon>
+										</button>
+										<!-- <button *ngIf="data.attributeName === 'addressLine1' " [disabled]="!data.checked" id="matIcon" mat-button [matMenuTriggerFor]="basic2">{{data.formatOptionLabel[langCode]}}
 									<mat-icon>keyboard_arrow_down</mat-icon>
-								</button>
-								<button *ngIf="data.attributeName === 'addressLine1' " [disabled]="!data.checked" id="matIcon" mat-button [matMenuTriggerFor]="basic2">{{data.formatOptionLabel[langCode]}}
-									<mat-icon>keyboard_arrow_down</mat-icon>
-								</button>
-								<mat-menu #basic="matMenu">
+								</button> -->
+										<!-- <mat-menu #basic="matMenu">
 									<ng-container *ngFor="let data1 of data.formatOption[langCode];">
 										<button mat-menu-item id="{{data1}}"
 											(click)="captureCheckboxValue($event, data, data1)">
-											<mat-checkbox *ngIf="!data1.checked" [checked]="data1.checked" id="{{data1.value}}">{{data1.label}}</mat-checkbox>
+											<mat-checkbox [checked]="data1.checked" id="{{data1.value}}">{{data1.label}}</mat-checkbox>
 											<span style="display: flex; align-items: center;" *ngIf="data1.checked">
 											<img style="margin-left: -3px; margin-right: 3px;" src="./assets/icons/iconfont/check_box_black_24dp (1).svg"/>
 											{{data1.label}}
 										</span>
 										</button>
 									</ng-container>
-								</mat-menu>
-								<mat-menu #basic2="matMenu">
-									<ng-container *ngFor="let data1 of data.formatOption[langCode];">
-								  		<button id="{{data1.value}}Btn"  mat-menu-item (click)="captureCheckboxValue($event, data,data1)">
-											<mat-checkbox id="{{data1.value}}">{{data1.label}}</mat-checkbox>
-										</button>
-								  	</ng-container>
-								</mat-menu>
-							</td>
-						</tr>
-					</table>
-				</td></mat-grid-tile>
-				<mat-grid-tile style="width: 400px;">
-				<td style="vertical-align: top;" [style.width] = "width">
-					<div class="attribute-card" [style.width] = "width">
-					<table [style.width] = "width">
-						<tr>
-							<td *ngIf="sharableAttributes['photo']">
-								<img [src]="sharableAttributes['photo']['value']" alt='' style="margin-left:48%;" width='70px' height='70px'/>
-						   </td>
-						</tr>
-						<tr *ngFor="let item of valuesSelected">
-							<td style='font-weight:600;' *ngIf="sharableAttributes[item] && item !== 'photo' ">
-								<p style="margin: 0px; width: 7rem;">{{sharableAttributes[item]['label']}}:</p>
-							</td>
-							<td *ngIf="sharableAttributes[item] && item !== 'photo' ">
-								<p [style.width] = "attributeWidth" style="margin: 0px;">{{sharableAttributes[item]['value']}}</p>
-							</td>
-						</tr>
-						<!-- <tr>
+								</mat-menu> -->
+										<mat-menu #basic="matMenu">
+											<ng-container *ngFor="let data1 of data.formatOption[langCode];">
+												<button id="{{data1.value}}Btn" mat-menu-item
+													(click)="captureCheckboxValue($event, data,data1)">
+													<!-- <mat-checkbox [checked]="data1.checked" id="{{data1.value}}">{{data1.label}}</mat-checkbox> -->
+													<div class="check-box-card">
+														<input class="check-box" type="checkbox" [checked]="data1.checked"
+															id="{{data1.value}}" />
+														<label>{{data1.label}}</label>
+													</div>
+												</button>
+											</ng-container>
+										</mat-menu>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</mat-grid-tile>
+					<mat-grid-tile style="width: 400px;">
+						<td style="vertical-align: top;" [style.width]="width">
+							<div class="attribute-card" [style.width]="width">
+								<table [style.width]="width">
+									<tr>
+										<td *ngIf="sharableAttributes['photo']">
+											<img [src]="sharableAttributes['photo']['value']" alt=''
+												style="margin-left:48%;" width='70px' height='70px' />
+										</td>
+									</tr>
+									<tr *ngFor="let item of valuesSelected">
+										<td style='font-weight:600;'
+											*ngIf="sharableAttributes[item] && item !== 'photo' ">
+											<p style="margin: 0px; width: 7rem;">{{sharableAttributes[item]['label']}}:
+											</p>
+										</td>
+										<td *ngIf="sharableAttributes[item] && item !== 'photo' ">
+											<p [style.width]="attributeWidth" style="margin: 0px;">
+												{{sharableAttributes[item]['value']}}</p>
+										</td>
+									</tr>
+									<!-- <tr>
 							<td>
 								<div [innerHTML]="buildHTML | sanitize"></div>
 							</td>
 						</tr> -->
-					</table>
-				</div>
-					<table [style.width] = "width">
-						<tr>
-							<td style="padding-bottom: 10px;font-size: 14px;">
-								<mat-label>{{'sharewithpartner.partnerName' | translate}}</mat-label>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<mat-select id="partnerDetails" [style.width] = "width">
-									<mat-option (onSelectionChange)="captureDropDownValue($event)"
-										*ngFor="let partnerDetail of partnerDetails" [id]="partnerDetail.organizationName" [value]="partnerDetail.partnerID">
-										{{partnerDetail.organizationName}}</mat-option>
-								</mat-select>
-							</td>
-						</tr>
-						<tr>
-							<td style="padding-top: 10px;padding-bottom: 10px;font-size: 14px;">
-								<mat-label>{{'sharewithpartner.sharingReason' | translate}}<span style="color: red;"> *</span></mat-label>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<textarea
-									 [style.width] = "width"
-								    id="sharingReasonPlaceholder"
-									class="purpose-input-box"
-									matInput placeholder="{{'sharewithpartner.sharingReasonPlaceholder' | translate}}"
-									(input)="purpose = $event.target.value"></textarea>
-							</td>
-						</tr>
-					</table>
-				</td></mat-grid-tile></mat-grid-list>
+								</table>
+							</div>
+							<table [style.width]="width">
+								<tr>
+									<td style="padding-bottom: 10px;font-size: 14px;">
+										<mat-label>{{'sharewithpartner.partnerName' | translate}}<span
+												style="color: red;">*</span></mat-label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<mat-select id="partnerDetails" [style.width]="width">
+											<mat-option (onSelectionChange)="captureDropDownValue($event)"
+												*ngFor="let partnerDetail of partnerDetails"
+												[id]="partnerDetail.organizationName" [value]="partnerDetail.partnerID">
+												{{partnerDetail.organizationName}}</mat-option>
+										</mat-select>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-top: 10px;padding-bottom: 10px;font-size: 14px;">
+										<mat-label>{{'sharewithpartner.sharingReason' | translate}}<span
+												style="color: red;">*</span></mat-label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<textarea [attr.maxlength]="totalCommentCount" [style.width]="width"
+											id="sharingReasonPlaceholder" class="purpose-input-box" matInput
+											placeholder="{{'sharewithpartner.sharingReasonPlaceholder' | translate}}"
+											(input)="getpurpose($event)"></textarea>
+										<span
+											style="color:red; font-size: 12px; display: block;">{{'sharewithpartner.TotalCharacters'
+											| translate}}: {{totalCommentCount}}</span>
+										<span
+											style="color:red; font-size: 12px; display: block;">{{'sharewithpartner.remainingCharacters'
+											| translate}}: {{remainingChars}}</span>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</mat-grid-tile></mat-grid-list>
 			</tr>
 			<tr>
-				<td style="float:right;width: 100%" colspan="2"><button id="shareBtn" [disabled]="shareBthDisabled" mat-raised-button class="share-btn"
-					(click)="shareInfoBtn()">{{'sharewithpartner.sharebutton' | translate}}</button></td>
+				<td style="float:right;width: 100%" colspan="2"><button id="shareBtn" [disabled]="shareBthDisabled"
+						mat-raised-button class="share-btn" (click)="shareInfoBtn()">{{'sharewithpartner.sharebutton' |
+						translate}}</button></td>
 			</tr>
 		</table>
 	</mat-card>
 </div>
 
-<div class="main-div" *ngIf="showAcknowledgement">
+<!-- <div class="main-div" *ngIf="showAcknowledgement">
 	<mat-card class="successMsg-card">
 		<div class="succcess-title-card">
 			<img src="./assets/sucess_icon.png" />
@@ -171,7 +198,7 @@
 				(click)="downloadAcknowledgement(aidStatus.eventId)">{{'personalisedcard.downloadbutton' |
 				translate}}</button>
 		</div>
-		<!-- <table style="width: 100%;">
+		<table style="width: 100%;">
 			<tr>
 				<td><label>{{'trackservicerequest.eventId' | translate}}</label></td>
 				<td><label>{{'trackservicerequest.eventType' | translate}}</label></td>
@@ -187,8 +214,6 @@
 						(click)="downloadAcknowledgement(aidStatus.eventId)">{{'personalisedcard.downloadbutton' |
 						translate}}</button></td>
 			</tr>
-		</table> -->
+		</table>
 	</mat-card>
-</div>
-
-
+</div> -->

@@ -14,7 +14,7 @@
 				<mat-card (click)="setAuthlockStatus(authInfo)" id="setAuthlockStatus{{i}}"  [ngClass]="authInfo.recorddirty == false ? 'mini-card' : 'mini-card-yellow'" >
 				  <mat-card-header>			  	
 				    <mat-card-title><span><img src="assets\{{authInfo.label}}.png"></span>&nbsp;&nbsp;&nbsp;<span style="font-size: 14px;font-weight: 800;">{{authInfo.label}}</span></mat-card-title>	
-					<mat-icon (mouseover)="openPopUp(authInfo.label)" (mouseout)="openPopUp(authInfo.label)" class="info-icon">info</mat-icon> 
+					<mat-icon [matTooltip]="openPopUp(authInfo.label)" class="info-icon">info</mat-icon> 
 					<div *ngIf="isPopupSHow && clickedId === (authInfo.label)" class="info-box">
 						<p style="margin-top: 0px;">{{infoMsg}}</p>
 						<p class="read-more-btn">{{readText}}</p>

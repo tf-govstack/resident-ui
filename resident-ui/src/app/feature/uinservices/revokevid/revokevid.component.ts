@@ -42,6 +42,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   errorCode:string;
   message2:any;
   userPreferredLangCode = localStorage.getItem("langCode");
+  isLoading:boolean = true;
 
   constructor(private autoLogout: AutoLogoutService, private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
@@ -127,6 +128,7 @@ export class RevokevidComponent implements OnInit, OnDestroy {
     this.dataStorageService.getPolicy().subscribe(response => {
       if (response["response"]) {
         this.policyType = JSON.parse(response["response"]);
+        this.isLoading = false;
         for (var i = 0; i < this.policyType.vidPolicies.length; i++) {
           results = [];
           for (var j = 0; j < self.vidlist.length; j++) {
@@ -201,13 +203,21 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   generateVID(vidType: any) {
+    this.isLoading = true;
+    let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
+    if (transactionID.length < 10) {
+      let diffrence = 10 - transactionID.length;
+      for(let i=0; i < diffrence; i++){
+          transactionID = transactionID + i
+      }
+    } 
     let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["resident.vid.id.generate"],
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": window.crypto.getRandomValues(new Uint32Array(1)).toString(),
+        "transactionID": transactionID,
         "vidType": vidType,
         "channels": ["PHONE", "EMAIL"]
       }
@@ -219,9 +229,11 @@ export class RevokevidComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           self.getVID();
         }, 400);
+        this.isLoading = false;
         this.showMessage(this.message.replace("$eventId", this.eventId ),this.eventId);
       } else {
-        this.showErrorPopup(response.body["errors"][0].errorCode);
+        this.isLoading = false;
+        this.showErrorPopup(response.body["errors"]);
       }
     });
   }
@@ -240,15 +252,18 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   vidDownloadStatus(vid:any){
+    this.isLoading = true;
       this.dataStorageService.vidDownloadStatus(vid).subscribe(response =>{
         this.eventId = response.headers.get("eventid")
         this.message = this.popupMessages.genericmessage.manageMyVidMessages.downloadedSuccessFully.replace("$eventId", this.eventId)
         if(!response.body['errors'].length){
+          this.isLoading = false;
           this.successMsgForDownload(this.message, this.eventId)
           // setTimeout(()=>{
           //   this.downloadVidCard(this.eventId)
           // },120000)
         }else{
+          this.isLoading = false;
           console.log("error>>"+response.body['errors'])
         }
       },
@@ -289,13 +304,21 @@ export class RevokevidComponent implements OnInit, OnDestroy {
   }
 
   revokeVID(vidValue: any) {
+    this.isLoading = true;
+    let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
+    if (transactionID.length < 10) {
+      let diffrence = 10 - transactionID.length;
+      for(let i=0; i < diffrence; i++){
+          transactionID = transactionID + i
+      }
+    } 
     let self = this;
     const request = {
       "id": this.appConfigService.getConfig()["mosip.resident.revokevid.id"],
       "version": this.appConfigService.getConfig()["resident.revokevid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": window.crypto.getRandomValues(new Uint32Array(1)).toString(),
+        "transactionID": transactionID,
         "vidStatus": "REVOKED"
       }
     };
@@ -303,12 +326,14 @@ export class RevokevidComponent implements OnInit, OnDestroy {
       this.eventId = response.headers.get("eventid")
       this.message = this.popupMessages.genericmessage.manageMyVidMessages.deletedSuccessfully.replace("$eventId", this.eventId)
       if (!response.body["errors"].length) {
+       this.isLoading = false;
         setTimeout(() => {
           self.getVID();
           // this.showMessage(this.message ,vidValue);
         }, 400);
         this.showMessage(this.message ,this.eventId);
       } else {
+        this.isLoading = false;
         this.showErrorPopup(response.body["errors"]);
       }
     },

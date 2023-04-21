@@ -19,7 +19,6 @@ export class GetuinComponent implements OnInit {
   getUinData: any;
   transactionID: any;
   isChecked: boolean = true;
-  buttonbgColor: string = "#BFBCBC";
   otpChannel: any = [];
   siteKey:string = "";
   resetCaptcha: boolean;
@@ -35,6 +34,8 @@ export class GetuinComponent implements OnInit {
   orderStatus:any;
   orderStatusIndex:any;
   width : string;
+  stageKeys:any = [];
+  disableSendOtp: boolean = true;
 
   constructor(
     private router: Router,
@@ -78,7 +79,6 @@ export class GetuinComponent implements OnInit {
     let self = this;
     setTimeout(() => {
       self.siteKey = self.appConfigService.getConfig()["mosip.resident.captcha.sitekey"];
-      console.log("osip.resident.captcha.sitekey>>>"+self.appConfigService.getConfig()["mosip.resident.captcha.sitekey"]);
     }, 1000);  
     this.translateService.use(localStorage.getItem("langCode"));    
     this.translateService
@@ -88,6 +88,8 @@ export class GetuinComponent implements OnInit {
         this.popupMessages = response
         this.infoText = response.InfomationContent.getUin
         this.getStatusData = response.uinStatus
+        this.stageKeys =  Object.keys(this.getStatusData.statusStages)
+
       });
   }
 
@@ -110,11 +112,9 @@ export class GetuinComponent implements OnInit {
   
   getCaptchaToken(event: Event) {
     if (event !== undefined && event != null) {
-      console.log("Captcha event " + event);
-      this.buttonbgColor = "#03A64A";
+      this.disableSendOtp = false;
     } else {
-      console.log("Captcha has expired" + event);
-      this.buttonbgColor = "#BFBCBC";
+      this.disableSendOtp = true;
     }
   }
 
@@ -124,7 +124,7 @@ export class GetuinComponent implements OnInit {
 
   submitUserID(data: NgForm) {
     this.auditService.audit('RP-034', 'Get my UIN', 'RP-Get my UIN', 'Get my UIN', 'User clicks on "send OTP" button on Get my UIN page');
-    if ( data["AID"] !== undefined) {
+    if ( data !== undefined) {
       this.aid = data["AID"]
       this.getStatus(data)
     }
@@ -132,23 +132,30 @@ export class GetuinComponent implements OnInit {
 
   getStatus(data:any){
     this.dataStorageService.getStatus(data["AID"]).subscribe(response =>{
-      if(response["response"].aidStatus === "SUCCESS"){
-        this.generateOTP(data)
+      if(response["response"]){
+        if(response["response"].transactionStage === "CARD_READY_TO_DOWNLOAD"){
+          this.generateOTP(data)
+        }else{
+          this.isUinNotReady = true
+          this.orderStatus = response["response"].transactionStage
+          this.orderStatusIndex =  this.stageKeys.indexOf(this.orderStatus)
+        }
       }else{
-        this.isUinNotReady = true
-        this.orderStatus = response["response"].transactionStage
-        this.orderStatusIndex =  this.getStatusData.statusStages.indexOf(this.orderStatus)
+        this.showErrorPopup(response["errors"])
       }
+     
     })
   }
 
   generateOTP(data:any) {
     this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
-    /*this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
-    if(this.transactionID.length < 10){
+    if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
-      this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString()
-    }*/
+      for(let i=0; i < diffrence; i++){
+          this.transactionID = this.transactionID + i
+      }
+    } 
+    
     let self = this;
     const request = {
       "id": "mosip.identity.otp.internal",
@@ -178,7 +185,13 @@ export class GetuinComponent implements OnInit {
 
   showErrorPopup(message: any) {
     this.errorCode = message[0]["errorCode"]
-    this.message = this.popupMessages.serverErrors[this.errorCode]
+    if (this.errorCode === "RES-SER-410") {
+      let messageType = message[0]["message"].split("-")[1].trim();
+      this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
+      console.log(messageType)
+    } else {
+      this.message = this.popupMessages.serverErrors[this.errorCode]
+    }
     this.dialog
       .open(DialogComponent, {
         width: '550px',

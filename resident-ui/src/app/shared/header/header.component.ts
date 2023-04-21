@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,HostListener } from "@angular/core";
+import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription, timer } from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
@@ -12,6 +12,8 @@ import { AuditService } from 'src/app/core/services/audit.service';
 import { map } from 'rxjs/operators'
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { AuthService } from 'src/app/core/services/authservice.service';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: "app-header",
@@ -35,7 +37,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notificationList:any;
   langCode = localStorage.getItem("langCode");
   popupMessages:any;
-  
+  page = 1;
+  selector: string = "#notificationMenu";
+
   constructor(
     private router: Router,
     private appConfigService: AppConfigService,
@@ -45,10 +49,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private logoutService: LogoutService,
     private headerService: HeaderService,
     private auditService: AuditService,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private authService: AuthService
+  ) {
+    
+  }
 
-  ngOnInit() {
+  onScroll() {
+    console.log("scroll down>>>");
+    /*this.dataStorageService
+    .getNotificationData(this.langCode)
+    .subscribe((response) => {
+      if(response["response"])     
+        this.notificationList = response["response"]["data"];
+        console.log(this.notificationList)
+    });*/
+  }
+
+  onScrollUp() {
+    console.log("scroll up>>>");
+    /*this.dataStorageService
+    .getNotificationData(this.langCode)
+    .subscribe((response) => {
+      if(response["response"])     
+        this.notificationList = response["response"]["data"];
+        console.log(this.notificationList)
+    });*/
+  }
+
+ async ngOnInit() {
     this.defaultJsonValue = defaultJson;
     this.supportedLanguages = [];
     this.selectLanguagesArr = []; 
@@ -81,14 +110,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
 
       self.translateService.use(localStorage.getItem("langCode")); 
-      self.textDir = localStorage.getItem("dir"); 
-
+      self.textDir = localStorage.getItem("dir");
     }, 1000);    
-    this.getProfileInfo();
-   
-   
 
-    this.translateService
+    self.getProfileInfo();
+
+    await  this.translateService
     .getTranslation(localStorage.getItem("langCode"))
     .subscribe(response => {
       this.popupMessages = response;
@@ -115,7 +142,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     //   document.body.style["zoom"] = localStorage.getItem("zoomLevel");
     // }
     
-
+    //window.addEventListener('scroll', this.scroll, true); //third parameter
   }
 
   getNotificationInfo(){
@@ -213,15 +240,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }    
   }
 
-  onLogoClick() {
-   /* if (this.authService.isAuthenticated()) {
-      this.router.navigate([
-        localStorage.getItem("langCode"),
-        "dashboard",
-      ]);
+  godashboard() {
+    console.log("this.authService.isAuthenticated()>>>"+this.fullName);
+    if (this.fullName) {
+      console.log("session exist>>>");
+      this.router.navigate(["uinservices/dashboard"]);
     } else {
-      this.router.navigate([`/${localStorage.getItem("langCode")}`]);
-    }*/
+      console.log("session doesn't exist>>>");
+      this.router.navigate(["dashboard"]);
+    }
   }
 
   onHome() {
@@ -303,6 +330,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    //window.removeEventListener('scroll', this.scroll, true);
   }
 
 }

@@ -4,6 +4,7 @@
 			"attributeName": "fullName",
 			"maskRequired": false,			
 			"formatRequired": true,
+			"defaultFormat":"fullName",
 			"label": {
 				"eng": "Name"
 			},
@@ -24,6 +25,7 @@
 			"attributeName": "dateOfBirth",
 			"maskRequired": false,
 			"formatRequired": true,
+			"defaultFormat":"DD/MM/YYYY",
 			"label": {
 				"eng": "DOB"
 			},
@@ -104,6 +106,7 @@
 			"attributeName": "addressLine1",
 			"maskRequired": false,
 			"formatRequired": true,
+			"defaultFormat":"fullAddress",
 			"label": {
 				"eng": "Address"
 			},
@@ -114,7 +117,7 @@
 				"eng": "Address Format"
 			},
 			"formatOption":{
-				"eng": [{"label":"Address line1", "value":"addressLine1","checked":false},{"label":"Address line2", "value":"addressLine2","checked":false},{"label":"Address line3", "value":"addressLine3","checked":false}, {"label":"Region", "value":"region","checked":false}, {"label":"Province", "value":"province","checked":false}, {"label":"City", "value":"city","checked":false},{"label":"Postal code", "value":"postalCode","checked":false}, {"label":"Full Address", "value":"fullAddress","checked":false}]
+				"eng": [{"label":"Address line1", "value":"addressLine1","checked":true},{"label":"Address line2", "value":"addressLine2","checked":true},{"label":"Address line3", "value":"addressLine3","checked":true}, {"label":"Region", "value":"region","checked":true}, {"label":"Province", "value":"province","checked":true}, {"label":"City", "value":"city","checked":true},{"label":"Postal code", "value":"postalCode","checked":true}, {"label":"Full Address", "value":"fullAddress","checked":true}]
 			},
 			"displaykeyinsharewithpartner":true,
 			"displaykeyinpersonalisedcard":true,

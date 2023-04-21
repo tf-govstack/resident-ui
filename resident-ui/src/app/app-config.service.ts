@@ -55,8 +55,10 @@ export class AppConfigService {
         this.appConfig["mosip.webui.auto.logout.timeout"] = responseData["mosip.webui.auto.logout.timeout"];
         this.appConfig["resident.updateuin.id"] = responseData["resident.updateuin.id"];
         this.appConfig["resident.ui.notification.update.interval.seconds"] = responseData["resident.ui.notification.update.interval.seconds"];  
-        this.appConfig["mosip.kernel.otp.expiry-time"] = responseData["mosip.kernel.otp.expiry-time"]   
-        this.appConfig["resident.grievance-redressal.comments.chars.limit"] = responseData["resident.grievance-redressal.comments.chars.limit"]   
+        this.appConfig["mosip.kernel.otp.expiry-time"] = responseData["mosip.kernel.otp.expiry-time"];
+        this.appConfig["resident.grievance-redressal.comments.chars.limit"] = responseData["resident.grievance-redressal.comments.chars.limit"];
+        this.appConfig["resident.grievance-redressal.alt-email.chars.limit"] = responseData["resident.grievance-redressal.alt-email.chars.limit"];  
+        this.appConfig["resident.grievance-redressal.alt-phone.chars.limit"] = responseData["resident.grievance-redressal.alt-phone.chars.limit"];  
       },
       (error) => {
         console.log(error);

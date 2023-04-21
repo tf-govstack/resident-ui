@@ -35,6 +35,10 @@
 				</td>
 			</tr>
 		</table>
+		<div class="spinner spinner2" *ngIf="isLoading">
+			<mat-spinner></mat-spinner>
+	   </div>
+	   <div *ngIf="!isLoading">
 		<div *ngIf="eidStatus" class="trackDetails">
 			<table style="width: 100%; border-radius: 10px; border-collapse: collapse;">
 				<tr>
@@ -118,10 +122,12 @@
 			</div>
 			<div *ngIf="eidStatus.eventType === 'Update UIN Data'"
 				style="display: flex; justify-content: space-between; width: 100%; margin-top: 1rem;">
-				<button id="downloadCardWithNewDataBtn" style="cursor: pointer;" class="download-btn"><img
+				<div>
+				<button mat-raised-button id="downloadCardWithNewDataBtn" [disabled]="eidStatus.info.downloadLink === 'NA'" *ngIf="eidStatus.eventStatus === 'Success'" (click)="downloadVIDCard(eidStatus.eventId)" class="download-btn"><img
 						class="save-icon"
-						src="./assets/images/save.png" />{{'trackservicerequest.downloadCardWithNewData' |
+						src="./assets/images/save.png" />{{'trackservicerequest.downloadUINCard' |
 					translate}}</button>
+				</div>
 				<button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn"
 					(click)="downloadAcknowledgement()"><img class="save-icon"
 						src="./assets/images/save.png" />{{'trackservicerequest.downloadbuttonLabel' |
@@ -130,9 +136,9 @@
 			<div *ngIf="eidStatus.eventType === 'Download VID Card' "
 				style="display: flex; justify-content: space-between; width: 100%; margin-top: 1rem;">
 				<div>
-				<button mat-raised-button [disabled]="eidStatus.info.downloadLink === 'NA'" *ngIf="eidStatus.eventStatus === 'Success'" (click)="downloadVIDCard(eidStatus.eventId)" id="downloadCardWithNewDataBtn" style="cursor: pointer;" class="download-btn"><img
+				<button mat-raised-button [disabled]="eidStatus.info.downloadLink === 'NA'" *ngIf="eidStatus.eventStatus === 'Success'" (click)="downloadVIDCard(eidStatus.eventId)" id="downloadCardWithNewDataBtn" class="download-btn"><img
 						class="save-icon"
-						src="./assets/images/save.png" />{{'trackservicerequest.downloadCardWithNewData' |
+						src="./assets/images/save.png" />{{'trackservicerequest.downloadVIDCard' |
 					translate}}</button>
 				</div>
 				<button id="downloadAcknowledgementbtn" style="cursor: pointer;" class="download-btn"
@@ -150,5 +156,6 @@
 
 		</div>
 		<P *ngIf="eidStatus">{{'trackservicerequest.raiseSupportRequest' | translate}} <span class="click-here" (click)="navigateGrievance(eidStatus.eventId)">{{'trackservicerequest.clickHere' | translate}}</span></P>
+	</div>
 	</mat-card>
 </div>

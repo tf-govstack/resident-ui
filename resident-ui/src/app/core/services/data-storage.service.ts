@@ -175,7 +175,7 @@ export class DataStorageService {
     return this.httpClient.get(this.BASE_URL + '/profile');
   }
 
-  getServiceHistory(request: any, filters: any) {
+  getServiceHistory(request: any, filters: any,pageSize1:any) {
     let buildURL = "";
     if (request) {
       let pageSize = request.pageSize;
@@ -186,7 +186,7 @@ export class DataStorageService {
       }
     }
     if (!request && filters) {
-      buildURL = "?" + filters;
+      buildURL = "?pageFetch=" + pageSize1 + "&" + filters;
     }
     console.log("buildURL>>>" + buildURL);
     return this.httpClient.get(this.BASE_URL + '/service-history' + "/" + localStorage.getItem("langCode") + buildURL);
@@ -323,10 +323,14 @@ export class DataStorageService {
   }
 
   updateuin(request: any){
-    return this.httpClient.patch(this.BASE_URL + '/update-uin', request);
+    return this.httpClient.patch(this.BASE_URL + '/update-uin', request,{ observe: 'response' });
   }
 
   uploadfile(request, transactionID, docCatCode, docTypCode, referenceId){
     return this.httpClient.post(this.BASE_URL + '/documents/'+transactionID+'?docCatCode='+docCatCode+'&docTypCode='+docTypCode+'&langCode='+localStorage.getItem("langCode")+'&referenceId='+referenceId, request);
+  }
+
+  isAuthenticated(){
+    return this.httpClient.get(this.BASE_URL+'/authorize/admin/validateToken');
   }
 }

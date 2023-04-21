@@ -4,14 +4,17 @@
 	&nbsp;&nbsp;<span class="active">{{'viewhistory.title' | translate}}</span>
 </span>
 
-<div class="main-div" *ngIf="langJSON">
-	<mat-card>
+<div class="main-div">
+	<div class="spinner spinner2" *ngIf="isLoading">
+		<mat-spinner></mat-spinner>
+   </div>
+	<mat-card *ngIf="!isLoading">
 		<h3 style="color: #505050; font-size:20px;">{{'viewhistory.title' | translate}}</h3>
 		<mat-grid-list *ngIf="responselist" [cols]="cols" rowHeight="100px" gutterSize="7px">
 	        <mat-grid-tile>
 	          <div class="mini-card">
 	            <mat-card-header><span class="label">{{'viewhistory.inputsearch' |translate}}</span></mat-card-header>
-	            <mat-card-subtitle><span class="input"><input type="text" id="appIdValue" name="appIdValue" (blur)="captureValue($event, 'searchText', 'textbox')" placeholder="{{'viewhistory.inputAppId' | translate}}" /></span></mat-card-subtitle>
+	            <mat-card-subtitle><span class="input"><input type="text" id="appIdValue" name="appIdValue" (blur)="captureValue($event, 'searchText', 'textbox')" placeholder="{{'viewhistory.inputAppId' | translate}}" style="padding: 10px;" /></span></mat-card-subtitle>
 	          </div>
 	        </mat-grid-tile>
 	        <mat-grid-tile>
@@ -54,7 +57,14 @@
 							>
 							{{status.label}}</mat-option>
 						</mat-select>
-						&nbsp;&nbsp;&nbsp;&nbsp;<button id="searchbtn" mat-raised-button color="primary"
+					</span></mat-card-subtitle>
+	          </div>
+	        </mat-grid-tile>
+	        <mat-grid-tile>
+	          <div class="mini-card">
+	            <mat-card-header><span class="label"></span></mat-card-header>
+	            <mat-card-subtitle style="display: flex;margin-top: 15px;"><span class="datepicker-card" style="display: contents;">
+					<button id="searchbtn" mat-raised-button color="primary"
 						(click)="search()">{{'viewhistory.searchBtn' |
 						translate}}</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="downloadbtn" mat-raised-button
 						color="default" (click)="downloadServiceHistory()"><img class="save-icon"

@@ -39,12 +39,17 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   eventId: any;
   shareBthDisabled: boolean = true;
   valuesSelected: any = [];
-  width : string;
-  attributeWidth:string;
-  cols : number;
-  message2:any;
+  width: string;
+  attributeWidth: string;
+  cols: number;
+  message2: any;
+  totalCommentCount: number;
+  remainingChars: number;
+  fullAddress: string = "";
+  formatLabels: any;
+  isLoading: boolean = true;
 
-  constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
+  constructor(private autoLogout: AutoLogoutService, private interactionService: InteractionService, private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "shareWithPartner") {
         this.shareInfo()
@@ -75,7 +80,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         }
         if (result.breakpoints[Breakpoints.Large]) {
           this.cols = 2;
-          this.width = "35em";
+          this.width = "29em";
           this.attributeWidth = "18em";
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
@@ -104,7 +109,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       .getConfigFiles("sharewithpartner")
       .subscribe((response) => {
         this.schema = response["identity"];
-        this.schema.forEach(data =>{
+        this.schema.forEach(data => {
           this.valuesSelected.push(data.attributeName)
         })
       });
@@ -127,6 +132,11 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       this.autoLogout.getValues(this.langCode);
       this.autoLogout.continueWatching();
     }
+
+    setTimeout(() => {
+      this.totalCommentCount = this.appConfigService.getConfig()["resident.grievance-redressal.comments.chars.limit"]
+      this.remainingChars = this.totalCommentCount;
+    }, 400)
   }
 
   getMappingData() {
@@ -134,7 +144,6 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       .getMappingData()
       .subscribe((response) => {
         this.formatData = { "Address Format": response["identity"]["fullAddress"]["value"].split(","), "Name Format": response["identity"]["name"]["value"].split(","), "Date Format": response["identity"]["dob"]["value"].split(",") }
-        console.log(this.formatData)
       })
   }
 
@@ -142,13 +151,20 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getUserInfo('personalized-card')
       .subscribe((response) => {
-        if(response['response']){
+        if (response['response']) {
           this.userInfo = response["response"];
-        }else{
+          this.isLoading = false;
+        } else {
           this.showErrorPopup(response['errors'])
         }
-        
+
       });
+  }
+
+  getpurpose(event: any) {
+    this.purpose = event.target.value;
+    let enterdChars = this.purpose.length
+    this.remainingChars = this.totalCommentCount - enterdChars
   }
 
   getPartnerDetails() {
@@ -160,7 +176,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   }
 
   captureCheckboxValue($event: any, data: any, type: string) {
-    this.buildHTML = ""
+    this.buildHTML = "";
     if (type === "datacheck") {
       if (data.attributeName.toString() in this.sharableAttributes) {
         delete this.sharableAttributes[data.attributeName];
@@ -176,58 +192,128 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
           if (this.userInfo[data.attributeName] === undefined || this.userInfo[data.attributeName].length < 1) {
             value = "Not Available"
           } else {
-            value = this.userInfo[data.attributeName][0].value;
+            if (data.formatRequired) {
+              if (data.attributeName === "addressLine1") {
+                this.fullAddress = ""
+                this.schema.forEach(item => {
+                  if (item.attributeName === data.attributeName) {
+                    this.formatLabels = item.formatOption[this.langCode]
+                  }
+                })
+
+                this.formatLabels.forEach(item => {
+                  if (this.userInfo[item.value] !== undefined) {
+                    if (typeof this.userInfo[item.value] !== "string") {
+                      this.userInfo[item.value].forEach(eachLang => {
+                        if (eachLang.language === this.langCode) {
+                          this.fullAddress = eachLang.value + "," + this.fullAddress
+                        }
+                      })
+                    } else {
+                      this.fullAddress = this.fullAddress + this.userInfo[item.value]
+                    }
+                  }
+                })
+                value = this.fullAddress
+              } else {
+                value = this.userInfo[data.attributeName][0].value;
+              }
+            } else {
+              value = this.userInfo[data.attributeName][0].value;
+            }
+
           }
         }
-        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": data['maskRequired'], "format": data['attributeName'], "value": value };
+
+        if (data.formatRequired) {
+          this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": data['maskRequired'], "format": data['defaultFormat'], "value": value };
+        } else {
+          this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": data['maskRequired'], "value": value };
+        }
       }
+
       this.schema = this.schema.map(item => {
         if (item.attributeName === data.attributeName) {
           let newItem = { ...item, checked: !item.checked }
+          if (!newItem.checked) {
+            newItem['formatOption'][this.langCode].forEach(eachFormat => {
+              return eachFormat['checked'] = true
+            })
+          }
           return newItem
         } else {
           return item
         }
       })
+
+
     } else {
-     if(typeof type !== 'string'){
-      this.schema =  this.schema.map(eachItem =>{
-        if(data['attributeName'] === eachItem['attributeName']){
-          eachItem['formatOption'][this.langCode].forEach(item =>{
-            if(item.value === type['value']){
-            return  item['checked'] = !item['checked']
-            }else{
-            return  item['checked'] = false
+      console.log("Format1")
+      if (!data.formatRequired) {
+        console.log("Format2")
+        let value;
+        if (this.sharableAttributes[data.attributeName].value === this.userInfo[type]) {
+          value = this.userInfo[data.attributeName];
+        } else {
+          value = this.userInfo[type];
+        }
+        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": $event.checked, "value": value };
+      } else {
+        console.log("Format3")
+        let value = "";
+        if (typeof this.userInfo[data.attributeName] === "string") {
+          console.log("Format4")
+          value = moment(this.userInfo[data.attributeName]).format(type["value"]);
+        } else {
+          console.log("Format5")
+          let allValue = "";
+          let self = this;
+          if (type["value"] !== 'fullAddress') {
+            this.schema.map(eachItem => {
+              if (data['attributeName'] === eachItem['attributeName']) {
+                eachItem['formatOption'][this.langCode].forEach((item) => {
+                  if (item.checked) {
+                    if (self.userInfo[item.value] !== undefined) {
+                      if (item.value === "postalCode") {
+                        allValue = allValue + self.userInfo[item.value];
+                      } else {
+                        allValue = allValue + self.userInfo[item.value][0].value + ",";
+                      }
+                    }
+                  }
+                  return "";
+                });
+              }
+            });
+            if (allValue.endsWith(',')) {
+              allValue = allValue.replace(/.$/, '')
+            }
+            value = allValue;
+          } else {
+            value = this.fullAddress
+          }
+        }
+        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": false, "format": type["value"], "value": value };
+      }
+
+      console.log(this.schema)
+      // if (typeof type !== 'string') {
+      this.schema = this.schema.map(eachItem => {
+        if (data['attributeName'] === eachItem['attributeName']) {
+          eachItem['formatOption'][this.langCode].forEach(item => {
+            if (item.value === type['value']) {
+              return item['checked'] = !item['checked']
+            } else {
+              return item['checked'] = item['checked']
             }
           })
         }
         return eachItem
       })
+      console.log(this.schema)
+      console.log(type)
     }
-      if(!data.formatRequired){
-        let value;
-        if(this.sharableAttributes[data.attributeName].value === this.userInfo[type]){
-          value = this.userInfo[data.attributeName];
-        }else{
-          value = this.userInfo[type];
-        }
-        this.sharableAttributes[data.attributeName] = { "label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": $event.checked, "format": "", "value": value };   
-        console.log(value) 
-      }else{
-        let value = "";
-        if (typeof this.userInfo[data.attributeName] === "string") {
-          value = moment(this.userInfo[data.attributeName]).format(type["value"]);
-        } else {
-          if(type["value"] !== 'fullAddress'){
-            value =  typeof this.userInfo[type["value"]] !== 'string' ? this.userInfo[type["value"]][0].value : this.userInfo[type["value"]];
-          }else{
-            // value = this.userInfo[data.attributeName][0].value;
-          }
-        }
-        this.sharableAttributes[data.attributeName] = {"label": data.label[this.langCode], "attributeName": data['attributeName'], "isMasked": false, "format": type["value"], "value": value };    
-      }
-        
-    }
+    // }
 
     if (Object.keys(this.sharableAttributes).length >= 3) {
       this.shareBthDisabled = false
@@ -237,7 +323,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
 
     let row = "";
     let rowImage = ""
-    
+
     for (const key in this.sharableAttributes) {
       if (key === "photo") {
         rowImage = "<tr><td><img src=' " + this.sharableAttributes[key].value + "' alt='' style='margin-left:48%;' width='70px' height='70px'/></td></tr>";
@@ -258,7 +344,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
       this.partnerId = event.source.value;
     }
   }
-  
+
   shareInfoBtn() {
     this.auditService.audit('RP-033', 'Share credential with partner', 'RP-Share credential with partner', 'Share credential with partner', 'User clicks on "share" button on share credential page');
     if (!this.partnerId) {
@@ -273,11 +359,11 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   }
 
   shareInfo() {
+    this.isLoading = true;
     let sharableAttributes = [];
     for (const key in this.sharableAttributes) {
       sharableAttributes.push(this.sharableAttributes[key]);
     }
-    console.log("sharableAttributes>>>"+JSON.stringify(sharableAttributes));
     let self = this;
     const request = {
       "id": "mosip.resident.share.credential",
@@ -297,9 +383,12 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
         this.dataStorageService
           .getEIDStatus(this.eventId)
           .subscribe((response) => {
-            if (response["response"])
+            if (response["response"]) {
+              this.isLoading = false;
               this.aidStatus = response["response"];
-            this.showAcknowledgement = true;
+              this.router.navigateByUrl(`uinservices/trackservicerequest?eid=` + this.eventId)
+              // this.showAcknowledgement = true;
+            }
           });
         console.log("data>>>" + data);
       },
@@ -312,7 +401,7 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
-        id:"shareWithPartner",
+        id: "shareWithPartner",
         case: 'termsAndConditions',
         title: this.popupMessages.genericmessage.termsAndConditionsLabel,
         conditions: this.popupMessages.genericmessage.termsAndConditionsDescription,
@@ -360,36 +449,36 @@ export class SharewithpartnerComponent implements OnInit, OnDestroy {
   showErrorPopup(message: string) {
     let errorCode = message[0]['errorCode']
     setTimeout(() => {
-    if(errorCode === "RES-SER-418"){
-    this.dialog
-      .open(DialogComponent, {
-        width: '650px',
-        data: {
-          case: 'accessDenied',
-          title: this.popupMessages.genericmessage.errorLabel,
-          message: this.popupMessages.serverErrors[errorCode],
-          btnTxt: this.popupMessages.genericmessage.successButton,
-          clickHere: this.popupMessages.genericmessage.clickHere,
-          clickHere2: this.popupMessages.genericmessage.clickHere2,
-          dearResident: this.popupMessages.genericmessage.dearResident,
-          relogin: this.popupMessages.genericmessage.relogin
-        },
-        disableClose: true
-      });
-    }else{
-      this.dialog
-      .open(DialogComponent, {
-        width: '650px',
-        data: {
-          case: 'MESSAGE',
-          title: this.popupMessages.genericmessage.errorLabel,
-          message: this.popupMessages.serverErrors[errorCode],
-          btnTxt: this.popupMessages.genericmessage.successButton
-        },
-        disableClose: true
-      });
-    }
-  },400)
+      if (errorCode === "RES-SER-418") {
+        this.dialog
+          .open(DialogComponent, {
+            width: '650px',
+            data: {
+              case: 'accessDenied',
+              title: this.popupMessages.genericmessage.errorLabel,
+              message: this.popupMessages.serverErrors[errorCode],
+              btnTxt: this.popupMessages.genericmessage.successButton,
+              clickHere: this.popupMessages.genericmessage.clickHere,
+              clickHere2: this.popupMessages.genericmessage.clickHere2,
+              dearResident: this.popupMessages.genericmessage.dearResident,
+              relogin: this.popupMessages.genericmessage.relogin
+            },
+            disableClose: true
+          });
+      } else {
+        this.dialog
+          .open(DialogComponent, {
+            width: '650px',
+            data: {
+              case: 'MESSAGE',
+              title: this.popupMessages.genericmessage.errorLabel,
+              message: message,
+              btnTxt: this.popupMessages.genericmessage.successButton
+            },
+            disableClose: true
+          });
+      }
+    }, 400)
   }
 
   viewDetails(eventId: any) {

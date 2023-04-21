@@ -79,13 +79,13 @@ export class AuthInterceptor implements HttpInterceptor {
         err => {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401) {
-              if (err.url.includes("profile") && window.location.href.includes("dashboard")) {
-                this.router.navigateByUrl(`dashboard`);
-              } else {
+              if (this.router.url.includes('uinservices')) {
                 this.redirectService.redirect(window.location.href);
                 this.showMessage()
+              } else {
+                this.router.navigateByUrl(`dashboard`);
               }
-            } else if (err.status === 403) {
+            }else if (err.status === 403) {
               this.translateService
                 .getTranslation(localStorage.getItem("langCode"))
                 .subscribe(response => {

@@ -3,8 +3,11 @@
 	<a (click)="onItemSelected('uinservices/dashboard')">{{'dashboard.uinservices' | translate}} &nbsp;&nbsp;</a> > &nbsp;&nbsp;<span class="active">{{'personalisedcard.title' | translate}}</span>
 </span>
 
-<div class="main-div" *ngIf="langJSON">
-	<mat-card *ngIf="schema">
+<div class="main-div">
+	<div class="spinner" *ngIf="isLoading">
+		<mat-spinner></mat-spinner>
+   </div>
+	<mat-card *ngIf="!isLoading">
 		<h3 style="color: #505050;">{{'personalisedcard.title' | translate}}</h3>
 		<p class="intro-description">{{'personalisedcard.introDescription' | translate}}</p>
 		<label style="color: #505050;padding:10px;line-height: 2.5;">{{'personalisedcard.mainlabel' | translate}}</label>
@@ -35,8 +38,8 @@
 								</mat-menu>
 								<mat-menu #basic2="matMenu">
 									<ng-container *ngFor="let data1 of data.formatOption[langCode];">
-								  		<button id="{{data1.value}}Btn"  mat-menu-item (click)="captureCheckboxValue($event, data,data1)">
-											<mat-checkbox id="{{data1.value}}">{{data1.label}}</mat-checkbox>
+								  		<button id="{{data1.value}}Btn"  mat-menu-item>
+											<mat-checkbox (click)="captureCheckboxValue($event, data,data1)" id="{{data1.value}}">{{data1.label}}</mat-checkbox>
 										</button>
 								  	</ng-container>
 								</mat-menu>

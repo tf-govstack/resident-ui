@@ -126,7 +126,7 @@
             "rows": 1,
             "subMenus": [
                 {
-                    "displayName": "Click here to verify your email Id or phone number"
+                    "displayName": "Click here to verify your email ID or phone number"
                 }
             ]
         }
@@ -158,7 +158,7 @@
         "subTitle": "The OTP will expire in",
         "inputLabel": "Enter One Time Password (OTP)",
         "otpDescription": "One Time Password (OTP) has been sent to your registered Mobile Number",
-        "otpDescriptionEmail": " and your registered Email id",
+        "otpDescriptionEmail": " and your registered Email ID",
         "resendBtnLabel": "Resend OTP",
         "submitBtnLabel": "Submit"
     },
@@ -198,6 +198,10 @@
         "TotalCharacters": "Total Characters",
         "remainingCharacters": "Remaining"
     },
+    "breadCrumbNames":{
+        "trackMyRequest":"Track My Request",
+        "viewMyHistory":"View My History"
+    },
     "verifyuinvid": {
         "title": "",
         "mobileno": "Verify mobile number",
@@ -211,7 +215,7 @@
         "phoneicon": "assets/images/phone_iphone_black_24dp.png",
         "subTitle": "The OTP will expire in",
         "inputLabel": "Enter One Time Password (OTP)",
-        "otpDescriptionEmail": "Please enter the OTP that has been sent to your registered email Id ",
+        "otpDescriptionEmail": "Please enter the OTP that has been sent to your registered email ID ",
         "otpDescriptionPhone": "Please enter the OTP that has been sent to your registered phone number ",
         "resendBtnLabel": "Resend OTP",
         "submitBtnLabel": "Submit"
@@ -219,7 +223,7 @@
     "viewhistory": {
         "title": "View My History",
         "inputsearch": "Search",
-        "inputAppId": "Event Id",
+        "inputAppId": "Event ID",
         "inputHistory": "History Type",
         "inputStatus": "Status",
         "inputFrom": "From (dd/mm/yyyy)",
@@ -323,7 +327,16 @@
         "identity": "Identity",
         "address": "Address",
         "contact": "Contact",
-        "languagePreference": "Language Preference"
+        "languagePreference": "Language Preference",
+        "identityHeading":"My Identity",
+        "addressHeading":"My Address",
+        "contactHeading":"My Contact",
+        "languageHeading":"My Language Preference",
+        "InvalidFormatMsg":"The file type that you are trying to upload is not supported. Please upload a different file type.",
+        "InvalidFileSize":"The document you are trying to upload exceeds the file size limit of 2mb. Please upload a document within 2mb.",
+        "sameNameInputErrorMsg":"The name you have entered already exists. Please enter a new name to proceed.",
+        "sameDobInputErrorMsg":"The DOB you have entered already exists. Please enter a new DOB to proceed.",
+        "sameGenderInputErrorMsg":"The gender you have chosen already exists. Please choose a new gender to proceed."
     },
     "preview": {
         "title": "Preview"
@@ -331,14 +344,14 @@
     "trackservicerequest": {
         "title": "Track My Requests",
         "source":"View My History",
-        "searchLabel": "Enter the Event Id that you want to track",
+        "searchLabel": "Enter the Event ID that you want to track",
         "searchPlaceholder": "Enter the 16-digit EID",
         "searchButton": "Track",
-        "eventId": "Event Id",
+        "eventId": "Event ID",
         "eventType": "Event Type",
         "eventStatus": "Event Status",
         "description": "Description",
-        "individualId": "Individual Id",
+        "individualId": "Individual ID",
         "authenticationMode": "Authentication Mode",
         "vidType": "VID Type",
         "vid": "VID",
@@ -352,7 +365,7 @@
         "summary": "Summary",
         "attributeList": "Attribute List",
         "downloadVIDCard": "Download VID card",
-        "downloadCardWithNewData": "Download VID card",
+        "downloadUINCard": "Download UIN card",
         "purpose": "Purpose",
         "raiseSupportRequest": "To raise a support request against this EID",
         "clickHere": "click here."
@@ -382,7 +395,9 @@
         "messageDescription2": ". In order to track the status of the transaction use the above EID in ",
         "trackMyserviceLink": "Track My Service Request",
         "orin": "or in",
-        "viewHistoryLink": "view history"
+        "viewHistoryLink": "view history",
+        "TotalCharacters": "Total Characters",
+        "remainingCharacters": "Remaining"
     },
     "uinStatus": {
         "status": "Status",
@@ -390,13 +405,13 @@
         "requestMsg": "Please try again after a few days.",
         "UINCardStatus": "UIN Card Status",
         "statusTime": "Completion Expected Date : $date",
-        "statusStages": [
-            "Request received",
-            "Validation stage",
-            "Verification stage",
-            "UIN generation stage",
-            "Card ready to download"
-        ],
+        "statusStages": {
+            "REQUEST_RECEIVED":"Request received",
+            "VALIDATION_STAGE":"Validation stage",
+            "VERIFICATION_STAGE":"Verification stage",
+            "UIN_GENERATION_STAGE":"UIN generation stage",
+            "CARD_READY_TO_DOWNLOAD":"Card ready to download"
+        },
         "trackDetailsHeading": "Tracking Details"
     },
     "genericmessage": {
@@ -430,7 +445,7 @@
         "trackStatusText":"In order to track the status of the event, you can click ",
         "clickYesToProceed":"Click Yes to proceed.",
         "getMyUin": {
-            "downloadedSuccessFully": "Dear resident, your UIN card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can",
+            "downloadedSuccessFully": "Dear resident, your UIN card has been successfully downloaded against the the Event ID: $eventId. The password will be sent to your registered Email ID or phone number. In order to track the status of the event, you can",
             "invalidOtp": " Invalid OTP was entered. Please click resend OTP and try again with a valid OTP "
         },
         "termsAndConditionsDescription": [
@@ -477,7 +492,7 @@
             "deletedSuccessfully": "Your VID has been successfully deleted against the Event ID: $eventId."
         },
         "personalisedcardMessages": {
-            "downloadedSuccessFully": "Dear resident, your personalized card has been successfully downloaded against the the Event Id: $eventId. The password will be sent to your registered email Id or phone number. In order to track the status of the event, you can "
+            "downloadedSuccessFully": "Dear resident, your personalized card has been successfully downloaded against the the Event ID: $eventId. The password will be sent to your registered email ID or phone number."
         },
         "sharewithpartnerMessages": {
             "choosePartner": "Kindly choose a partner to proceed.",
@@ -489,8 +504,8 @@
         },
         "verifyChannel": {
             "warningMsg": "Your $channel has already been verified.",
-            "emailSuccess": "Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can ",
-            "phoneSuccess": "Dear resident, your $channel has been successfully verified against the the Event Id: $eventId. In order to track the status of the event, you can "
+            "emailSuccess": "Dear resident, your $channel has been successfully verified against the the Event ID: $eventId. In order to track the status of the event, you can ",
+            "phoneSuccess": "Dear resident, your $channel has been successfully verified against the the Event ID: $eventId. In order to track the status of the event, you can "
         },
         "grievanceRedressal": {
             "successMsg": "Dear resident, your complaint has been successfully sent against the $ticketId.",
@@ -501,8 +516,9 @@
             "confirmationMessage": " Are you sure you want to save the changes made in authentication types?"
         },
         "updateMyData": {
-            "emailSuccessMsg": "Dear resident, your email Id has been successfully updated against the eventId: $eventId. In order to track the status of the event, you can ",
-            "phoneNumberSuccessMsg": "Dear resident, your email Id has been successfully updated against the eventId: $eventId. In order to track the status of the event, you can "
+            "emailSuccessMsg": "Your Email ID has been successfully updated against the Event ID:: $eventId.",
+            "phoneNumberSuccessMsg": "your phone number has been successfully updated against the event ID: $eventId.",
+            "newDataUpdatedSuccessMsg":"Your request to change your data has been submitted against the Event ID: $eventId."
         }
     },
     "autologout": {
@@ -525,7 +541,7 @@
             "Iris Authentication": "On locking/unlocking 'Iris Authentication', any authentication attempt made using an iris will be disabled/enabled.",
             "Face Authentication": "On locking/unlocking 'Face Authentication', any authentication attempt made using face will be disabled/enabled."
         },
-        "trackStatus": "Please enter the EID (Event Id) associated with the event that you want to track. It is important that the EID you enter is associated with the logged-in UIN.",
+        "trackStatus": "Please enter the EID (Event ID) associated with the event that you want to track. It is important that the EID you enter is associated with the logged-in UIN.",
         "getUin": "An AID is your 16-digit Application ID which was provided to you after registration. A UIN is your 10-digit Unique Identity Number. A VID is your 16-digit Virtual ID.",
         "verifyChannel": "A UIN is your 10-digit Unique Identity Number. A VID is your 16-digit Virtual ID."
     },
@@ -535,6 +551,7 @@
         "RES-SER-422": "Invalid OTP entered. Please try again with a valid OTP.",
         "RES-SER-410": {
             "individualIdError": "Invalid UIN/ AID/ VID entered. Please enter a valid UIN/ AID/ VID and try again.",
+            "individualId":"Invalid UIN/ AID/ VID entered. Please enter a valid UIN/ AID/ VID and try again.",
             "EMAIL": "The email ID you have entered is invalid. Please enter a valid email ID.",
             "PHONE": "The phone number you have entered is invalid. Please enter a valid phone number.",
             "eventId": "The event ID you have entered is invalid. Please enter a valid event ID",
@@ -548,10 +565,14 @@
         "RES-SER-449": "Invalid UIN/ AID/ VID entered. Please enter a valid UIN/ AID/ VID and try again.",
         "RES-SER-414": "Comment section cannot be blank. Please enter your comments in order to proceed.",
         "RES-SER-471": "This VID cannot be revoked since you have logged in using the same VID.",
-        "RES-SER-513": "Failed to create a new VID as the existing VID is in use in the current session and it cannot be revoked.",
+        "RES-SER-513": "This VID cannot be revoked since you have logged in using the same VID.",
         "RES-OTP-007": "Invalid OTP entered. Please try again with a valid OTP.",
         "RES-SER-415": "Template exceptionServiceError.",
         "RES-SER-463": "Failed to send OTP. Retry again in sometime.",
-        "RES-SER-418": "You cannot access this service since you have not accepted the consent while logging in. Request you to re-login and accept the relevant consent to proceed."
+        "RES-SER-418": "You cannot access this service since you have not accepted the consent while logging in. Request you to re-login and accept the relevant consent to proceed.",
+        "RES-SER-461":"Document type is a mandatory field. Kindly choose a document type in order to proceed.",
+        "RES-SER-519":"Please enter a different Email ID from the already existing one.",
+        "RES-SER-520":"Please enter a different phone number from the already existing one.",
+        "RES-SER-456":"Invalid AID entered. Please enter a valid AID and try again."
     }
 }

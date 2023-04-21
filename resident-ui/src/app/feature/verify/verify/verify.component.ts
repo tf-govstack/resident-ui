@@ -220,11 +220,12 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   generateOTP() {
     this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
-    /*this.transactionID = (Math.floor(Math.random() * 9000000000) + 1).toString();
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
-      this.transactionID = (Math.floor(Math.random() * 9000000000) + diffrence).toString();
-    }*/
+      for(let i=0; i < diffrence; i++){
+          this.transactionID = this.transactionID + i
+      }
+    } 
     let self = this;
     const request = {
       "id": self.appConfigService.getConfig()['mosip.resident.api.id.otp.request'],

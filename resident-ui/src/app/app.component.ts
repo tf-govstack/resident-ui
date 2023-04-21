@@ -4,8 +4,11 @@ import { HostListener } from '@angular/core';
 import { AutoLogoutService } from 'src/app/core/services/auto-logout.service';
 import { Subscription } from 'rxjs';
 import { Event as NavigationEvent, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { NavigationStart } from '@angular/router';
+import { filter, pairwise } from 'rxjs/operators';
+import { NavigationEnd, NavigationStart } from '@angular/router';
+import { LogoutService } from 'src/app/core/services/logout.service';
+import { AuditService } from 'src/app/core/services/audit.service';
+import { DataStorageService } from 'src/app/core/services/data-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -16,15 +19,54 @@ import { NavigationStart } from '@angular/router';
 export class AppComponent {
   title = 'resident-ui';
   subscriptions: Subscription[] = [];
+  previousUrl: string;
+
   constructor(
     private appConfigService: AppConfigService,
     private autoLogout: AutoLogoutService, 
-    private router: Router
+    private router: Router,
+    private logoutService: LogoutService,
+    private auditService: AuditService,
+    private dataStorageService: DataStorageService
   ) {
     this.appConfigService.getConfig();
+    
   }
+  
+  // @HostListener('window:popstate', ['$event'])
+  // PopState(event) {
+  //   console.log("Testing1")
+  //   console.log(window.location.hash)
+  //   if(window.location.hash.includes("uinservices")){
+  //   console.log("Testing2")
+  //   }else{ 
+  //     console.log("Testing3")
+  //     if(confirm("Are you sure want to leave the page. you will be logged out automatically if you press OK?")){
+  //       this.auditService.audit('RP-002', 'Logout', 'RP-Logout', 'Logout', 'User clicks on "logout" button after logging in to UIN services');
+  //       this.logoutService.logout();
+  //     }else{
+  //       this.router.navigate([this.router.url]); 
+  //       return false;
+  //     }
+  //   }
+  // }
+  
+  ngOnInit() { 
+    this.router.routeReuseStrategy.shouldReuseRoute = function(){
+      return false;
+    };
 
-  ngOnInit() {    
+    this.dataStorageService.isAuthenticated().subscribe((response) => {
+      if(response){
+        console.log("response>>>"+response["errors"]["length"]);
+        if(!response["errors"]["length"]){
+          this.router.navigate(['uinservices/dashboard']); 
+        }
+      }else{
+        this.router.navigate(['dashboard']); 
+      }
+    });
+    
     if(!localStorage.getItem("langCode")){
       localStorage.setItem("langCode", "eng");
     }

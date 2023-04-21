@@ -13,6 +13,8 @@ import { isNgTemplate } from "@angular/compiler";
 import defaultJson from "src/assets/i18n/default.json";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AutoLogoutService } from "src/app/core/services/auto-logout.service";
+import { DateAdapter } from '@angular/material/core';
+import { lang } from "moment";
 
 @Component({
   selector: "app-demographic",
@@ -24,20 +26,20 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   static actualData: any;
   schema: any = {
     "identity": [
-      { "attributeName": "fullName", "description": "", "labelName": { "eng": ["Current Name", "New Name"], "ara": ["Current Name_ara", "New Name_ara"], "fra": ["Current Name_fra", "New Name_fra"] }, "controlType": "textbox", "tabgroup": "identity" },
-      { "attributeName": "dateOfBirth", "description": "", "labelName": { "eng": ["Current DOB", "New DOB"], "ara": ["Current DOB_ara", "New DOB_ara"], "fra": ["Current DOB_fra", "New DOB_fra"] }, "controlType": "calendar", "tabgroup": "identity" },
-      { "attributeName": "gender", "description": "", "labelName": { "eng": ["Current Gender", "New Gender"], "ara": ["Current Gender_ara", "New Gender_ara"], "fra": ["Current Gender_fra", "New Gender_fra"] }, "controlType": "dropdown", "tabgroup": "identity" },
-      { "attributeName": "proofOfIdentity", "description": "", "labelName": { "eng": ["Identity Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Identity Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Identity Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "identity" },
-      { "attributeName": "addressLine1", "description": "", "labelName": { "eng": ["Current Address Line1", "New Address Line1"], "ara": ["Current Address Line1_ara", "New Address Line1_ara"], "fra": ["Current Address Line1_fra", "New Address Line1_fra"] }, "controlType": "textbox", "tabgroup": "address" },
-      { "attributeName": "region", "name": "Region", "description": "", "labelName": { "eng": ["Current Region", "New Region"], "ara": ["Current Region_ara", "New Region_ara"], "fra": ["Current Region_fra", "New Region_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 1 },
-      { "attributeName": "province", "name": "Province", "description": "", "labelName": { "eng": ["Current Province", "New Province"], "ara": ["Current Province_ara", "New Province_ara"], "fra": ["Current Province_fra", "New Province_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 2 },
-      { "attributeName": "city", "name": "City", "description": "", "labelName": { "eng": ["Current City", "New City"], "ara": ["Current City_ara", "New City_ara"], "fra": ["Current City_fra", "New City_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 3 },
-      { "attributeName": "zone", "name": "Zone", "description": "", "labelName": { "eng": ["Current Zone", "New Zone"], "ara": ["Current Zone_ara", "New Zone_ara"], "fra": ["Current Zone_fra", "New Zone_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 4 },
-      { "attributeName": "postalCode", "name": "Postal Code", "description": "", "labelName": { "eng": ["Current Postal Code", "New Postal Code"], "ara": ["Current Postal Code_ara", "New Postal Code_ara"], "fra": ["Current Postal Code_fra", "New Postal Code_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 5 },
-      { "attributeName": "proofOfAddress", "description": "", "labelName": { "eng": ["Address Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Address Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Address Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "address" },
-      { "attributeName": "email", "description": "", "labelName": { "eng": ["Current email ID", "New email ID", "Confirm New email ID", "Send OTP"], "ara": ["Current email ID_ara", "New email ID_ara", "Confirm New email ID_ara", "Send OTP_ara"], "fra": ["Current email ID_fra", "New email ID_fra", "Confirm New email ID_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact" },
-      { "attributeName": "phone", "description": "", "labelName": { "eng": ["Current Phone Number", "New Phone Number", "Confirm New Phone Number", "Send OTP"], "ara": ["Current Phone Number_ara", "New Phone Number_ara", "Confirm New Phone Number_ara", "Send OTP_ara"], "fra": ["Current Phone Number_fra", "New Phone Number_fra", "Confirm New Phone Number_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact" },
-      { "attributeName": "preferredLang", "description": "", "labelName": { "eng": ["Current Notification Language", "New Notification Language"], "ara": ["Current Notification Language_ara", "New Notification Language_ara"], "fra": ["Current Notification Language_fra", "New Notification Language_fra"] }, "controlType": "dropdown", "tabgroup": "notificationLanguage" }]
+      { "attributeName": "fullName", "description": "", "labelName": { "eng": ["Current Name", "New Name"], "ara": ["Current Name_ara", "New Name_ara"], "fra": ["Current Name_fra", "New Name_fra"] }, "controlType": "textbox", "tabgroup": "identity","dataType":"notString" },
+      { "attributeName": "dateOfBirth", "description": "", "labelName": { "eng": ["Current DOB", "New DOB"], "ara": ["Current DOB_ara", "New DOB_ara"], "fra": ["Current DOB_fra", "New DOB_fra"] }, "controlType": "calendar", "tabgroup": "identity","dataType":"string" },
+      { "attributeName": "gender", "description": "", "labelName": { "eng": ["Current Gender", "New Gender"], "ara": ["Current Gender_ara", "New Gender_ara"], "fra": ["Current Gender_fra", "New Gender_fra"] }, "controlType": "dropdown", "tabgroup": "identity","dataType":"notString" },
+      { "attributeName": "proofOfIdentity", "description": "", "labelName": { "eng": ["Identity Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Identity Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Identity Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "identity","dataType":"notString" },
+      { "attributeName": "addressLine1", "description": "", "labelName": { "eng": ["Current Address Line1", "New Address Line1"], "ara": ["Current Address Line1_ara", "New Address Line1_ara"], "fra": ["Current Address Line1_fra", "New Address Line1_fra"] }, "controlType": "textbox", "tabgroup": "address","dataType":"notString" },
+      { "attributeName": "region", "name": "Region", "description": "", "labelName": { "eng": ["Current Region", "New Region"], "ara": ["Current Region_ara", "New Region_ara"], "fra": ["Current Region_fra", "New Region_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 1,"dataType":"notString" },
+      { "attributeName": "province", "name": "Province", "description": "", "labelName": { "eng": ["Current Province", "New Province"], "ara": ["Current Province_ara", "New Province_ara"], "fra": ["Current Province_fra", "New Province_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 2,"dataType":"notString" },
+      { "attributeName": "city", "name": "City", "description": "", "labelName": { "eng": ["Current City", "New City"], "ara": ["Current City_ara", "New City_ara"], "fra": ["Current City_fra", "New City_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 3, "dataType":"notString" },
+      { "attributeName": "zone", "name": "Zone", "description": "", "labelName": { "eng": ["Current Zone", "New Zone"], "ara": ["Current Zone_ara", "New Zone_ara"], "fra": ["Current Zone_fra", "New Zone_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 4, "dataType":"string" },
+      { "attributeName": "postalCode", "name": "Postal Code", "description": "", "labelName": { "eng": ["Current Postal Code", "New Postal Code"], "ara": ["Current Postal Code_ara", "New Postal Code_ara"], "fra": ["Current Postal Code_fra", "New Postal Code_fra"] }, "controlType": "dropdown", "tabgroup": "address", "locationHierarchyLevel": 5,"dataType":"notString" },
+      { "attributeName": "proofOfAddress", "description": "", "labelName": { "eng": ["Address Proof", "Document Type", "Document Reference ID", "Proof Of Document", "Allowed file type : pdf,jpeg,png,jpg and allowed file size : 2mb"], "ara": ["Address Proof_ara", "Document Type_ara", "Document Reference ID_ara", "Proof Of Document_ara", "Allowed file type_ara : pdf,jpeg,png,jpg and allowed file size : 2mb"], "fra": ["Address Proof_fra", "Document Type_fra", "Document Reference ID_fra", "Proof Of Document_fra", "Allowed file type_fra : pdf,jpeg,png,jpg and allowed file size : 2mb"] }, "controlType": "fileupload", "tabgroup": "address","dataType":"notString" },
+      { "attributeName": "email", "description": "", "labelName": { "eng": ["Current email ID", "New email ID", "Confirm New email ID", "Send OTP"], "ara": ["Current email ID_ara", "New email ID_ara", "Confirm New email ID_ara", "Send OTP_ara"], "fra": ["Current email ID_fra", "New email ID_fra", "Confirm New email ID_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact", "dataType":"string" },
+      { "attributeName": "phone", "description": "", "labelName": { "eng": ["Current Phone Number", "New Phone Number", "Confirm New Phone Number", "Send OTP"], "ara": ["Current Phone Number_ara", "New Phone Number_ara", "Confirm New Phone Number_ara", "Send OTP_ara"], "fra": ["Current Phone Number_fra", "New Phone Number_fra", "Confirm New Phone Number_fra", "Send OTP_fra"] }, "controlType": "textbox", "tabgroup": "contact", "dataType":"string" },
+      { "attributeName": "preferredLang", "description": "", "labelName": { "eng": ["Current Notification Language", "New Notification Language"], "ara": ["Current Notification Language_ara", "New Notification Language_ara"], "fra": ["Current Notification Language_fra", "New Notification Language_fra"] }, "controlType": "dropdown", "tabgroup": "notificationLanguage", "dataType":"string" }]
   };
   subscriptions: Subscription[] = [];
   buildJSONData: any = {};
@@ -58,6 +60,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   clickEventSubscription: Subscription;
   popupMessages: any;
   pdfSrc = "";
+  pdfSrcPOA = "";
   confirmContact: any;
   sendOtpDisable: boolean = true;
   updatedingId: any;
@@ -73,17 +76,27 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   errorCode: any;
   selectedLanguage: any;
   defaultJsonValue: any;
-  newLangArr:any =[];
-  perfLangArr:any = {};
-  newNotificationLanguages:any= [];
-  matTabLabel:string = "Identity";
-  matTabIndex:number = 0;
-  contactTye:string;
-  width : string;
-  cols : number;
-  message2:any;
+  newLangArr: any = [];
+  perfLangArr: any = {};
+  newNotificationLanguages: any = [];
+  matTabLabel: string = "Identity";
+  matTabIndex: number = 0;
+  contactTye: string;
+  width: string;
+  cols: number;
+  message2: any;
+  displayPOIUpload: boolean = false;
+  displayPOAUpload: boolean = false;
+  maxdate: Date = new Date();
+  isValidFileFormatPOI: boolean = false;
+  isValidFileFormatPOA: boolean = false;
+  warningMessage: string;
+  langJson: any;
+  selectedPOIFileForPreview:string = "";
+  selectedPOAFileForPreview:string = "";
+  isLoading:boolean = true;
 
-  constructor(private autoLogout: AutoLogoutService,private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
+  constructor(private autoLogout: AutoLogoutService, private interactionService: InteractionService, private dialog: MatDialog, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router, private appConfigService: AppConfigService, private auditService: AuditService, private breakpointObserver: BreakpointObserver, private dateAdapter: DateAdapter<Date>) {
     this.clickEventSubscription = this.interactionService.getClickEvent().subscribe((id) => {
       if (id === "updateMyData") {
         this.updateDemographicData();
@@ -123,10 +136,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         }
       }
     });
+    this.dateAdapter.setLocale('en-GB');
   }
 
   async ngOnInit() {
-    this.defaultJsonValue = {...defaultJson}
+    this.defaultJsonValue = { ...defaultJson }
     this.initialLocationCode = "MOR";
     this.locCode = 5;
     this.translateService.use(localStorage.getItem("langCode"));
@@ -138,12 +152,13 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.translateService
       .getTranslation(localStorage.getItem("langCode"))
       .subscribe(response => {
+        this.langJson = response.updatedemographic
         this.popupMessages = response;
       });
-    
+
     let supportedLanguages = this.appConfigService.getConfig()['supportedLanguages'].split(',');
-    supportedLanguages.forEach(data =>{
-      let newObj = {"code":data,"name":this.defaultJsonValue['languages'][data]['nativeName']}
+    supportedLanguages.forEach(data => {
+      let newObj = { "code": data, "name": this.defaultJsonValue['languages'][data]['nativeName'] }
       this.newNotificationLanguages.push(newObj)
     })
 
@@ -181,13 +196,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.dataStorageService
       .getUserInfo('update-demographics')
       .subscribe((response) => {
-        if (response["response"]){
+        if (response["response"]) {
+          this.isLoading = false;
           this.userInfo = response["response"];
-        console.log(this.userInfo)
-        UpdatedemographicComponent.actualData = response["response"];
-        this.buildData();
-        }else{
-           this.showErrorPopup(response['errors'])
+          UpdatedemographicComponent.actualData = response["response"];
+          this.buildData();
+        } else {
+          this.isLoading = false;
+          this.showErrorPopup(response['errors'])
         }
       });
   }
@@ -209,7 +225,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
                       return data.value.trim()
                     }
                   });
-                  console.log("schema.id>>>" + JSON.stringify(schema.attributeName));
                   self.buildJSONData[schema.attributeName][language] = value[0].value;
                 });
               }
@@ -217,7 +232,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           }
         }
       }
-      console.log("this.buildJSONData>>>" + JSON.stringify(this.buildJSONData));
       this.getGender();
       this.getLocationHierarchyLevel();
       this.getDocumentType("POI", "proofOfIdentity"); this.getDocumentType("POA", "proofOfAddress");
@@ -225,12 +239,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
       console.log("Exception>>>" + ex.message);
     }
     let perfLangs = this.buildJSONData['preferredLang'].split(',');
-    perfLangs.forEach(data =>{
+    perfLangs.forEach(data => {
       this.perfLangArr[data] = defaultJson['languages'][data]['nativeName']
     })
-    console.log(this.perfLangArr)
-    this.buildJSONData['preferredLang'] = this.perfLangArr
-    console.log(this.buildJSONData)
+    this.buildJSONData['preferredLang'] = this.perfLangArr;
   }
 
   changedBuildData() {
@@ -257,7 +269,6 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         }
       }
     }
-    // this.buildCloneJsonData = { ...this.buildCloneJsonData, ...this.dynamicFieldValue }
   }
 
   addingAddessData() {
@@ -294,9 +305,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     }
     this.addingAddessData()
     // this.showPreviewPage = true
-    this.uploadedFiles = this.files.concat(this.filesPOA)
-    console.log(this.buildCloneJsonData)
-    console.log(this.userInfoClone)
+    this.uploadedFiles = this.files.concat(this.filesPOA);
     // this.matTabLabel = "Identity";
   }
 
@@ -308,8 +317,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   getGender() {
-    this.dataStorageService.getDataForDropDown("/auth-proxy/masterdata/gendertypes/" + localStorage.getItem("langCode")).subscribe(response => {
-      this.dropDownValues["gender"] = response["response"]["genderType"];
+    this.dataStorageService.getDataForDropDown("/auth-proxy/masterdata/dynamicfields/gender" + "/" + localStorage.getItem("langCode") + "?withValue=true").subscribe(response => {
+      this.dropDownValues["gender"] = response["response"]['values'];
     });
   }
 
@@ -352,8 +361,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   captureConfirmValue(event: any, id: any) {
     this.sendOtpDisable = this.userId === event.target.value ? false : true;
-    this.updatedingId = id
-    this.confirmContact = event.target.value
+    this.updatedingId = id;
+    this.confirmContact = event.target.value;
   }
 
   sendOTPBtn(id: any) {
@@ -370,10 +379,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
-      for(let i=0; i < diffrence; i++){
-          this.transactionID = this.transactionID + i
+      for (let i = 0; i < diffrence; i++) {
+        this.transactionID = this.transactionID + i
       }
-    } 
+    }
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
@@ -398,10 +407,10 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (this.transactionID.length < 10) {
       let diffrence = 10 - this.transactionID.length;
-      for(let i=0; i < diffrence; i++){
-          this.transactionID = this.transactionID + i
+      for (let i = 0; i < diffrence; i++) {
+        this.transactionID = this.transactionID + i
       }
-    } 
+    }
 
     const request = {
       "id": "mosip.resident.contact.details.send.otp.id",
@@ -424,6 +433,8 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   }
 
   verifyupdatedData(otp: any) {
+    this.dialog.closeAll();
+    this.isLoading = true;
     const request = {
       "id": "mosip.resident.contact.details.update.id",
       "version": this.appConfigService.getConfig()['mosip.resident.request.response.version'],
@@ -437,11 +448,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.dataStorageService.verifyUpdateData(request).subscribe(response => {
       if (response.body['response']) {
         let eventId = response.headers.get("eventid")
-        this.message =  this.contactTye === 'email' ? this.popupMessages.genericmessage.updateMyData.emailSuccessMsg.replace("$eventId", eventId) : this.popupMessages.genericmessage.updateMyData.phoneNumberSuccessMsg.replace("$eventId", eventId);
-        this.dialog.closeAll();
-        this.showMessage(this.message,eventId);
+        this.message = this.contactTye === 'email' ? this.popupMessages.genericmessage.updateMyData.emailSuccessMsg.replace("$eventId", eventId) : this.popupMessages.genericmessage.updateMyData.phoneNumberSuccessMsg.replace("$eventId", eventId);
+        this.isLoading = false;
+        this.showMessage(this.message, eventId);
       } else {
-        this.dialog.closeAll();
+         this.isLoading = false;
         this.showErrorPopup(response.body["errors"]);
       }
     }, error => {
@@ -453,27 +464,72 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     this.userId = event.target.value;
     this.contactTye = formControlName;
     let self = this;
-    if(event.target.value !== ''){
-    if (event.target.value === "" && this.userInfoClone[formControlName]) {
-      this.userInfoClone[formControlName].forEach(item => {
-        if (item.language === language) {
-          console.log(this.userInfoClone[formControlName])
-          let index = this.userInfoClone[formControlName].findIndex(data => data === item)
-          this.userInfoClone[formControlName].splice(index, 1)
-        }
-      })
-    } else {
-      if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
-        if (typeof self.userInfo[formControlName] === "string") {
-          self.userInfo[formControlName] = event.target.value;
+    if (event.target.value !== '') {
+      if (event.target.value === "" && this.userInfoClone[formControlName]) {
+        this.userInfoClone[formControlName].forEach(item => {
+          if (item.language === language) {
+            let index = this.userInfoClone[formControlName].findIndex(data => data === item)
+            this.userInfoClone[formControlName].splice(index, 1)
+          }
+        })
+      } else {
+        if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
+          if (typeof self.userInfo[formControlName] === "string") {
+            self.userInfo[formControlName] = event.target.value;
+          } else {
+            let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
+            // self.userInfoClone[formControlName][index]["value"] = event.target.value;
+            let newData = { "language": language, "value": event.target.value };
+            if (formControlName in this.userInfoClone) {
+              this.userInfoClone[formControlName].forEach(item => {
+                if (item['language'] === language) {
+                  item['value'] = event.target.value;
+                } else {
+                  if (item['language']) {
+                    if (this.userInfoClone[formControlName]) {
+                      this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
+                    } else {
+                      this.userInfoClone[formControlName] = [].concat(newData);
+                    }
+                  }
+                }
+              })
+            } else {
+              this.userInfoClone[formControlName] = [].concat(newData);
+            }
+          }
         } else {
-          let index = self.userInfo[formControlName].findIndex(data => data.language.trim() === language.trim());
-          // self.userInfoClone[formControlName][index]["value"] = event.target.value;
-          let newData = { "language": language, "value": event.target.value };
+          self[formControlName]["documentreferenceId"] = event.target.value;
+        }
+      }
+    }
+  }
+
+  captureDatePickerValue(event: any, formControlName: string) {
+    let self = this;
+    let dateFormat = new Date(event.target.value);
+    let formattedDate = dateFormat.getFullYear() + "/" + ("0" + (dateFormat.getMonth() + 1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);
+    this.selectedDate = dateFormat;
+    if (event.target.value === null && this.userInfoClone["dateOfBirth"]) {
+      delete this.userInfoClone["dateOfBirth"]
+    } else {
+      self.userInfoClone[formControlName] = formattedDate;
+    }
+    console.log(this.userInfoClone)
+  }
+
+  captureDropDownValue(event: any, formControlName: string, language: string, dataType:string) {
+    let self = this;
+    if (event.source.selected) {
+      if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
+        if (dataType === "string") {
+          this.userInfoClone[formControlName] = event.source.viewValue;
+        } else {
+          let newData = { "language": language, "value": event.source.viewValue }
           if (formControlName in this.userInfoClone) {
             this.userInfoClone[formControlName].forEach(item => {
               if (item['language'] === language) {
-                item['value'] = event.target.value;
+                item['value'] = event.source.viewValue;
               } else {
                 if (item['language']) {
                   if (this.userInfoClone[formControlName]) {
@@ -489,47 +545,11 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
           }
         }
       } else {
-        self[formControlName]["documentreferenceId"] = event.target.value;
-      }
-    }
-  }
-  }
-
-  captureDatePickerValue(event: any, formControlName: string) {
-    let self = this;
-    let dateFormat = new Date(event.target.value);
-    let formattedDate = dateFormat.getFullYear() + "/" + ("0" + (dateFormat.getMonth() + 1)).slice(-2) + "/" + ("0" + dateFormat.getDate()).slice(-2);
-    if (event.target.value === null && this.userInfoClone["dateOfBirth"]) {
-      delete this.userInfoClone["dateOfBirth"]
-    } else {
-      self.userInfoClone[formControlName] = formattedDate;
-    }
-    console.log(this.userInfoClone)
-  }
-
-  captureDropDownValue(event: any, formControlName: string, language: string) {
-    let self = this;
-    if (event.source.selected) {
-      if ((formControlName !== "proofOfIdentity") && (formControlName !== "proofOfAddress")) {
-        let newData = { "language": language, "value": event.source.viewValue }
-        if (formControlName in this.userInfoClone) {
-          this.userInfoClone[formControlName].forEach(item => {
-            if (item['language'] === language) {
-              item['value'] = event.source.viewValue;
-            } else {
-              if (item['language']) {
-                if (this.userInfoClone[formControlName]) {
-                  this.userInfoClone[formControlName] = this.userInfoClone[formControlName].concat(newData);
-                } else {
-                  this.userInfoClone[formControlName] = [].concat(newData);
-                }
-              }
-            }
-          })
-        } else {
-          this.userInfoClone[formControlName] = [].concat(newData);
+        if (formControlName === "proofOfIdentity") {
+          this.displayPOIUpload = true;
+        } else if (formControlName === "proofOfAddress") {
+          this.displayPOAUpload = true;
         }
-      } else {
         self[formControlName]["documenttype"] = event.source.value;
       }
     }
@@ -541,48 +561,75 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
 
   uploadFiles(files, transactionID, docCatCode, docTypCode, referenceId) {
     this.dataStorageService.uploadfile(files, transactionID, docCatCode, docTypCode, referenceId).subscribe(response => {
+      console.log(response)
     });
   }
 
   updateDemographicData() {
-    console.log("self.proofOfIdentity>>>" + JSON.stringify(this.proofOfIdentity));
-    console.log("self.proofOfAddress>>>" + JSON.stringify(this.proofOfAddress));
-    console.log("this.dynamicFieldValue>>>" + JSON.stringify(this.dynamicFieldValue));
-    console.log("self.userInfo>>>" + JSON.stringify(this.userInfo));
-
+    this.isLoading = true;
     let transactionID = window.crypto.getRandomValues(new Uint32Array(1)).toString();
     if (transactionID.length < 10) {
       let diffrence = 10 - transactionID.length;
-      for(let i=0; i < diffrence; i++){
-           transactionID = transactionID + i
+      for (let i = 0; i < diffrence; i++) {
+        transactionID = transactionID + i
       }
-    } 
+    }
     if (this.proofOfIdentity['documenttype']) {
       const formData = new FormData();
       formData.append('file', this.files[0]);
       this.uploadFiles(formData, transactionID, 'POI', this.proofOfIdentity['documenttype'], this.proofOfIdentity['documentreferenceId']);
-      console.log(this.files[0]);
     }
     if (this.proofOfAddress['documenttype']) {
-      this.uploadFiles(this.filesPOA[0], transactionID, 'POA', this.proofOfAddress['documenttype'], this.proofOfAddress['documentreferenceId']);
-      console.log(this.filesPOA[0]);
+      const formData = new FormData();
+      formData.append('file', this.filesPOA[0]);
+      this.uploadFiles(formData, transactionID, 'POA', this.proofOfAddress['documenttype'], this.proofOfAddress['documentreferenceId']);
     }
 
+    setTimeout(() => {
+      const request = {
+        "id": this.appConfigService.getConfig()["resident.updateuin.id"],
+        "version": this.appConfigService.getConfig()["resident.vid.version.new"],
+        "requesttime": Utils.getCurrentDate(),
+        "request": {
+          "transactionID": transactionID,
+          "consent": "Accepted",
+          "identity": this.userInfoClone
+        }
+      };
+      this.dataStorageService.updateuin(request).subscribe(response => {
+        let eventId = response.headers.get("eventid")
+        this.message = this.popupMessages.genericmessage.updateMyData.newDataUpdatedSuccessMsg.replace("$eventId", eventId)
+        if (response.body["response"]) {
+          this.isLoading = false;
+          this.showMessage(this.message, eventId);
+        } else {
+          this.isLoading = false;
+          this.showErrorPopup(response.body["errors"])
+        }
+      }, error => {
+        console.log(error)
+      })
+    }, 4000)
+  }
+
+  updatenotificationLanguage(){
     const request = {
       "id": this.appConfigService.getConfig()["resident.updateuin.id"],
       "version": this.appConfigService.getConfig()["resident.vid.version.new"],
       "requesttime": Utils.getCurrentDate(),
       "request": {
-        "transactionID": transactionID,
+        "transactionID": null,
         "consent": "Accepted",
         "identity": this.userInfoClone
       }
     };
     this.dataStorageService.updateuin(request).subscribe(response => {
-      if (response["response"]) {
-        this.showMessage(response["response"]['message'],'')
+      let eventId = response.headers.get("eventid")
+      this.message = this.popupMessages.genericmessage.updateMyData.newDataUpdatedSuccessMsg.replace("$eventId", eventId)
+      if (response.body["response"]) {
+        this.showMessage(this.message, eventId)
       } else {
-        this.showErrorPopup(response["errors"])
+        this.showErrorPopup(response.body["errors"])
       }
     }, error => {
       console.log(error)
@@ -603,7 +650,16 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     });
     return dialogRef;
   }
-
+  closePreview(fileType:any) {
+    if(fileType === "POI"){
+      this.pdfSrc = "";
+      this.selectedPOIFileForPreview = "";
+    }else{
+      this.pdfSrcPOA = "";
+      this.selectedPOAFileForPreview = "";
+    }
+   
+  }
   /**
    * on file drop handler
    */
@@ -629,12 +685,14 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
         this.pdfSrc = e.target.result;
       };
       reader.readAsDataURL(this.files[index]);
+      this.selectedPOIFileForPreview = this.files[index].name;
     } else {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.pdfSrc = e.target.result;
+        this.pdfSrcPOA = e.target.result;
       };
       reader.readAsDataURL(this.filesPOA[index]);
+      this.selectedPOAFileForPreview = this.filesPOA[index].name;
     }
   }
 
@@ -662,6 +720,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     if (this.filesPOA.length < 1) {
       this.previewDisabledInAddress = true;
     }
+    this.pdfSrc = "";
     this.uploadedFiles = this.files.concat(this.filesPOA)
   }
 
@@ -679,7 +738,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
               clearInterval(progressInterval);
               this.uploadFilesSimulator(index + 1, type);
             } else {
-              this.files[index].progress += 5;
+              this.files[index].progress += 20;
             }
           }, 200);
         }
@@ -692,7 +751,7 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
               clearInterval(progressInterval);
               this.uploadFilesSimulator(index + 1, type);
             } else {
-              this.filesPOA[index].progress += 5;
+              this.filesPOA[index].progress += 20;
             }
           }, 200);
         }
@@ -704,25 +763,43 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
    * Convert Files list to normal array list
    * @param files (Files List)
    */
-  prepareFilesList(files: Array<any>, type: string) {  
+  prepareFilesList(files: Array<any>, type: string) {
     var allowedFiles = [".jpg", ".jpeg", ".png", ".pdf"];
     var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+    let fileSize = Math.floor(Math.log(files[0].size) / Math.log(1024));
     if (!regex.test(files[0].name.toLowerCase())) {
-    }else{
-       if (type === "POI") {
-        for (const item of files) {
-          item.progress = 0;
-          this.files.push(item);
-        }
-        this.uploadFilesSimulator(0, type);
-        this.previewDisabled = false
+      if (type === "POI") {
+        this.isValidFileFormatPOI = true
       } else {
-        for (const item of files) {
-          item.progress = 0;
-          this.filesPOA.push(item);
+        this.isValidFileFormatPOA = true
+      }
+      this.warningMessage = this.popupMessages.updatedemographic.InvalidFormatMsg
+    } else {
+      if (fileSize <= 2) {
+        if (type === "POI") {
+          this.isValidFileFormatPOI = false;
+          for (const item of files) {
+            item.progress = 0;
+            this.files.push(item);
+          }
+          this.uploadFilesSimulator(0, type);
+          this.previewDisabled = false
+        } else {
+          this.isValidFileFormatPOA = false;
+          for (const item of files) {
+            item.progress = 0;
+            this.filesPOA.push(item);
+          }
+          this.uploadFilesSimulator(0, type);
+          this.previewDisabledInAddress = false
         }
-        this.uploadFilesSimulator(0, type);
-        this.previewDisabledInAddress = false
+      } else {
+        if (type === "POI") {
+          this.isValidFileFormatPOI = true
+        } else {
+          this.isValidFileFormatPOA = true
+        }
+        this.warningMessage = this.popupMessages.updatedemographic.InvalidFileSize
       }
     }
   }
@@ -758,15 +835,18 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
     return dialogRef;
   }
 
-  showMessage(message: string,eventId:any) {
+  showMessage(message: string, eventId: any) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',
       data: {
         case: 'MESSAGE',
         title: this.popupMessages.genericmessage.successLabel,
-        message: message,
-        eventId:eventId,
+        trackStatusText: this.popupMessages.genericmessage.trackStatusText,
         clickHere: this.popupMessages.genericmessage.clickHere,
+        message: message,
+        eventId: eventId,
+        clickHere2: this.popupMessages.genericmessage.clickHere2,
+        dearResident: this.popupMessages.genericmessage.dearResident,
         btnTxt: this.popupMessages.genericmessage.successButton
       }
     });
@@ -776,69 +856,68 @@ export class UpdatedemographicComponent implements OnInit, OnDestroy {
   showErrorPopup(message: string) {
     this.errorCode = message[0]["errorCode"];
     setTimeout(() => {
-    if (this.errorCode === "RES-SER-410") {
-      let messageType = message[0]["message"].split("-")[1].trim();
-      this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
-    } else {
-      this.message = this.popupMessages.serverErrors[this.errorCode]
-    }
-    if(this.errorCode === "RES-SER-418"){
-      this.dialog
-        .open(DialogComponent, {
-          width: '650px',
-          data: {
-            case: 'accessDenied',
-            title: this.popupMessages.genericmessage.errorLabel,
-            message: this.popupMessages.serverErrors[this.errorCode],
-            btnTxt: this.popupMessages.genericmessage.successButton,
-            clickHere: this.popupMessages.genericmessage.clickHere,
-            clickHere2: this.popupMessages.genericmessage.clickHere2,
-            dearResident: this.popupMessages.genericmessage.dearResident,
-            relogin: this.popupMessages.genericmessage.relogin
-          },
-          disableClose: true
-        });
-      }else{
-        this.dialog
-        .open(DialogComponent, {
-          width: '650px',
-          data: {
-            case: 'MESSAGE',
-            title: this.popupMessages.genericmessage.errorLabel,
-            message: this.popupMessages.serverErrors[this.errorCode],
-            btnTxt: this.popupMessages.genericmessage.successButton
-          },
-          disableClose: true
-        });
+      if (this.errorCode === "RES-SER-410") {
+        let messageType = message[0]["message"].split("-")[1].trim();
+        this.message = this.popupMessages.serverErrors[this.errorCode][messageType]
+      } else {
+        this.message = this.popupMessages.serverErrors[this.errorCode]
       }
-    },400)
+      if (this.errorCode === "RES-SER-418") {
+        this.dialog
+          .open(DialogComponent, {
+            width: '650px',
+            data: {
+              case: 'accessDenied',
+              title: this.popupMessages.genericmessage.errorLabel,
+              message: this.message,
+              btnTxt: this.popupMessages.genericmessage.successButton,
+              clickHere: this.popupMessages.genericmessage.clickHere,
+              clickHere2: this.popupMessages.genericmessage.clickHere2,
+              dearResident: this.popupMessages.genericmessage.dearResident,
+              relogin: this.popupMessages.genericmessage.relogin
+            },
+            disableClose: true
+          });
+      } else {
+        this.dialog
+          .open(DialogComponent, {
+            width: '650px',
+            data: {
+              case: 'MESSAGE',
+              title: this.popupMessages.genericmessage.errorLabel,
+              message: this.message,
+              btnTxt: this.popupMessages.genericmessage.successButton
+            },
+            disableClose: true
+          });
+      }
+    }, 400)
   }
 
 
   onItemSelected(item: any) {
-    if (item === "matTabLabel"){
+    if (item === "matTabLabel") {
       this.showPreviewPage = false;
-    }else{
+    } else {
       this.router.navigate([item]);
     }
   }
 
-  typeOf(value:any){
-     return typeof value
+  typeOf(value: any) {
+    return typeof value
   }
 
   backBtn() {
     this.showPreviewPage = false
   }
 
-  logChange(event:any){
-    console.log(event)
+  logChange(event: any) {
     this.matTabIndex = event.index;
-    this.matTabLabel =event.tab.textLabel;
+    this.matTabLabel = event.tab.textLabel;
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-    this.clickEventSubscription.unsubscribe()
+    this.clickEventSubscription.unsubscribe();
   }
 }

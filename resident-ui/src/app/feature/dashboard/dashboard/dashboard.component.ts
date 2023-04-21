@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { DataStorageService } from "src/app/core/services/data-storage.service";
@@ -12,7 +12,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.css"],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   menuItems:any;
   message:any;
@@ -66,7 +66,11 @@ export class DashboardComponent implements OnInit {
 
   onItemSelected(item: any) {
     if(item === "UIN Services"){
-      this.router.navigate(['uinservices/dashboard'])
+      console.log("skipLocationChange false>>>");
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>{
+       this.router.navigated = false;
+       this.router.navigate(["uinservices/dashboard"]);
+      });
     }else if(item === "Get Information"){
       this.router.navigate(["regcenter"])
     }else if(item === "Booking an Appointment"){
@@ -75,5 +79,9 @@ export class DashboardComponent implements OnInit {
     }else{
      this.router.navigate([item]); 
    }    
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

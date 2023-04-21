@@ -60,6 +60,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   langCode = localStorage.getItem("langCode");
   serviceHistorySelectedValue:any;
   statusHistorySelectedValue:any;
+  isLoading:boolean = true;
 
   constructor(private autoLogout: AutoLogoutService,private dialog: MatDialog, private appConfigService: AppConfigService, private dataStorageService: DataStorageService, private translateService: TranslateService, private router: Router,private dateAdapter: DateAdapter<Date>, public headerService: HeaderService,private auditService: AuditService, private breakpointObserver: BreakpointObserver) {
     this.dateAdapter.setLocale('en-GB'); 
@@ -81,18 +82,18 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
           this.cols = 4;
         }
         if (result.breakpoints[Breakpoints.Large]) {
-          this.cols = 5;
+          this.cols = 6;
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
-          this.cols = 5;
+          this.cols = 6;
         }
       }
     });
   }
 
-  ngAfterViewInit(): void {
-    this.paginator.pageIndex = 2;
-  }
+  // ngAfterViewInit(): void {
+  //   this.paginator.pageIndex = 2;
+  // }
   async ngOnInit() {
     this.translateService.use(localStorage.getItem("langCode"));      
 
@@ -123,21 +124,21 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   getServiceHistory(pageEvent:any, filters:any, actionTriggered:string){
-    if(actionTriggered === "search"){
-      this.paginator.firstPage();
-    }
     this.dataStorageService
-    .getServiceHistory(pageEvent, filters)
+    .getServiceHistory(pageEvent, filters,this.pageSize)
     .subscribe((response) => {
-      if(response["response"]){   
+      if(response["response"]){  
+        this.isLoading = false; 
         this.responselist = response["response"]["data"];
         this.totalItems = response["response"]["totalItems"];
         this.serviceTypeFilter = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');   
         this.serviceTypeFilter2 = this.appConfigService.getConfig()["resident.view.history.serviceType.filters"].split(',');  
         this.statusTypeFilter = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
         this.statusTypeFilter2 = this.appConfigService.getConfig()["resident.view.history.status.filters"].split(',');
+        this.pageSize = response["response"]['pageSize']
         this.parsedrodowndata();
       }else{
+        this.isLoading = false;
         this.showErrorPopup(response["errors"])
       }
     });
@@ -255,7 +256,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
 
   reportDetails(data:any){
     this.auditService.audit('RP-007', 'View history', 'RP-View history', 'View history', 'User clicks on "Report an issue"');
-    this.router.navigate(["grievanceRedressal"],{state:{eventId:data.eventId}})
+    this.router.navigateByUrl(`uinservices/grievanceRedressal?source1=viewMyHistory&eid=`+data.eventId);
   }
 
   search(){    
@@ -292,6 +293,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
   }
 
   downloadServiceHistory(){
+    this.isLoading = true;
     this.auditService.audit('RP-005', 'View history', 'RP-View history', 'View history', 'User clicks on "download" button');
     let searchParam = "", self = this;    
     this.controlTypes.forEach(controlType => {
@@ -311,6 +313,7 @@ export class ViewhistoryComponent implements OnInit, OnDestroy {
       var fileName = ""
       const contentDisposition = data.headers.get('content-disposition');
       if (contentDisposition) {
+        this.isLoading = false;
         const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
         const matches = fileNameRegex.exec(contentDisposition);
         if (matches != null && matches[1]) {

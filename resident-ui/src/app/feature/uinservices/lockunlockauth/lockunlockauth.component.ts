@@ -347,9 +347,10 @@ export class LockunlockauthComponent implements OnInit, OnDestroy {
   }
 
   openPopUp(clickedId:any){
-    this.clickedId = clickedId;
+    /*this.clickedId = clickedId;
     this.isPopupSHow = !this.isPopupSHow;
-    this.infoMsg =  this.popupMessages.InfomationContent.secureMyID[clickedId]
+    this.infoMsg =  this.popupMessages.InfomationContent.secureMyID[clickedId]*/
+    return this.popupMessages.InfomationContent.secureMyID[clickedId];
   }
 
 }
